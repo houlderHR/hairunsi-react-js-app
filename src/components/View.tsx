@@ -10,7 +10,7 @@ const View: React.FC = () => {
         <Button additionalClass="min-w-60 hover:bg-secondary duration-300" />
         <InputSearch />
       </div>
-      <div className="flex flex-row gap-4 flex-wrap items-center justify-arround mt-8">
+      <div className="flex flex-row xl:gap-4 gap-2 flex-wrap items-center w-full justify-between mt-8">
         <CardType title="Direction" iconVisible={true} name="Super admin"/>
         <CardType title="Administration" name="Admin"/>
         <CardType title="Commercial" name="Modérateur"/>
