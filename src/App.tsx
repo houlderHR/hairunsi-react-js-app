@@ -1,9 +1,14 @@
+import Navbar from "./components/Navbar"
+import GestionUserType from "./pages/GestionUserType"
 
 function App() {
 
   return (
     <>
-     <p className="p-4 bg-primary text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus numquam excepturi labore repellat distinctio possimus magnam perspiciatis fuga rem odit, nam minima. Accusantium maiores facere voluptas totam similique recusandae magni!</p>
+      <div className="min-h-screen bg-gray-50 h-full">
+        <Navbar />
+        <GestionUserType />
+      </div>
     </>
   )
 }
