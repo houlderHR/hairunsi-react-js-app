@@ -5,12 +5,12 @@ import CardType from "./CardType";
 
 const View: React.FC = () => {
   return <>
-    <div className="ml-72 px-14 h-full pt-6 flex flex-col">
+    <div className="lg:ml-72 sm:ml-52 ml-16 md:px-14 px-6 h-full pt-6 flex flex-col">
       <div className="flex flex-row gap-x-4">
-        <Button additionalClass="min-w-60 hover:bg-secondary duration-300" />
+        <Button additionalClass="md:min-w-60 hover:bg-secondary duration-300" />
         <InputSearch />
       </div>
-      <div className="flex flex-row xl:gap-4 gap-2 flex-wrap items-center w-full justify-between mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
         <CardType title="Direction" iconVisible={true} name="Super admin"/>
         <CardType title="Administration" name="Admin"/>
         <CardType title="Commercial" name="Modérateur"/>
