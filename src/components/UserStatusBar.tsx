@@ -15,7 +15,7 @@ const UserStatusBar = () => {
           <p className="text-[10px] leading-3 font-normal">Web Designer</p>
         </div>
         <Icon width="10" height="5" name="SharpArrowDropDown" />
-        {show && <div className="absolute -bottom-4 translate-y-full w-full rounded text-[10px] bg-primary">
+        {show && <div className="absolute -bottom-4 translate-y-full w-auto sm:w-full rounded text-[10px] bg-primary right-0">
           <Dropdown />
         </div>}
       </div>
