@@ -12,7 +12,7 @@ const Home = () => {
           </div>
           <div className="mt-20 text-white">
             <h2 className="welcome_text">Bienvenue sur HaiRun SI!</h2>
-            <h3 className="mt-1 description text-center px-2 xl:px-36">Une plateforme de gestion et d'organisation en interne de vos rêves.</h3>
+            <h3 className="mt-1 description text-center px-2 lg:px-40">Une plateforme de gestion et d'organisation en interne de vos rêves.</h3>
           </div>
           <Link to={'login'}>
             <button className="border border-white-300 rounded-md text-white uppercase mt-20 hover:cursor-pointer start_button">Commencer</button>

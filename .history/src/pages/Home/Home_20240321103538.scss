@@ -1,7 +1,7 @@
 @import '../../utils/default.scss';  
   
   .welcome_text {
-    font-size: $font-title-desktop;
+    font-size: $font-title;
   }
 
   .description {
@@ -13,15 +13,12 @@
   }
 
   .bg_svg {
-    background-image: url('../../assets/images/bg-large.svg');
+    background-image: url('../../assets/images/bg-home.svg');
   }
 
   @media (max-width: 768px) {
     .logo {
-      width:95px !important;
-    }
-    .welcome_text {
-      font-size: $font-title-mobile;
+      width:90px !important;
     }
     .bg_svg {
       background-image: url('../../assets/images/bg-mobile.svg') !important;
@@ -30,12 +27,12 @@
 
   @media (min-width: 769px) and (max-width: 1024px) {
     .bg_svg {
-      background-image: url('../../assets/images/bg-medium1.svg') !important;
+      background-image: url('../../assets/images/bg2.svg') !important;
     }
   }
 
   @media (min-width: 1025px) and (max-width: 1280px) {
     .bg_svg {
-      background-image: url('../../assets/images/bg-medium2.svg') !important;
+      background-image: url('../../assets/images/bg-3.svg') !important;
     }
   }
