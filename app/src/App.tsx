@@ -4,12 +4,12 @@ import {
 } from 'react-router-dom'
 import './App.css'
 
-import routes from './routes/route'
+import router from './routes/router'
 
 function App() {
   return (
     <>
-      <RouterProvider router={routes}>
+      <RouterProvider router={router}>
       </RouterProvider>
       <Outlet/>
     </>

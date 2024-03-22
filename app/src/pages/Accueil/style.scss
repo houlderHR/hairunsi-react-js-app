@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+        .col-start{
+            @apply flex flex-col
+        }
+        .col-center{
+            @apply flex flex-col justify-center items-center
+        }
+        
+        .content-option{
+            @apply space-y-2 w-[128px] h-[116px] bg-[#f9f9f9] rounded-lg hover:cursor-pointer sm:mr-5 max-[639px]:mr-3
+        }
+        .accueil-body{
+            @apply flex flex-col w-full h-screen;
+
+            .container{
+                @apply flex flex-col justify-start items-center max-[639px]:flex max-[639px]:flex-col max-[639px]:h-screen max-[639px]:justify-center max-[639px]:space-y-20 bg-transparent lg:mt-20 md:mt-10 sm:h-screen sm:flex sm:flex-col sm:justify-around;
+                
+                .header-content{
+                    @apply flex flex-col justify-between items-center w-[513px] h-[111px] bg-transparent;
+
+                    .title{
+                        @apply text-center w-[374px] h-[55px] font-medium lg:text-[48px] sm:text-[30px] md:text-[40px] md:font-medium max-[639px]:text-[30px] max-[639px]:font-medium
+                    };
+
+                    .label{
+                        @apply text-center whitespace-normal text-[#808080] w-auto h-auto lg:mt-5 md:mt-1 lg:text-[16px] sm:text-[12px] max-[639px]:text-[11px] max-[639px]:mt-0 break-all
+                    }
+
+                };
+                .body-content{
+                    @apply w-full h-auto lg:w-[664px] lg:h-[372px] bg-transparent flex flex-wrap justify-between content-center sm:flex sm:flex-wrap sm:justify-between mx-1 max-[639px]:flex max-[639px]:flex-wrap
+                }
+            }
+        }
+        
+}
