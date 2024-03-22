@@ -9,12 +9,12 @@ interface IconType {
 
 const Icon:React.FC<IconType> = ({name,width,height,size = "16"}) => {
 
-  const generateWidth = () => {
-    return width ? width : size;
+  const generateWidth = ():string => {
+    return width ?? size;
   }
 
-  const generateHeight = () => {
-    return height ? height : size;
+  const generateHeight = ():string => {
+    return height ?? size;
   }
 
   return <>

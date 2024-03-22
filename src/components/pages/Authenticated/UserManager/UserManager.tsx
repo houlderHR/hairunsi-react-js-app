@@ -1,9 +1,11 @@
-import Icon from "../components/ui/Icon";
-import Sidebar from "../components/Sidebar";
-import View from "../components/View";
+import Icon from "../../../shared/Icon";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import Navbar from "../shared/Navbar";
 
-const GestionUserType = () => {
+const UserManager = () => {
   return <>
+    <Navbar />
     <div className="h-full">
       <div className="py-2 flex items-center pl-5 border-b bg-white border-gray-2 shadow-sm">
         <div className="flex gap-3 items-center">
@@ -15,9 +17,11 @@ const GestionUserType = () => {
         </div>
       </div>
       <Sidebar />
-      <View />
+      <div className="lg:ml-72 sm:ml-52 ml-16 md:px-14 px-6 h-full pt-6 flex flex-col">
+        <Outlet />
+      </div>
     </div>
   </>
 }
 
-export default GestionUserType;
+export default UserManager;

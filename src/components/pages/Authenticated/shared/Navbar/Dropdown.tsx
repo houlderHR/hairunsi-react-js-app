@@ -1,4 +1,4 @@
-import Icon from "./ui/Icon";
+import Icon from "../../../../shared/Icon";
 
 interface DropDownListItemProps {
   name: string;

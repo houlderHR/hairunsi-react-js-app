@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Dropdown from "./Dropdown"
-import Icon from "./ui/Icon"
+import Icon from "../../../../shared/Icon"
 
 const UserStatusBar = () => {
   const [show,setShow] = useState(false)

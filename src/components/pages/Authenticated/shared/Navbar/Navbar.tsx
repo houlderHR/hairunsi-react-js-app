@@ -1,7 +1,6 @@
 import React from "react";
-import Icon from "./ui/Icon";
-import Dropdown from "./Dropdown";
 import UserStatusBar from "./UserStatusBar";
+import Icon from "../../../../shared/Icon";
 
 const Navbar: React.FC = () => {
   return <>

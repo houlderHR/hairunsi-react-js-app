@@ -1,4 +1,5 @@
-import Icon from "./Icon";
+import Icon from "../../../../shared/Icon";
+
 
 const InputSearch: React.FC = () => {
   return <>
