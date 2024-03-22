@@ -1,20 +1,18 @@
-import { lazy } from 'react'
 import {
-  BrowserRouter,
-  Routes, 
-  Route
+  Outlet,
+  RouterProvider
 } from 'react-router-dom'
 import './App.css'
 
-const Accueil = lazy(() => import('./components/Accueil/Accueil'))
+import routes from './routes/route'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Accueil />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <RouterProvider router={routes}>
+      </RouterProvider>
+      <Outlet/>
+    </>
   )
 }
 

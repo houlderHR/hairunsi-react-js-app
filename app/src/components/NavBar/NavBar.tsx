@@ -1,8 +1,9 @@
-import logo from './../../../assets/logo-hairun.svg'
-import exit from './../assets/FluentMdl2Cancel 1.svg'
-import notify from './../assets/notify.svg'
-import ellipse from './../assets/Ellipse 909.png'
-import vector from './../assets/Vector.svg'
+import './style.css'
+import logo from './../../assets/logo-hairun.svg'
+import exit from './../../assets/FluentMdl2Cancel 1.svg'
+import notify from './../../assets/notify.svg'
+import ellipse from './../../assets/Ellipse 909.png'
+import vector from './../../assets/Vector.svg'
 const NavBar = () => {
     return (
         <div className="flex flex-row w-full h-[56px] bg-[#12103b]">
@@ -22,9 +23,9 @@ const NavBar = () => {
                             className="h-[4vh]"
                         />
                     </div>
-                    <div className="hidden ml-1 lg:w-[55.08px] h-[21.39px] bg-transparent lg:flex lg:flex-col sm:flex sm:flex-col justify-end  items-end text-[#fff]">
+                    <div className="content-hairun-name">
                         <div className="text-[1em] font-medium w-[55.08px] h-[13.22px]">HaiRun</div>
-                        <div className="text-[0.3em] font-light mt-1 w-[27.71px] h-[5.18px]">Technology</div>
+                        <div className="sizing-techno">Technology</div>
                     </div>
                 </div>
             </div>

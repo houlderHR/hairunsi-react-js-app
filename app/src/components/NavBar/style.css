@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components{
+    .col-center{
+        @apply flex flex-col justify-center items-center
+    }
+    .col-start{
+        @apply flex flex-col justify-start items-center
+    }
+    .content-hairun-name{
+        @apply hidden ml-1 lg:w-[55.08px] h-[21.39px] bg-transparent lg:flex lg:flex-col sm:flex sm:flex-col justify-end  items-end text-[#fff]
+    }
+    .sizing-techno{
+        @apply text-[0.3em] font-light mt-1 w-[27.71px] h-[5.18px]
+    }
+}
