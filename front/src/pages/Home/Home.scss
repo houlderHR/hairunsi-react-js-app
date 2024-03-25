@@ -1,0 +1,34 @@
+@import '../../theme/default.scss';
+
+.home-container {
+  .bg-svg {
+    background-image: url('images/bg-large.svg');
+  }
+
+  @media (max-width: 768px) {
+    .logo {
+      width: 95px !important;
+    }
+    .bg-svg {
+      background-image: url('images/bg-mobile.svg') !important;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .logo {
+      width: 95px !important;
+    }
+    .bg-svg {
+      background-image: url('images/bg-medium-1.svg') !important;
+    }
+  }
+
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    .logo {
+      width: 95px !important;
+    }
+    .bg-svg {
+      background-image: url('images/bg-medium-2.svg') !important;
+    }
+  }
+}
