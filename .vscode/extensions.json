@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "xabikos.javascriptsnippets",
+    "eamodio.gitlens",
+    "dbaeumer.vscode-eslint",
+    "irongeek.vscode-env",
+    "ms-azuretools.vscode-docker"
+  ]
+}
