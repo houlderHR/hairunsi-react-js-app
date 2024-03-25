@@ -1,11 +1,14 @@
 import { Outlet, RouterProvider } from 'react-router-dom';
 import './App.scss';
-import routes from './routes/route';
+
+import router from './routes/route';
+import NavBar from './shared/authentificated/NavBar';
 
 function App() {
   return (
     <>
-      <RouterProvider router={routes}></RouterProvider>
+      <NavBar />
+      <RouterProvider router={router}></RouterProvider>
       <Outlet />
     </>
   );
