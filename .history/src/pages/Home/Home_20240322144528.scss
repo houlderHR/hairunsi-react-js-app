@@ -1,0 +1,43 @@
+@import '../../theme/default.scss';  
+
+.home-container {
+  .welcome_text {
+    font-size: $font-title-desktop;
+  }
+  
+  .description {
+    font-size: $font-md;
+  }
+  
+  .start-button {
+    padding: 20px 62px;
+  }
+  
+  .bg-svg {
+    background-image: url('../../assets/images/bg-large.svg');
+  }
+  
+  @media (max-width: 768px) {
+    .logo {
+      width:95px !important;
+    }
+    .welcome-text {
+      font-size: $font-title-mobile;
+    }
+    .bg-svg {
+      background-image: url('../../assets/images/bg-mobile.svg') !important;
+    }
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .bg-svg {
+      background-image: url('../../assets/images/bg-medium1.svg') !important;
+    }
+  }
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    .bg-svg {
+      background-image: url('../../assets/images/bg-medium2.svg') !important;
+    }
+  }
+}
