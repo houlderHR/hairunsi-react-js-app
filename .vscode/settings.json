@@ -2,7 +2,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "typescript.updateImportsOnFileMove.enabled": "prompt",
-  "javascript.updateImportsOnFileMove.enabled": "prompt",
+  "javascript.updateImportsOnFileMove.enabled": "always",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },

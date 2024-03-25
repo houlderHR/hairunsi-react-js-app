@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .navbar-container {
+    @apply flex flex-row w-full h-[56px] bg-[#12103b] fixed top-0;
+
+    .navbar-content-left {
+      @apply w-1/2 bg-transparent flex flex-row justify-start items-center;
+
+      .navbar-left-image {
+        @apply hidden lg:flex lg:flex-col sm:flex sm:flex-col justify-center items-center lg:w-[56px] h-[56px] sm:w-[56px] hover:cursor-pointer;
+
+        .left-image {
+          @apply mx-2 w-[18.3px] h-[18.3px];
+        }
+      }
+
+      .navbar-left-text {
+        @apply ml-5 flex flex-row items-center w-[85px] h-[30px];
+
+        .navbar-left-text-image {
+          @apply flex justify-center items-center w-[23.87px] h-[29.99px];
+
+          .navbar-left-text-src {
+            @apply h-[4vh];
+          }
+        }
+        .navbar-left-text-label {
+          @apply hidden ml-1 lg:w-[55.08px] h-[21.39px] bg-transparent lg:flex lg:flex-col sm:flex sm:flex-col justify-end  items-end text-[#fff];
+
+          .navbar-left-title {
+            @apply text-[1em] font-medium w-[55.08px] h-[13.22px];
+          }
+          .navbar-left-label {
+            @apply text-[0.3em] font-light mt-1 w-[27.71px] h-[5.18px];
+          }
+        }
+      }
+    }
+
+    .navbar-content-right {
+      @apply flex flex-row items-center justify-end mx-2 w-1/2 bg-transparent;
+    }
+  }
+}

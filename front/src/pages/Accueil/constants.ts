@@ -1,14 +1,17 @@
 export const options = [
   {
-      src : "/Vector(3).svg",
-      title : "Projets"
+    src: '/rocket-icon.svg',
+    title: 'Projets',
+    path: '/projects',
   },
   {
-      src : "/Vector(2).svg",
-      title : "Gestion des utilisateurs"
+    src: '/user-setting-icon.svg',
+    title: 'Gestion des utilisateurs',
+    path: '/users',
   },
   {
-      src : "/Vector(1).svg",
-      title : "Congé"
-  }
-]
+    src: '/leave-icon.svg',
+    title: 'Congé',
+    path: '/leave-day',
+  },
+];
