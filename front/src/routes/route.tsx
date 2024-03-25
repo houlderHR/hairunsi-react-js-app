@@ -1,34 +1,28 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
-<<<<<<< HEAD
-import UserManager from '../pages/userManager';
-import UserManagerType from '../pages/userManager/userManagerType';
-import { LK_USERMANAGER } from './endpoints';
-=======
 import UserManager from '../pages/UserManager';
 import UserManagerType from '../pages/UserManager/UserManagerType';
-import { LK_USERMANAGER } from './paths';
->>>>>>> a8eed9f (fix: linter)
+import routes from './paths';
 
 const router = createBrowserRouter([
   {
-    path: LK_USERMANAGER,
+    path: routes.userManager.path,
     element: <UserManager />,
     children: [
       {
-        path: 'type',
+        path: routes.userManager.subpaths.type.path,
         element: <UserManagerType />,
       },
       {
-        path: 'user',
+        path: routes.userManager.subpaths.user.path,
         element: <div>Utilisateurs</div>,
       },
       {
-        path: 'role',
+        path: routes.userManager.subpaths.role.path,
         element: <div>Rôle</div>,
       },
       {
         path: '*',
-        element: <Navigate to="type" replace />,
+        element: <Navigate to={routes.userManager.subpaths.type.path} replace />,
       },
     ],
   },

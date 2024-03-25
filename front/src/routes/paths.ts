@@ -1,5 +1,12 @@
-export const LK_HOME = '/';
-export const LK_LOGIN = '/login';
-export const LK_ACCUEIL = '/user-manager';
+const routes = {
+  userManager: {
+    path: '/user-manager/',
+    subpaths: {
+      type: { path: 'type' },
+      user: { path: 'path' },
+      role: { path: 'role' },
+    },
+  },
+};
 
-export const LK_USERMANAGER = '/user-manager/';
+export default routes;

@@ -8,7 +8,7 @@ const UserStatusBar = () => {
   return (
     <>
       <div
-        onClick={() => setShow(!show)}
+        onClick={() => setShow((s) => !s)}
         className="flex cursor-pointer duration-200 ml-4 h-full relative items-center py-2.5 pr-6 justify-center hover:bg-secondary"
       >
         <span className="w-px h-full hidden sm:inline-block mr-4 bg-gray-50 opacity-30"></span>
