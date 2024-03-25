@@ -1,4 +1,9 @@
-export const options = [
+interface ObjOption {
+  src: string;
+  title: string;
+  path: string;
+}
+export const options: ObjOption[] = [
   {
     src: '/rocket-icon.svg',
     title: 'Projets',

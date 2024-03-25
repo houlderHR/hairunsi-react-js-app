@@ -9,16 +9,18 @@ const Accueil = () => {
         <div className="header-content">
           <div className="title">Mes applications</div>
           <div className="label">
-            Explorer la plateforme pour vous familiariser avec l'outils.
-            <br /> Naviguer sur la plateforme via les applications mise à votre disposition.
+            Explorez la plateforme pour vous familiariser avec l'outil.
+            <br /> Naviguez sur la plateforme via les applications mise à votre disposition.
           </div>
         </div>
         <div className="body-content">
-          {options.length
-            ? options.map((opt) => {
-                return <OptionButton title={opt.title} src={opt.src} path={opt.path} />;
-              })
-            : ''}
+          {!options ? (
+            <div className="error-content">Pas d'option ! </div>
+          ) : (
+            options.map((opt, key) => {
+              return <OptionButton title={opt.title} src={opt.src} path={opt.path} key={key} />;
+            })
+          )}
         </div>
       </div>
     </div>

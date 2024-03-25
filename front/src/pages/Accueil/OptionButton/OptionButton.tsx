@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom';
 import './style.scss';
-const OptionButton = (props: any) => {
+
+interface ObjProps {
+  path: string;
+  title: string;
+  src: string;
+}
+
+const OptionButton = (props: ObjProps) => {
   return (
     <Link to={props.path}>
       <div className="button-option-container">
