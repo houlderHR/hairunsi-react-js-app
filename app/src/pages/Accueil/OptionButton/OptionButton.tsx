@@ -1,13 +1,13 @@
 import './style.scss'
 const OptionButton = (props : any) => {
   return(
-    <div className="col-center content-option">
+    <div className="button-option-container">
       <img
           src={props.src}
           alt="projet"
-          className="w-[35.77px] h-[35.78px]"
+          className="button-option-image"
       />
-      <div className="center col-center pt-2 w-[64px] h-[14px] text-[12px] font-normal">
+      <div className="button-option-label">
           {props.title}
       </div>
   </div>

@@ -1,32 +1,31 @@
 import './style.scss'
 
-
 const NavBar = () => {
     return (
-        <div className="flex flex-row w-full h-[56px] bg-[#12103b]">
-            <div className="w-1/2 bg-transparent flex flex-row justify-start items-center">
-                <div className="hidden lg:flex lg:flex-col sm:flex sm:flex-col justify-center items-center lg:w-[56px] h-[56px] sm:w-[56px] hover:cursor-pointer">
+        <div className="navbar-container">
+            <div className="navbar-content-left">
+                <div className="navbar-left-image">
                     <img 
                         src="FluentMdl2Cancel 1.svg"
                         alt='exit'
-                        className="mx-2 w-[18.3px] h-[18.3px]"
+                        className="left-image"
                     />
                 </div>
-                <div className="ml-5 flex flex-row items-center w-[85px] h-[30px]">
-                    <div className='flex justify-center items-center w-[23.87px] h-[29.99px]'>
+                <div className="navbar-left-text">
+                    <div className="navbar-left-text-image">
                         <img 
                             src="/logo-hairun.svg"
                             alt="logo" 
-                            className="h-[4vh]"
+                            className="navbar-left-text-src"
                         />
                     </div>
-                    <div className="content-hairun-name">
-                        <div className="text-[1em] font-medium w-[55.08px] h-[13.22px]">HaiRun</div>
-                        <div className="sizing-techno">Technology</div>
+                    <div className="navbar-left-text-label">
+                        <div className="navbar-left-title">HaiRun</div>
+                        <div className="navbar-left-label">Technology</div>
                     </div>
                 </div>
             </div>
-            <div className="flex flex-row items-center justify-end mx-2 w-1/2 bg-transparent">
+            <div className="navbar-content-right">
                     <div className="hidden lg:flex justify-center items-center bg-[#2b335b] rounded-full h-[34px] w-[34px] mx-2">
                         <img 
                             src="/notify.svg"

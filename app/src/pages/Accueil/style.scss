@@ -3,21 +3,11 @@
 @tailwind utilities;
 
 @layer components{
-        .col-start{
-            @apply flex flex-col
-        }
-        .col-center{
-            @apply flex flex-col justify-center items-center
-        }
-        
-        .content-option{
-            @apply space-y-2 w-[128px] h-[116px] bg-[#f9f9f9] rounded-lg hover:cursor-pointer sm:mr-5 max-[639px]:mr-3
-        }
         .accueil-body{
-            @apply flex flex-col w-full h-screen;
+            @apply flex flex-col justify-center w-[50vw] h-[50vh] mx-[50%] my-[15%];
 
             .container{
-                @apply flex flex-col justify-start items-center max-[639px]:flex max-[639px]:flex-col max-[639px]:h-screen max-[639px]:justify-center max-[639px]:space-y-20 bg-transparent lg:mt-20 md:mt-10 sm:h-screen sm:flex sm:flex-col sm:justify-around;
+                @apply flex flex-col justify-start items-center max-[639px]:flex max-[639px]:flex-col max-[639px]:h-screen max-[639px]:justify-center max-[639px]:space-y-20 bg-transparent lg:mt-20 sm:h-screen sm:flex sm:flex-col sm:justify-around;
                 
                 .header-content{
                     @apply flex flex-col justify-between items-center w-[513px] h-[111px] bg-transparent;
@@ -32,7 +22,7 @@
 
                 };
                 .body-content{
-                    @apply w-full h-auto lg:w-[664px] lg:h-[372px] bg-transparent flex flex-wrap justify-between content-center sm:flex sm:flex-wrap sm:justify-between mx-1 max-[639px]:flex max-[639px]:flex-wrap
+                    @apply w-full h-auto lg:w-[664px] lg:h-[250px] bg-transparent flex flex-wrap justify-between content-center sm:flex sm:flex-wrap sm:justify-between mx-1 max-[639px]:flex max-[639px]:flex-wrap 
                 }
             }
         }
