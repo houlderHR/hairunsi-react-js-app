@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import logo from '/images/logo-hairun.png';
 import './Home.scss';
 import { LK_LOGIN } from '../../routes/paths';
 import StartButton from '../../shared/unauthenticated/buttons/StartButton/StartButton';
@@ -10,7 +9,11 @@ const Home = () => {
       <div className="relative w-full h-full bg-primary flex justify-center items-center justify-self-center">
         <div className="absolute md:w-1/3 text-center z-50 flex flex-col justify-center">
           <div className="flex justify-center items-center">
-            <img src={logo} className="logo flex justify-center items-center" alt="" />
+            <img
+              src="images/logo-hairun.png"
+              className="logo flex justify-center items-center"
+              alt=""
+            />
           </div>
           <div className="mt-20 text-white">
             <h2 className="text-2xl xl:text-4xl font-bold xl:font-normal">
