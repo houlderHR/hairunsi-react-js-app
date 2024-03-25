@@ -4,7 +4,7 @@ const DropDown = () => {
   return (
     <>
       <div className="flex flex-col px-3">
-        <DropDownListItem name="Modifier le profil" icon="user_notification" />
+        <DropDownListItem name="Modifier le profil" icon="user-notification" />
         <span className="h-[0.15px] opacity-30 bg-gray-50 w-full block"></span>
         <DropDownListItem name="Déconnexion" icon="logout" />
       </div>

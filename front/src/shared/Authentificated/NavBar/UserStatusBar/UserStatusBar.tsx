@@ -24,7 +24,7 @@ const UserStatusBar = () => {
             </h2>
             <p className="text-[10px] leading-3 font-normal">Web Designer</p>
           </div>
-          <Icon width="10" height="5" name="sharp_arrow_drop_down" />
+          <Icon width="10" height="5" name="sharp-arrow-drop-down" />
           {show && (
             <div className="absolute -bottom-4 translate-y-full w-auto sm:w-full rounded text-[10px] bg-primary right-0">
               <Dropdown />

@@ -22,7 +22,7 @@ const CardType: React.FC<CardTypeProps> = ({ title, name, iconVisible = false })
           {iconVisible ? <IconCardType /> : <IconCardType withOther={true} />}
         </div>
         <div className="flex mt-4 flex-row justify-start gap-x-4">
-          <Icon name="userGuard" height="22" width="18" />
+          <Icon name="user-guard" height="22" width="18" />
           <p className="text-base">{name}</p>
         </div>
       </div>
