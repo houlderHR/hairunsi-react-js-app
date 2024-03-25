@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../../../public/images/logo-hairun.png';
+import logo from '/images/logo-hairun.png';
 import './Home.scss';
 import { LK_LOGIN } from '../../routes/paths';
 import StartButton from '../../shared/unauthenticated/buttons/StartButton/StartButton';
