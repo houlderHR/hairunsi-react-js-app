@@ -1,18 +1,14 @@
-import {
-  Outlet,
-  RouterProvider
-} from 'react-router-dom'
-import './App.scss'
-import routes from './routes/route'
+import { Outlet, RouterProvider } from 'react-router-dom';
+import './App.scss';
+import routes from './routes/route';
 
 function App() {
   return (
     <>
-      <RouterProvider router={routes}>
-      </RouterProvider>
-      <Outlet/>
+      <RouterProvider router={routes}></RouterProvider>
+      <Outlet />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
