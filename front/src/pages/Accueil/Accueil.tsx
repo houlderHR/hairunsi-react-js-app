@@ -1,5 +1,5 @@
 import './style.scss';
-import OptionButton from './OptionButton/OptionButton';
+import OptionButton from './OptionButton';
 import { options } from './constants';
 
 const Accueil = () => {

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Home.scss';
 import { LK_LOGIN } from '../../routes/paths';
-import StartButton from '../../shared/unauthenticated/buttons/StartButton/StartButton';
+import StartButton from '../../shared/unauthenticated/buttons/StartButton';
 
 const Home = () => {
   return (
