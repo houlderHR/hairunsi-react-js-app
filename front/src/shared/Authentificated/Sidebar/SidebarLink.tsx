@@ -13,7 +13,7 @@ interface SidebarListProps {
 }
 
 const SidebarLink: React.FC<SidebarListProps> = ({ name, icon, url }) => {
-  const activeLink = twMerge(classes.activeLink, classes.inactiveLink);
+  const activeLink = twMerge(classes.inactiveLink, classes.activeLink);
 
   return (
     <>
