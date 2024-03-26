@@ -1,10 +1,23 @@
 const routes = {
-  userManager: {
-    path: '/user-manager/',
+  authentified: {
+    path: '',
     subpaths: {
-      type: { path: 'type' },
-      user: { path: 'path' },
-      role: { path: 'role' },
+      userManager: {
+        path: '/user-manager/',
+        subpaths: {
+          type: { path: 'type' },
+          user: { path: 'user' },
+          role: { path: 'role' },
+        },
+      },
+    },
+  },
+  unauthenticated: {
+    path: '',
+    subpaths: {
+      login: {
+        path: '/login',
+      },
     },
   },
 };

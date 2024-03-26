@@ -1,12 +1,10 @@
 import { Outlet } from 'react-router-dom';
-import Navbar from '../../shared/Authentificated/NavBar';
 import Icon from '../../shared/Icon';
 import Sidebar from '../../shared/Authentificated/Sidebar';
 
 const UserManager = () => {
   return (
     <>
-      <Navbar />
       <div className="h-full">
         <div className="py-2 flex items-center pl-5 border-b bg-white border-gray-2 shadow-sm">
           <div className="flex gap-3 items-center">

@@ -18,7 +18,7 @@ const SidebarLink: React.FC<SidebarListProps> = ({ name, icon, url }) => {
   return (
     <>
       <NavLink
-        to={`${routes.userManager.path}${url}`}
+        to={`${routes.authentified.subpaths.userManager.path}${url}`}
         className={({ isActive }) => (isActive ? activeLink : classes.inactiveLink)}
       >
         <Icon height="22" width="18" name={icon} />
