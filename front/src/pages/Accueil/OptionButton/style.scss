@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .button-option-container {
+    @apply flex flex-col justify-center items-center;
+
+    .button-option-image {
+      @apply w-[35.77px] h-[35.78px];
+    }
+
+    .button-option-label {
+      @apply text-center mt-2 flex flex-col justify-center items-center pt-2 w-[64px] h-[14px] text-[12px] font-normal;
+    }
+  }
+}
