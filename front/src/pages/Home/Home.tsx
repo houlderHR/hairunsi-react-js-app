@@ -5,7 +5,7 @@ import StartButton from '../../shared/unauthenticated/buttons/StartButton/StartB
 
 const Home = () => {
   return (
-    <div className="home-container h-screen w-screen">
+    <div className="home-container h-screen w-full">
       <div className="relative w-full h-full bg-primary flex justify-center items-center justify-self-center">
         <div className="absolute md:w-1/3 text-center z-50 flex flex-col justify-center">
           <div className="flex justify-center items-center">
@@ -19,7 +19,7 @@ const Home = () => {
             <h2 className="text-2xl xl:text-4xl font-bold xl:font-normal">
               Bienvenue sur HaiRun SI!
             </h2>
-            <h3 className="mt-1 text-sm text-center xl:text-base px-12 sm:px-3.5 xl:px-36">
+            <h3 className="mt-1 text-sm text-center xl:text-base px-12 sm:px-3.5 xl:px-mety">
               Une plateforme de gestion et d'organisation en interne de vos rêves.
             </h3>
           </div>
