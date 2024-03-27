@@ -1,3 +1,4 @@
+import routes from '../../routes/paths';
 interface ObjOption {
   src: string;
   title: string;
@@ -12,7 +13,7 @@ export const options: ObjOption[] = [
   {
     src: '/user-setting-icon.svg',
     title: 'Gestion des utilisateurs',
-    path: '/users',
+    path: `${routes.authentified.subpaths.userManager.path}/${routes.authentified.subpaths.userManager.subpaths.type.path}`,
   },
   {
     src: '/leave-icon.svg',

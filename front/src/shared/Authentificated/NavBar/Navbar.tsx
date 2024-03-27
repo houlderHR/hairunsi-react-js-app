@@ -5,7 +5,7 @@ import Icon from '../../Icon';
 const Navbar: React.FC = () => {
   return (
     <>
-      <div className="bg-primary pl-5 text-white flex justify-between items-center h-14 w-full">
+      <div className="bg-primary z-10 fixed top-0 pl-5 text-white flex justify-between items-center h-14 w-full">
         <div className="flex items-center">
           <span className="inline-block sm:hidden">
             <Icon name="x" size="18.3" />

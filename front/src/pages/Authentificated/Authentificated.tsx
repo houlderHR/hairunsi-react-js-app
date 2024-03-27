@@ -4,9 +4,11 @@ import Navbar from '../../shared/Authentificated/NavBar';
 const Authentified = () => {
   return (
     <>
-      <Navbar />
-      <div className="min-h-screen bg-gray-50 h-full">
-        <Outlet />
+      <div className="min-h-screen h-full bg-gray-50">
+        <Navbar />
+        <div className="h-full">
+          <Outlet />
+        </div>
       </div>
     </>
   );

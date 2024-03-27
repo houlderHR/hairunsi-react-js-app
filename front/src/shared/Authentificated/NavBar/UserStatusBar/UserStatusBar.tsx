@@ -26,7 +26,7 @@ const UserStatusBar = () => {
           </div>
           <Icon width="10" height="5" name="sharp-arrow-drop-down" />
           {show && (
-            <div className="absolute -bottom-4 translate-y-full w-auto sm:w-full rounded text-[10px] bg-primary right-0">
+            <div className="absolute z-10 -bottom-4 translate-y-full w-auto sm:w-full rounded text-[10px] bg-primary right-0">
               <Dropdown />
             </div>
           )}

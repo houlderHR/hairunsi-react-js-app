@@ -2,6 +2,7 @@ const routes = {
   authentified: {
     path: '',
     subpaths: {
+      accueil: { path: 'accueil' },
       userManager: {
         path: '/user-manager/',
         subpaths: {
@@ -13,7 +14,7 @@ const routes = {
     },
   },
   unauthenticated: {
-    path: '',
+    path: '/',
     subpaths: {
       login: {
         path: '/login',

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Home.scss';
-import { LK_LOGIN } from '../../routes/paths';
+import routes from '../../routes/paths';
 import StartButton from '../../shared/unauthenticated/buttons/StartButton';
 
 const Home = () => {
@@ -23,7 +23,7 @@ const Home = () => {
               Une plateforme de gestion et d'organisation en interne de vos rêves.
             </h3>
           </div>
-          <Link to={LK_LOGIN}>
+          <Link to={routes.unauthenticated.subpaths.login.path}>
             <StartButton title="commencer" />
           </Link>
         </div>
