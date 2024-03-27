@@ -1,5 +1,5 @@
 import React from 'react';
-import ButtonAdd from '../../../shared/authenticated/Buttons/ButtonAdd';
+import ButtonAdd from '../../../shared/authenticated/buttons/ButtonAdd';
 import InputSearch from '../../../shared/authenticated/InputSearch';
 import CardType from '../../../shared/authenticated/CardType';
 
