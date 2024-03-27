@@ -5,8 +5,11 @@ import Icon from '../../shared/Icon';
 import Sidebar from './Sidebar';
 =======
 import Sidebar from '../../shared/authenticated/Sidebar';
+<<<<<<< HEAD
 import HeadManager from '../../shared/authenticated/HeadManager';
 >>>>>>> 84c509c (feat: refact components and create card role manager)
+=======
+>>>>>>> 58fe6e1 (feat:role page)
 
 const UserManager: FC = () => (
   <div className="h-full pt-[101px]">

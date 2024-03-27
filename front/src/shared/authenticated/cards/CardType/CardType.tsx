@@ -1,6 +1,4 @@
 import React from 'react';
-import IconCard from '../IconCard';
-import Icon from '../../../Icon';
 import { twMerge } from 'tailwind-merge';
 import CardContentType from './CardContentType';
 import Card from '../Card';

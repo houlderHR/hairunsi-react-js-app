@@ -1,6 +1,4 @@
 import React from 'react';
-import IconCard from '../IconCard';
-import Icon from '../../../Icon';
 import { twMerge } from 'tailwind-merge';
 import Card from '../Card';
 import CardContentRole from './CardContentRole';
