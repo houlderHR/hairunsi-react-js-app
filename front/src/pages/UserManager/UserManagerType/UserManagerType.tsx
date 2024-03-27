@@ -1,7 +1,7 @@
 import React from 'react';
-import ButtonAdd from '../../../shared/Authentificated/Buttons/ButtonAdd';
-import InputSearch from '../../../shared/Authentificated/InputSearch';
-import CardType from '../../../shared/Authentificated/CardType';
+import ButtonAdd from '../../../shared/authenticated/Buttons/ButtonAdd';
+import InputSearch from '../../../shared/authenticated/InputSearch';
+import CardType from '../../../shared/authenticated/CardType';
 
 const View: React.FC = () => {
   return (

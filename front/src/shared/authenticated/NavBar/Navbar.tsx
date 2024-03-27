@@ -10,7 +10,11 @@ const Navbar: React.FC = () => {
           <span className="inline-block sm:hidden">
             <Icon name="x" size="18.3" />
           </span>
-          <img src="/logo/logo-hairun.png" className="h-8 w-[85px] ml-10" alt="logo_hairun" />
+          <img
+            src="/images/logo/logo-hairun-navbar.png"
+            className="h-8 w-[85px] ml-10"
+            alt="logo_hairun"
+          />
         </div>
         <div className="flex h-full items-center justify-center">
           <span className="bg-secondary hidden shadow hover:shadow-xl duration-300 sm:flex h-9 w-9 rounded-full items-center justify-center">
