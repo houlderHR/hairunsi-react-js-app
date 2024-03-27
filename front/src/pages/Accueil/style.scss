@@ -4,7 +4,7 @@
 
 @layer components {
   .accueil-body {
-    @apply flex flex-col justify-center items-center w-full h-[50vh];
+    @apply flex flex-col justify-center items-center w-full h-[65vh] pt-10;
 
     .container {
       @apply flex flex-col justify-center items-center max-[639px]:flex max-[639px]:flex-col max-[639px]:h-screen max-[639px]:justify-center max-[639px]:space-y-20 bg-transparent lg:mt-20 sm:h-screen sm:flex sm:flex-col sm:justify-around;

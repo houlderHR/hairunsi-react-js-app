@@ -6,17 +6,17 @@ interface ObjOption {
 }
 export const options: ObjOption[] = [
   {
-    src: '/rocket-icon.svg',
+    src: '/icon/rocket-icon.svg',
     title: 'Projets',
     path: '/projects',
   },
   {
-    src: '/user-setting-icon.svg',
+    src: '/icon/user-setting-icon.svg',
     title: 'Gestion des utilisateurs',
     path: `${routes.authentified.subpaths.userManager.path}/${routes.authentified.subpaths.userManager.subpaths.type.path}`,
   },
   {
-    src: '/leave-icon.svg',
+    src: '/icon/leave-icon.svg',
     title: 'Congé',
     path: '/leave-day',
   },
