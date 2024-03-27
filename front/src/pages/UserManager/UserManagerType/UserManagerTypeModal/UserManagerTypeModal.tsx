@@ -1,5 +1,5 @@
 import { ModalShowState } from '../../../../utils/type/ModalShowType';
-import CreateModalType from '../CreateModal/CreateModalType';
+import CreateModalType from '../CreateModalType';
 
 interface UserManagerTypeModalProps {
   modalState: ModalShowState;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import CardType from '../../../shared/authenticated/CardType';
 import HeadManager from '../../../shared/authenticated/HeadManager';
-import UserManagerTypeModal from '../../../shared/authenticated/Modal/UserManagerTypeModal';
 import { ModalShowState } from '../../../utils/type/ModalShowType';
+import UserManagerTypeModal from './UserManagerTypeModal';
 
 const UserManagerType: React.FC = () => {
   const [showModal, setShowModal] = useState<ModalShowState>({
