@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import CardType from '../../../shared/authenticated/CardType';
+import CardType from '../../../shared/authenticated/cards/CardType';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
 import UserManagerTypeModal from './UserManagerTypeModal';

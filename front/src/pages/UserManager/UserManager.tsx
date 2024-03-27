@@ -1,7 +1,12 @@
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import Icon from '../../shared/Icon';
+<<<<<<< HEAD
 import Sidebar from './Sidebar';
+=======
+import Sidebar from '../../shared/authenticated/Sidebar';
+import HeadManager from '../../shared/authenticated/HeadManager';
+>>>>>>> 84c509c (feat: refact components and create card role manager)
 
 const UserManager: FC = () => (
   <div className="h-full pt-[101px]">

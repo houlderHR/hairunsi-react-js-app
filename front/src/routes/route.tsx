@@ -5,6 +5,13 @@ import Home from '../pages/Home';
 import UserManager from '../pages/UserManager';
 import UserManagerType from '../pages/UserManager/UserManagerType';
 import routes from './paths';
+<<<<<<< HEAD
+=======
+import Authenticated from '../pages/Authenticated/Authenticated';
+import Home from '../pages/Home';
+import Accueil from '../pages/Accueil';
+import UserManagerRole from '../pages/UserManager/UserManagerRole';
+>>>>>>> 84c509c (feat: refact components and create card role manager)
 
 const router = createBrowserRouter([
   {
@@ -33,7 +40,7 @@ const router = createBrowserRouter([
           },
           {
             path: routes.authentified.subpaths.userManager.subpaths.role.path,
-            element: <div>Rôle</div>,
+            element: <UserManagerRole />,
           },
           {
             path: '*',

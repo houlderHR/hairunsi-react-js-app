@@ -6,7 +6,11 @@ interface IconBoxProps {
   withOther?: boolean;
 }
 // Icone de trash et edit chaque CardType
+<<<<<<< HEAD:front/src/shared/authenticated/CardType/IconCardType.tsx
 const IconCardType: FC<IconBoxProps> = ({ withOther }) => {
+=======
+const IconCard: React.FC<IconBoxProps> = ({ withOther }) => {
+>>>>>>> 84c509c (feat: refact components and create card role manager):front/src/shared/authenticated/cards/IconCard.tsx
   const classes = twMerge(
     'flex flex-row gap-x-4 items-center group-hover:opacity-100 duration-300 ',
     withOther ? 'opacity-0' : 'opacity-100',
@@ -21,4 +25,4 @@ const IconCardType: FC<IconBoxProps> = ({ withOther }) => {
   );
 };
 
-export default IconCardType;
+export default IconCard;

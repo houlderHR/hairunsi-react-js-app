@@ -7,6 +7,7 @@ export default {
         primary: '#12103B',
         secondary: '#2B335B',
         'secondary-2': '#3E60C1',
+        'secondary-3': '#CAC8FF',
         'secondary-light': '#F7F7FF',
         'black-1': '#272727',
         'blue-3': '#3E60C1',
@@ -18,7 +19,13 @@ export default {
       fontFamily: {
         ubuntu: ['Ubuntu', 'sans-serif'],
       },
+      fontSize: {
+        '10px': '10px',
+      },
       spacing: {
+        '2px': '2px',
+        '4px': '4px',
+        '8px': '8px',
         ssm: '20px',
         llg: '62px',
       },
