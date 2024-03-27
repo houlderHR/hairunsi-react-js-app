@@ -14,7 +14,7 @@ const UserStatusBar = () => {
         <span className="w-px h-full hidden sm:inline-block mr-4 bg-gray-50 opacity-30"></span>
         <div className="flex relative flex-row items-center gap-x-4">
           <img
-            src="/image/profile.png"
+            src="/images/profile.png"
             className="w-8 h-8 rounded-full border-white border"
             alt=""
           />

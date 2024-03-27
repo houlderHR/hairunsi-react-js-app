@@ -10,7 +10,7 @@ const Home = () => {
         <div className="absolute md:w-1/3 text-center z-50 flex flex-col justify-center">
           <div className="flex justify-center items-center">
             <img
-              src="images/logo-hairun.png"
+              src="images/logo/logo-hairun.png"
               className="logo flex justify-center items-center"
               alt=""
             />
