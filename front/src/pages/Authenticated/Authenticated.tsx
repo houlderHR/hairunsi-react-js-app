@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import Navbar from '../../shared/Authentificated/NavBar';
+import Navbar from '../../shared/authenticated/NavBar';
 
-const Authentified = () => {
+const Authenticated = () => {
   return (
     <>
       <div className="min-h-screen h-full bg-gray-50">
@@ -14,4 +14,4 @@ const Authentified = () => {
   );
 };
 
-export default Authentified;
+export default Authenticated;

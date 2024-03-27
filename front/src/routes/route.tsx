@@ -2,7 +2,7 @@ import { Navigate, createBrowserRouter } from 'react-router-dom';
 import UserManager from '../pages/UserManager';
 import UserManagerType from '../pages/UserManager/UserManagerType';
 import routes from './paths';
-import Authentified from '../pages/Authentificated/Authentificated';
+import Authenticated from '../pages/Authenticated/Authenticated';
 import Home from '../pages/Home';
 import Accueil from '../pages/Accueil';
 
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   },
   {
     path: routes.authentified.path,
-    element: <Authentified />,
+    element: <Authenticated />,
     children: [
       {
         path: routes.authentified.subpaths.accueil.path,

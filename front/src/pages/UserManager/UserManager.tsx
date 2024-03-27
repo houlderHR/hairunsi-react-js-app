@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Icon from '../../shared/Icon';
-import Sidebar from '../../shared/Authentificated/Sidebar';
+import Sidebar from '../../shared/authenticated/Sidebar';
 
 const UserManager = () => {
   return (
