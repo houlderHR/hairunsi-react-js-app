@@ -7,7 +7,7 @@ interface IconType {
   height?: number;
 }
 
-const Icon: FC<IconType> = ({ name, width, height, size = '16' }) => (
+const Icon: FC<IconType> = ({ name, width, height, size = 16 }) => (
   <div style={{ height: `${height ?? size}px`, width: `${width ?? size}px` }}>
     <img className="bg-no-repeat bg-contain w-full h-full" src={`/icon/${name}.svg`} alt="" />
   </div>
