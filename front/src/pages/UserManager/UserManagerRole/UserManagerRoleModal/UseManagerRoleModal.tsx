@@ -7,7 +7,7 @@ interface UserManagerRoleModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
 }
 
-const UserManagerTypeModal: FC<UserManagerRoleModalProps> = ({ modalState, setShowModal }) =>
+const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({ modalState, setShowModal }) =>
   modalState === ModalShowStateType.CREATE && <CreateTypeModal setShowModal={setShowModal} />;
 
-export default UserManagerTypeModal;
+export default UserManagerRoleModal;

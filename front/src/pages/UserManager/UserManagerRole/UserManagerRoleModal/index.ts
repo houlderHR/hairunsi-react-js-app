@@ -1,3 +1,3 @@
-import UserManagerTypeModal from './UserManagerTypeModal';
+import UserManagerRoleModal from './UseManagerRoleModal';
 
-export default UserManagerTypeModal;
+export default UserManagerRoleModal;
