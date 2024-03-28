@@ -14,24 +14,25 @@ const InputSearch: FC<InputIconProps> = ({
   placeholder,
   additionalClass,
   additionalInputClass,
-}) => {
-  const inputClasses = twMerge(
-    'bg-transparent cursor-pointer py-3 w-full border-transparent text-xs placeholder:text-black-1 focus:outline-none',
-    additionalInputClass,
-  );
-  return (
-    <div
+}) => (
+  <div
+    className={twMerge(
+      'bg-gray-3 hover:bg-white duration-300 flex items-center flex-row px-5 gap-x-2.5 active:bg-white focus:bg-white w-full rounded',
+      additionalClass,
+    )}
+  >
+    <span>
+      <Icon name={icon} size={18} />
+    </span>
+    <input
+      type="text"
+      placeholder={placeholder}
       className={twMerge(
-        'bg-gray-3 hover:bg-white duration-300 flex items-center flex-row px-5 gap-x-2.5 active:bg-white focus:bg-white w-full rounded',
-        additionalClass,
+        'bg-transparent cursor-pointer py-3 w-full border-transparent text-xs placeholder:text-black-1 focus:outline-none',
+        additionalInputClass,
       )}
-    >
-      <span>
-        <Icon name={icon} size={18} />
-      </span>
-      <input type="text" placeholder={placeholder} className={inputClasses} />
-    </div>
-  );
-};
+    />
+  </div>
+);
 
 export default InputSearch;
