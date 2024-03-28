@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Icon from '../../Icon';
 import IconCardType from './IconCardType';
@@ -10,7 +10,7 @@ interface CardTypeProps {
 }
 
 // CardType
-const CardType: React.FC<CardTypeProps> = ({ title, name, iconVisible = false }) => {
+const CardType: FC<CardTypeProps> = ({ title, name, iconVisible = false }) => {
   const classes = twMerge(
     'p-6 border  cursor-default group hover:border-gray-3 w-full bg-white text-gray-1 rounded-xl duration-300',
     iconVisible ? 'border-gray-3' : 'border-transparent',
@@ -19,10 +19,10 @@ const CardType: React.FC<CardTypeProps> = ({ title, name, iconVisible = false })
     <div className={classes}>
       <div className="flex flex-row justify-between">
         <h3 className="text-secondary truncate font-medium leading-6">{title}</h3>
-        {iconVisible ? <IconCardType /> : <IconCardType withOther />}
+        {iconVisible ? <IconCardType /> : <IconCardType withOther={!iconVisible} />}
       </div>
       <div className="flex mt-4 flex-row justify-start gap-x-4">
-        <Icon name="user-guard" height="22" width="18" />
+        <Icon name="user-guard" height={22} width={18} />
         <p className="text-base">{name}</p>
       </div>
     </div>

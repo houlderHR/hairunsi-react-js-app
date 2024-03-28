@@ -1,8 +1,9 @@
 import './style.scss';
+import { FC } from 'react';
 import { options } from './constants';
 import OptionButton from './OptionButton';
 
-const Accueil = () => (
+const Accueil: FC = () => (
   <div className="accueil-body">
     <div className="container">
       <div className="header-content">
@@ -13,13 +14,9 @@ const Accueil = () => (
         </div>
       </div>
       <div className="body-content">
-        {!options ? (
-          <div className="error-content">Pas d&apos;option ! </div>
-        ) : (
-          options.map((opt) => (
-            <OptionButton title={opt.title} src={opt.src} path={opt.path} key={opt.path} />
-          ))
-        )}
+        {options.map((opt) => (
+          <OptionButton title={opt.title} src={opt.src} path={opt.path} key={opt.path} />
+        ))}
       </div>
     </div>
   </div>

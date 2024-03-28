@@ -1,9 +1,10 @@
 import './Home.scss';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../routes/paths';
-import StartButton from '../../shared/unauthenticated/buttons/StartButton';
+import StartButtonOutlined from './StartButtonOutlined';
 
-const Home = () => (
+const Home: FC = () => (
   <div className="home-container h-screen w-full">
     <div className="relative w-full h-full bg-primary flex justify-center items-center justify-self-center">
       <div className="absolute md:w-1/3 text-center z-50 flex flex-col justify-center">
@@ -23,7 +24,7 @@ const Home = () => (
           </h3>
         </div>
         <Link to={routes.unauthenticated.subpaths.login.path}>
-          <StartButton title="commencer" />
+          <StartButtonOutlined title="commencer" />
         </Link>
       </div>
       <div className="absolute bg-cover z-20 inset-0 h-full w-full bg-no-repeat bg-svg" />

@@ -1,5 +1,5 @@
 import './style.scss';
-import React from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 interface ObjProps {
@@ -8,7 +8,7 @@ interface ObjProps {
   src: string;
 }
 
-const OptionButton: React.FC<ObjProps> = ({ path, src, title }) => (
+const OptionButton: FC<ObjProps> = ({ path, src, title }) => (
   <Link to={path}>
     <div className="button-option-container">
       <img src={src} alt="projet" className="button-option-image" />

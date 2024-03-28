@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import Icon from '../../../Icon';
 
 interface DropDownListItemProps {
@@ -5,7 +6,7 @@ interface DropDownListItemProps {
   icon: string;
 }
 
-const DropDownListItem: React.FC<DropDownListItemProps> = ({ name, icon }) => (
+const DropDownListItem: FC<DropDownListItemProps> = ({ name, icon }) => (
   <div className="flex hover:font-medium py-3 flex-row gap-4">
     <Icon name={icon} />
     <p>{name}</p>

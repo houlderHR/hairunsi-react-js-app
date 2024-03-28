@@ -1,14 +1,14 @@
-import React, { PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
-import { ModalShowState } from '../../../utils/type/ModalShowType';
+import ModalShowStateType from '../../../utils/type/ModalShowType';
 import Icon from '../../Icon';
 
 interface ModalProps {
   title?: string;
-  setShowModal: React.Dispatch<React.SetStateAction<ModalShowState>>;
+  setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
 }
 
-const Modal: React.FC<PropsWithChildren<ModalProps>> = ({ children, title, setShowModal }) => (
+const Modal: FC<PropsWithChildren<ModalProps>> = ({ children, title, setShowModal }) => (
   <>
     {createPortal(
       <div className="fixed z-20 top-0 h-full w-full flex items-center justify-center">
@@ -18,16 +18,10 @@ const Modal: React.FC<PropsWithChildren<ModalProps>> = ({ children, title, setSh
             <h3 className="text-secondary text-[22px] font-medium">{title}</h3>
             <span
               role="presentation"
-              onClick={() =>
-                setShowModal(() => ({
-                  create: false,
-                  update: false,
-                  delete: false,
-                }))
-              }
+              onClick={() => setShowModal(() => ModalShowStateType.CLOSE)}
               className="cursor-pointer"
             >
-              <Icon name="x" size="15.25" />
+              <Icon name="x" size={15.25} />
             </span>
           </div>
           {children}

@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface InputProps {
@@ -6,7 +7,7 @@ interface InputProps {
   additionalClass?: string;
 }
 
-const Input: React.FC<InputProps> = ({ placeholder, type, additionalClass }) => {
+const Input: FC<InputProps> = ({ placeholder, type, additionalClass }) => {
   const classes = twMerge(
     additionalClass,
     'rounded border border-gray-1 p-4 w-full leading-3 focus:placeholder:opacity-0 focus:outline-none focus:border-secondary cursor-pointer',

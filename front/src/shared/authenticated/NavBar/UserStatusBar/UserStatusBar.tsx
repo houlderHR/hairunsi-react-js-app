@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import Icon from '../../../Icon';
 import Dropdown from '../DropDown';
 
-const UserStatusBar = () => {
+const UserStatusBar: FC = () => {
   const [show, setShow] = useState(false);
 
   return (
@@ -24,7 +24,7 @@ const UserStatusBar = () => {
           </h2>
           <p className="text-[10px] leading-3 font-normal">Web Designer</p>
         </div>
-        <Icon width="10" height="5" name="sharp-arrow-drop-down" />
+        <Icon width={10} height={5} name="sharp-arrow-drop-down" />
         {show && (
           <div className="absolute z-10 -bottom-4 translate-y-full w-auto sm:w-full rounded text-[10px] bg-primary right-0">
             <Dropdown />

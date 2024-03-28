@@ -1,13 +1,13 @@
-import React from 'react';
+import { FC } from 'react';
 
 interface IconType {
   name: string;
-  size?: string;
-  width?: string;
-  height?: string;
+  size?: number;
+  width?: number;
+  height?: number;
 }
 
-const Icon: React.FC<IconType> = ({ name, width, height, size = '16' }) => (
+const Icon: FC<IconType> = ({ name, width, height, size = '16' }) => (
   <div style={{ height: `${height ?? size}px`, width: `${width ?? size}px` }}>
     <img className="bg-no-repeat bg-contain w-full h-full" src={`/icon/${name}.svg`} alt="" />
   </div>

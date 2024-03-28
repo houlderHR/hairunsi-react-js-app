@@ -1,12 +1,12 @@
-import React, { PropsWithChildren } from 'react';
-import { ModalShowState } from '../../../../utils/type/ModalShowType';
+import React, { FC, PropsWithChildren } from 'react';
+import ModalShowStateType from '../../../../utils/type/ModalShowType';
 import Modal from '..';
 
 interface CreateModalProps {
-  setShowModal: React.Dispatch<React.SetStateAction<ModalShowState>>;
+  setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
 }
 
-const CreateModal: React.FC<PropsWithChildren<CreateModalProps>> = ({ children, setShowModal }) => (
+const CreateModal: FC<PropsWithChildren<CreateModalProps>> = ({ children, setShowModal }) => (
   <Modal setShowModal={setShowModal} title="Création de type">
     {children}
     <button

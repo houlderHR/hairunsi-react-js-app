@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import Input from '../../../../../shared/authenticated/Input';
 import InputIcon from '../../../../../shared/authenticated/Input/InputIcon';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
-import { ModalShowState } from '../../../../../utils/type/ModalShowType';
+import ModalShowStateType from '../../../../../utils/type/ModalShowType';
 
 interface CreateModalTypeProps {
-  setShowModal: React.Dispatch<React.SetStateAction<ModalShowState>>;
+  setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
 }
 
-const CreateModalType: React.FC<CreateModalTypeProps> = ({ setShowModal }) => {
+const CreateModalType: FC<CreateModalTypeProps> = ({ setShowModal }) => {
   const [show, setShow] = useState(false);
   return (
     <CreateModal setShowModal={setShowModal}>

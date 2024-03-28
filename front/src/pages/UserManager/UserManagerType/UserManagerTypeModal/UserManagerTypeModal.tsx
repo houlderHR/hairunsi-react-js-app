@@ -1,4 +1,5 @@
-import { ModalShowState } from '../../../../utils/type/ModalShowType';
+import { FC } from 'react';
+import ModalShowState from '../../../../utils/type/ModalShowType';
 import CreateModalType from './CreateModalType';
 
 interface UserManagerTypeModalProps {
@@ -6,7 +7,7 @@ interface UserManagerTypeModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowState>>;
 }
 
-const UserManagerTypeModal: React.FC<UserManagerTypeModalProps> = ({ modalState, setShowModal }) =>
-  modalState.create && <CreateModalType setShowModal={setShowModal} />;
+const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({ modalState, setShowModal }) =>
+  modalState === ModalShowState.CREATE && <CreateModalType setShowModal={setShowModal} />;
 
 export default UserManagerTypeModal;
