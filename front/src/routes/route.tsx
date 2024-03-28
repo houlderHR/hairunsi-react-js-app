@@ -30,7 +30,7 @@ const router = createBrowserRouter([
           },
           {
             path: routes.authentified.subpaths.userManager.subpaths.user.path,
-            element: <div>Utilisateurs</div>,
+            element: <UserManagerList />,
           },
           {
             path: routes.authentified.subpaths.userManager.subpaths.role.path,
