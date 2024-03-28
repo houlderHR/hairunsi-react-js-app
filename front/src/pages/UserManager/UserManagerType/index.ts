@@ -1,3 +1,3 @@
-import UserManagerType from "./UserManagerType";
+import UserManagerType from './UserManagerType';
 
 export default UserManagerType;

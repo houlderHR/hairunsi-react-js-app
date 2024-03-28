@@ -3,6 +3,8 @@ const routes = {
     path: '',
     subpaths: {
       accueil: { path: 'accueil' },
+      project: { path: '/projects' },
+      leaveDay: { path: '/leave-day' },
       userManager: {
         path: '/user-manager/',
         subpaths: {

@@ -1,10 +1,10 @@
-import { Navigate, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+import Accueil from '../pages/Accueil';
+import Authenticated from '../pages/Authenticated/Authenticated';
+import Home from '../pages/Home';
 import UserManager from '../pages/UserManager';
 import UserManagerType from '../pages/UserManager/UserManagerType';
 import routes from './paths';
-import Authenticated from '../pages/Authenticated/Authenticated';
-import Home from '../pages/Home';
-import Accueil from '../pages/Accueil';
 
 const router = createBrowserRouter([
   {

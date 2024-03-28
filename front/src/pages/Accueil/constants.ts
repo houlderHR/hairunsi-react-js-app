@@ -1,4 +1,5 @@
 import routes from '../../routes/paths';
+
 interface ObjOption {
   src: string;
   title: string;
@@ -8,7 +9,7 @@ export const options: ObjOption[] = [
   {
     src: '/icon/rocket-icon.svg',
     title: 'Projets',
-    path: '/projects',
+    path: routes.authentified.subpaths.project.path,
   },
   {
     src: '/icon/user-setting-icon.svg',
@@ -18,6 +19,8 @@ export const options: ObjOption[] = [
   {
     src: '/icon/leave-icon.svg',
     title: 'Congé',
-    path: '/leave-day',
+    path: routes.authentified.subpaths.leaveDay.path,
   },
 ];
+
+export default options;

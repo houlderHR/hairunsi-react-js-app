@@ -1,24 +1,25 @@
-import React from 'react';
-import ButtonAdd from '../../../shared/authenticated/buttons/ButtonAdd';
-import InputSearch from '../../../shared/authenticated/InputSearch';
+import { FC, useState } from 'react';
 import CardType from '../../../shared/authenticated/CardType';
+import HeadManager from '../../../shared/authenticated/HeadManager';
+import { ModalShowStateType } from '../../../shared/authenticated/Modal';
+import UserManagerTypeModal from './UserManagerTypeModal';
 
-const View: React.FC = () => {
+const UserManagerType: FC = () => {
+  const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
+
   return (
     <>
-      <div className="flex flex-row gap-x-4">
-        <ButtonAdd additionalClass="md:min-w-60 hover:bg-secondary duration-300" />
-        <InputSearch />
-      </div>
+      <HeadManager title="CREER UN NOUVEAU TYPE" openCreateModal={setShowModal} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
-        <CardType title="Direction" iconVisible={true} name="Super admin" />
+        <CardType title="Direction" iconVisible name="Super admin" />
         <CardType title="Administration" name="Admin" />
         <CardType title="Commercial" name="Modérateur" />
         <CardType title="Responsable Prod" name="Chef" />
         <CardType title="Production" name="Employé" />
       </div>
+      <UserManagerTypeModal modalState={showModal} setShowModal={setShowModal} />
     </>
   );
 };
 
-export default View;
+export default UserManagerType;
