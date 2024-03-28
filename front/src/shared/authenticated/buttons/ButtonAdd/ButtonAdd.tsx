@@ -1,10 +1,7 @@
 import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Icon from '../../../Icon';
-<<<<<<< HEAD
 import { ModalShowStateType } from '../../Modal';
-=======
->>>>>>> d4f4508 (fix: components type)
 
 interface ButtonAddProps {
   additionalClass?: string;
