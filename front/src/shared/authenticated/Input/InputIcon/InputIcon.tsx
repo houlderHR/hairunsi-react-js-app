@@ -23,14 +23,12 @@ const InputSearch: React.FC<InputIconProps> = ({
     additionalInputClass,
   );
   return (
-    <>
-      <div className={classes}>
-        <span>
-          <Icon name={icon} size="18" />
-        </span>
-        <input type="text" placeholder={placeholder} className={inputClasses} />
-      </div>
-    </>
+    <div className={classes}>
+      <span>
+        <Icon name={icon} size="18" />
+      </span>
+      <input type="text" placeholder={placeholder} className={inputClasses} />
+    </div>
   );
 };
 

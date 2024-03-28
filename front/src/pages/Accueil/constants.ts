@@ -1,4 +1,5 @@
 import routes from '../../routes/paths';
+
 interface ObjOption {
   src: string;
   title: string;
@@ -21,3 +22,5 @@ export const options: ObjOption[] = [
     path: '/leave-day',
   },
 ];
+
+export default options;

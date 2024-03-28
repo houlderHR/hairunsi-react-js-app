@@ -1,5 +1,5 @@
-import Icon from '../../Icon';
 import { twMerge } from 'tailwind-merge';
+import Icon from '../../Icon';
 
 interface IconBoxProps {
   withOther?: boolean;
@@ -12,13 +12,11 @@ const IconCardType: React.FC<IconBoxProps> = ({ withOther }) => {
   );
 
   return (
-    <>
-      <div className={classes}>
-        <Icon name="trash" height="15" width="11.67" />
-        <span className="w-px h-4 bg-gray-3"></span>
-        <Icon width="11.67" height="15" name="pen" />
-      </div>
-    </>
+    <div className={classes}>
+      <Icon name="trash" height="15" width="11.67" />
+      <span className="w-px h-4 bg-gray-3" />
+      <Icon width="11.67" height="15" name="pen" />
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
+import { twMerge } from 'tailwind-merge';
 import { ModalShowState } from '../../../../utils/type/ModalShowType';
 import Icon from '../../../Icon';
-import { twMerge } from 'tailwind-merge';
 
 interface ButtonAddProps {
   additionalClass?: string;
@@ -15,17 +15,16 @@ const ButtonAdd: React.FC<ButtonAddProps> = ({ openModal, title, additionalClass
   );
 
   return (
-    <>
-      <button
-        onClick={() => openModal((s: ModalShowState) => ({ ...s, create: true }))}
-        className={classes}
-      >
-        <span>
-          <Icon name="add" size="12" />
-        </span>
-        <span className="hidden md:inline">{title}</span>
-      </button>
-    </>
+    <button
+      type="button"
+      onClick={() => openModal((s: ModalShowState) => ({ ...s, create: true }))}
+      className={classes}
+    >
+      <span>
+        <Icon name="add" size="12" />
+      </span>
+      <span className="hidden md:inline">{title}</span>
+    </button>
   );
 };
 

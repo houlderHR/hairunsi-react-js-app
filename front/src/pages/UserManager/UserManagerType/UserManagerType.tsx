@@ -15,7 +15,7 @@ const UserManagerType: React.FC = () => {
     <>
       <HeadManager title="CREER UN NOUVEAU TYPE" openCreateModal={setShowModal} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
-        <CardType title="Direction" iconVisible={true} name="Super admin" />
+        <CardType title="Direction" iconVisible name="Super admin" />
         <CardType title="Administration" name="Admin" />
         <CardType title="Commercial" name="Modérateur" />
         <CardType title="Responsable Prod" name="Chef" />
