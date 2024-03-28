@@ -8,7 +8,7 @@ interface DropDownListItemProps {
 
 const DropDownListItem: FC<DropDownListItemProps> = ({ name, icon }) => (
   <div className="flex hover:font-medium py-3 flex-row gap-4">
-    <Icon name={icon} />
+    <Icon className="hover:text-red-500" name={icon} />
     <p>{name}</p>
   </div>
 );
