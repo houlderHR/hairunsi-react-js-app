@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Card from '../Card';
 import CardContentType from './CardContentType';
 
@@ -9,7 +9,7 @@ interface CardTypeProps {
 }
 
 // CardType
-const CardType: React.FC<CardTypeProps> = ({ title, name, iconVisible = false }) => (
+const CardType: FC<CardTypeProps> = ({ title, name, iconVisible = false }) => (
   <Card title={title} iconVisible={iconVisible}>
     <CardContentType name={name} />
   </Card>

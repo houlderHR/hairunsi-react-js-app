@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import routes from '../../../routes/paths';
 import SidebarLink from './SidebarLink';
 
-const Sidebar: React.FC = () => (
+const Sidebar: FC = () => (
   <div className="lg:w-72 sm:w-52 w-16 bg-white border border-white-1 left-0 h-full fixed">
     <SidebarLink
       url={routes.authentified.subpaths.userManager.subpaths.role.path}

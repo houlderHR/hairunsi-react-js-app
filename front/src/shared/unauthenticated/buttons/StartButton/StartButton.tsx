@@ -1,4 +1,5 @@
 import './StartButton.scss';
+import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface ButtonProps {
@@ -6,7 +7,7 @@ interface ButtonProps {
   addClass?: string;
 }
 
-const StartButton: React.FC<ButtonProps> = ({ title, addClass }) => (
+const StartButton: FC<ButtonProps> = ({ title, addClass }) => (
   <button
     type="button"
     className={twMerge(

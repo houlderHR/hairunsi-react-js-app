@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import routes from '../../../routes/paths';
@@ -12,7 +12,7 @@ interface SidebarListProps {
   url: string;
 }
 
-const SidebarLink: React.FC<SidebarListProps> = ({ name, icon, url }) => {
+const SidebarLink: FC<SidebarListProps> = ({ name, icon, url }) => {
   const activeLink = twMerge(classes.inactiveLink, classes.activeLink);
 
   return (

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import ButtonAdd from '../buttons/ButtonAdd';
 import InputIcon from '../Input/InputIcon';
 import { ModalShowStateType } from '../Modal';
