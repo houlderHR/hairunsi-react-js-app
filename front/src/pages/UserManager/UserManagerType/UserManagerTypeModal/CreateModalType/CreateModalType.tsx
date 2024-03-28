@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Input from '../../../../../shared/authenticated/Input';
 import InputIcon from '../../../../../shared/authenticated/Input/InputIcon';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
+import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import { ModalShowState } from '../../../../../utils/type/ModalShowType';
-import DropDown from './DropDown';
 
 interface CreateModalTypeProps {
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowState>>;
