@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
-import CreateTypeModal from './CreateTypeModal';
+import CreateTypeModal from './CreateRoleModal';
 
 interface UserManagerTypeModalProps {
   modalState: ModalShowStateType;

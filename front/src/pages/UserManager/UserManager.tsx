@@ -1,33 +1,13 @@
-import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-<<<<<<< HEAD
 import Icon from '../../shared/Icon';
-<<<<<<< HEAD
 import Sidebar from './Sidebar';
-=======
-import Sidebar from '../../shared/authenticated/Sidebar';
-<<<<<<< HEAD
-import HeadManager from '../../shared/authenticated/HeadManager';
->>>>>>> 84c509c (feat: refact components and create card role manager)
-=======
->>>>>>> 58fe6e1 (feat:role page)
-
-const UserManager: FC = () => (
-=======
-import Sidebar from '../../shared/authenticated/Sidebar';
-import Icon from '../../shared/Icon';
 
 const UserManager = () => (
->>>>>>> c1e59ef (fix:lint config)
   <div className="h-full pt-[101px]">
     <div className="fixed w-full top-14">
       <div className="py-2 flex items-center pl-5 border-b bg-white z-0 border-gray-2 shadow-sm">
         <div className="flex gap-3 items-center">
-<<<<<<< HEAD
           <Icon size={24.5} name="user-settings" />
-=======
-          <Icon size="24.5" name="user-settings" />
->>>>>>> c1e59ef (fix:lint config)
           <div className="flex flex-col justify-sd tart items-start">
             <h2 className="text-normal text-black-1 font-medium leading-4">
               Gestion des utilisateurs

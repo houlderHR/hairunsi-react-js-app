@@ -24,11 +24,7 @@ const UserStatusBar: FC = () => {
           </h2>
           <p className="text-[10px] leading-3 font-normal">Web Designer</p>
         </div>
-<<<<<<< HEAD
         <Icon width={10} height={5} name="sharp-arrow-drop-down" />
-=======
-        <Icon width="10" height="5" name="sharp-arrow-drop-down" />
->>>>>>> c1e59ef (fix:lint config)
         {show && (
           <div className="absolute z-10 -bottom-4 translate-y-full w-auto sm:w-full rounded text-[10px] bg-primary right-0">
             <Dropdown />
