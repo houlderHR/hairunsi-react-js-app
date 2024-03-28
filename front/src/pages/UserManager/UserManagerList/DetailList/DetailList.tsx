@@ -2,28 +2,33 @@ import './style.scss';
 import { FC } from 'react';
 import ObjDetail from '../obj-detail';
 
-const DetailList: FC<ObjDetail> = ({ matricule, nom, prenom, ddn, type, classes, categorie }) => {
+interface Detail {
+  detail: ObjDetail;
+  classes: string;
+  categorie: string;
+}
+const DetailList: FC<Detail> = ({ detail, classes, categorie }) => {
   if (categorie === 'head')
     return (
       <div className={classes}>
-        <div className="text matricule">{matricule.toUpperCase()}</div>
-        <div className="text nom">{nom.toUpperCase()}</div>
+        <div className="text matricule">{detail.matricule.toUpperCase()}</div>
+        <div className="text nom">{detail.nom.toUpperCase()}</div>
         <div className="text prenom">
-          <div>{prenom.toUpperCase()}</div>
+          <div>{detail.prenom.toUpperCase()}</div>
           <img className="up-down" src="/icon/up-down.svg" alt="up-down" />
         </div>
-        <div className="text ddn">{ddn.toUpperCase()}</div>
-        <div className="text type">{type.toUpperCase()}</div>
+        <div className="text ddn">{detail.ddn.toUpperCase()}</div>
+        <div className="text type">{detail.type.toUpperCase()}</div>
         <div className="text action">{'Actions'.toUpperCase()}</div>
       </div>
     );
   return (
     <div className={classes}>
-      <div className="text matricule">{matricule}</div>
-      <div className="text nom">{nom.toUpperCase()}</div>
-      <div className="text prenom">{prenom}</div>
-      <div className="text ddn">{ddn}</div>
-      <div className="text type">{type}</div>
+      <div className="text matricule">{detail.matricule}</div>
+      <div className="text nom">{detail.nom.toUpperCase()}</div>
+      <div className="text prenom">{detail.prenom}</div>
+      <div className="text ddn">{detail.ddn}</div>
+      <div className="text type">{detail.type}</div>
       <div className="text action">
         <div className="icons">
           <div className="icon-action">

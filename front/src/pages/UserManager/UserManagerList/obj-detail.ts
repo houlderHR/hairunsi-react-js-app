@@ -4,7 +4,4 @@ export default interface ObjDetail {
   prenom: string;
   ddn: string;
   type: string;
-  classes: string;
-  categorie: string;
-  index: number;
 }
