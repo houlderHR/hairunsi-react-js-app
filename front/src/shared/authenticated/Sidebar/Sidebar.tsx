@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import routes from '../../../routes/paths';
 import SidebarLink from './SidebarLink';
 
