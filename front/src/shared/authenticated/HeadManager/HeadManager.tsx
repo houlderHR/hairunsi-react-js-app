@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import ModalShowStateType from '../../../utils/type/ModalShowType';
 import ButtonAdd from '../buttons/ButtonAdd';
 import InputIcon from '../Input/InputIcon';
+import { ModalShowStateType } from '../Modal';
 
 interface HeadManagerProps {
   openCreateModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;

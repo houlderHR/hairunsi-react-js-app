@@ -1,7 +1,13 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
-import ModalShowStateType from '../../../utils/type/ModalShowType';
 import Icon from '../../Icon';
+
+export enum ModalShowStateType {
+  CREATE = 'CREATE',
+  UPDATE = 'UPDATE',
+  DELETE = 'DELETE',
+  CLOSE = 'CLOSE',
+}
 
 interface ModalProps {
   title?: string;
