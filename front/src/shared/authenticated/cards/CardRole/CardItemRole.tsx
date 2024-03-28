@@ -1,4 +1,3 @@
-import './card.scss';
 import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 
