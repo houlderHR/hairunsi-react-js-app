@@ -1,7 +1,6 @@
 import React from 'react';
-import { twMerge } from 'tailwind-merge';
-import CardContentType from './CardContentType';
 import Card from '../Card';
+import CardContentType from './CardContentType';
 
 interface CardTypeProps {
   title: string;
@@ -10,16 +9,10 @@ interface CardTypeProps {
 }
 
 // CardType
-const CardType: React.FC<CardTypeProps> = ({ title, name, iconVisible = false }) => {
-  const classes = twMerge(
-    'p-6 border  cursor-default group hover:border-gray-3 w-full bg-white text-gray-1 rounded-xl duration-300',
-    iconVisible ? 'border-gray-3' : 'border-transparent',
-  );
-  return (
-    <>
-      <Card title={title} children={<CardContentType name={name} />} />
-    </>
-  );
-};
+const CardType: React.FC<CardTypeProps> = ({ title, name, iconVisible = false }) => (
+  <Card title={title} iconVisible={iconVisible}>
+    <CardContentType name={name} />
+  </Card>
+);
 
 export default CardType;

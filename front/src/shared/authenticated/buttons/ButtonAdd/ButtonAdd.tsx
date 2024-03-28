@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Icon from '../../../Icon';
 import { ModalShowStateType } from '../../Modal';
+=======
+import { twMerge } from 'tailwind-merge';
+import Icon from '../../../Icon';
+>>>>>>> c1e59ef (fix:lint config)
 
 interface ButtonAddProps {
   additionalClass?: string;
@@ -36,14 +41,13 @@ const ButtonAdd: React.FC<ButtonProps> = ({ additionalClass = '', title = '' }) 
   );
 
   return (
-    <>
-      <button className={classes}>
-        <span>
-          <Icon name="add" size="12" />
-        </span>
-        <span className="hidden md:inline">{title}</span>
-      </button>
-    </>
+    // eslint-disable-next-line react/button-has-type
+    <button className={classes}>
+      <span>
+        <Icon name="add" size="12" />
+      </span>
+      <span className="hidden md:inline">{title}</span>
+    </button>
   );
 };
 >>>>>>> 84c509c (feat: refact components and create card role manager)

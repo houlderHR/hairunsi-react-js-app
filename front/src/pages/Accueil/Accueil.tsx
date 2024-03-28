@@ -1,9 +1,8 @@
 import './style.scss';
-import { FC } from 'react';
-import { options } from './constants';
+import options from './constants';
 import OptionButton from './OptionButton';
 
-const Accueil: FC = () => (
+const Accueil = () => (
   <div className="accueil-body">
     <div className="container">
       <div className="header-content">

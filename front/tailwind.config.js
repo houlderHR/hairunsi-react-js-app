@@ -14,6 +14,7 @@ export default {
         'gray-1': '#808080',
         'gray-2': '#DDDDDD',
         'gray-3': '#EEEEEE',
+        'gray-4': '#BDBDBD',
         'white-1': '#F0F0F0',
       },
       fontFamily: {
@@ -27,6 +28,7 @@ export default {
         '4px': '4px',
         '8px': '8px',
         ssm: '20px',
+        mmd: '56px',
         llg: '62px',
       },
     },
