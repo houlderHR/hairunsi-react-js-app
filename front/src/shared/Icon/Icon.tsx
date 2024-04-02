@@ -6,10 +6,11 @@ interface IconType {
   size?: number;
   width?: number;
   height?: number;
+  onClick?: React.MouseEventHandler;
 }
 
-const Icon: FC<IconType> = ({ name, width, height, className, size = 16 }) => (
-  <svg className={className} width={width ?? size} height={height ?? size}>
+const Icon: FC<IconType> = ({ name, width, height, className, onClick, size = 16 }) => (
+  <svg className={className} width={width ?? size} height={height ?? size} onClick={onClick}>
     <use xlinkHref={`/icon/sprite.svg#${name}`} />
   </svg>
 );
