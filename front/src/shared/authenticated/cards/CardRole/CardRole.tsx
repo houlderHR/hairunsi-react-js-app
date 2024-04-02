@@ -17,7 +17,6 @@ const CardRole: FC<CardRoleProps> = ({ title, items, maxElement, iconVisible = f
         .map((item) => (
           <CardItemRole addClass="rounded border-secondary-3 " title={item} key={item} />
         ))}
-      ;
       {items.length >= maxElement && (
         <p className="bg-secondary-3 px-8px text-sm rounded text-white h-[25px] hover:bg-gray-3">
           <span className="m-0 p-0">...</span>
