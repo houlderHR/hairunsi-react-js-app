@@ -1,18 +1,13 @@
-import React, { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { twMerge } from 'tailwind-merge';
 import IconCard from './IconCard';
 
-interface CardTypeProps {
+interface CardProps {
   title: string;
   iconVisible?: boolean;
 }
 
-// CardType
-const CardType: FC<PropsWithChildren<CardTypeProps>> = ({
-  children,
-  title,
-  iconVisible = false,
-}) => {
+const Card: FC<PropsWithChildren<CardProps>> = ({ children, title, iconVisible = false }) => {
   const classes = twMerge(
     'p-6 border  cursor-default group hover:border-gray-3 w-full bg-white text-gray-1 rounded-xl duration-300',
     iconVisible ? 'border-gray-3' : 'border-transparent',
@@ -28,4 +23,4 @@ const CardType: FC<PropsWithChildren<CardTypeProps>> = ({
   );
 };
 
-export default CardType;
+export default Card;

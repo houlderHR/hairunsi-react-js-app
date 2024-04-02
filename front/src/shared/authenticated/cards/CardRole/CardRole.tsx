@@ -14,7 +14,7 @@ const CardRole: FC<CardRoleProps> = ({ title, items, maxElement, iconVisible = f
     <div className="flex mt-4 gap-2 flex-wrap justify-start">
       {items.map((item, index) => {
         if (index < maxElement)
-          return <CardItemRole addClass="rounded border-secondary-3 " title={item} />;
+          return <CardItemRole addClass="rounded border-secondary-3 " title={item} key={item} />;
         return <div />;
       })}
       {items.length >= maxElement && (
