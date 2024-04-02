@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+import Icon from '../../../Icon';
 import Card from '../Card';
-import CardContentType from './CardContentType';
 
 interface CardTypeProps {
   title: string;
@@ -11,7 +11,10 @@ interface CardTypeProps {
 // CardType
 const CardType: FC<CardTypeProps> = ({ title, name, iconVisible = false }) => (
   <Card title={title} iconVisible={iconVisible}>
-    <CardContentType name={name} />
+    <div className="flex mt-4 flex-row justify-start gap-x-4">
+      <Icon name="user-guard" height={22} width={18} />
+      <p className="text-base">{name}</p>
+    </div>
   </Card>
 );
 

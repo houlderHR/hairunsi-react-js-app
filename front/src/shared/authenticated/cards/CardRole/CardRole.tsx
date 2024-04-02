@@ -1,17 +1,28 @@
-import React from 'react';
+import { FC } from 'react';
 import Card from '../Card';
-import CardContentRole from './CardContentRole';
+import CardItemRole from './CardItemRole';
 
-interface CardTypeProps {
+interface CardRoleProps {
   title: string;
   items: string[];
+  maxElement: number;
   iconVisible?: boolean;
 }
 
-// CardType
-const CardRole: React.FC<CardTypeProps> = ({ title, items, iconVisible = false }) => (
+const CardRole: FC<CardRoleProps> = ({ title, items, maxElement, iconVisible = false }) => (
   <Card title={title} iconVisible={iconVisible}>
-    <CardContentRole items={items} />
+    <div className="flex mt-4 gap-2 flex-wrap justify-start">
+      {items.map((item, index) => {
+        if (index < maxElement)
+          return <CardItemRole addClass="rounded border-secondary-3 " title={item} />;
+        return <div />;
+      })}
+      {items.length >= maxElement && (
+        <p className="bg-secondary-3 px-8px text-sm rounded text-white h-[25px] hover:bg-gray-3">
+          <span className="m-0 p-0">...</span>
+        </p>
+      )}
+    </div>
   </Card>
 );
 

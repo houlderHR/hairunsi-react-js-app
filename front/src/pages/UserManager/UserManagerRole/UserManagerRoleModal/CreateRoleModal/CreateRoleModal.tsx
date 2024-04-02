@@ -9,7 +9,7 @@ interface CreateModalRoleProps {
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
 }
 
-const CreateTypeModal: FC<CreateModalRoleProps> = ({ setShowModal }) => {
+const CreateRoleModal: FC<CreateModalRoleProps> = ({ setShowModal }) => {
   const [show, setShow] = useState(false);
   return (
     <CreateModal setShowModal={setShowModal}>
@@ -29,4 +29,4 @@ const CreateTypeModal: FC<CreateModalRoleProps> = ({ setShowModal }) => {
   );
 };
 
-export default CreateTypeModal;
+export default CreateRoleModal;

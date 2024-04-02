@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
-import CreateTypeModal from './CreateRoleModal';
+import CreateRoleModal from './CreateRoleModal';
 
 interface UserManagerRoleModalProps {
   modalState: ModalShowStateType;
@@ -8,6 +8,6 @@ interface UserManagerRoleModalProps {
 }
 
 const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({ modalState, setShowModal }) =>
-  modalState === ModalShowStateType.CREATE && <CreateTypeModal setShowModal={setShowModal} />;
+  modalState === ModalShowStateType.CREATE && <CreateRoleModal setShowModal={setShowModal} />;
 
 export default UserManagerRoleModal;

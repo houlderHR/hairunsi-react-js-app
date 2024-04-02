@@ -1,4 +1,4 @@
-import './StartButton.scss';
+import './StartButtonOutlined.scss';
 import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -7,7 +7,7 @@ interface ButtonProps {
   addClass?: string;
 }
 
-const StartButton: FC<ButtonProps> = ({ title, addClass }) => (
+const StartButtonOutlined: FC<ButtonProps> = ({ title, addClass }) => (
   <button
     type="button"
     className={twMerge(
@@ -19,4 +19,4 @@ const StartButton: FC<ButtonProps> = ({ title, addClass }) => (
   </button>
 );
 
-export default StartButton;
+export default StartButtonOutlined;

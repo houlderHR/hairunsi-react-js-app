@@ -21,7 +21,7 @@ const CardType: FC<PropsWithChildren<CardTypeProps>> = ({
     <div className={classes}>
       <div className="flex flex-row justify-between">
         <h3 className="text-secondary truncate font-medium leading-6">{title}</h3>
-        {iconVisible ? <IconCard /> : <IconCard withOther />}
+        <IconCard withOther={!iconVisible} />
       </div>
       {children}
     </div>
