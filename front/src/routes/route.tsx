@@ -1,11 +1,12 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Accueil from '../pages/Accueil';
+import Authenticated from '../pages/Authenticated';
 import Home from '../pages/Home';
 import UserManager from '../pages/UserManager';
+import UserManagerList from '../pages/UserManager/UserManagerList/UserManagerList';
 import UserManagerRole from '../pages/UserManager/UserManagerRole';
 import UserManagerType from '../pages/UserManager/UserManagerType';
 import routes from './paths';
-import Authenticated from '../pages/Authenticated';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
           },
           {
             path: routes.authentified.subpaths.userManager.subpaths.user.path,
-            element: <div>Utilisateurs</div>,
+            element: <UserManagerList />,
           },
           {
             path: routes.authentified.subpaths.userManager.subpaths.role.path,

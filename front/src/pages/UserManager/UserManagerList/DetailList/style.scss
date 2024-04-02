@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .container-headdetail {
+    @apply bg-primary flex flex-row w-full h-[46px] rounded-tl-[12px] rounded-tr-[12px];
+
+    .text {
+      @apply font-medium text-[10px] text-white-1;
+    }
+    .matricule {
+      @apply border-r border-[#f7f7ff] w-[7.88%] text-center flex
+      flex-col justify-center items-center;
+    }
+    .nom {
+      @apply border-r border-[#f7f7ff] w-[29.45%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .prenom {
+      @apply border-r border-[#f7f7ff] w-[29.45%] px-1.5 flex
+       flex-row justify-between items-center;
+
+      .up-down {
+        @apply w-[9px] h-[9px];
+      }
+    }
+    .ddn {
+      @apply border-r border-[#f7f7ff] w-[12.72%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .type {
+      @apply border-r border-[#f7f7ff] w-[10.55%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .action {
+      @apply w-[9.92%] px-1.5 flex flex-col justify-center items-start;
+    }
+  }
+
+  .pair {
+    @apply bg-[#f7f7ff] flex flex-row w-full h-[46px];
+
+    .text {
+      @apply font-normal text-[10px] text-black-1;
+    }
+    .matricule {
+      @apply border-r border-[#f7f7ff] w-[7.88%] text-center flex
+      flex-col justify-center items-center;
+    }
+    .nom {
+      @apply border-r border-[#f7f7ff] w-[29.45%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .prenom {
+      @apply border-r border-[#f7f7ff] w-[29.45%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .ddn {
+      @apply border-r border-[#f7f7ff] w-[12.72%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .type {
+      @apply border-r border-[#f7f7ff] w-[10.55%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .action {
+      @apply w-[9.92%] px-1.5 flex flex-col justify-center items-center;
+    }
+  }
+  .impair {
+    @apply bg-[#ffffff] flex flex-row w-full h-[46px];
+
+    .text {
+      @apply font-normal text-[10px] text-black-1;
+    }
+    .matricule {
+      @apply border-r border-[#f7f7ff] w-[7.88%] text-center flex
+      flex-col justify-center items-center;
+    }
+    .nom {
+      @apply border-r border-[#f7f7ff] w-[29.45%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .prenom {
+      @apply border-r border-[#f7f7ff] w-[29.45%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .ddn {
+      @apply border-r border-[#f7f7ff] w-[12.72%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .type {
+      @apply border-r border-[#f7f7ff] w-[10.55%] px-1.5 flex
+       flex-col justify-center items-start;
+    }
+    .action {
+      @apply w-[9.92%] px-1.5 flex flex-col justify-center items-center;
+    }
+  }
+
+  .icons {
+    @apply flex flex-row pt-2 justify-center items-center space-x-3 bg-transparent;
+    .icon-action {
+      @apply w-[20px] h-[20px] bg-transparent px-1 hover:cursor-pointer;
+    }
+  }
+}

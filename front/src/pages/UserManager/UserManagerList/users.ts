@@ -1,0 +1,88 @@
+const users = [
+  {
+    matricule: 'M001',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M002',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M003',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M004',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M005',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M006',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M007',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M008',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M009',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M010',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M011',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+  {
+    matricule: 'M012',
+    nom: 'GuyHawkins',
+    prenom: 'Cody Fisher',
+    ddn: '24/03/2020',
+    type: 'Production',
+  },
+];
+
+export default users;
