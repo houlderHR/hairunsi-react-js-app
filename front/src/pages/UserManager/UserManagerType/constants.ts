@@ -1,3 +1,4 @@
+export const TypeList = ['Super Admin', 'Admin', 'Modérateur', 'Chef', 'Employé'];
 export interface UserType {
   title: string;
   name: string;
