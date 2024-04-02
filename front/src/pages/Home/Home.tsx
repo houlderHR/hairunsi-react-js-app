@@ -2,7 +2,7 @@ import './Home.scss';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../routes/paths';
-import ButtonOutlined from '../../shared/buttons/OutlineButton';
+import ButtonOutlined from '../../shared/buttons/ButtonOutlined';
 
 const Home: FC = () => (
   <div className="home-container h-screen w-full">
