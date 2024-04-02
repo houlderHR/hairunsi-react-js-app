@@ -5,13 +5,13 @@ import Icon from '../../../Icon';
 interface ButtonAddProps {
   additionalClass?: string;
   title: string;
-  onOpen: () => void;
+  onClick: () => void;
 }
 
-const ButtonAdd: FC<ButtonAddProps> = ({ onOpen, title, additionalClass = '' }) => (
+const ButtonAdd: FC<ButtonAddProps> = ({ onClick, title, additionalClass = '' }) => (
   <button
     type="button"
-    onClick={onOpen}
+    onClick={onClick}
     className={twMerge(
       additionalClass,
       'uppercase leading-3 flex flex-row gap-x-3 items-center bg-black-1 py-3.5 pl-8 pr-7 rounded text-xs text-white',

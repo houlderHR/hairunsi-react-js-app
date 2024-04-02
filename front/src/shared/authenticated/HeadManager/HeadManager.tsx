@@ -10,7 +10,7 @@ interface HeadManagerProps {
 const HeadManager: FC<HeadManagerProps> = ({ onOpen, title }) => (
   <div className="flex flex-row gap-x-4">
     <ButtonAdd
-      onOpen={onOpen}
+      onClick={onOpen}
       title={title}
       additionalClass="md:min-w-60 hover:bg-secondary duration-300"
     />
