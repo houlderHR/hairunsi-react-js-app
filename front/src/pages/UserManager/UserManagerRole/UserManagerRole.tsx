@@ -7,9 +7,10 @@ import UserManagerRoleModal from './UserManagerRoleModal';
 
 const UserManagerRole: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
-  const openUpdateModal = () => () => {
+  const openUpdateModal = () => {
     setShowModal(ModalShowStateType.UPDATE);
   };
+
   return (
     <>
       <HeadManager

@@ -20,7 +20,7 @@ const CardRole: FC<CardRoleProps> = ({
   <CardUserManager title={title} iconVisible={iconVisible} openUpdateModal={openUpdateModal}>
     <div className="flex mt-4 gap-2 flex-wrap justify-start">
       {items
-        .filter((item, index) => index < maxElement)
+        .filter((_, index) => index < maxElement)
         .map((item) => (
           <CardItemRole addClass="rounded border-secondary-3 " title={item} key={item} />
         ))}
