@@ -7,7 +7,16 @@ interface UserManagerRoleModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
 }
 
-const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({ modalState, setShowModal }) =>
-  modalState === ModalShowStateType.CREATE && <CreateRoleModal setShowModal={setShowModal} />;
+const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({ modalState, setShowModal }) => {
+  const onClose = () => {
+    setShowModal(ModalShowStateType.CLOSE);
+  };
+
+  if (modalState === ModalShowStateType.CREATE) {
+    return <CreateRoleModal onClose={onClose} />;
+  }
+
+  return null;
+};
 
 export default UserManagerRoleModal;

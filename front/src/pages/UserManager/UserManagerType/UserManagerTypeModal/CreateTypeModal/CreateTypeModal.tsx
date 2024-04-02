@@ -1,18 +1,17 @@
 import { FC, useState } from 'react';
 import Input from '../../../../../shared/authenticated/Input';
 import InputIcon from '../../../../../shared/authenticated/Input/InputIcon';
-import { ModalShowStateType } from '../../../../../shared/authenticated/Modal';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 
 interface CreateModalTypeProps {
-  setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
+  onClose: () => void;
 }
 
-const CreateTypeModal: FC<CreateModalTypeProps> = ({ setShowModal }) => {
+const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
   const [show, setShow] = useState(false);
   return (
-    <CreateModal setShowModal={setShowModal}>
+    <CreateModal onClose={onClose}>
       <div className="flex gap-4 flex-col w-full">
         <Input type="text" placeholder="Nom du type" />
         <div role="presentation" onClick={() => setShow((s) => !s)} className="relative">

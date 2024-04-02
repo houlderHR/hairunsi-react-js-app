@@ -16,7 +16,10 @@ const UserManagerType: FC = () => {
 
   return (
     <>
-      <HeadManager title="CREER UN NOUVEAU TYPE" openCreateModal={setShowModal} />
+      <HeadManager
+        title="CREER UN NOUVEAU TYPE"
+        onOpen={() => setShowModal(ModalShowStateType.CREATE)}
+      />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
         {userData.map((_user: UserType, index: number) => (
           <CardType

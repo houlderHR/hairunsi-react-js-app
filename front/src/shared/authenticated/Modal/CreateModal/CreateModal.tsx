@@ -1,13 +1,12 @@
-import React, { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import Modal from '..';
-import { ModalShowStateType } from '../Modal';
 
 interface CreateModalProps {
-  setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
+  onClose: () => void;
 }
 
-const CreateModal: FC<PropsWithChildren<CreateModalProps>> = ({ children, setShowModal }) => (
-  <Modal setShowModal={setShowModal} title="Création de type">
+const CreateModal: FC<PropsWithChildren<CreateModalProps>> = ({ children, onClose }) => (
+  <Modal onClose={onClose} title="Création de type">
     {children}
     <button
       type="button"

@@ -8,7 +8,7 @@ interface InputIconProps {
   additionalClass?: string;
   additionalInputClass?: string;
   value?: string;
-  withClose?: boolean;
+  endIcon?: React.ReactNode;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -18,7 +18,7 @@ const InputIcon: FC<InputIconProps> = ({
   additionalClass,
   additionalInputClass,
   onChange,
-  withClose = false,
+  endIcon,
   value = '',
 }) => (
   <div
@@ -40,11 +40,7 @@ const InputIcon: FC<InputIconProps> = ({
         additionalInputClass,
       )}
     />
-    {withClose && (
-      <span className="absolute right-4">
-        <Icon name="x" size={12} className="text-gray-500" />
-      </span>
-    )}
+    <span className="absolute right-4">{endIcon}</span>
   </div>
 );
 

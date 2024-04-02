@@ -15,11 +15,17 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   setShowModal,
   user,
 }) => {
-  if (modalState === ModalShowStateType.CREATE)
-    return <CreateTypeModal setShowModal={setShowModal} />;
+  const onClose = () => {
+    setShowModal(ModalShowStateType.CLOSE);
+  };
 
-  if (user && modalState === ModalShowStateType.UPDATE)
-    return <UpdateTypeModal setShowModal={setShowModal} user={user} />;
+  if (modalState === ModalShowStateType.CREATE) {
+    return <CreateTypeModal onClose={onClose} />;
+  }
+
+  if (user && modalState === ModalShowStateType.UPDATE) {
+    return <UpdateTypeModal onClose={onClose} user={user} />;
+  }
 
   return null;
 };

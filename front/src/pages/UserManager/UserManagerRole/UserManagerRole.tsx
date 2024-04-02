@@ -9,7 +9,10 @@ const UserManagerRole: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
   return (
     <>
-      <HeadManager title="CREER UN NOUVEAU ROLE" openCreateModal={setShowModal} />
+      <HeadManager
+        title="CREER UN NOUVEAU ROLE"
+        onOpen={() => setShowModal(ModalShowStateType.CREATE)}
+      />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
         <CardRole title="Super Admin" maxElement={11} iconVisible items={RoleItems.superAdmin} />
         <CardRole title="Admin" maxElement={11} items={RoleItems.Admin} />
