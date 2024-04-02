@@ -9,7 +9,7 @@ interface InputIconProps {
   additionalInputClass?: string;
 }
 
-const InputSearch: FC<InputIconProps> = ({
+const InputIcon: FC<InputIconProps> = ({
   icon,
   placeholder,
   additionalClass,
@@ -35,4 +35,4 @@ const InputSearch: FC<InputIconProps> = ({
   </div>
 );
 
-export default InputSearch;
+export default InputIcon;

@@ -1,9 +1,8 @@
-import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 import Icon from '../../shared/Icon';
 import Sidebar from './Sidebar';
 
-const UserManager: FC = () => (
+const UserManager = () => (
   <div className="h-full pt-[101px]">
     <div className="fixed w-full top-14">
       <div className="py-2 flex items-center pl-5 border-b bg-white z-0 border-gray-2 shadow-sm">

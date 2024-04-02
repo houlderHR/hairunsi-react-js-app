@@ -1,0 +1,52 @@
+const RoleItems = {
+  superAdmin: [
+    'Accès projet',
+    'Création projet',
+    'Modification projet',
+    'Accès utilisateur',
+    'Création utilisateur',
+    'Modification utilisateur',
+    'Attribution rôle',
+    'Attribution type',
+    'Suppression projet',
+    'Ajout documents',
+    'Suppression documents',
+  ],
+  Admin: [
+    'Accès projet',
+    'Création projet',
+    'Modification projet',
+    'Accès utilisateur',
+    'Création utilisateur',
+    'Attribution type',
+    'Suppression projet',
+    'Ajout documents',
+    'Suppression documents',
+  ],
+  Moderator: [
+    'Accès projet',
+    'Accès utilisateur',
+    'Création utilisateur',
+    'Modification utilisateur',
+    'Attribution type',
+    'Suppression projet',
+    'Ajout documents',
+    'Suppression documents',
+  ],
+  Chef: [
+    'Création projet',
+    'Modification projet',
+    'Attribution type',
+    'Suppression projet',
+    'Ajout documents',
+    'Suppression documents',
+  ],
+  Employ: [
+    'Accès utilisateur',
+    'Modification utilisateur',
+    'Ajout documents',
+    'Suppression documents',
+  ],
+};
+
+export default RoleItems;

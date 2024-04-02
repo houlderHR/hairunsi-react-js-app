@@ -5,7 +5,7 @@ interface ObjOption {
   title: string;
   path: string;
 }
-export const options: ObjOption[] = [
+const options: ObjOption[] = [
   {
     src: '/icon/rocket-icon.svg',
     title: 'Projets',

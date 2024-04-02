@@ -2,7 +2,7 @@ import './Home.scss';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../routes/paths';
-import StartButtonOutlined from './StartButtonOutlined';
+import ButtonOutlined from '../../shared/buttons/ButtonOutlined';
 
 const Home: FC = () => (
   <div className="home-container h-screen w-full">
@@ -24,7 +24,7 @@ const Home: FC = () => (
           </h3>
         </div>
         <Link to={routes.unauthenticated.subpaths.login.path}>
-          <StartButtonOutlined title="commencer" />
+          <ButtonOutlined title="commencer" />
         </Link>
       </div>
       <div className="absolute bg-cover z-20 inset-0 h-full w-full bg-no-repeat bg-svg" />
