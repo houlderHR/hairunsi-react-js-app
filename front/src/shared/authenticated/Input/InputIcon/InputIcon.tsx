@@ -7,6 +7,9 @@ interface InputIconProps {
   placeholder: string;
   additionalClass?: string;
   additionalInputClass?: string;
+  value?: string;
+  endIcon?: React.ReactNode;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputIcon: FC<InputIconProps> = ({
@@ -14,6 +17,9 @@ const InputIcon: FC<InputIconProps> = ({
   placeholder,
   additionalClass,
   additionalInputClass,
+  onChange,
+  endIcon,
+  value = '',
 }) => (
   <div
     className={twMerge(
@@ -26,12 +32,15 @@ const InputIcon: FC<InputIconProps> = ({
     </span>
     <input
       type="text"
+      defaultValue={value}
+      onChange={onChange}
       placeholder={placeholder}
       className={twMerge(
         'bg-transparent cursor-pointer py-3 w-full border-transparent text-xs placeholder:text-black-1 focus:outline-none',
         additionalInputClass,
       )}
     />
+    <span className="absolute right-4">{endIcon}</span>
   </div>
 );
 

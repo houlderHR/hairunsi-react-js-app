@@ -1,17 +1,16 @@
 import { FC } from 'react';
 import ButtonAdd from '../buttons/ButtonAdd';
 import InputIcon from '../Input/InputIcon';
-import { ModalShowStateType } from '../Modal';
 
 interface HeadManagerProps {
-  openCreateModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
+  onOpen: () => void;
   title: string;
 }
 
-const HeadManager: FC<HeadManagerProps> = ({ openCreateModal, title }) => (
+const HeadManager: FC<HeadManagerProps> = ({ onOpen, title }) => (
   <div className="flex flex-row gap-x-4">
     <ButtonAdd
-      openModal={openCreateModal}
+      onClick={onOpen}
       title={title}
       additionalClass="md:min-w-60 hover:bg-secondary duration-300"
     />
