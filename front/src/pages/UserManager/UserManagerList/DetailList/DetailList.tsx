@@ -4,13 +4,13 @@ import ObjDetail from '../obj-detail';
 
 interface Detail {
   detail: ObjDetail;
-  classes: string;
+  className: string;
   categorie: string;
 }
-const DetailList: FC<Detail> = ({ detail, classes, categorie }) => {
+const DetailList: FC<Detail> = ({ detail, className, categorie }) => {
   if (categorie === 'head')
     return (
-      <div className={classes}>
+      <div className={className}>
         <div className="text matricule">{detail.matricule.toUpperCase()}</div>
         <div className="text nom">{detail.nom.toUpperCase()}</div>
         <div className="text prenom">
@@ -23,7 +23,7 @@ const DetailList: FC<Detail> = ({ detail, classes, categorie }) => {
       </div>
     );
   return (
-    <div className={classes}>
+    <div className={className}>
       <div className="text matricule">{detail.matricule}</div>
       <div className="text nom">{detail.nom.toUpperCase()}</div>
       <div className="text prenom">{detail.prenom}</div>
