@@ -4,14 +4,15 @@ import InputIcon from '../../../../../shared/authenticated/Input/InputIcon';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import UpdateModal from '../../../../../shared/authenticated/Modal/UpdateModal';
 import Icon from '../../../../../shared/Icon';
-import { UserType } from '../../constants';
+import { TypeList, UserType } from '../../constants';
 
 interface UpdateModalTypeProps {
   onClose: () => void;
   user: UserType;
+  setValue: (elem: string) => void;
 }
 
-const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, user }) => {
+const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, user, setValue }) => {
   const [show, setShow] = useState(false);
   return (
     <UpdateModal onClose={onClose} title="Modification de type">
@@ -26,7 +27,7 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, user }) => {
             icon="search"
             endIcon={<Icon name="x" size={12} className="text-gray-500" />}
           />
-          {show && <DropDown />}
+          {show && <DropDown items={TypeList} setValue={setValue} />}
         </div>
       </div>
     </UpdateModal>
