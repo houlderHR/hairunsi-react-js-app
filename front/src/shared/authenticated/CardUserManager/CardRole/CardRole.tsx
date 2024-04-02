@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Card from '../Card';
+import CardUserManager from '../CardUserManager';
 import CardItemRole from './CardItemRole';
 
 interface CardRoleProps {
@@ -7,10 +7,17 @@ interface CardRoleProps {
   items: string[];
   maxElement: number;
   iconVisible?: boolean;
+  openUpdateModal: () => void;
 }
 
-const CardRole: FC<CardRoleProps> = ({ title, items, maxElement, iconVisible = false }) => (
-  <Card title={title} iconVisible={iconVisible}>
+const CardRole: FC<CardRoleProps> = ({
+  title,
+  items,
+  maxElement,
+  openUpdateModal,
+  iconVisible = false,
+}) => (
+  <CardUserManager title={title} iconVisible={iconVisible} openUpdateModal={openUpdateModal}>
     <div className="flex mt-4 gap-2 flex-wrap justify-start">
       {items
         .filter((item, index) => index < maxElement)
@@ -23,7 +30,7 @@ const CardRole: FC<CardRoleProps> = ({ title, items, maxElement, iconVisible = f
         </p>
       )}
     </div>
-  </Card>
+  </CardUserManager>
 );
 
 export default CardRole;

@@ -8,7 +8,7 @@ interface CardProps {
   openUpdateModal: () => void;
 }
 
-const Card: FC<PropsWithChildren<CardProps>> = ({
+const CardUserManager: FC<PropsWithChildren<CardProps>> = ({
   children,
   title,
   openUpdateModal,
@@ -28,4 +28,4 @@ const Card: FC<PropsWithChildren<CardProps>> = ({
   </div>
 );
 
-export default Card;
+export default CardUserManager;
