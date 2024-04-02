@@ -3,7 +3,7 @@ export interface UserType {
   name: string;
 }
 
-const UserData: UserType[] = [
+const userData: UserType[] = [
   {
     title: 'Direction',
     name: 'Super admin',
@@ -26,4 +26,4 @@ const UserData: UserType[] = [
   },
 ];
 
-export default UserData;
+export default userData;

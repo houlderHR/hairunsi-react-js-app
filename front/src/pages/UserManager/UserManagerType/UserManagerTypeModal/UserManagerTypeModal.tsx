@@ -14,13 +14,14 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   modalState,
   setShowModal,
   user,
-}) => (
-  <>
-    {modalState === ModalShowStateType.CREATE && <CreateTypeModal setShowModal={setShowModal} />}
-    {user && modalState === ModalShowStateType.UPDATE && (
-      <UpdateTypeModal setShowModal={setShowModal} user={user} />
-    )}
-  </>
-);
+}) => {
+  if (modalState === ModalShowStateType.CREATE)
+    return <CreateTypeModal setShowModal={setShowModal} />;
+
+  if (user && modalState === ModalShowStateType.UPDATE)
+    return <UpdateTypeModal setShowModal={setShowModal} user={user} />;
+
+  return null;
+};
 
 export default UserManagerTypeModal;

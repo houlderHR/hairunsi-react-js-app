@@ -6,7 +6,7 @@ interface IconType {
   size?: number;
   width?: number;
   height?: number;
-  onClick?: React.MouseEventHandler;
+  onClick?: React.MouseEventHandler<SVGSVGElement>;
 }
 
 const Icon: FC<IconType> = ({ name, width, height, className, onClick, size = 16 }) => (

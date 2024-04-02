@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import CardType from '../../../shared/authenticated/cards/CardType';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
-import UserData, { UserType } from './constants';
+import userData, { UserType } from './constants';
 import UserManagerTypeModal from './UserManagerTypeModal';
 
 const UserManagerType: FC = () => {
@@ -13,11 +13,12 @@ const UserManagerType: FC = () => {
     setUser(_user);
     setShowModal(ModalShowStateType.UPDATE);
   };
+
   return (
     <>
       <HeadManager title="CREER UN NOUVEAU TYPE" openCreateModal={setShowModal} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
-        {UserData.map((_user: UserType, index: number) => (
+        {userData.map((_user: UserType, index: number) => (
           <CardType
             openUpdateModal={openUpdateModal(_user)}
             iconVisible={index === 0}
