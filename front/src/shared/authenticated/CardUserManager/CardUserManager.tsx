@@ -2,13 +2,13 @@ import { FC, PropsWithChildren } from 'react';
 import { twMerge } from 'tailwind-merge';
 import IconCard from './IconCard';
 
-interface CardProps {
+interface CardUserManagerProps {
   title: string;
   iconVisible?: boolean;
   openUpdateModal: () => void;
 }
 
-const CardUserManager: FC<PropsWithChildren<CardProps>> = ({
+const CardUserManager: FC<PropsWithChildren<CardUserManagerProps>> = ({
   children,
   title,
   openUpdateModal,
