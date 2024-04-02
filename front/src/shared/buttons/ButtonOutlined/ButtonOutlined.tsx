@@ -6,7 +6,7 @@ interface ButtonProps {
   addClass?: string;
 }
 
-const OutlineButton: FC<ButtonProps> = ({ title, addClass }) => (
+const ButtonOutlined: FC<ButtonProps> = ({ title, addClass }) => (
   <button
     type="button"
     className={twMerge(
@@ -18,4 +18,4 @@ const OutlineButton: FC<ButtonProps> = ({ title, addClass }) => (
   </button>
 );
 
-export default OutlineButton;
+export default ButtonOutlined;
