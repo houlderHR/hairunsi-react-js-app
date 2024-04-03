@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
@@ -10,7 +10,7 @@ enum InputType {
   PASSWORD = 'password',
 }
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
   const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
 
   const toggleInputType = () => {
