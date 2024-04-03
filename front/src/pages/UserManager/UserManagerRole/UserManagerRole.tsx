@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import CardRole from '../../../shared/authenticated/CardUserManager/CardRole';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
-import RoleItems from './constants';
+import ROLE_ITEMS from './constants';
 import UserManagerRoleModal from './UserManagerRoleModal';
 
 const UserManagerRole: FC = () => {
@@ -23,31 +23,31 @@ const UserManagerRole: FC = () => {
           title="Super Admin"
           maxElement={11}
           iconVisible
-          items={RoleItems.superAdmin}
+          items={ROLE_ITEMS.superAdmin}
         />
         <CardRole
           openUpdateModal={openUpdateModal}
           title="Admin"
           maxElement={11}
-          items={RoleItems.Admin}
+          items={ROLE_ITEMS.Admin}
         />
         <CardRole
           openUpdateModal={openUpdateModal}
           title="Modérateur"
           maxElement={11}
-          items={RoleItems.Moderator}
+          items={ROLE_ITEMS.Moderator}
         />
         <CardRole
           openUpdateModal={openUpdateModal}
           title="Chef"
           maxElement={11}
-          items={RoleItems.Chef}
+          items={ROLE_ITEMS.Chef}
         />
         <CardRole
           openUpdateModal={openUpdateModal}
           title="Employé"
           maxElement={11}
-          items={RoleItems.Employ}
+          items={ROLE_ITEMS.Employ}
         />
       </div>
       <UserManagerRoleModal modalState={showModal} setShowModal={setShowModal} />

@@ -3,10 +3,11 @@ import Modal from '..';
 
 interface CreateModalProps {
   onClose: () => void;
+  title: string;
 }
 
-const CreateModal: FC<PropsWithChildren<CreateModalProps>> = ({ children, onClose }) => (
-  <Modal onClose={onClose} title="Création de type">
+const CreateModal: FC<PropsWithChildren<CreateModalProps>> = ({ children, title, onClose }) => (
+  <Modal onClose={onClose} title={title}>
     {children}
     <button
       type="button"
