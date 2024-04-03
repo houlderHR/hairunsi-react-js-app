@@ -57,15 +57,15 @@ const DragAndDrop: FC<FiLeExport> = ({ file, setFile }) => {
           ref={inputRef}
         />
         <div>
-          Déposer ou{' '}
+          Déposer ou&nbsp;
           <span
             role="presentation"
             onClick={() => inputRef.current?.click()}
             className="text-[#478fff] cursor-pointer"
           >
             Uploader
-          </span>{' '}
-          l’image
+          </span>
+          &nbsp; l’image
         </div>
       </div>
     );
