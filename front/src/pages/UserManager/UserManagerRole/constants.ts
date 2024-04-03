@@ -1,4 +1,4 @@
-export const ModuleRoleList = [
+export const MODULE_ROLE_LIST = [
   'Accès projet',
   'Création projet',
   'Modification projet',
@@ -12,7 +12,7 @@ export const ModuleRoleList = [
   'Suppression documents',
 ];
 
-const RoleItems = {
+const ROLE_ITEMS = {
   superAdmin: [
     'Accès projet',
     'Création projet',
@@ -62,4 +62,4 @@ const RoleItems = {
     'Suppression documents',
   ],
 };
-export default RoleItems;
+export default ROLE_ITEMS;

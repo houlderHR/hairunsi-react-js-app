@@ -4,7 +4,7 @@ import Input from '../../../../../shared/authenticated/Input';
 import InputIcon from '../../../../../shared/authenticated/Input/InputIcon';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
-import { ModuleRoleList } from '../../constants';
+import { MODULE_ROLE_LIST } from '../../constants';
 
 interface CreateModalRoleProps {
   onClose: () => void;
@@ -12,7 +12,7 @@ interface CreateModalRoleProps {
 
 const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose }) => {
   const [show, setShow] = useState(false);
-  const [moduleRole, setModuleRole] = useState(ModuleRoleList);
+  const [moduleRole, setModuleRole] = useState(MODULE_ROLE_LIST);
   const [moduleListSelected, setmoduleListSelected] = useState<string[]>([]);
 
   const setValue = (elem: string) => {
@@ -42,7 +42,7 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose }) => {
         <div className="min-h-48">
           <div className="flex flex-wrap gap-2 ">
             {moduleListSelected
-              .filter((item) => item !== '')
+              .filter((item) => item)
               .map((item) => (
                 <CardItemRole
                   addClass="rounded-md border-gray-4"
