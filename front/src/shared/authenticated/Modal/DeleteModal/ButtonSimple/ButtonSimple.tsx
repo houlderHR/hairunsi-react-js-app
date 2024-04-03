@@ -14,13 +14,13 @@ const ButtonSimple: FC<ButtonSimpleProps> = ({ icon, title, addClass, onClick })
     type="button"
     className={twMerge(
       addClass,
-      'w-full rounded uppercase flex justify-center flex-row px-10 justify-items-center gap-4',
+      'w-full rounded uppercase flex justify-center  flex-row py-3 justify-items-center gap-6',
     )}
     onClick={onClick}
   >
     {icon && (
-      <span>
-        <Icon name={icon} size={12} />
+      <span className="mt-1">
+        <Icon name={icon} size={14} />
       </span>
     )}
     <span className="">{title}</span>

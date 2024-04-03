@@ -24,7 +24,7 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
     return <CreateRoleModal onClose={onClose} />;
   }
   if (modalState === ModalShowStateType.DELETE) {
-    return <DeleteModal onClose={onClose} />;
+    return <DeleteModal icon="role" type="rôle" onClose={onClose} />;
   }
   if (user && modalState === ModalShowStateType.UPDATE) {
     return <UpdateRoleModal user={user} onClose={onClose} />;
