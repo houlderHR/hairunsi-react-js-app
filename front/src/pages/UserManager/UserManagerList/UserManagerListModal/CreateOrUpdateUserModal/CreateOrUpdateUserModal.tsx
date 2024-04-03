@@ -1,12 +1,12 @@
 import './index.scss';
 import { FC, useState } from 'react';
-import Input from '../../../../../shared/authenticated/Input';
-import InputIcon from '../../../../../shared/authenticated/Input/InputIcon';
-import InputFileWithDragAndDrop from '../../../../../shared/authenticated/InputFileWithDragAndDrop';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import UpdateModal from '../../../../../shared/authenticated/Modal/UpdateModal';
 import Icon from '../../../../../shared/Icon';
+import Input from '../../../../../shared/inputs/Input';
+import InputFileWithDragAndDrop from '../../../../../shared/inputs/InputFileWithDragAndDrop';
+import InputIcon from '../../../../../shared/inputs/InputIcon';
 import ObjDetail from '../../obj-detail';
 import { POSTES, TYPES } from '../constants';
 
