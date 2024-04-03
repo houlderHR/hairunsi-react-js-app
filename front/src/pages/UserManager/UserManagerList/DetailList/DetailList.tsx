@@ -8,16 +8,24 @@ interface Detail {
   detail: ObjDetail;
   className: string;
   categorie: string;
-  openUpdateModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
-  userToUpdate?: React.Dispatch<React.SetStateAction<ObjDetail | null>>;
+  setUpdateModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
+  setUserToUpdate?: React.Dispatch<React.SetStateAction<ObjDetail | null>>;
 }
+
 const DetailList: FC<Detail> = ({
   detail,
   className,
   categorie,
-  openUpdateModal,
-  userToUpdate,
+  setUpdateModal,
+  setUserToUpdate,
 }) => {
+  const changeUser = (user: ObjDetail) => {
+    if (setUserToUpdate) {
+      setUpdateModal(ModalShowStateType.UPDATE);
+      setUserToUpdate(user);
+    }
+  };
+
   if (categorie === 'head')
     return (
       <div className={className}>
@@ -32,6 +40,7 @@ const DetailList: FC<Detail> = ({
         <div className="text action">{'Actions'.toUpperCase()}</div>
       </div>
     );
+
   return (
     <div className={className}>
       <div className="text matricule">{detail.matricule}</div>
@@ -41,16 +50,7 @@ const DetailList: FC<Detail> = ({
       <div className="text type">{detail.type}</div>
       <div className="text action">
         <div className="icons">
-          <div
-            className="icon-action"
-            role="presentation"
-            onClick={() => {
-              if (userToUpdate) {
-                openUpdateModal(ModalShowStateType.UPDATE);
-                userToUpdate(detail);
-              }
-            }}
-          >
+          <div className="icon-action" role="presentation" onClick={() => changeUser(detail)}>
             <Icon name="pen" className="text-gray-500 hover:text-gray-800" size={12} />
           </div>
           <div className="icon-action">

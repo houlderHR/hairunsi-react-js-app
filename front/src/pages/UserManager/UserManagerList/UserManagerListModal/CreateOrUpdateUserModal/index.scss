@@ -24,7 +24,7 @@
         }
       }
       .input-date {
-        @apply flex flex-row justify-between w-full leading-3 focus:placeholder:opacity-0 focus:outline-none focus:border-secondary cursor-pointer;
+        @apply flex flex-row justify-between rounded border border-gray-1 p-4 w-full leading-3 focus:placeholder:opacity-0 focus:outline-none focus:border-secondary cursor-pointer;
         .input {
           @apply w-full leading-3 focus:placeholder:opacity-0 focus:outline-none cursor-pointer;
         }

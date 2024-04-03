@@ -6,7 +6,7 @@ interface FiLeExport {
   setFile: React.Dispatch<React.SetStateAction<File | undefined | null>>;
 }
 
-const DragAndDrop: FC<FiLeExport> = ({ file, setFile }) => {
+const InputFileWithDragAndDrop: FC<FiLeExport> = ({ file, setFile }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isOver, setIsOver] = useState(false);
   const [image, setImage] = useState<string>();
@@ -79,4 +79,4 @@ const DragAndDrop: FC<FiLeExport> = ({ file, setFile }) => {
   );
 };
 
-export default DragAndDrop;
+export default InputFileWithDragAndDrop;

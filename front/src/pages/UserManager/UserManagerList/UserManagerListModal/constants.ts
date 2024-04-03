@@ -1,2 +1,2 @@
-export const postes = ['Dev', 'Designer', 'Integrateur', 'Tester'];
-export const types = ['Direction', 'Administraion', 'Commercial', 'Production'];
+export const POSTES = ['Dev', 'Designer', 'Integrateur', 'Tester'];
+export const TYPES = ['Direction', 'Administraion', 'Commercial', 'Production'];

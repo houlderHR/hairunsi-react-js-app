@@ -14,6 +14,7 @@ const title: ObjDetail = {
   ddn: 'Date de naissance',
   type: 'Type',
 };
+
 const UserManagerList: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
   const [userToUpdate, setUserToUpdate] = useState<ObjDetail | null>(null);
@@ -22,7 +23,7 @@ const UserManagerList: FC = () => {
     <>
       <div className="w-full h-1/4 my-1">
         <HeadManager
-          title="NOUVEAU UTILISATEUR"
+          title="NOUVEL UTILISATEUR"
           onOpen={() => setShowModal(ModalShowStateType.CREATE)}
         />
       </div>
@@ -33,7 +34,7 @@ const UserManagerList: FC = () => {
               detail={title}
               className="container-headdetail"
               categorie="head"
-              openUpdateModal={setShowModal}
+              setUpdateModal={setShowModal}
             />
             {!users ? (
               <>Pas d&apos;utilisateur</>
@@ -44,8 +45,8 @@ const UserManagerList: FC = () => {
                   className={index % 2 === 0 ? 'pair' : 'impair'}
                   categorie="detail"
                   key={user.matricule}
-                  openUpdateModal={setShowModal}
-                  userToUpdate={setUserToUpdate}
+                  setUpdateModal={setShowModal}
+                  setUserToUpdate={setUserToUpdate}
                 />
               ))
             )}
@@ -68,6 +69,7 @@ const UserManagerList: FC = () => {
       </div>
       <UserManagerUserModal
         user={userToUpdate}
+        setUser={setUserToUpdate}
         modalState={showModal}
         setShowModal={setShowModal}
       />
