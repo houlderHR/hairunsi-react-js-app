@@ -6,12 +6,20 @@ import InputIcon from '../../shared/inputs/InputIcon';
 
 const ResetPassword = () => (
   <div className="grid md:grid-cols-[30%_70%] md:px-0 px-4 h-full min-h-screen">
-    <div className="bg-primary h-full relative md:block hidden">
+    <div className="bg-primary h-full relative md:flex flex-col hidden">
       <img
         src="images/background/bg-only-left.png"
         alt="background"
-        className="absolute w-full h-full top-0 left-0 bg-cover right-0 bg-no-repeat"
+        className="absolute z-0 w-full h-full top-0 left-0 bg-cover right-0 bg-no-repeat"
       />
+      <div className="z-10 mt-auto xl:mb-80 mb-52 text-white mx-5 xl:mx-[77px]">
+        <h3 className="text-[54px] leading-[60px] font-normal">Cr&eacute;er un nouveau type</h3>
+        <span className="text-base mt-1 leading-2">
+          Saisissez votre nouveau mot de passe
+          <br />
+          pour acc&eacute;der de nouveau à vote compte.
+        </span>
+      </div>
     </div>
     <div className="flex w-full flex-col items-center justify-center">
       <div className="flex flex-col items-center">
@@ -38,8 +46,8 @@ const ResetPassword = () => (
           <Input placeholder="Adresse e-mail" type="text" />
           <InputIcon
             endIcon={<Icon name="eye" height={15} width={22} />}
-            additionalClass="bg-transparent border rounded border-gray-1  text-base text-xl"
-            additionalInputClass="text-base placeholder:text-gray-1 leading-3 py-4"
+            additionalClass="bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl"
+            additionalInputClass="text-base placeholder:text-gray-1 leading-3 py-4 focus:placeholder:opacity-0 "
             placeholder="Mot de passe"
             type="password"
           />
