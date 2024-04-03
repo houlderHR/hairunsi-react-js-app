@@ -3,22 +3,22 @@ import { FC, useState } from 'react';
 import DragAndDrop from '../../../../../shared/authenticated/DragAndDrop';
 import Input from '../../../../../shared/authenticated/Input';
 import InputIcon from '../../../../../shared/authenticated/Input/InputIcon';
-import { ModalShowStateType } from '../../../../../shared/authenticated/Modal';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
+import Icon from '../../../../../shared/Icon';
 import { postes, types } from '../constants';
 
 interface CreateModalUserProps {
-  setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
+  onClose: () => void;
 }
 
-const CreateUserModal: FC<CreateModalUserProps> = ({ setShowModal }) => {
+const CreateUserModal: FC<CreateModalUserProps> = ({ onClose }) => {
   const [showPoste, setShowPoste] = useState(false);
   const [showType, setShowType] = useState(false);
   const [file, setFile] = useState<File | null>();
 
   return (
-    <CreateModal setShowModal={setShowModal} title="Nouveau utilisateur">
+    <CreateModal onClose={onClose} title="Nouveau utilisateur">
       <div className="flex gap-4 flex-col w-full">
         <div className="container-create-modal">
           <div className="content">
@@ -57,7 +57,11 @@ const CreateUserModal: FC<CreateModalUserProps> = ({ setShowModal }) => {
                   {showPoste && <DropDown items={postes} setValue={() => {}} />}
                 </div>
                 <div className="type" role="presentation" onClick={() => setShowType((s) => !s)}>
-                  <div className="libelle">Type</div>
+                  <div className="libelle">
+                    {' '}
+                    <div>Type</div>
+                    <Icon name="sharp-arrow-drop-down" size={10} className="text-gray-500" />
+                  </div>
                   {showType && <DropDown items={types} setValue={() => {}} />}
                 </div>
               </div>

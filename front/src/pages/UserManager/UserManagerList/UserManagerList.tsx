@@ -21,7 +21,10 @@ const UserManagerList: FC = () => {
   return (
     <>
       <div className="w-full h-1/4 my-1">
-        <HeadManager title="NOUVEAU UTILISATEUR" openCreateModal={setShowModal} />
+        <HeadManager
+          title="NOUVEAU UTILISATEUR"
+          onOpen={() => setShowModal(ModalShowStateType.CREATE)}
+        />
       </div>
       <div className="container-user">
         <div className="container-list">
