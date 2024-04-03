@@ -22,7 +22,7 @@ const routes = {
         path: '/login',
       },
       resetPassword: {
-        path: 'reset-password',
+        path: '/reset-password',
       },
     },
   },
