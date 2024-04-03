@@ -1,5 +1,6 @@
 import './style.scss';
 import { FC } from 'react';
+import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import Icon from '../../../../shared/Icon';
 import ObjDetail from '../obj-detail';
 
@@ -7,8 +8,16 @@ interface Detail {
   detail: ObjDetail;
   className: string;
   categorie: string;
+  openUpdateModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
+  userToUpdate?: React.Dispatch<React.SetStateAction<ObjDetail | null>>;
 }
-const DetailList: FC<Detail> = ({ detail, className, categorie }) => {
+const DetailList: FC<Detail> = ({
+  detail,
+  className,
+  categorie,
+  openUpdateModal,
+  userToUpdate,
+}) => {
   if (categorie === 'head')
     return (
       <div className={className}>
@@ -32,7 +41,16 @@ const DetailList: FC<Detail> = ({ detail, className, categorie }) => {
       <div className="text type">{detail.type}</div>
       <div className="text action">
         <div className="icons">
-          <div className="icon-action">
+          <div
+            className="icon-action"
+            role="presentation"
+            onClick={() => {
+              if (userToUpdate) {
+                openUpdateModal(ModalShowStateType.UPDATE);
+                userToUpdate(detail);
+              }
+            }}
+          >
             <Icon name="pen" className="text-gray-500 hover:text-gray-800" size={12} />
           </div>
           <div className="icon-action">

@@ -16,6 +16,7 @@ const title: ObjDetail = {
 };
 const UserManagerList: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
+  const [userToUpdate, setUserToUpdate] = useState<ObjDetail | null>(null);
 
   return (
     <>
@@ -25,7 +26,12 @@ const UserManagerList: FC = () => {
       <div className="container-user">
         <div className="container-list">
           <div className="label-list">
-            <DetailList detail={title} className="container-headdetail" categorie="head" />
+            <DetailList
+              detail={title}
+              className="container-headdetail"
+              categorie="head"
+              openUpdateModal={setShowModal}
+            />
             {!users ? (
               <>Pas d&apos;utilisateur</>
             ) : (
@@ -35,6 +41,8 @@ const UserManagerList: FC = () => {
                   className={index % 2 === 0 ? 'pair' : 'impair'}
                   categorie="detail"
                   key={user.matricule}
+                  openUpdateModal={setShowModal}
+                  userToUpdate={setUserToUpdate}
                 />
               ))
             )}
@@ -55,7 +63,11 @@ const UserManagerList: FC = () => {
           </div>
         </div>
       </div>
-      <UserManagerUserModal modalState={showModal} setShowModal={setShowModal} />
+      <UserManagerUserModal
+        user={userToUpdate}
+        modalState={showModal}
+        setShowModal={setShowModal}
+      />
     </>
   );
 };

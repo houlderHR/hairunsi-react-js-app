@@ -36,7 +36,7 @@
           @apply w-1/2 relative;
 
           .libelle {
-            @apply flex flex-col justify-center w-full h-[9vh] px-5 bg-gray-3 hover:bg-gray-50;
+            @apply flex flex-col justify-center w-full h-[8.5vh] px-5 bg-gray-3 rounded-[5px] hover:bg-gray-50;
           }
         }
       }

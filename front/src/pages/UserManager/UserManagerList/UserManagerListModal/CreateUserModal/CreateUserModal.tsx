@@ -1,11 +1,12 @@
 import './style.scss';
 import { FC, useState } from 'react';
+import DragAndDrop from '../../../../../shared/authenticated/DragAndDrop';
 import Input from '../../../../../shared/authenticated/Input';
 import InputIcon from '../../../../../shared/authenticated/Input/InputIcon';
 import { ModalShowStateType } from '../../../../../shared/authenticated/Modal';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
-import DragAndDrop from './DragAndDrop';
+import { postes, types } from '../constants';
 
 interface CreateModalUserProps {
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
@@ -53,21 +54,11 @@ const CreateUserModal: FC<CreateModalUserProps> = ({ setShowModal }) => {
                     icon="search"
                   />
 
-                  {showPoste && (
-                    <DropDown
-                      items={['Dev', 'Designer', 'Integrateur', 'Tester']}
-                      setValue={() => {}}
-                    />
-                  )}
+                  {showPoste && <DropDown items={postes} setValue={() => {}} />}
                 </div>
                 <div className="type" role="presentation" onClick={() => setShowType((s) => !s)}>
                   <div className="libelle">Type</div>
-                  {showType && (
-                    <DropDown
-                      items={['Dev', 'Designer', 'Integrateur', 'Tester']}
-                      setValue={() => {}}
-                    />
-                  )}
+                  {showType && <DropDown items={types} setValue={() => {}} />}
                 </div>
               </div>
             </div>
