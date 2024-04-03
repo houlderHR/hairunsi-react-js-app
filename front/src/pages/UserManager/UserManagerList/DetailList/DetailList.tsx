@@ -1,5 +1,6 @@
 import './style.scss';
 import { FC } from 'react';
+import Icon from '../../../../shared/Icon';
 import ObjDetail from '../obj-detail';
 
 interface Detail {
@@ -32,10 +33,10 @@ const DetailList: FC<Detail> = ({ detail, className, categorie }) => {
       <div className="text action">
         <div className="icons">
           <div className="icon-action">
-            <img src="/icon/pen-grey.svg" alt="pen" className="pen" />
+            <Icon name="pen" className="text-gray-500 hover:text-gray-800" size={12} />
           </div>
           <div className="icon-action">
-            <img src="/icon/x-grey.svg" alt="delete" className="delete" />
+            <Icon name="x" className="text-gray-500 hover:text-red-700" size={12} />
           </div>
         </div>
       </div>
