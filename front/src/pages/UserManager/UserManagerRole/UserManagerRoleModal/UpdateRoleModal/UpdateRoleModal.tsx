@@ -47,7 +47,7 @@ const UpdateRoleModal: FC<UpdateModalRoleProps> = ({ onClose, user }) => {
         <div className="min-h-48">
           <div className="flex flex-wrap gap-2 ">
             {moduleListSelected
-              .filter((item) => item !== '')
+              .filter((item) => item)
               .map((item) => (
                 <CardItemRole
                   addClass="rounded-md border-gray-4"
