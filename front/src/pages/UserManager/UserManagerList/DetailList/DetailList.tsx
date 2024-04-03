@@ -1,13 +1,31 @@
 import './style.scss';
 import { FC } from 'react';
+import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
+import Icon from '../../../../shared/Icon';
 import ObjDetail from '../obj-detail';
 
 interface Detail {
   detail: ObjDetail;
   className: string;
   categorie: string;
+  setUpdateModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
+  setUserToUpdate?: React.Dispatch<React.SetStateAction<ObjDetail | null>>;
 }
-const DetailList: FC<Detail> = ({ detail, className, categorie }) => {
+
+const DetailList: FC<Detail> = ({
+  detail,
+  className,
+  categorie,
+  setUpdateModal,
+  setUserToUpdate,
+}) => {
+  const changeUser = (user: ObjDetail) => {
+    if (setUserToUpdate) {
+      setUpdateModal(ModalShowStateType.UPDATE);
+      setUserToUpdate(user);
+    }
+  };
+
   if (categorie === 'head')
     return (
       <div className={className}>
@@ -22,6 +40,7 @@ const DetailList: FC<Detail> = ({ detail, className, categorie }) => {
         <div className="text action">{'Actions'.toUpperCase()}</div>
       </div>
     );
+
   return (
     <div className={className}>
       <div className="text matricule">{detail.matricule}</div>
@@ -31,11 +50,11 @@ const DetailList: FC<Detail> = ({ detail, className, categorie }) => {
       <div className="text type">{detail.type}</div>
       <div className="text action">
         <div className="icons">
-          <div className="icon-action">
-            <img src="/icon/pen-grey.svg" alt="pen" className="pen" />
+          <div className="icon-action" role="presentation" onClick={() => changeUser(detail)}>
+            <Icon name="pen" className="text-gray-500 hover:text-gray-800" size={12} />
           </div>
           <div className="icon-action">
-            <img src="/icon/x-grey.svg" alt="delete" className="delete" />
+            <Icon name="x" className="text-gray-500 hover:text-red-700" size={12} />
           </div>
         </div>
       </div>

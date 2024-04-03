@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .container-create-modal {
+    @apply w-full h-full;
+
+    .content {
+      @apply flex flex-col justify-between items-stretch space-y-2;
+
+      .file-with-names {
+        @apply flex flex-row justify-evenly items-stretch h-[30vh] space-x-3;
+
+        .file {
+          @apply flex flex-col justify-center items-center w-[200px] border border-dashed border-gray-500 rounded-md;
+
+          .upload {
+            @apply flex flex-col justify-between items-center w-24 text-center text-[12px] space-y-2 text-[#808080];
+          }
+        }
+        .names {
+          @apply flex flex-col justify-between items-center w-[300px];
+        }
+      }
+      .input-date {
+        @apply flex flex-row justify-between rounded border border-gray-1 p-4 w-full leading-3 focus:placeholder:opacity-0 focus:outline-none focus:border-secondary cursor-pointer;
+        .input {
+          @apply w-full leading-3 focus:placeholder:opacity-0 focus:outline-none cursor-pointer;
+        }
+      }
+      .poste-type {
+        @apply w-full space-x-1 h-auto flex flex-row justify-center items-center;
+
+        .poste {
+          @apply w-1/2 relative my-1;
+        }
+        .type {
+          @apply w-1/2 relative;
+
+          .libelle {
+            @apply flex flex-row justify-between items-center w-full h-[8.5vh] px-5 bg-gray-3 rounded-[5px] hover:bg-gray-50;
+          }
+        }
+      }
+    }
+  }
+}

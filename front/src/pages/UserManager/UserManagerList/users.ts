@@ -1,4 +1,4 @@
-const users = [
+const USERS = [
   {
     matricule: 'M001',
     nom: 'GuyHawkins',
@@ -85,4 +85,4 @@ const users = [
   },
 ];
 
-export default users;
+export default USERS;

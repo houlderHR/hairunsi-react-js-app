@@ -4,7 +4,7 @@
 
 @layer components {
   .container-headdetail {
-    @apply bg-primary flex flex-row w-full h-[46px] rounded-tl-[12px] rounded-tr-[12px];
+    @apply bg-primary flex flex-row w-full h-[36px] rounded-tl-[12px] rounded-tr-[12px];
 
     .text {
       @apply font-medium text-[10px] text-white-1;
@@ -39,7 +39,7 @@
   }
 
   .pair {
-    @apply bg-[#f7f7ff] flex flex-row w-full h-[46px];
+    @apply bg-[#f7f7ff] flex flex-row w-full h-[36px];
 
     .text {
       @apply font-normal text-[10px] text-black-1;
@@ -69,7 +69,7 @@
     }
   }
   .impair {
-    @apply bg-[#ffffff] flex flex-row w-full h-[46px];
+    @apply bg-[#ffffff] flex flex-row w-full h-[36px];
 
     .text {
       @apply font-normal text-[10px] text-black-1;
