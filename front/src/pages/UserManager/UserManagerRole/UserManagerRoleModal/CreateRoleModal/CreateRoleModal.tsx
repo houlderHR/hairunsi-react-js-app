@@ -41,18 +41,17 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose }) => {
         </div>
         <div className="min-h-48">
           <div className="flex flex-wrap gap-2 ">
-            {moduleListSelected &&
-              moduleListSelected
-                .filter((item) => item !== '')
-                .map((item) => (
-                  <CardItemRole
-                    addClass="rounded-md border-gray-4"
-                    icon="x-1"
-                    title={item}
-                    deleteItem={deleteItem}
-                    key={item}
-                  />
-                ))}
+            {moduleListSelected
+              .filter((item) => item !== '')
+              .map((item) => (
+                <CardItemRole
+                  addClass="rounded-md border-gray-4"
+                  icon="x-1"
+                  title={item}
+                  deleteItem={deleteItem}
+                  key={item}
+                />
+              ))}
           </div>
         </div>
       </div>
