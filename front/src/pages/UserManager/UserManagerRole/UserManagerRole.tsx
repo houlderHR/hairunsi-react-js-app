@@ -12,6 +12,9 @@ const UserManagerRole: FC = () => {
     setShowModal(ModalShowStateType.UPDATE);
     setUser(userData);
   };
+  const openDeleteModal = () => {
+    setShowModal(ModalShowStateType.DELETE);
+  };
 
   return (
     <>
@@ -24,6 +27,7 @@ const UserManagerRole: FC = () => {
           <CardRole
             key={item.id}
             openUpdateModal={openUpdateModal(item)}
+            openDeleteModal={openDeleteModal}
             title={item.role}
             maxElement={11}
             iconVisible={index === 0}

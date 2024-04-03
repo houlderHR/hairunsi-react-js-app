@@ -5,16 +5,23 @@ import Icon from '../../Icon';
 interface IconBoxProps {
   withOther?: boolean;
   openUpdateModal: () => void;
+  openDeleteModal: () => void;
 }
 // Icone de trash et edit de chaque Card
-const IconCard: FC<IconBoxProps> = ({ withOther, openUpdateModal }) => (
+const IconCard: FC<IconBoxProps> = ({ withOther, openUpdateModal, openDeleteModal }) => (
   <div
     className={twMerge(
       'flex flex-row gap-x-4 items-center group-hover:opacity-100 duration-300 ',
       withOther ? 'opacity-0' : 'opacity-100',
     )}
   >
-    <Icon name="trash" className="hover:text-red-400 duration-300" height={15} width={11.67} />
+    <Icon
+      onClick={openDeleteModal}
+      name="trash"
+      className="hover:text-red-400 duration-300"
+      height={15}
+      width={11.67}
+    />
     <span className="w-px h-4 bg-gray-3" />
     <Icon
       onClick={openUpdateModal}

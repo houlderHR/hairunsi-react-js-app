@@ -8,6 +8,7 @@ interface CardRoleProps {
   maxElement: number;
   iconVisible?: boolean;
   openUpdateModal: () => void;
+  openDeleteModal: () => void;
 }
 
 const CardRole: FC<CardRoleProps> = ({
@@ -15,9 +16,15 @@ const CardRole: FC<CardRoleProps> = ({
   items,
   maxElement,
   openUpdateModal,
+  openDeleteModal,
   iconVisible = false,
 }) => (
-  <CardUserManager title={title} iconVisible={iconVisible} openUpdateModal={openUpdateModal}>
+  <CardUserManager
+    title={title}
+    iconVisible={iconVisible}
+    openUpdateModal={openUpdateModal}
+    openDeleteModal={openDeleteModal}
+  >
     <div className="flex mt-4 gap-2 flex-wrap justify-start">
       {items
         .filter((_, index) => index < maxElement)
