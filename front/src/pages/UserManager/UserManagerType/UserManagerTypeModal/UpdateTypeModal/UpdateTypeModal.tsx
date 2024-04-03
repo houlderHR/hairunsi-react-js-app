@@ -9,7 +9,7 @@ import { TypeList, UserType } from '../../constants';
 interface UpdateModalTypeProps {
   onClose: () => void;
   user: UserType;
-  setValue: (elem: string) => void;
+  setValue?: (elem: string) => void;
 }
 
 const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, user, setValue }) => {
