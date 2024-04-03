@@ -23,7 +23,7 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
             additionalInputClass="text-base"
             icon="search"
           />
-          {show && <DropDown items={TypeList} setValue={() => ''} />}
+          {show && <DropDown items={TypeList} />}
         </div>
       </div>
     </CreateModal>
