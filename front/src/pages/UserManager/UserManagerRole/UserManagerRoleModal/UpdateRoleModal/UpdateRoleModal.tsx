@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from 'react';
 import CardItemRole from '../../../../../shared/authenticated/CardUserManager/CardRole/CardItemRole';
-import Input from '../../../../../shared/authenticated/Input';
-import InputIcon from '../../../../../shared/authenticated/Input/InputIcon';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import UpdateModal from '../../../../../shared/authenticated/Modal/UpdateModal';
+import Input from '../../../../../shared/inputs/Input';
+import InputIcon from '../../../../../shared/inputs/InputIcon';
 import { MODULE_ROLE_LIST, UserObject } from '../../constants';
 
 interface UpdateModalRoleProps {

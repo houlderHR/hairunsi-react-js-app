@@ -1,6 +1,6 @@
 import { FC } from 'react';
+import InputIcon from '../../inputs/InputIcon';
 import ButtonAdd from '../buttons/ButtonAdd';
-import InputIcon from '../Input/InputIcon';
 
 interface HeadManagerProps {
   onOpen: () => void;

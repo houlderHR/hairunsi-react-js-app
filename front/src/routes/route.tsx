@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Accueil from '../pages/Accueil';
 import Authenticated from '../pages/Authenticated';
 import Home from '../pages/Home';
+import ResetPassword from '../pages/ResetPassword';
 import UserManager from '../pages/UserManager';
 import UserManagerList from '../pages/UserManager/UserManagerList/UserManagerList';
 import UserManagerRole from '../pages/UserManager/UserManagerRole';
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
   {
     path: routes.unauthenticated.path,
     element: <Home />,
+  },
+  {
+    path: routes.unauthenticated.subpaths.resetPassword.path,
+    element: <ResetPassword />,
   },
   {
     path: routes.authentified.path,

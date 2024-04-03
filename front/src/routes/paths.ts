@@ -21,6 +21,9 @@ const routes = {
       login: {
         path: '/login',
       },
+      resetPassword: {
+        path: '/reset-password',
+      },
     },
   },
 };
