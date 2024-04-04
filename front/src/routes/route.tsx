@@ -3,6 +3,7 @@ import Accueil from '../pages/Accueil';
 import Authenticated from '../pages/Authenticated';
 import Home from '../pages/Home';
 import ResetPassword from '../pages/ResetPassword';
+import ResetPasswordSuccess from '../pages/ResetPassworSuccess';
 import UserManager from '../pages/UserManager';
 import UserManagerList from '../pages/UserManager/UserManagerList/UserManagerList';
 import UserManagerRole from '../pages/UserManager/UserManagerRole';
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: routes.unauthenticated.subpaths.resetPassword.path,
     element: <ResetPassword />,
+  },
+  {
+    path: routes.unauthenticated.subpaths.resetPasswordSuccess.path,
+    element: <ResetPasswordSuccess />,
   },
   {
     path: routes.authentified.path,
