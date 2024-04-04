@@ -32,8 +32,10 @@ const routes = {
       },
       redirectEmail: {
         path: 'redirect-email',
+      },
       checkPassword: {
         path: '/reset-password-error',
+      },
       checkEmailToResetPassword: {
         path: '/check-email',
       },
