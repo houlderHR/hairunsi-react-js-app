@@ -13,7 +13,9 @@ const UserManagerType: FC = () => {
     setUser(_user);
     setShowModal(ModalShowStateType.UPDATE);
   };
-
+  const openDeleteModal = () => {
+    setShowModal(ModalShowStateType.DELETE);
+  };
   return (
     <>
       <HeadManager
@@ -24,6 +26,7 @@ const UserManagerType: FC = () => {
         {userData.map((_user: UserType, index: number) => (
           <CardType
             openUpdateModal={openUpdateModal(_user)}
+            openDeleteModal={openDeleteModal}
             iconVisible={index === 0}
             user={_user}
             key={_user.name}
