@@ -9,6 +9,7 @@ interface Detail {
   className: string;
   categorie: string;
   setUpdateModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
+  setDeleteModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
   setUserToUpdate?: React.Dispatch<React.SetStateAction<ObjDetail | null>>;
 }
 
@@ -17,6 +18,7 @@ const DetailList: FC<Detail> = ({
   className,
   categorie,
   setUpdateModal,
+  setDeleteModal,
   setUserToUpdate,
 }) => {
   const changeUser = (user: ObjDetail) => {
@@ -53,7 +55,11 @@ const DetailList: FC<Detail> = ({
           <div className="icon-action" role="presentation" onClick={() => changeUser(detail)}>
             <Icon name="pen" className="text-gray-500 hover:text-gray-800" size={12} />
           </div>
-          <div className="icon-action">
+          <div
+            role="presentation"
+            className="icon-action"
+            onClick={() => setDeleteModal(ModalShowStateType.DELETE)}
+          >
             <Icon name="x" className="text-gray-500 hover:text-red-700" size={12} />
           </div>
         </div>

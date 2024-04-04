@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
+import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
 import ObjDetail from '../obj-detail';
 import CreateOrUpdateUserModal from './CreateOrUpdateUserModal';
 
@@ -22,6 +23,15 @@ const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
   };
   if (modalState === ModalShowStateType.CREATE || modalState === ModalShowStateType.UPDATE)
     return <CreateOrUpdateUserModal user={user} onClose={onClose} />;
+  if (modalState === ModalShowStateType.DELETE)
+    return (
+      <DeleteModal
+        description="Vous êtes sur le point d’enlever cet utilisateur."
+        confirmation="Etes-vous sûr de vouloir supprimer cet utilisateur ?"
+        onClose={onClose}
+        icon="delete-user"
+      />
+    );
 
   return null;
 };

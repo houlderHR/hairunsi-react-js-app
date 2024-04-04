@@ -35,6 +35,7 @@ const UserManagerList: FC = () => {
               className="container-headdetail"
               categorie="head"
               setUpdateModal={setShowModal}
+              setDeleteModal={setShowModal}
             />
             {!users ? (
               <>Pas d&apos;utilisateur</>
@@ -47,6 +48,7 @@ const UserManagerList: FC = () => {
                   key={user.matricule}
                   setUpdateModal={setShowModal}
                   setUserToUpdate={setUserToUpdate}
+                  setDeleteModal={setShowModal}
                 />
               ))
             )}
