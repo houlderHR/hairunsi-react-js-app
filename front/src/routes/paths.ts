@@ -30,6 +30,9 @@ const routes = {
       forgotPassword: {
         path: 'forgot-password',
       },
+      redirectEmail: {
+        path: 'redirect-email',
+      },
     },
   },
 };
