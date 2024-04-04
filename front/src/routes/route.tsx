@@ -1,12 +1,12 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Accueil from '../pages/Accueil';
 import Authenticated from '../pages/Authenticated';
+import CheckEmailToResetPassword from '../pages/CheckEmailToResetPassword';
 import ForgotPassword from '../pages/ForgotPassword';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import RedirectEmail from '../pages/RedirectEmail';
 import ResetPassword from '../pages/ResetPassword';
-import ResetPasswordError from '../pages/ResetPasswordError';
 import ResetPasswordSuccess from '../pages/ResetPassworSuccess';
 import UserManager from '../pages/UserManager';
 import UserManagerList from '../pages/UserManager/UserManagerList/UserManagerList';
@@ -40,8 +40,8 @@ const router = createBrowserRouter([
     element: <ResetPasswordSuccess />,
   },
   {
-    path: routes.unauthenticated.subpaths.checkPassword.path,
-    element: <ResetPasswordError />,
+    path: routes.unauthenticated.subpaths.checkEmailToResetPassword.path,
+    element: <CheckEmailToResetPassword />,
   },
   {
     path: routes.authentified.path,

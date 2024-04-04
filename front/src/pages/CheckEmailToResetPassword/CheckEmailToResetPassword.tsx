@@ -3,11 +3,11 @@ import { FC } from 'react';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import Button from '../../shared/UserAuthenticationLayout/Button';
 
-const ResetPasswordError: FC = () => (
+const CheckEmailToResetPassword: FC = () => (
   <UserAuthenticationLayout
     title="Vérifiez votre e-mail"
     contentTitle="Vérification"
-    subTitle="Des instructions ont été envoyé dans votre boîte e-mail. Merci de le vérifier."
+    subTitle="Des instructions ont été envoyées dans votre boîte e-mail. Merci de le vérifier."
     showLogo
     showLoginLink
   >
@@ -29,4 +29,4 @@ const ResetPasswordError: FC = () => (
   </UserAuthenticationLayout>
 );
 
-export default ResetPasswordError;
+export default CheckEmailToResetPassword;
