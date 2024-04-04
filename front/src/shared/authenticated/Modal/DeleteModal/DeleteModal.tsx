@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
-import CustomizableButton from '../../buttons/CustomizableButton';
+import Button from '../../buttons/Button';
 import Modal from '..';
 
 interface DeleteModalProps {
@@ -26,18 +26,13 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
       <h3 className="text-gray-1 text-base">{confirmation}</h3>
     </div>
     <div className="flex gap-2">
-      <CustomizableButton
-        title="Annuler"
-        icon="x"
-        addClass="bg-transparent border border-gray-1 text-black-1"
-        onClick={onClose}
-      />
-      <CustomizableButton
+      <Button title="Annuler" icon="x" className="uppercase" onClick={onClose} />
+      <Button
         title="Supprimer"
         icon="trash-1"
+        className="uppercase"
         iconSize={18}
-        addClass="bg-danger-2 text-white"
-        onClick={() => ''}
+        variant="danger"
       />
     </div>
   </Modal>
