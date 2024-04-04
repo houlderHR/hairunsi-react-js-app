@@ -35,4 +35,5 @@ const ResetPasswordSuccess: FC = () => (
     </div>
   </UserAuthentication>
 );
+
 export default ResetPasswordSuccess;
