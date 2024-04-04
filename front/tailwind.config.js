@@ -17,6 +17,7 @@ export default {
         'gray-4': '#BDBDBD',
         'gray-5': '#EAEAEA',
         'gray-6': '#FAFAFA',
+        'gray-7': '#DEDEDE',
         'danger-2': '#EF4F4E',
         'white-1': '#F0F0F0',
       },

@@ -4,11 +4,7 @@ import Input from '../../shared/inputs/Input';
 import InputIcon from '../../shared/inputs/InputIcon';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import Button from '../../shared/UserAuthenticationLayout/Button';
-
-enum InputType {
-  TEXT = 'text',
-  PASSWORD = 'password',
-}
+import InputType from '../../shared/UserAuthenticationLayout/constants';
 
 const ResetPassword: FC = () => {
   const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
