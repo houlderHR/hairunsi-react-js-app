@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     element: <ResetPassword />,
   },
   {
-    path: routes.unauthenticated.subpaths.ResetPasswordSuccess.path,
+    path: routes.unauthenticated.subpaths.resetPasswordSuccess.path,
     element: <ResetPasswordSuccess />,
   },
   {

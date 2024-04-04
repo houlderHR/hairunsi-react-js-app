@@ -24,7 +24,7 @@ const routes = {
       resetPassword: {
         path: '/reset-password',
       },
-      ResetPasswordSuccess: {
+      resetPasswordSuccess: {
         path: '/reset-password-success',
       },
     },
