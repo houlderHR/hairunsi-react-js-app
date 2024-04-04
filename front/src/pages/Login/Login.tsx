@@ -59,7 +59,7 @@ const Login = () => {
             Se connecter
           </button>
           <hr className="mx-20" />
-          <span className="text-black1 mt-8 text-[14px]">
+          <span className="text-black-1 mt-8 text-[14px]">
             Mot de passe oublié?{' '}
             <Link to="/">
               <b>Cliquez ici.</b>
