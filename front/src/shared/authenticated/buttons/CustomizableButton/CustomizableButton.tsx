@@ -1,15 +1,22 @@
 import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import Icon from '../../../../Icon';
+import Icon from '../../../Icon';
 
-interface ButtonSimpleProps {
+interface CustomizableButtonProps {
   icon?: string;
   title: string;
   addClass?: string;
+  iconSize?: number;
   onClick: () => void;
 }
 
-const ButtonSimple: FC<ButtonSimpleProps> = ({ icon, title, addClass, onClick }) => (
+const CustomizableButton: FC<CustomizableButtonProps> = ({
+  icon,
+  title,
+  addClass,
+  onClick,
+  iconSize = 14,
+}) => (
   <button
     type="button"
     className={twMerge(
@@ -20,11 +27,11 @@ const ButtonSimple: FC<ButtonSimpleProps> = ({ icon, title, addClass, onClick })
   >
     {icon && (
       <span className="mt-1">
-        <Icon name={icon} size={14} />
+        <Icon name={icon} size={iconSize} />
       </span>
     )}
     <span className="">{title}</span>
   </button>
 );
 
-export default ButtonSimple;
+export default CustomizableButton;

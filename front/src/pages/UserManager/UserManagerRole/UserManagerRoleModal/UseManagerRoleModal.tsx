@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
-import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal/DeleteModal';
+import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
 import { UserObject } from '../constants';
 import CreateRoleModal from './CreateRoleModal';
 import UpdateRoleModal from './UpdateRoleModal';
@@ -24,7 +24,14 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
     return <CreateRoleModal onClose={onClose} />;
   }
   if (modalState === ModalShowStateType.DELETE) {
-    return <DeleteModal icon="role" type="rôle" onClose={onClose} />;
+    return (
+      <DeleteModal
+        icon="role"
+        description=" Vous êtes sur le point de supprimer ce rôle d’utilisateur."
+        confirmation=" Etes-vous sûr de vouloir supprimer ce rôle d’utilisateur?"
+        onClose={onClose}
+      />
+    );
   }
   if (user && modalState === ModalShowStateType.UPDATE) {
     return <UpdateRoleModal user={user} onClose={onClose} />;
