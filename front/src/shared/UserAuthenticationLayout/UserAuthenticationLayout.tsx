@@ -34,7 +34,7 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
         alt="background"
         className="absolute z-0 w-full h-full top-0 left-0 bg-cover right-0 bg-no-repeat"
       />
-      <div className="z-10 mt-auto xl:mb-80 mb-52 text-white mx-5 2xl:mx-[77px]">
+      <div className="z-10 mt-[594px] mb-52 text-white mx-5 2xl:mx-[77px]">
         <h3 className="lg:text-[54px] text-4xl leading-9 lg:leading-[60px] break-words font-normal">
           {title}
         </h3>
