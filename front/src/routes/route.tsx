@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Accueil from '../pages/Accueil';
 import Authenticated from '../pages/Authenticated';
+import ForgotPassword from '../pages/ForgotPassword';
 import Home from '../pages/Home';
 import ResetPassword from '../pages/ResetPassword';
 import ResetPasswordSuccess from '../pages/ResetPassworSuccess';
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: routes.unauthenticated.subpaths.resetPassword.path,
     element: <ResetPassword />,
+  },
+  {
+    path: routes.unauthenticated.subpaths.forgotPassword.path,
+    element: <ForgotPassword />,
   },
   {
     path: routes.unauthenticated.subpaths.resetPasswordSuccess.path,
