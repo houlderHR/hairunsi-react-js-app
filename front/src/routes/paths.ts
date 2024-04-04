@@ -39,6 +39,9 @@ const routes = {
       checkEmailToResetPassword: {
         path: '/check-email',
       },
+      errorResetPassword: {
+        path: '/reset-password-fail',
+      },
     },
   },
 };
