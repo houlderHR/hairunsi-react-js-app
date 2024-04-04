@@ -27,6 +27,9 @@ const routes = {
       resetPasswordSuccess: {
         path: '/reset-password-success',
       },
+      forgotPassword: {
+        path: 'forgot-password',
+      },
     },
   },
 };
