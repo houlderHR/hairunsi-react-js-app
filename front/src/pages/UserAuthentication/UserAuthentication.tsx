@@ -5,6 +5,15 @@ interface UserAuthenticationProps {
   subTitle?: string;
 }
 
+/**
+ * Composant de base pour la partie:
+ *  Login
+ *  ResetPassword
+ *  ResetPasswordSuccess
+ *  ResetPasswordError
+ *  PasswordRecovery
+ *  EmailVerification
+ */
 const UserAuthentication: FC<PropsWithChildren<UserAuthenticationProps>> = ({
   title,
   subTitle,

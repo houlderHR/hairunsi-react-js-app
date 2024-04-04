@@ -3,7 +3,7 @@ import Accueil from '../pages/Accueil';
 import Authenticated from '../pages/Authenticated';
 import Home from '../pages/Home';
 import ResetPassword from '../pages/UserAuthentication/ResetPassword';
-import ResetPasswordSuccess from '../pages/UserAuthentication/ResetPassword/ResetPassworSuccess';
+import ResetPasswordSuccess from '../pages/UserAuthentication/ResetPassworSuccess';
 import UserManager from '../pages/UserManager';
 import UserManagerList from '../pages/UserManager/UserManagerList/UserManagerList';
 import UserManagerRole from '../pages/UserManager/UserManagerRole';
