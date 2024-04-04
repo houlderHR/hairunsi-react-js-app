@@ -16,6 +16,7 @@ export default {
         'gray-3': '#EEEEEE',
         'gray-4': '#BDBDBD',
         'gray-5': '#EAEAEA',
+        'danger-2': '#EF4F4E',
         'white-1': '#F0F0F0',
       },
       fontFamily: {

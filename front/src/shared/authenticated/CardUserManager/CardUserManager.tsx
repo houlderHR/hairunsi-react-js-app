@@ -6,12 +6,14 @@ interface CardUserManagerProps {
   title: string;
   iconVisible?: boolean;
   openUpdateModal: () => void;
+  openDeleteModal: () => void;
 }
 
 const CardUserManager: FC<PropsWithChildren<CardUserManagerProps>> = ({
   children,
   title,
   openUpdateModal,
+  openDeleteModal,
   iconVisible = false,
 }) => (
   <div
@@ -22,7 +24,11 @@ const CardUserManager: FC<PropsWithChildren<CardUserManagerProps>> = ({
   >
     <div className="flex flex-row justify-between">
       <h3 className="text-secondary truncate font-medium leading-6">{title}</h3>
-      <IconCard openUpdateModal={openUpdateModal} withOther={!iconVisible} />
+      <IconCard
+        openUpdateModal={openUpdateModal}
+        openDeleteModal={openDeleteModal}
+        withOther={!iconVisible}
+      />
     </div>
     {children}
   </div>
