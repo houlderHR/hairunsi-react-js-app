@@ -21,9 +21,7 @@ const Login = () => {
     <UserAuthenticationLayout
       showLogo
       title="Bienvenue sur HaiRun SI !"
-      subTitle="Prêt à démarrer votre journée ?
-    Connectez-vous avec votre identifiant et mot de passe
-    pour caccéder à la plateforme et ces fonctionnalités."
+      subTitle="Prêt à démarrer votre journée? Connectez-vous avec votre identifiant et mot de passe pour accéder à la plateforme et ces fonctionnalités."
     >
       <div className="text-center w-full">
         <h2 className="mt-20 text-[32px] text-black-1">Connexion</h2>
@@ -60,7 +58,7 @@ const Login = () => {
           </button>
           <hr className="mx-20" />
           <span className="text-black-1 mt-8 text-[14px]">
-            Mot de passe oublié?{' '}
+            Mot de passe oublié?&nbsp;
             <Link to="/">
               <b>Cliquez ici.</b>
             </Link>
