@@ -1,12 +1,15 @@
 import './style.scss';
 import { FC } from 'react';
-import UserAuthentication from '../../shared/UserAuthentication';
-import Button from '../../shared/UserAuthentication/Button';
+import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
+import Button from '../../shared/UserAuthenticationLayout/Button';
 
-const CheckPassword: FC = () => (
-  <UserAuthentication
+const ResetPasswordError: FC = () => (
+  <UserAuthenticationLayout
     title="Vérifiez votre e-mail"
+    contentTitle="Vérification"
     subTitle="Des instructions ont été envoyé dans votre boîte e-mail. Merci de le vérifier."
+    showLogo
+    showLoginLink
   >
     <div className="container-check-password">
       <div className="content">
@@ -23,7 +26,7 @@ const CheckPassword: FC = () => (
         <Button>RENVOYER</Button>
       </div>
     </div>
-  </UserAuthentication>
+  </UserAuthenticationLayout>
 );
 
-export default CheckPassword;
+export default ResetPasswordError;

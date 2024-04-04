@@ -59,9 +59,7 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
             <p className="text-sm leading-4">
               Vous avez d&eacute;ja un compte&nbsp;?&nbsp;
               <strong>
-                <NavLink to={routes.unauthenticated.subpaths.login.path}>
-                  Conn&eacute;ctez-vous
-                </NavLink>
+                <NavLink to={routes.unauthenticated.subpaths.login.path}>Connectez-vous</NavLink>
               </strong>
             </p>
           </div>

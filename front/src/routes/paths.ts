@@ -33,7 +33,7 @@ const routes = {
       redirectEmail: {
         path: 'redirect-email',
       checkPassword: {
-        path: '/check-password',
+        path: '/reset-password-error',
       },
     },
   },
