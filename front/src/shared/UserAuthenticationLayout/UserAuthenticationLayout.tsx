@@ -19,7 +19,7 @@ interface UserAuthenticationProps {
  *  PasswordRecovery
  *  EmailVerification
  */
-const UserAuthentication: FC<PropsWithChildren<UserAuthenticationProps>> = ({
+const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> = ({
   title,
   subTitle,
   contentTitle,
@@ -71,4 +71,4 @@ const UserAuthentication: FC<PropsWithChildren<UserAuthenticationProps>> = ({
   </div>
 );
 
-export default UserAuthentication;
+export default UserAuthenticationLayout;

@@ -2,8 +2,8 @@ import { FC, useState } from 'react';
 import Icon from '../../shared/Icon';
 import Input from '../../shared/inputs/Input';
 import InputIcon from '../../shared/inputs/InputIcon';
-import UserAuthentication from '../../shared/UserAuthentication';
-import Button from '../../shared/UserAuthentication/Button';
+import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
+import Button from '../../shared/UserAuthenticationLayout/Button';
 
 enum InputType {
   TEXT = 'text',
@@ -22,7 +22,7 @@ const ResetPassword: FC = () => {
   };
 
   return (
-    <UserAuthentication
+    <UserAuthenticationLayout
       title="Créer un nouveau mot de passe"
       subTitle="Saisissez votre nouveau mot de passe pour accéder de nouveau à vote compte."
       contentTitle="Réinitialisation"
@@ -59,7 +59,7 @@ const ResetPassword: FC = () => {
         />
         <Button>CONFIRMER</Button>
       </div>
-    </UserAuthentication>
+    </UserAuthenticationLayout>
   );
 };
 

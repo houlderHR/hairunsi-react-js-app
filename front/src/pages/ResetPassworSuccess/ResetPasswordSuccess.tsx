@@ -2,11 +2,11 @@ import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
-import UserAuthentication from '../../shared/UserAuthentication';
-import Button from '../../shared/UserAuthentication/Button';
+import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
+import Button from '../../shared/UserAuthenticationLayout/Button';
 
 const ResetPasswordSuccess: FC = () => (
-  <UserAuthentication
+  <UserAuthenticationLayout
     title="Réinitialisation de
   mot de passe réussi"
   >
@@ -33,7 +33,7 @@ const ResetPasswordSuccess: FC = () => (
         </NavLink>
       </Button>
     </div>
-  </UserAuthentication>
+  </UserAuthenticationLayout>
 );
 
 export default ResetPasswordSuccess;

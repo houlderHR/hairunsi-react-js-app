@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import Input from '../../shared/inputs/Input';
-import UserAuthentication from '../../shared/UserAuthentication';
-import Button from '../../shared/UserAuthentication/Button';
+import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
+import Button from '../../shared/UserAuthenticationLayout/Button';
 
 const ForgotPassword: FC = () => (
-  <UserAuthentication
+  <UserAuthenticationLayout
     showLogo
     showLoginLink
     title="Mot de passe oublié?"
@@ -20,7 +20,7 @@ const ForgotPassword: FC = () => (
       <Input type="email" placeholder="Email" additionalClass="focus:border-secondary border" />
       <Button>Se conn&eacute;cter</Button>
     </div>
-  </UserAuthentication>
+  </UserAuthenticationLayout>
 );
 
 export default ForgotPassword;
