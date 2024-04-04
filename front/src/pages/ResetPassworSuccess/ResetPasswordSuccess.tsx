@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-import routes from '../../../routes/paths';
-import Icon from '../../../shared/Icon';
-import UserAuthentication from '..';
-import Button from '../Button';
+import routes from '../../routes/paths';
+import Icon from '../../shared/Icon';
+import UserAuthentication from '../../shared/UserAuthentication';
+import Button from '../../shared/UserAuthentication/Button';
 
 const ResetPasswordSuccess: FC = () => (
   <UserAuthentication

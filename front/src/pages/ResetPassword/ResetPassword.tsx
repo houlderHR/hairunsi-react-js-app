@@ -1,11 +1,11 @@
 import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import routes from '../../../routes/paths';
-import Icon from '../../../shared/Icon';
-import Input from '../../../shared/inputs/Input';
-import InputIcon from '../../../shared/inputs/InputIcon';
-import UserAuthentication from '..';
-import Button from '../Button';
+import routes from '../../routes/paths';
+import Icon from '../../shared/Icon';
+import Input from '../../shared/inputs/Input';
+import InputIcon from '../../shared/inputs/InputIcon';
+import UserAuthentication from '../../shared/UserAuthentication';
+import Button from '../../shared/UserAuthentication/Button';
 
 enum InputType {
   TEXT = 'text',
