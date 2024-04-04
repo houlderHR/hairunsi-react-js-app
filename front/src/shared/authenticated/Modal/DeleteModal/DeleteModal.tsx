@@ -21,8 +21,8 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
     <div className="mt-1 flex justify-center">
       <img src={`/icon/${icon}.svg`} alt="f4" srcSet="" />
     </div>
-    <div className="text-center py-5 mb-8">
-      <h2 className="text-secondary text-xl mb-2">{description}</h2>
+    <div className="text-center py-5 mb-10">
+      <h2 className="text-secondary text-xl mb-3 font-medium">{description}</h2>
       <h3 className="text-gray-1 text-base">{confirmation}</h3>
     </div>
     <div className="flex gap-2">

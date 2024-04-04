@@ -21,7 +21,7 @@ const CustomizableButton: FC<CustomizableButtonProps> = ({
     type="button"
     className={twMerge(
       addClass,
-      'w-full rounded uppercase flex justify-center  flex-row py-3 justify-items-center gap-6',
+      'w-full rounded uppercase flex justify-center py-3 font-medium justify-items-center gap-6',
     )}
     onClick={onClick}
   >
