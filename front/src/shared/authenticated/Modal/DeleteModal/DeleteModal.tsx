@@ -30,7 +30,7 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
         title="Annuler"
         icon="x"
         addClass="bg-transparent border border-gray-1 text-black-1"
-        onClick={() => ''}
+        onClick={onClose}
       />
       <CustomizableButton
         title="Supprimer"
