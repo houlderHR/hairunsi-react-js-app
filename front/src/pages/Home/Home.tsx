@@ -19,7 +19,7 @@ const Home: FC = () => (
           <h2 className="text-2xl xl:text-4xl font-bold xl:font-normal">
             Bienvenue sur HaiRun SI!
           </h2>
-          <h3 className="mt-1 text-sm text-center xl:text-base px-12 sm:px-3.5 xl:px-mety">
+          <h3 className="mt-1 text-sm text-center xl:text-base px-12 sm:px-3.5 2xl:px-36">
             Une plateforme de gestion et d&apos;organisation en interne de vos r&ecirc;ves.
           </h3>
         </div>
