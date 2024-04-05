@@ -25,10 +25,6 @@
     }
     .button {
       @apply w-full px-[15em];
-
-      .redirect {
-        @apply flex flex-row justify-center items-center gap-x-4;
-      }
     }
   }
 }

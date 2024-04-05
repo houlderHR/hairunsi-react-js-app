@@ -2,6 +2,7 @@ import './style.scss';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../routes/paths';
+import Icon from '../../shared/Icon';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import Button from '../../shared/UserAuthenticationLayout/Button';
 
@@ -19,14 +20,12 @@ const ErrorResetPassword: FC = () => (
         </div>
       </div>
       <div className="button">
-        <Link to={routes.unauthenticated.subpaths.login.path}>
           <Button>
-            <div className="redirect">
-              <div>VERS LA CONNEXION</div>
-              <img src="/icon/arrow-right.svg" alt="right" />
-            </div>
+            <Link to={routes.unauthenticated.subpaths.login.path} className="flex flex-row w-full items-center justify-center gap-4">
+              VERS LA CONNEXION
+              <Icon name="arrow-right" />
+            </Link>
           </Button>
-        </Link>
       </div>
     </div>
   </UserAuthenticationLayout>
