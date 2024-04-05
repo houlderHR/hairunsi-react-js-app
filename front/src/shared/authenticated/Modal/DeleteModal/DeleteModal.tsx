@@ -19,7 +19,7 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
 }) => (
   <Modal onClose={onClose} title={title}>
     <div className="mt-1 flex justify-center">
-      <img src={`/icon/${icon}.svg`} alt="f4" srcSet="" />
+      <img src={`/icon/${icon}.svg`} width={74} height={74} alt="f4" />
     </div>
     <div className="text-center py-5 mb-10">
       <h2 className="text-secondary text-xl mb-3 font-medium">{description}</h2>
