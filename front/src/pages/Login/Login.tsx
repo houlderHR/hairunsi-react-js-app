@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
 import Input from '../../shared/inputs/Input';
 import InputIcon from '../../shared/inputs/InputIcon';
@@ -59,7 +60,7 @@ const Login = () => {
           <hr className="mx-20" />
           <span className="text-black-1 mt-8 text-[14px]">
             Mot de passe oublié?&nbsp;
-            <Link to="/">
+            <Link to={routes.unauthenticated.subpaths.resetPassword.path}>
               <b>Cliquez ici.</b>
             </Link>
           </span>

@@ -1,6 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Accueil from '../pages/Accueil';
 import Authenticated from '../pages/Authenticated';
+import CheckEmailToResetPassword from '../pages/CheckEmailToResetPassword';
+import ErrorResetPassword from '../pages/ErrorResetPassword';
 import ForgotPassword from '../pages/ForgotPassword';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
   {
     path: routes.unauthenticated.subpaths.resetPasswordSuccess.path,
     element: <ResetPasswordSuccess />,
+  },
+  {
+    path: routes.unauthenticated.subpaths.checkEmailToResetPassword.path,
+    element: <CheckEmailToResetPassword />,
+  },
+  {
+    path: routes.unauthenticated.subpaths.errorResetPassword.path,
+    element: <ErrorResetPassword />,
   },
   {
     path: routes.authentified.path,

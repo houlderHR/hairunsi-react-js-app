@@ -34,7 +34,7 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
         alt="background"
         className="absolute z-0 w-full h-full top-0 left-0 bg-cover right-0 bg-no-repeat"
       />
-      <div className="z-10 mt-[594px] mb-52 text-white mx-5 2xl:mx-[77px]">
+      <div className="z-10 mt-[594px] text-white mx-5 2xl:mx-[77px]">
         <h3 className="lg:text-[54px] text-4xl leading-9 lg:leading-[60px] break-words font-normal">
           {title}
         </h3>
@@ -59,9 +59,7 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
             <p className="text-sm leading-4">
               Vous avez d&eacute;ja un compte&nbsp;?&nbsp;
               <strong>
-                <NavLink to={routes.unauthenticated.subpaths.login.path}>
-                  Conn&eacute;ctez-vous
-                </NavLink>
+                <NavLink to={routes.unauthenticated.subpaths.login.path}>Connectez-vous</NavLink>
               </strong>
             </p>
           </div>
