@@ -1,5 +1,6 @@
 import { Express } from 'express';
 import { config } from 'dotenv';
+import './database/data-source';
 import express = require('express');
 import bodyParser = require('body-parser');
 
