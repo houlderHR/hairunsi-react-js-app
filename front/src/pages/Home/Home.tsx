@@ -23,9 +23,11 @@ const Home: FC = () => (
             Une plateforme de gestion et d&apos;organisation en interne de vos r&ecirc;ves.
           </h3>
         </div>
-        <Link to={routes.unauthenticated.subpaths.login.path}>
-          <ButtonOutlined title="commencer" />
-        </Link>
+        <div>
+          <Link to={routes.unauthenticated.subpaths.login.path}>
+            <ButtonOutlined title="commencer" />
+          </Link>
+        </div>
       </div>
       <div className="absolute bg-cover z-20 inset-0 h-full w-full bg-no-repeat bg-svg" />
     </div>
