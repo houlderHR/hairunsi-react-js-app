@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
-    "build": "npx tsc",
+    "build": "tsc",
     "start": "ts-node src/index.ts",
     "dev": "typeorm-ts-node-commonjs migration:run -d  ./src/database/data-source.ts;nodemon src/index.ts",
     "typeorm": "typeorm-ts-node-commonjs",
