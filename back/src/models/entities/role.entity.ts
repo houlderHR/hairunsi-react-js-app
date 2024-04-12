@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, Unique } from 'typeorm';
 import { Job } from './job.entity';
 import { Permission } from './permission.entity';
 
@@ -9,6 +9,7 @@ export class Role {
 
   @Column('varchar', {
     length: 255,
+    unique: true,
   })
   name: string;
 
