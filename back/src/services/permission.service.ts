@@ -1,9 +1,9 @@
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { AppDataSource } from '../database/data-source';
-import { Permission } from '../entities/permission.entity';
-import { CreateAndUpdatePermissionDto } from '../dto/permission/CreateAndUpdatePermissionDto';
 import { ErrorMessage } from '../exceptions/ErrorMessage';
+import { CreateAndUpdatePermissionDto } from '../models/dto/permission/CreateAndUpdatePermissionDto';
+import { Permission } from '../models/entities/permission.entity';
 
 class PermissionService {
   async createPermission(

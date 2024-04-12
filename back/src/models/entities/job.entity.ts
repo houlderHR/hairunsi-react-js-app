@@ -7,9 +7,9 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Department } from './department.entity';
 import { User } from './user.entity';
 import { Role } from './role.entity';
+import { Department } from './department.entity';
 
 @Entity('Job')
 export class Job {

@@ -12,5 +12,5 @@ export class Department {
   name: string;
 
   @OneToMany(() => Job, (job) => job.department)
-  jobs: Job[];
+  jobs?: Job[];
 }
