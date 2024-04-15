@@ -11,7 +11,7 @@ router.get(
 );
 router.delete(
   '/:id([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})',
-  DepartmentController.deleteById,
+  DepartmentController.delete,
 );
 router.put(
   '/:id([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})',

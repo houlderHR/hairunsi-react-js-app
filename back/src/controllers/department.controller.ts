@@ -35,7 +35,7 @@ class DepartmentController {
     }
   }
 
-  public async deleteById(request: Request, response: Response): Promise<Response> {
+  public async delete(request: Request, response: Response): Promise<Response> {
     try {
       const deleteResult = await DepartmentService.deleteDepartment(request.params.id);
       if (deleteResult.affected > 0) {
@@ -44,7 +44,7 @@ class DepartmentController {
 
       return response.status(204).send();
     } catch (error) {
-      return response.status(error.errors.status).json(error);
+      return response.status(error.status).json(error);
     }
   }
 
