@@ -4,14 +4,13 @@ import { Role } from '../entities/role.entity';
 import { CreateOrUpdateRoleDto } from '../dto/role/createRoleDto';
 import ERROR from '../utils/errorMessage';
 import TYPEORM_ERROR from '../utils/errorTypeorm';
+import { plainToClass } from 'class-transformer';
 
 class RoleService {
   async create(newRoleDto: CreateOrUpdateRoleDto): Promise<Role> {
     try {
-      const errors = await validate(newRoleDto);
+      const errors = await validate(plainToClass(CreateOrUpdateRoleDto, newRoleDto));
       if (errors.length > 0) {
-        console.log(errors);
-        // if(errors.at(0).)
         throw { status: ERROR.UNAUTHORIZED.status, message: errors.at(0).constraints.isLength };
       }
       const role: CreateOrUpdateRoleDto = new Role();

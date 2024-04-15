@@ -2,12 +2,13 @@ import { Request, Response } from 'express';
 import { plainToClass } from 'class-transformer';
 import { CreateOrUpdateRoleDto } from '../dto/role/createRoleDto';
 import RoleService from '../services/role.service';
+import { Role } from '../entities/role.entity';
 
 class RoleController {
   async create(req: Request, res: Response) {
     try {
-      const newRoleDto: CreateOrUpdateRoleDto = plainToClass(CreateOrUpdateRoleDto, req.body);
-      const createdRole = await RoleService.create(newRoleDto as CreateOrUpdateRoleDto);
+      // const newRoleDto: Role = plainToClass(CreateOrUpdateRoleDto, req.body);
+      const createdRole = await RoleService.create(req.body);
       return res.status(200).json(createdRole);
     } catch (error) {
       return res.status(error.status).json(error);
