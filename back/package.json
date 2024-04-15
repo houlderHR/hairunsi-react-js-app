@@ -10,6 +10,7 @@
     "schema:sync": "typeorm-ts-node-commonjs schema:sync",
     "typeorm:cache": "typeorm-ts-node-commonjs cache:clear",
     "schema:drop": "typeorm-ts-node-commonjs -d ./src/database/data-source.ts",
+    "migration:create": "typeorm-ts-node-commonjs migration:create ./src/migrations/$npm_config_name",
     "migration:generate": "typeorm-ts-node-commonjs migration:generate ./src/migrations/$npm_config_name -d ./src/database/data-source.ts",
     "migration:show": "typeorm-ts-node-commonjs migration:show -d ./src/database/data-source.ts",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d  ./src/database/data-source.ts",
@@ -21,6 +22,9 @@
   "description": "",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "pg": "^8.4.0",
