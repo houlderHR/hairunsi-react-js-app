@@ -1,7 +1,7 @@
 import { validate } from 'class-validator';
 import { AppDataSource } from '../database/data-source';
-import { CreatePermissionDto } from '../models/dto/permission/CreatePermissionDto';
-import { Permission } from '../models/entities/permission.entity';
+import { CreatePermissionDto } from '../dto/permission/CreatePermissionDto';
+import { Permission } from '../entities/permission.entity';
 
 export const createPermission = async (permissionDto: CreatePermissionDto): Promise<Permission> => {
   const errors = await validate(permissionDto);
