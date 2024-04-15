@@ -10,6 +10,8 @@ class RoleService {
     try {
       const errors = await validate(newRoleDto);
       if (errors.length > 0) {
+        console.log(errors);
+        // if(errors.at(0).)
         throw { status: ERROR.UNAUTHORIZED.status, message: errors.at(0).constraints.isLength };
       }
       const role: CreateOrUpdateRoleDto = new Role();

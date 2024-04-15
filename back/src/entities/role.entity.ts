@@ -4,14 +4,13 @@ import {
   Column,
   ManyToMany,
   JoinTable,
-  Unique,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Job } from './job.entity';
 import { Permission } from './permission.entity';
 
-@Entity('Role')
+@Entity('roles')
 export class Role {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -25,14 +24,14 @@ export class Role {
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',
-    nullable: false,
+    nullable: true,
   })
   created_at: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
     type: 'timestamp',
-    nullable: false,
+    nullable: true,
   })
   updated_at: Date;
   @ManyToMany(() => Job)

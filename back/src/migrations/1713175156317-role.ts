@@ -20,6 +20,7 @@ export class Role1713175156317 implements MigrationInterface {
             name: 'name',
             type: 'varchar',
             length: '255',
+            isUnique: true,
             isNullable: false,
           },
           {
@@ -31,8 +32,7 @@ export class Role1713175156317 implements MigrationInterface {
           {
             name: 'updated_at',
             type: 'timestamp',
-            isNullable: false,
-            default: 'NOW()',
+            isNullable: true,
           },
         ],
       }),
