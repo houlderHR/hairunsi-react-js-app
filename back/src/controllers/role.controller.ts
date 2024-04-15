@@ -7,7 +7,6 @@ import { Role } from '../entities/role.entity';
 class RoleController {
   async create(req: Request, res: Response) {
     try {
-      // const newRoleDto: Role = plainToClass(CreateOrUpdateRoleDto, req.body);
       const createdRole = await RoleService.create(req.body);
       return res.status(200).json(createdRole);
     } catch (error) {
