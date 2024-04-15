@@ -61,7 +61,7 @@ class DepartmentController {
 
       return response.status(200).json(department);
     } catch (error) {
-      return response.status(error.errors.status).json(error);
+      return response.status(error.status).json(error);
     }
   }
 }

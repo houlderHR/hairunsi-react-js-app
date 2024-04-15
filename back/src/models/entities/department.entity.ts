@@ -8,6 +8,7 @@ export class Department {
 
   @Column('varchar', {
     length: 255,
+    unique: true,
   })
   name: string;
 

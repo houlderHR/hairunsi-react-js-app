@@ -1,11 +1,10 @@
 import { validate } from 'class-validator';
 import { AppDataSource } from '../database/data-source';
 import { Department } from '../models/entities/department.entity';
-import ValidationError from '../validation/ValidationError';
-import EntityNotFoundException from '../exceptions/EntityNotFoundException';
 import { DeleteResult, Repository } from 'typeorm';
 import { CreateDepartmentDto } from '../models/dto/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../models/dto/department/UpdateDepartmentDto';
+import HttpException from '../exceptions/HttpException';
 
 class DepartmentService {
   public async createDepartment(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
@@ -16,24 +15,29 @@ class DepartmentService {
         constraints,
       }));
 
-      throw new ValidationError('Bad request', 400, validationErrors);
+      throw new HttpException(400, validationErrors);
     }
 
-    const department = new Department();
-    department.name = createDepartmentDto.name;
-    department.jobs = createDepartmentDto.jobs;
+    try {
+      const department = new Department();
+      department.name = createDepartmentDto.name;
+      department.jobs = createDepartmentDto.jobs;
 
-    return await this.getRepository().save(department);
+      return await this.getRepository().save(department);
+    } catch (error) {
+      if (error.code === '23505') {
+        throw new HttpException(409, 'Le département existe déja');
+      }
+
+      throw new HttpException(500, 'Internal server error');
+    }
   }
 
   public async getDepartmentById(id: string): Promise<Department> {
     try {
       return await this.getRepository().findOneByOrFail({ id });
     } catch (error) {
-      throw new EntityNotFoundException('Not found', {
-        message: "Le departement n'existe pas",
-        status: 404,
-      });
+      throw new HttpException(404, "Le departement n'existe pas");
     }
   }
 
@@ -45,10 +49,7 @@ class DepartmentService {
     try {
       return await this.getRepository().delete({ id });
     } catch (error) {
-      throw new EntityNotFoundException('Not found', {
-        message: "Le departement à supprimé n'existe pas",
-        status: 404,
-      });
+      throw new HttpException(404, "Le departement à supprimé n'existe pas");
     }
   }
 
@@ -65,16 +66,14 @@ class DepartmentService {
           constraints,
         }));
 
-        throw new ValidationError('Bad request', 500, validationErrors);
+        throw new HttpException(400, validationErrors);
       }
       department.jobs = updateDepartmentDto.jobs;
       department.name = updateDepartmentDto.name;
 
       return await this.getRepository().save(department);
     } catch (error) {
-      console.log(error);
-
-      throw error;
+      throw new HttpException(500, 'Internal server error');
     }
   }
 
