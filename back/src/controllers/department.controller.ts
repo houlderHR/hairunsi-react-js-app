@@ -4,9 +4,6 @@ import DepartmentService from '../services/department.service';
 import { CreateDepartmentDto } from '../dto/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../dto/department/UpdateDepartmentDto';
 
-/**
- * Controller pour le departement
- */
 class DepartmentController {
   public async create(request: Request, response: Response): Promise<Response> {
     try {
@@ -22,18 +19,12 @@ class DepartmentController {
     }
   }
 
-  /**
-   * Obtenir toute les departements
-   */
   public async get(request: Request, response: Response): Promise<Response> {
     const departments = await DepartmentService.getAllDepartment();
 
     return response.status(200).json(departments);
   }
 
-  /**
-   * Obtenir un departement par son ID
-   */
   public async getById(request: Request, response: Response): Promise<Response> {
     try {
       const department = await DepartmentService.getDepartmentById(request.params.id);
@@ -44,9 +35,6 @@ class DepartmentController {
     }
   }
 
-  /**
-   * Supprimer un departement par son ID
-   */
   public async delete(request: Request, response: Response): Promise<Response> {
     try {
       await DepartmentService.deleteDepartment(request.params.id);
@@ -57,9 +45,6 @@ class DepartmentController {
     }
   }
 
-  /**
-   * Mettre à jour un departement
-   */
   public async update(request: Request, response: Response): Promise<Response> {
     try {
       const updateDepartmentDto: UpdateDepartmentDto = plainToClass(
