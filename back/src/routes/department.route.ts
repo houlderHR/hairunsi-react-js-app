@@ -6,8 +6,8 @@ const router = Router();
 
 router.post('', DepartmentController.create);
 router.get('', DepartmentController.get);
-router.get(`/:id${REGEX.UID}`, DepartmentController.getById);
-router.delete(`/:id${REGEX.UID}`, DepartmentController.delete);
-router.put(`/:id${REGEX.UID}`, DepartmentController.update);
+router.get(`/:id${REGEX.UUID}`, DepartmentController.getById);
+router.delete(`/:id${REGEX.UUID}`, DepartmentController.delete);
+router.put(`/:id${REGEX.UUID}`, DepartmentController.update);
 
 export default router;
