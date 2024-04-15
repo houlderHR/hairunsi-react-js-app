@@ -3,25 +3,23 @@ import { plainToClass } from 'class-transformer';
 import { CreateOrUpdateRoleDto } from '../models/dto/role/createRoleDto';
 import RoleService from '../services/role.service';
 import ERROR from '../errorMessage';
+import TYPEORM_ERROR from '../errorTypeorm';
 
 class RoleController {
   async create(req: Request, res: Response) {
     try {
       const newRoleDto: CreateOrUpdateRoleDto = plainToClass(CreateOrUpdateRoleDto, req.body);
       const createdRole = await RoleService.create(newRoleDto as CreateOrUpdateRoleDto);
-      return res.status(201).json(createdRole);
+      return res.status(200).json(createdRole);
     } catch (error) {
-      if (error.status != ERROR.INTERNAL_SERVER.status) {
-        return res.status(error.status).json({ message: error.message });
-      }
-      return res.status(ERROR.INTERNAL_SERVER.status).json(ERROR.INTERNAL_SERVER);
+      return res.status(error.status).json(error);
     }
   }
 
   async getAll(req: Request, res: Response) {
     try {
       const result = await RoleService.getAll();
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     } catch (error) {
       return res.status(error.status).json({ message: error.message });
     }
@@ -31,13 +29,9 @@ class RoleController {
     try {
       const id = req.params.id;
       const result = await RoleService.getOne(id);
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     } catch (error) {
-      if (error.status != ERROR.INTERNAL_SERVER.status)
-        return res.status(error.status).json({ message: error.message });
-      return res
-        .status(ERROR.INTERNAL_SERVER.status)
-        .json({ message: ERROR.INTERNAL_SERVER.message });
+      return res.status(error.status).json(error);
     }
   }
 
@@ -48,11 +42,7 @@ class RoleController {
       const result = await RoleService.update(id, updateRole);
       return res.status(200).json(result);
     } catch (error) {
-      if (error.status != ERROR.INTERNAL_SERVER.status)
-        return res.status(error.status).json({ message: error.message });
-      return res
-        .status(ERROR.INTERNAL_SERVER.status)
-        .json({ message: ERROR.INTERNAL_SERVER.message });
+      return res.status(error.status).json(error);
     }
   }
 
@@ -60,13 +50,9 @@ class RoleController {
     const id = req.params.id;
     try {
       const result = await RoleService.delete(id);
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     } catch (error) {
-      if (error.status != ERROR.INTERNAL_SERVER.status)
-        return res.status(error.status).json({ message: error.message });
-      return res
-        .status(ERROR.INTERNAL_SERVER.status)
-        .json({ message: ERROR.INTERNAL_SERVER.message });
+      return res.status(error.status).json(error);
     }
   }
 }

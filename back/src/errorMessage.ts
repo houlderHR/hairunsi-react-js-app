@@ -11,6 +11,10 @@ const ERROR = {
     status: 402,
     message: 'Unauthorized request',
   },
+  DUPLICATED: {
+    status: 409,
+    message: 'Duplicated value',
+  },
 };
 
 export default ERROR;
