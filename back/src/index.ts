@@ -5,7 +5,7 @@ import express = require('express');
 var cors = require('cors');
 
 import bodyParser = require('body-parser');
-import { routerPermission } from './routes';
+import router from './routes/';
 
 config();
 
@@ -14,7 +14,7 @@ const app: Express = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/permission', routerPermission);
+app.use(router);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

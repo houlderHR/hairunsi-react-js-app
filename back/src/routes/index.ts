@@ -1,3 +1,8 @@
-import routerPermission from './permission.route';
+import { Router } from 'express';
+import permissionRoute from './permission.route';
 
-export { routerPermission };
+const router = Router();
+
+router.use('/permission', permissionRoute);
+
+export default router;

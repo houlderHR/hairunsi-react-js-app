@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Role } from './role.entity';
 
-@Entity()
+@Entity('permissions')
 export class Permission {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -22,7 +22,7 @@ export class Permission {
   created_at: Date;
 
   @UpdateDateColumn()
-  update_at: Date;
+  updated_at: Date;
 
   @ManyToMany(() => Role)
   roles: Role[];
