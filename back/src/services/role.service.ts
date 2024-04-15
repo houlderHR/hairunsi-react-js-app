@@ -1,9 +1,9 @@
 import { validate } from 'class-validator';
 import { AppDataSource } from '../database/data-source';
-import { Role } from '../models/entities/role.entity';
-import { CreateOrUpdateRoleDto } from '../models/dto/role/createRoleDto';
-import ERROR from '../errorMessage';
-import TYPEORM_ERROR from '../errorTypeorm';
+import { Role } from '../entities/role.entity';
+import { CreateOrUpdateRoleDto } from '../dto/role/createRoleDto';
+import ERROR from '../utils/errorMessage';
+import TYPEORM_ERROR from '../utils/errorTypeorm';
 
 class RoleService {
   async create(newRoleDto: CreateOrUpdateRoleDto): Promise<Role> {

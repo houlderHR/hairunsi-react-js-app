@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { plainToClass } from 'class-transformer';
-import { CreateOrUpdateRoleDto } from '../models/dto/role/createRoleDto';
+import { CreateOrUpdateRoleDto } from '../dto/role/createRoleDto';
 import RoleService from '../services/role.service';
 
 class RoleController {

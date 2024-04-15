@@ -1,15 +1,9 @@
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { AppDataSource } from '../database/data-source';
-<<<<<<< HEAD
 import { Permission } from '../entities/permission.entity';
 import { CreateAndUpdatePermissionDto } from '../dto/permission/CreateAndUpdatePermissionDto';
 import { ErrorMessage } from '../exceptions/ErrorMessage';
-=======
-import { CreatePermissionDto } from '../models/dto/permission/CreatePermissionDto';
-import { Permission } from '../models/entities/permission.entity';
-import { error } from 'console';
->>>>>>> c287a21 (✨ CRUD role)
 
 class PermissionService {
   async createPermission(
