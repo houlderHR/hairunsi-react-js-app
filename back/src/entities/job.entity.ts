@@ -7,9 +7,9 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Department } from './department.entity';
 import { User } from './user.entity';
 import { Role } from './role.entity';
+import { Department } from './department.entity';
 
 @Entity('Job')
 export class Job {
@@ -20,9 +20,6 @@ export class Job {
     length: 255,
   })
   name: string;
-
-  @ManyToOne(() => Department, (department) => department.jobs)
-  department: Department;
 
   @OneToMany(() => User, (user) => user.job)
   users: User[];

@@ -1,16 +1,25 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm';
-import { Job } from './job.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  UpdateDateColumn,
+  CreateDateColumn,
+} from 'typeorm';
 
-@Entity('Department')
+@Entity('departments')
 export class Department {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column('varchar', {
     length: 255,
+    unique: true,
   })
   name: string;
 
-  @OneToMany(() => Job, (job) => job.department)
-  jobs: Job[];
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn({ nullable: true })
+  updated_at: Date;
 }
