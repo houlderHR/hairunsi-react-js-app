@@ -3,7 +3,6 @@ import { AppDataSource } from '../database/data-source';
 import { Role } from '../models/entities/role.entity';
 import { CreateOrUpdateRoleDto } from '../models/dto/role/createRoleDto';
 import ERROR from '../errorMessage';
-import { log } from 'console';
 import TYPEORM_ERROR from '../errorTypeorm';
 
 class RoleService {
@@ -20,7 +19,7 @@ class RoleService {
     } catch (error) {
       if (error.status) throw error;
       if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code) {
-        throw { status: ERROR.DUPLICATED.status, message: ERROR.DUPLICATED.message };
+        throw ERROR.DUPLICATED;
       }
     }
   }
@@ -29,7 +28,7 @@ class RoleService {
     try {
       return await AppDataSource.getRepository(Role).find();
     } catch (error) {
-      throw { status: ERROR.INTERNAL_SERVER.status, message: ERROR.INTERNAL_SERVER.message };
+      throw ERROR.INTERNAL_SERVER;
     }
   }
 
@@ -43,7 +42,7 @@ class RoleService {
       if (error.code == TYPEORM_ERROR.UUID_INVALID.code)
         throw { status: ERROR.UNAUTHORIZED.status, message: 'Invalid role id' };
       if (error.status) throw { status: error.status, message: error.message };
-      throw { status: ERROR.INTERNAL_SERVER.status, message: ERROR.INTERNAL_SERVER.message };
+      throw ERROR.INTERNAL_SERVER;
     }
   }
 
@@ -62,12 +61,12 @@ class RoleService {
       throw { status: ERROR.NOT_FOUND.status, message: 'Role not found' };
     } catch (error) {
       if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code) {
-        throw { status: ERROR.DUPLICATED.status, message: ERROR.DUPLICATED.message };
+        throw ERROR.DUPLICATED;
       }
       if (error.code == TYPEORM_ERROR.UUID_INVALID.code)
         throw { status: ERROR.UNAUTHORIZED.status, message: 'Invalid role id' };
       if (error.status !== ERROR.INTERNAL_SERVER.status) throw error;
-      throw { status: ERROR.INTERNAL_SERVER.status, message: ERROR.INTERNAL_SERVER.message };
+      throw ERROR.INTERNAL_SERVER;
     }
   }
 
@@ -78,7 +77,7 @@ class RoleService {
     } catch (error) {
       if (error.code == TYPEORM_ERROR.UUID_INVALID.code)
         throw { status: ERROR.UNAUTHORIZED.status, message: 'Invalid role id' };
-      throw { status: ERROR.INTERNAL_SERVER.status, message: ERROR.INTERNAL_SERVER.message };
+      throw ERROR.INTERNAL_SERVER;
     }
   }
 }

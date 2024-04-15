@@ -2,8 +2,6 @@ import { Request, Response } from 'express';
 import { plainToClass } from 'class-transformer';
 import { CreateOrUpdateRoleDto } from '../models/dto/role/createRoleDto';
 import RoleService from '../services/role.service';
-import ERROR from '../errorMessage';
-import TYPEORM_ERROR from '../errorTypeorm';
 
 class RoleController {
   async create(req: Request, res: Response) {
