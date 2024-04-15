@@ -1,16 +1,18 @@
-import { validate } from 'class-validator';
+import { ValidationError, validate } from 'class-validator';
 import { AppDataSource } from '../database/data-source';
-import { Department } from '../models/entities/department.entity';
+import { Department } from '../entities/department.entity';
 import { DeleteResult, Repository } from 'typeorm';
-import { CreateDepartmentDto } from '../models/dto/department/CreateDepartmentDto';
-import { UpdateDepartmentDto } from '../models/dto/department/UpdateDepartmentDto';
 import HttpException from '../exceptions/HttpException';
+import { CreateDepartmentDto } from '../dto/department/CreateDepartmentDto';
+import { UpdateDepartmentDto } from '../dto/department/UpdateDepartmentDto';
+import HttpNotFoundException from '../exceptions/HttpNotFoundException';
+import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 
 class DepartmentService {
   public async createDepartment(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
     const errors = await validate(createDepartmentDto);
     if (errors.length > 0) {
-      const validationErrors = errors.map(({ property, constraints }) => ({
+      const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
         property,
         constraints,
       }));
@@ -21,7 +23,6 @@ class DepartmentService {
     try {
       const department = new Department();
       department.name = createDepartmentDto.name;
-      department.jobs = createDepartmentDto.jobs;
 
       return await this.getRepository().save(department);
     } catch (error) {
@@ -29,7 +30,7 @@ class DepartmentService {
         throw new HttpException(409, 'Le département existe déja');
       }
 
-      throw new HttpException(500, 'Internal server error');
+      throw new InternalServerErrorException();
     }
   }
 
@@ -37,7 +38,7 @@ class DepartmentService {
     try {
       return await this.getRepository().findOneByOrFail({ id });
     } catch (error) {
-      throw new HttpException(404, "Le departement n'existe pas");
+      throw new HttpNotFoundException("Le departement n'existe pas");
     }
   }
 
@@ -46,34 +47,41 @@ class DepartmentService {
   }
 
   public async deleteDepartment(id: string): Promise<DeleteResult> {
-    try {
-      return await this.getRepository().delete({ id });
-    } catch (error) {
-      throw new HttpException(404, "Le departement à supprimé n'existe pas");
+    let deleteResult = await this.getRepository().delete({ id });
+
+    if (deleteResult.affected > 0) {
+      return deleteResult;
     }
+
+    if (deleteResult.affected === 0) {
+      throw new HttpNotFoundException("Le departement à supprimer n'existe pas");
+    }
+
+    throw new InternalServerErrorException();
   }
 
   public async updateDepartment(
     id: string,
     updateDepartmentDto: UpdateDepartmentDto,
   ): Promise<Department> {
-    try {
-      let department = await this.getDepartmentById(id);
-      const errors = await validate(updateDepartmentDto);
-      if (errors.length > 0) {
-        const validationErrors = errors.map(({ property, constraints }) => ({
-          property,
-          constraints,
-        }));
+    let department = await this.getDepartmentById(id);
 
-        throw new HttpException(400, validationErrors);
-      }
-      department.jobs = updateDepartmentDto.jobs;
+    const errors = await validate(updateDepartmentDto);
+    if (errors.length > 0) {
+      const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
+        property,
+        constraints,
+      }));
+
+      throw new HttpException(400, validationErrors);
+    }
+
+    try {
       department.name = updateDepartmentDto.name;
 
       return await this.getRepository().save(department);
     } catch (error) {
-      throw new HttpException(500, 'Internal server error');
+      throw new InternalServerErrorException();
     }
   }
 

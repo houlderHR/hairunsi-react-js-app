@@ -21,8 +21,8 @@ export class Job {
   })
   name: string;
 
-  @ManyToOne(() => Department, (department) => department.jobs)
-  department: Department;
+  // @ManyToOne(() => Department, (department) => department.jobs)
+  // department: Department;
 
   @OneToMany(() => User, (user) => user.job)
   users: User[];

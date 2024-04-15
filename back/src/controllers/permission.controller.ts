@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import PermissionService from '../services/permission.service';
 import { ErrorMessage } from '../exceptions/ErrorMessage';
-import { Permission } from '../models/entities/permission.entity';
+import { Permission } from '../entities/permission.entity';
 
 class PermissionController {
   async create(req: Request, res: Response) {
