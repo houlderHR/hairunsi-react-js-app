@@ -4,10 +4,10 @@ import REGEX from '../utils/regex';
 
 const router = Router();
 
-router.post('/post', PostController.create);
-router.get('/get', PostController.getAll);
-router.get(`/get/:id${REGEX.UID}`, PostController.getOne);
-router.put(`/update/:id${REGEX.UID}`, PostController.updateName);
-router.delete(`/delete/:id${REGEX.UID}`, PostController.delete);
+router.post('/', PostController.create);
+router.get('/', PostController.getAll);
+router.get(`/:id${REGEX.UID}`, PostController.getOne);
+router.put(`/:id${REGEX.UID}`, PostController.updateName);
+router.delete(`/:id${REGEX.UID}`, PostController.delete);
 
 export default router;

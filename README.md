@@ -97,17 +97,23 @@ POST http://localhost:PORT/user
 PUT http://localhost:PORT/user/:id
 DELETE http://localhost:PORT/user/:id
 
-GET http://localhost:PORT/persmission
-GET http://localhost:PORT/persmission/:id
-POST http://localhost:PORT/persmission
-PUT http://localhost:PORT/persmission/:id
-DELETE http://localhost:PORT/persmission/:id
+GET http://localhost:PORT/permission
+GET http://localhost:PORT/permission/:id
+POST http://localhost:PORT/permission
+PUT http://localhost:PORT/permission/:id
+DELETE http://localhost:PORT/permission/:id
 
 GET http://localhost:PORT/file
 GET http://localhost:PORT/file/:id
 POST http://localhost:PORT/file
 PUT http://localhost:PORT/file/:id
 DELETE http://localhost:PORT/file/:id
+
+GET http://localhost:PORT/post
+GET http://localhost:PORT/post/:id
+POST http://localhost:PORT/post
+PUT http://localhost:PORT/post/:id
+DELETE http://localhost:PORT/post/:id
 ```
 
 #### **Build the App**

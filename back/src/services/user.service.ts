@@ -4,11 +4,11 @@ import CreateUserDto from '../dto/user/CreateUserDto';
 import { User } from '../entities/user.entity';
 import { ValidationError, validate } from 'class-validator';
 import HttpException from '../exceptions/HttpException';
-import STATUS_CODE from '../utils/statusCode';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import UpdateUserDto from '../dto/user/UpdateUserDto';
 import ResponseUserDto from '../dto/user/ResponseUserDto';
+import { StatusCodes } from 'http-status-codes';
 
 class UserService {
   public async createUser(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
@@ -34,7 +34,7 @@ class UserService {
     } catch (error) {
       console.log(error);
       if (error.code === '23505') {
-        throw new HttpException(STATUS_CODE.DUPLICATED.status, "L'utilisateur existe déja");
+        throw new HttpException(StatusCodes.CONFLICT, "L'utilisateur existe déja");
       }
 
       throw new InternalServerErrorException();
@@ -72,7 +72,7 @@ class UserService {
       return this.formatUserResponse(await this.getUserRepository().save(user));
     } catch (error) {
       if (error.code === '23505') {
-        throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le département existe déja');
+        throw new HttpException(StatusCodes.CONFLICT, 'Le département existe déja');
       }
 
       throw new InternalServerErrorException();

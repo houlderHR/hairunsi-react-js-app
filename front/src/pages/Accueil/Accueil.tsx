@@ -4,7 +4,7 @@ import OptionButton from './OptionButton';
 
 const Accueil = () => (
   <div className="accueil-body">
-    <div className="container">
+    <div className="container-accueil">
       <div className="header-content">
         <div className="title">Mes applications</div>
         <div className="label">
