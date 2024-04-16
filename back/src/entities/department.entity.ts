@@ -4,7 +4,9 @@ import {
   Column,
   UpdateDateColumn,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Post } from './post.entity';
 
 @Entity('departments')
 export class Department {

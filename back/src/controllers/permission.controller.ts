@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import PermissionService from '../services/permission.service';
 import { Permission } from '../entities/permission.entity';
+import { UpdateResult } from 'typeorm';
 
 class PermissionController {
   async create(req: Request, res: Response) {
@@ -34,7 +35,10 @@ class PermissionController {
   async updateName(req: Request, res: Response) {
     try {
       const id: string = req.params.id;
-      const permission: Permission = await PermissionService.updateNameOfPermission(id, req.body);
+      const permission: Permission | UpdateResult = await PermissionService.updateNameOfPermission(
+        id,
+        req.body,
+      );
       return res.status(200).json(permission);
     } catch (error) {
       return res.status(error.status).json(error);
@@ -44,7 +48,7 @@ class PermissionController {
   async delete(req: Request, res: Response) {
     try {
       const id: string = req.params.id;
-      await PermissionService.updateNameOfPermission(id, req.body);
+      await PermissionService.deleteOnePermission(id);
       return res.status(200).json({ message: 'Permission supprimée' });
     } catch (error) {
       return res.status(error.status).json(error);

@@ -1,4 +1,4 @@
-import { DeleteResult } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 import { ValidationError, validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { AppDataSource } from '../database/data-source';
@@ -7,7 +7,7 @@ import { CreateAndUpdatePermissionDto } from '../dto/permission/CreateAndUpdateP
 import HttpException from '../exceptions/HttpException';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
-import ERROR from '../utils/statusCode';
+import STATUS_CODE from '../utils/statusCode';
 
 class PermissionService {
   async createPermission(permissionDto: CreateAndUpdatePermissionDto): Promise<Permission> {
@@ -17,7 +17,7 @@ class PermissionService {
         property,
         constraints,
       }));
-      throw new HttpException(ERROR.UNPROCESSABLE_ENTITY.status, errorsMessage);
+      throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, errorsMessage);
     }
     try {
       const permission: CreateAndUpdatePermissionDto = new Permission();
@@ -26,7 +26,7 @@ class PermissionService {
       return saved;
     } catch (error) {
       if (error.code === '23505') {
-        throw new HttpException(ERROR.DUPLICATED.status, ERROR.DUPLICATED.message);
+        throw new HttpException(STATUS_CODE.DUPLICATED.status, STATUS_CODE.DUPLICATED.message);
       }
       throw new InternalServerErrorException();
     }
@@ -61,7 +61,7 @@ class PermissionService {
   async updateNameOfPermission(
     id: string,
     updatePermissionDto: CreateAndUpdatePermissionDto,
-  ): Promise<Permission> {
+  ): Promise<UpdateResult | Permission> {
     const changedName: CreateAndUpdatePermissionDto = plainToClass(
       CreateAndUpdatePermissionDto,
       updatePermissionDto,
@@ -72,23 +72,23 @@ class PermissionService {
         property,
         constraints,
       }));
-      throw new HttpException(ERROR.UNPROCESSABLE_ENTITY.status, errorsMessage);
+      throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, errorsMessage);
     }
-
-    try {
-      if ((await this.getPermission(id)) instanceof HttpNotFoundException)
-        return this.getPermission(id);
-      if (!(await this.permissionWithThisNameAlreadyExists(changedName.name))) {
-        const permission = await AppDataSource.getRepository(Permission).save({
+    if ((await this.getPermission(id)) instanceof HttpNotFoundException)
+      return this.getPermission(id);
+    if (!(await this.permissionWithThisNameAlreadyExists(changedName.name))) {
+      const permission = await AppDataSource.getRepository(Permission).update(
+        {
           id,
-          name: changedName.name,
-        });
-        return permission;
-      }
-      throw new HttpException(ERROR.DUPLICATED.status, ERROR.DUPLICATED.message);
-    } catch (error) {
-      throw new InternalServerErrorException();
-    }
+        },
+        { name: changedName.name },
+      );
+      if (permission.affected > 0) return permission;
+      throw new HttpNotFoundException("Aucune permission n'a été modifiée");
+    } else if (await this.permissionWithThisNameAlreadyExists(changedName.name))
+      throw new HttpException(STATUS_CODE.DUPLICATED.status, STATUS_CODE.DUPLICATED.message);
+
+    throw new InternalServerErrorException();
   }
 
   async deleteOnePermission(id: string): Promise<DeleteResult> {

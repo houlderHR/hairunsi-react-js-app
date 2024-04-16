@@ -2,6 +2,9 @@ const STATUS_CODE = {
   OK: {
     status: 200,
   },
+  CREATED: {
+    status: 201,
+  },
   UNAUTHORIZED: {
     status: 402,
     message: 'Unauthorized request',
