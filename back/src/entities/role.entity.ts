@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Job } from './job.entity';
+import { Post } from './post.entity';
 import { Permission } from './permission.entity';
 
 @Entity('roles')

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import FileService from '../services/file.service';
-import STATUS_CODE from '../utils/statusCode';
+import { StatusCodes } from 'http-status-codes';
 
 class FileController {
   async create(req: Request, res: Response) {
     try {
       const createdFile = await FileService.create(req.body);
-      return res.status(STATUS_CODE.OK.status).json(createdFile);
+      return res.status(StatusCodes.CREATED).json(createdFile);
     } catch (error) {
       return res.status(error.status).json(error);
     }
@@ -15,7 +15,7 @@ class FileController {
   async getAll(req: Request, res: Response) {
     try {
       const result = await FileService.getAll();
-      return res.status(STATUS_CODE.OK.status).json(result);
+      return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
     }
@@ -25,7 +25,7 @@ class FileController {
     try {
       const id = req.params.id;
       const result = await FileService.getOne(id);
-      return res.status(STATUS_CODE.OK.status).json(result);
+      return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
     }
@@ -35,7 +35,7 @@ class FileController {
     try {
       const id = req.params.id;
       const result = await FileService.update(id, req.body);
-      return res.status(STATUS_CODE.OK.status).json(result);
+      return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
     }
@@ -45,7 +45,7 @@ class FileController {
     const id = req.params.id;
     try {
       const result = await FileService.delete(id);
-      return res.status(STATUS_CODE.OK.status).json(result);
+      return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
     }

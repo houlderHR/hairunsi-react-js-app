@@ -1,8 +1,9 @@
+import ERROR from '../utils/statusCode';
 import HttpException from './HttpException';
 
 class InternalServerErrorException extends HttpException {
   constructor() {
-    super(500, 'Internal server error');
+    super(ERROR.INTERNAL_SERVER.status, ERROR.INTERNAL_SERVER.message);
   }
 }
 
