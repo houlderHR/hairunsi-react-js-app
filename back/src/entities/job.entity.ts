@@ -21,9 +21,6 @@ export class Job {
   })
   name: string;
 
-  @OneToMany(() => User, (user) => user.job)
-  users: User[];
-
   @ManyToMany(() => Role)
   @JoinTable({ name: 'Role_Job' })
   roles: Role[];

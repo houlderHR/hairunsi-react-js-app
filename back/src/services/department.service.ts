@@ -7,6 +7,7 @@ import { CreateDepartmentDto } from '../dto/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../dto/department/UpdateDepartmentDto';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
+import STATUS_CODE from '../utils/statusCode';
 
 class DepartmentService {
   public async createDepartment(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
@@ -17,7 +18,7 @@ class DepartmentService {
         constraints,
       }));
 
-      throw new HttpException(400, validationErrors);
+      throw new HttpException(422, validationErrors);
     }
 
     try {
@@ -27,7 +28,7 @@ class DepartmentService {
       return await this.getRepository().save(department);
     } catch (error) {
       if (error.code === '23505') {
-        throw new HttpException(409, 'Le département existe déja');
+        throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le département existe déja');
       }
 
       throw new InternalServerErrorException();
@@ -73,7 +74,7 @@ class DepartmentService {
         constraints,
       }));
 
-      throw new HttpException(400, validationErrors);
+      throw new HttpException(422, validationErrors);
     }
 
     try {

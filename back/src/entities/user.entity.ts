@@ -1,33 +1,36 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne } from 'typeorm';
-import { Job } from './job.entity';
-import { File } from './file.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-@Entity('User')
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('varchar', {
-    length: 255,
-  })
-  registration_number: string;
+  @PrimaryGeneratedColumn('increment')
+  matricule: number;
 
   @Column('varchar', {
     length: 255,
   })
   firstname: string;
 
-  @Column('varchar', {
+  @Column({
+    type: 'varchar',
     length: 255,
   })
   lastname: string;
 
   @Column('timestamp')
-  birthday: Date;
+  birth_date: Date;
 
-  @ManyToOne(() => Job, (job) => job.users)
-  job: Job;
+  @CreateDateColumn()
+  created_at: Date;
 
-  @OneToOne(() => File)
-  profile: File;
+  @UpdateDateColumn({ nullable: true })
+  updated_at: Date;
 }
