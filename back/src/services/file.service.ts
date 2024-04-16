@@ -22,11 +22,7 @@ class FileService {
     }
     try {
       const file: CreateOrUpdateFileDto = new File();
-      file.name = newFileDto.name;
-      file.path = newFileDto.path;
-      file.size = newFileDto.size;
-      file.type = newFileDto.type;
-
+      Object.assign(file, newFileDto);
       const saved = await AppDataSource.getRepository(File).save(file);
       return saved;
     } catch (error) {
