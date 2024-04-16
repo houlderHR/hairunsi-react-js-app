@@ -42,6 +42,6 @@ npm install
 npm run dev
 ```
 
-This commande create database on your local PC and run the API
+This command will start the React development server
 
-Now open your browser on: [http://localhost:5173](http://localhost:5173)
+Now open your browser on: [http://localhost:5173](http://localhost:5173) to see the project
