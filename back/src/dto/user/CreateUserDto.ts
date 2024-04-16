@@ -11,7 +11,7 @@ class CreateUserDto {
   @MaxLength(255, { message: 'Le prenom ne doit pas dépasser les 255 caractères' })
   lastname: string;
 
-  @IsDateString()
+  @IsDateString({}, { message: 'Le format du date est incorrect' })
   birth_date: Date;
 }
 
