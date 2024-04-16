@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import RoleService from '../services/role.service';
 import STATUS_CODE from '../utils/statusCode';
+import { StatusCodes } from 'http-status-codes';
 
 class RoleController {
   async create(req: Request, res: Response) {
     try {
       const createdRole = await RoleService.create(req.body);
-      return res.status(STATUS_CODE.OK.status).json(createdRole);
+      return res.status(StatusCodes.CREATED).json(createdRole);
     } catch (error) {
       return res.status(error.status).json(error);
     }
@@ -15,7 +16,7 @@ class RoleController {
   async getAll(req: Request, res: Response) {
     try {
       const result = await RoleService.getAll();
-      return res.status(STATUS_CODE.OK.status).json(result);
+      return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
     }
@@ -25,7 +26,7 @@ class RoleController {
     try {
       const id = req.params.id;
       const result = await RoleService.getOne(id);
-      return res.status(STATUS_CODE.OK.status).json(result);
+      return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
     }
@@ -45,7 +46,7 @@ class RoleController {
     const id = req.params.id;
     try {
       const result = await RoleService.delete(id);
-      return res.status(STATUS_CODE.OK.status).json(result);
+      return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
     }

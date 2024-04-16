@@ -2,12 +2,12 @@ import { ValidationError, validate } from 'class-validator';
 import { AppDataSource } from '../database/data-source';
 import { Role } from '../entities/role.entity';
 import { CreateOrUpdateRoleDto } from '../dto/role/createOrUpdateRoleDto';
-import STATUS_CODE from '../utils/statusCode';
 import TYPEORM_ERROR from '../utils/errorTypeorm';
 import { plainToClass } from 'class-transformer';
 import HttpException from '../exceptions/HttpException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
+import { StatusCodes } from 'http-status-codes';
 
 class RoleService {
   async create(newRoleDto: CreateOrUpdateRoleDto): Promise<Role> {
@@ -18,7 +18,7 @@ class RoleService {
         constraints,
       }));
 
-      throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, validationErrors);
+      throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, validationErrors);
     }
     try {
       const role: CreateOrUpdateRoleDto = new Role();
@@ -27,7 +27,7 @@ class RoleService {
       return saved;
     } catch (error) {
       if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code) {
-        throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le rôle existe déja');
+        throw new HttpException(StatusCodes.CONFLICT, 'Le rôle existe déja');
       }
       throw new InternalServerErrorException();
     }
@@ -47,7 +47,7 @@ class RoleService {
       if (!result) throw new HttpNotFoundException("Le rôle n'existe pas");
       return result;
     } catch (error) {
-      if (error.status == STATUS_CODE.NOT_FOUND.status) throw error;
+      if (error.status == StatusCodes.NOT_FOUND) throw error;
       throw new InternalServerErrorException();
     }
   }
@@ -62,7 +62,7 @@ class RoleService {
             property,
             constraints,
           }));
-          throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, validationErrors);
+          throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, validationErrors);
         }
         AppDataSource.getRepository(Role).merge(role, updateRole);
         const result = await AppDataSource.getRepository(Role).save(role);
@@ -71,9 +71,9 @@ class RoleService {
       throw new HttpNotFoundException("Le rôle n'existe pas");
     } catch (error) {
       if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code)
-        throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le rôle existe déja');
-      if (error.status == STATUS_CODE.UNPROCESSABLE_ENTITY.status) throw error;
-      if (error.status == STATUS_CODE.NOT_FOUND.status) throw error;
+        throw new HttpException(StatusCodes.CONFLICT, 'Le rôle existe déja');
+      if (error.status == StatusCodes.UNPROCESSABLE_ENTITY) throw error;
+      if (error.status == StatusCodes.NOT_FOUND) throw error;
       throw new InternalServerErrorException();
     }
   }

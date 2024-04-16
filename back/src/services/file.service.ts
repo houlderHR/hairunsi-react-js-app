@@ -1,6 +1,5 @@
 import { ValidationError, validate } from 'class-validator';
 import { AppDataSource } from '../database/data-source';
-import STATUS_CODE from '../utils/statusCode';
 import TYPEORM_ERROR from '../utils/errorTypeorm';
 import { plainToClass } from 'class-transformer';
 import HttpException from '../exceptions/HttpException';
@@ -8,6 +7,7 @@ import InternalServerErrorException from '../exceptions/InternalServerErrorExcep
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import { File } from '../entities/file.entity';
 import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
+import { StatusCodes } from 'http-status-codes';
 
 class FileService {
   async create(newFileDto: CreateOrUpdateFileDto): Promise<File> {
@@ -18,7 +18,7 @@ class FileService {
         constraints,
       }));
 
-      throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, validationErrors);
+      throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, validationErrors);
     }
     try {
       const file: CreateOrUpdateFileDto = new File();
@@ -27,7 +27,7 @@ class FileService {
       return saved;
     } catch (error) {
       if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code) {
-        throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le fichier existe déja');
+        throw new HttpException(StatusCodes.CONFLICT, 'Le fichier existe déja');
       }
       throw new InternalServerErrorException();
     }
@@ -47,7 +47,7 @@ class FileService {
       if (!result) throw new HttpNotFoundException("Le fichier n'existe pas");
       return result;
     } catch (error) {
-      if (error.status == STATUS_CODE.NOT_FOUND.status) throw error;
+      if (error.status == StatusCodes.NOT_FOUND) throw error;
       throw new InternalServerErrorException();
     }
   }
@@ -62,7 +62,7 @@ class FileService {
             property,
             constraints,
           }));
-          throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, validationErrors);
+          throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, validationErrors);
         }
         AppDataSource.getRepository(File).merge(file, updateFile);
         const result = await AppDataSource.getRepository(File).save(file);
@@ -71,11 +71,8 @@ class FileService {
       throw new HttpNotFoundException("Le fichier n'existe pas");
     } catch (error) {
       if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code)
-        throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le fichier existe déja');
-      if (
-        error.status == STATUS_CODE.UNPROCESSABLE_ENTITY.status ||
-        error.status == STATUS_CODE.NOT_FOUND.status
-      )
+        throw new HttpException(StatusCodes.CONFLICT, 'Le fichier existe déja');
+      if (error.status == StatusCodes.UNPROCESSABLE_ENTITY || error.status == StatusCodes.NOT_FOUND)
         throw error;
       throw new InternalServerErrorException();
     }
