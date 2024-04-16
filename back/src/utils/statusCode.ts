@@ -1,7 +1,11 @@
-const ERROR = {
+const STATUS_CODE = {
   INTERNAL_SERVER: {
     status: 500,
     message: 'Internal server error',
+  },
+  UNPROCESSABLE_ENTITY: {
+    status: 422,
+    message: 'Unprocessable entity error',
   },
   NOT_FOUND: {
     status: 404,
@@ -17,4 +21,4 @@ const ERROR = {
   },
 };
 
-export default ERROR;
+export default STATUS_CODE;
