@@ -15,9 +15,10 @@ export class User1713249132613 implements MigrationInterface {
           },
           {
             name: 'matricule',
-            type: 'varchar',
-            isNullable: false,
-            isUnique: true,
+            type: 'int',
+            isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'increment',
           },
           {
             name: 'firstname',

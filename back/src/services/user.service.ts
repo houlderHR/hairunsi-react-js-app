@@ -8,9 +8,10 @@ import STATUS_CODE from '../utils/statusCode';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import UpdateUserDto from '../dto/user/UpdateUserDto';
+import ResponseUserDto from '../dto/user/ResponseUserDto';
 
 class UserService {
-  public async createUser(createUserDto: CreateUserDto): Promise<User> {
+  public async createUser(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
     const errors = await validate(createUserDto);
     if (errors.length > 0) {
       if (errors.length > 0) {
@@ -28,10 +29,10 @@ class UserService {
       user.firstname = createUserDto.firstname;
       user.lastname = createUserDto.lastname;
       user.birth_date = new Date(createUserDto.birth_date);
-      user.matricule = createUserDto.matricule;
 
-      return await this.getUserRepository().save(user);
+      return this.formatUserResponse(await this.getUserRepository().save(user));
     } catch (error) {
+      console.log(error);
       if (error.code === '23505') {
         throw new HttpException(STATUS_CODE.DUPLICATED.status, "L'utilisateur existe déja");
       }
@@ -40,16 +41,16 @@ class UserService {
     }
   }
 
-  public async getUserById(id: string): Promise<User> {
+  public async getUserById(id: string): Promise<ResponseUserDto> {
     try {
-      return await this.getUserRepository().findOneByOrFail({ id });
+      return this.formatUserResponse(await this.getUserRepository().findOneByOrFail({ id }));
     } catch (error) {
       throw new HttpNotFoundException("Cet utilisateur n'existe pas");
     }
   }
 
-  public async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.getUserById(id);
+  public async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<ResponseUserDto> {
+    const user = await this.getUserRepository().findOneByOrFail({ id });
 
     const errors = await validate(updateUserDto);
     if (errors.length > 0) {
@@ -68,7 +69,7 @@ class UserService {
       user.lastname = updateUserDto.lastname;
       user.birth_date = updateUserDto.birth_date;
 
-      return await this.getUserRepository().save(user);
+      return this.formatUserResponse(await this.getUserRepository().save(user));
     } catch (error) {
       if (error.code === '23505') {
         throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le département existe déja');
@@ -78,8 +79,9 @@ class UserService {
     }
   }
 
-  public async getAllUser(): Promise<User[]> {
-    return await this.getUserRepository().find();
+  public async getAllUser(): Promise<ResponseUserDto[]> {
+    const users = await this.getUserRepository().find();
+    return users.map((user) => this.formatUserResponse(user));
   }
 
   public async deleteUser(id: string): Promise<DeleteResult> {
@@ -98,6 +100,23 @@ class UserService {
 
   private getUserRepository(): Repository<User> {
     return AppDataSource.getRepository(User);
+  }
+
+  private formatUserResponse(user: User) {
+    let userResponseDto = new ResponseUserDto();
+    userResponseDto.id = user.id;
+    userResponseDto.firstname = user.firstname;
+    userResponseDto.lastname = user.lastname;
+    userResponseDto.matricule = this.formatMatricule(user.matricule);
+    userResponseDto.birth_date = user.birth_date;
+    userResponseDto.created_at = user.created_at;
+    userResponseDto.updated_at = user.updated_at;
+
+    return userResponseDto;
+  }
+
+  private formatMatricule(matricule: number): string {
+    return `M${('000' + matricule).substr(-3)}`;
   }
 }
 

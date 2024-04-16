@@ -3,7 +3,7 @@ import { plainToClass } from 'class-transformer';
 import DepartmentService from '../services/department.service';
 import { CreateDepartmentDto } from '../dto/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../dto/department/UpdateDepartmentDto';
-import STATUS_CODE from '../utils/statusCode';
+import { StatusCodes } from 'http-status-codes';
 
 class DepartmentController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -14,7 +14,7 @@ class DepartmentController {
       );
       const department = await DepartmentService.createDepartment(createDepartmentDto);
 
-      return response.status(STATUS_CODE.CREATED.status).json(department);
+      return response.status(StatusCodes.CREATED).json(department);
     } catch (error) {
       return response.status(error.status).json(error);
     }
@@ -23,14 +23,14 @@ class DepartmentController {
   public async get(request: Request, response: Response): Promise<Response> {
     const departments = await DepartmentService.getAllDepartment();
 
-    return response.status(STATUS_CODE.OK.status).json(departments);
+    return response.status(StatusCodes.OK).json(departments);
   }
 
   public async getById(request: Request, response: Response): Promise<Response> {
     try {
       const department = await DepartmentService.getDepartmentById(request.params.id);
 
-      return response.status(STATUS_CODE.OK.status).json(department);
+      return response.status(StatusCodes.OK).json(department);
     } catch (error) {
       return response.status(error.status).json(error);
     }
@@ -40,9 +40,7 @@ class DepartmentController {
     try {
       await DepartmentService.deleteDepartment(request.params.id);
 
-      return response
-        .status(STATUS_CODE.OK.status)
-        .json({ message: 'Departement supprimé avec succés' });
+      return response.status(StatusCodes.OK).json({ message: 'Departement supprimé avec succés' });
     } catch (error) {
       return response.status(error.status).json(error);
     }
@@ -59,7 +57,7 @@ class DepartmentController {
         updateDepartmentDto,
       );
 
-      return response.status(STATUS_CODE.OK.status).json(department);
+      return response.status(StatusCodes.OK).json(department);
     } catch (error) {
       return response.status(error.status).json(error);
     }

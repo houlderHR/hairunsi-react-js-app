@@ -11,22 +11,16 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('varchar', {
-    length: 255,
-    unique: true,
-  })
-  @Column('varchar', {
-    length: 6,
-    unique: true,
-  })
-  matricule: string;
+  @PrimaryGeneratedColumn('increment')
+  matricule: number;
 
   @Column('varchar', {
     length: 255,
   })
   firstname: string;
 
-  @Column('varchar', {
+  @Column({
+    type: 'varchar',
     length: 255,
   })
   lastname: string;
