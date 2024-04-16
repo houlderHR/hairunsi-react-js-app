@@ -1,15 +1,13 @@
-# HAIRUN SI PROJECT API
+# HAIRUN SI API
 
 A `node` server with a set of `RESTful` services using entirely `TypeScript` language.
 
 ## Technologies
 
-<div>
-  <img align="left" alt="node" style="margin-right: 10px; margin-top: 5px;" width="80px" height="50px" src="https://cdn4.iconfinder.com/data/icons/logos-3/454/nodejs-new-pantone-white-512.png" /> 
-   <img alt="node" width="80px" style="margin-right: 5px;" height="30px" src="https://miro.medium.com/v2/resize:fit:679/0*vq-JSMynSHUPXx70" /> 
-  <img alt="node" width="80px" style="margin-top: 15px;" height="30px" src="https://miro.medium.com/v2/resize:fit:1200/1*C8fBN7YOpw44gn5t8cIeWA.png" /> 
-  <img alt="node" width="80px" style="margin-left: 10px;" height="30px" src="https://c8j9w8r3.rocketcdn.me/wp-content/uploads/2021/05/postgresql-database-logo-1.jpeg" /> 
-</div>
+![image](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![image](https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white)
+![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ## Running server locally
 
@@ -17,7 +15,7 @@ A `node` server with a set of `RESTful` services using entirely `TypeScript` lan
 
 First, ensure you have the following installed:
 
-1. _Node_ - Download and install node version **21.7.^**: [NodeJS](https://nodejs.org/en/download).
+1. _Node_ - Download and install node version **>20.9.0**: [NodeJS](https://nodejs.org/en/download).
 2. _Git_ - Download and install latest version of [Git](https://git-scm.com/).
 3. _Docker_ - Install [docker](https://docs.docker.com/engine/install/).
 4. _PgAdmin_ - Download and install [pgadmin](https://www.pgadmin.org/download/).
