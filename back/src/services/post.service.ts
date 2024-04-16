@@ -7,7 +7,7 @@ import { CreateAndUpdatePostDto } from '../dto/post/CreateAndUpdatePostDto';
 import HttpException from '../exceptions/HttpException';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
-import STATUS_CODE from '../utils/statusCode';
+import { StatusCodes } from 'http-status-codes';
 
 class PostService {
   async createPost(postDto: CreateAndUpdatePostDto): Promise<Post> {
@@ -17,7 +17,7 @@ class PostService {
         property,
         constraints,
       }));
-      throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, errorsMessage);
+      throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, errorsMessage);
     }
     try {
       const poste: CreateAndUpdatePostDto = new Post();
@@ -27,7 +27,7 @@ class PostService {
     } catch (error) {
       console.log(error);
       if (error.code === '23505') {
-        throw new HttpException(STATUS_CODE.DUPLICATED.status, STATUS_CODE.DUPLICATED.message);
+        throw new HttpException(StatusCodes.CONFLICT, 'Le poste existe déjà');
       }
       throw new InternalServerErrorException();
     }
@@ -51,12 +51,9 @@ class PostService {
   }
 
   async getPost(id: string): Promise<Post> {
-    try {
-      const post: Post[] = await AppDataSource.getRepository(Post).findBy({ id });
-      return post[0];
-    } catch (error) {
-      throw new HttpNotFoundException('Aucun poste existant avec cet identifiant');
-    }
+    const post: Post[] = await AppDataSource.getRepository(Post).findBy({ id });
+    if (post.length) return post[0];
+    else throw new HttpNotFoundException('Aucun poste existant avec cet identifiant');
   }
 
   async updateNameOfPost(
@@ -70,7 +67,7 @@ class PostService {
         property,
         constraints,
       }));
-      throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, errorsMessage);
+      throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, errorsMessage);
     }
 
     if ((await this.getPost(id)) instanceof HttpNotFoundException) return this.getPost(id);
@@ -82,9 +79,9 @@ class PostService {
         { name: changedName.name },
       );
       if (post.affected > 0) return post;
-      throw new HttpNotFoundException("Aucune permission n'a été modifiée");
+      throw new HttpNotFoundException("Aucun poste n'a été modifié");
     } else if (await this.postWithThisNameAlreadyExists(changedName.name))
-      throw new HttpException(STATUS_CODE.DUPLICATED.status, STATUS_CODE.DUPLICATED.message);
+      throw new HttpException(StatusCodes.CONFLICT, 'Le poste existe déjà');
 
     throw new InternalServerErrorException();
   }

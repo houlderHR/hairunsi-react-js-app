@@ -50,12 +50,9 @@ class PermissionService {
   }
 
   async getPermission(id: string): Promise<Permission> {
-    try {
-      const permission: Permission[] = await AppDataSource.getRepository(Permission).findBy({ id });
-      return permission[0];
-    } catch (error) {
-      throw new HttpNotFoundException('Aucune permission existante avec cet identifiant');
-    }
+    const permission: Permission[] = await AppDataSource.getRepository(Permission).findBy({ id });
+    if (permission.length) return permission[0];
+    else throw new HttpNotFoundException('Aucune permission existante avec cet identifiant');
   }
 
   async updateNameOfPermission(
