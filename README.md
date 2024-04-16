@@ -16,7 +16,7 @@
 
 First, ensure you have the following installed:
 
-1. Node - Download and install node version **21.7.^**.
+1. Node - Download and install node version **>20.9.0**.
 2. Git - Download and install Git.
 
 After that, open your terminal to clone repository on gitlab
