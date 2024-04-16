@@ -3,6 +3,7 @@ import { plainToClass } from 'class-transformer';
 import DepartmentService from '../services/department.service';
 import { CreateDepartmentDto } from '../dto/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../dto/department/UpdateDepartmentDto';
+import STATUS_CODE from '../utils/statusCode';
 
 class DepartmentController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -13,7 +14,7 @@ class DepartmentController {
       );
       const department = await DepartmentService.createDepartment(createDepartmentDto);
 
-      return response.status(201).json(department);
+      return response.status(STATUS_CODE.CREATED.status).json(department);
     } catch (error) {
       return response.status(error.status).json(error);
     }
@@ -22,14 +23,14 @@ class DepartmentController {
   public async get(request: Request, response: Response): Promise<Response> {
     const departments = await DepartmentService.getAllDepartment();
 
-    return response.status(200).json(departments);
+    return response.status(STATUS_CODE.OK.status).json(departments);
   }
 
   public async getById(request: Request, response: Response): Promise<Response> {
     try {
       const department = await DepartmentService.getDepartmentById(request.params.id);
 
-      return response.status(200).json(department);
+      return response.status(STATUS_CODE.OK.status).json(department);
     } catch (error) {
       return response.status(error.status).json(error);
     }
@@ -39,7 +40,9 @@ class DepartmentController {
     try {
       await DepartmentService.deleteDepartment(request.params.id);
 
-      return response.status(200).json({ message: 'Departement supprimé avec succés' });
+      return response
+        .status(STATUS_CODE.OK.status)
+        .json({ message: 'Departement supprimé avec succés' });
     } catch (error) {
       return response.status(error.status).json(error);
     }
@@ -56,7 +59,7 @@ class DepartmentController {
         updateDepartmentDto,
       );
 
-      return response.status(200).json(department);
+      return response.status(STATUS_CODE.OK.status).json(department);
     } catch (error) {
       return response.status(error.status).json(error);
     }
