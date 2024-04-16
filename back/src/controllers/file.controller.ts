@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import RoleService from '../services/role.service';
+import FileService from '../services/file.service';
 import STATUS_CODE from '../utils/statusCode';
 
-class RoleController {
+class FileController {
   async create(req: Request, res: Response) {
     try {
-      const createdRole = await RoleService.create(req.body);
-      return res.status(STATUS_CODE.OK.status).json(createdRole);
+      const createdFile = await FileService.create(req.body);
+      return res.status(STATUS_CODE.OK.status).json(createdFile);
     } catch (error) {
       return res.status(error.status).json(error);
     }
@@ -14,7 +14,7 @@ class RoleController {
 
   async getAll(req: Request, res: Response) {
     try {
-      const result = await RoleService.getAll();
+      const result = await FileService.getAll();
       return res.status(STATUS_CODE.OK.status).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
@@ -24,7 +24,7 @@ class RoleController {
   async getOne(req: Request, res: Response) {
     try {
       const id = req.params.id;
-      const result = await RoleService.getOne(id);
+      const result = await FileService.getOne(id);
       return res.status(STATUS_CODE.OK.status).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
@@ -34,7 +34,7 @@ class RoleController {
   async update(req: Request, res: Response) {
     try {
       const id = req.params.id;
-      const result = await RoleService.update(id, req.body);
+      const result = await FileService.update(id, req.body);
       return res.status(STATUS_CODE.OK.status).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
@@ -44,7 +44,7 @@ class RoleController {
   async delete(req: Request, res: Response) {
     const id = req.params.id;
     try {
-      const result = await RoleService.delete(id);
+      const result = await FileService.delete(id);
       return res.status(STATUS_CODE.OK.status).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
@@ -52,4 +52,4 @@ class RoleController {
   }
 }
 
-export default new RoleController();
+export default new FileController();

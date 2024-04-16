@@ -34,10 +34,8 @@ export class Role {
     nullable: true,
   })
   updated_at: Date;
-  @ManyToMany(() => Job)
-  jobs: Job[];
 
   @ManyToMany(() => Permission)
-  @JoinTable({ name: 'permission_pole' })
+  @JoinTable({ name: 'permission_role' })
   permissions: Permission[];
 }

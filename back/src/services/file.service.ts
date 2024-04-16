@@ -1,17 +1,17 @@
 import { ValidationError, validate } from 'class-validator';
 import { AppDataSource } from '../database/data-source';
-import { Role } from '../entities/role.entity';
-import { CreateOrUpdateRoleDto } from '../dto/role/createOrUpdateRoleDto';
 import STATUS_CODE from '../utils/statusCode';
 import TYPEORM_ERROR from '../utils/errorTypeorm';
 import { plainToClass } from 'class-transformer';
 import HttpException from '../exceptions/HttpException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
+import { File } from '../entities/file.entity';
+import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
 
-class RoleService {
-  async create(newRoleDto: CreateOrUpdateRoleDto): Promise<Role> {
-    const errors = await validate(plainToClass(CreateOrUpdateRoleDto, newRoleDto));
+class FileService {
+  async create(newFileDto: CreateOrUpdateFileDto): Promise<File> {
+    const errors = await validate(plainToClass(CreateOrUpdateFileDto, newFileDto));
     if (errors.length > 0) {
       const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
         property,
@@ -21,30 +21,34 @@ class RoleService {
       throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, validationErrors);
     }
     try {
-      const role: CreateOrUpdateRoleDto = new Role();
-      role.name = newRoleDto.name;
-      const saved = await AppDataSource.getRepository(Role).save(role);
+      const file: CreateOrUpdateFileDto = new File();
+      file.name = newFileDto.name;
+      file.path = newFileDto.path;
+      file.size = newFileDto.size;
+      file.type = newFileDto.type;
+
+      const saved = await AppDataSource.getRepository(File).save(file);
       return saved;
     } catch (error) {
       if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code) {
-        throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le rôle existe déja');
+        throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le fichier existe déja');
       }
       throw new InternalServerErrorException();
     }
   }
 
-  async getAll(): Promise<Role[]> {
+  async getAll(): Promise<File[]> {
     try {
-      return await AppDataSource.getRepository(Role).find();
+      return await AppDataSource.getRepository(File).find();
     } catch (error) {
       throw new InternalServerErrorException();
     }
   }
 
-  async getOne(id: string): Promise<Role> {
+  async getOne(id: string): Promise<File> {
     try {
-      const result = await AppDataSource.getRepository(Role).findOne({ where: { id } });
-      if (!result) throw new HttpNotFoundException("Le rôle n'existe pas");
+      const result = await AppDataSource.getRepository(File).findOne({ where: { id } });
+      if (!result) throw new HttpNotFoundException("Le fichier n'existe pas");
       return result;
     } catch (error) {
       if (error.status == STATUS_CODE.NOT_FOUND.status) throw error;
@@ -52,11 +56,11 @@ class RoleService {
     }
   }
 
-  async update(id: string, updateRole: CreateOrUpdateRoleDto): Promise<Role> {
+  async update(id: string, updateFile: CreateOrUpdateFileDto): Promise<File> {
     try {
-      const role = await AppDataSource.getRepository(Role).findOne({ where: { id } });
-      if (role) {
-        const errors = await validate(plainToClass(CreateOrUpdateRoleDto, updateRole));
+      const file = await AppDataSource.getRepository(File).findOne({ where: { id } });
+      if (file) {
+        const errors = await validate(plainToClass(CreateOrUpdateFileDto, updateFile));
         if (errors.length > 0) {
           const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
             property,
@@ -64,22 +68,25 @@ class RoleService {
           }));
           throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, validationErrors);
         }
-        AppDataSource.getRepository(Role).merge(role, updateRole);
-        const result = await AppDataSource.getRepository(Role).save(role);
+        AppDataSource.getRepository(File).merge(file, updateFile);
+        const result = await AppDataSource.getRepository(File).save(file);
         return result;
       }
-      throw new HttpNotFoundException("Le rôle n'existe pas");
+      throw new HttpNotFoundException("Le fichier n'existe pas");
     } catch (error) {
       if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code)
-        throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le rôle existe déja');
-      if (error.status == STATUS_CODE.UNPROCESSABLE_ENTITY.status) throw error;
-      if (error.status == STATUS_CODE.NOT_FOUND.status) throw error;
+        throw new HttpException(STATUS_CODE.DUPLICATED.status, 'Le fichier existe déja');
+      if (
+        error.status == STATUS_CODE.UNPROCESSABLE_ENTITY.status ||
+        error.status == STATUS_CODE.NOT_FOUND.status
+      )
+        throw error;
       throw new InternalServerErrorException();
     }
   }
 
   async delete(id: string) {
-    const result = await AppDataSource.getRepository(Role).delete(id);
+    const result = await AppDataSource.getRepository(File).delete(id);
     if (result.affected > 0) return result;
     if (result.affected == 0)
       throw new HttpNotFoundException("Le fichier à supprimer n'existe pas");
@@ -87,4 +94,4 @@ class RoleService {
   }
 }
 
-export default new RoleService();
+export default new FileService();
