@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import RoleService from '../services/role.service';
-import STATUS_CODE from '../utils/statusCode';
 import { StatusCodes } from 'http-status-codes';
 
 class RoleController {
@@ -36,7 +35,7 @@ class RoleController {
     try {
       const id = req.params.id;
       const result = await RoleService.update(id, req.body);
-      return res.status(STATUS_CODE.OK.status).json(result);
+      return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
     }
