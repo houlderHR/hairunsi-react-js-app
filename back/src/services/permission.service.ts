@@ -7,7 +7,7 @@ import { CreateAndUpdatePermissionDto } from '../dto/permission/CreateAndUpdateP
 import HttpException from '../exceptions/HttpException';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
-import STATUS_CODE from '../utils/statusCode';
+import { StatusCodes } from 'http-status-codes';
 
 class PermissionService {
   async createPermission(permissionDto: CreateAndUpdatePermissionDto): Promise<Permission> {
@@ -17,7 +17,7 @@ class PermissionService {
         property,
         constraints,
       }));
-      throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, errorsMessage);
+      throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, errorsMessage);
     }
     try {
       const permission: CreateAndUpdatePermissionDto = new Permission();
@@ -26,7 +26,7 @@ class PermissionService {
       return saved;
     } catch (error) {
       if (error.code === '23505') {
-        throw new HttpException(STATUS_CODE.DUPLICATED.status, STATUS_CODE.DUPLICATED.message);
+        throw new HttpException(StatusCodes.CONFLICT, 'Cette permission existe déjà');
       }
       throw new InternalServerErrorException();
     }
@@ -69,7 +69,7 @@ class PermissionService {
         property,
         constraints,
       }));
-      throw new HttpException(STATUS_CODE.UNPROCESSABLE_ENTITY.status, errorsMessage);
+      throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, errorsMessage);
     }
     if ((await this.getPermission(id)) instanceof HttpNotFoundException)
       return this.getPermission(id);
@@ -83,7 +83,7 @@ class PermissionService {
       if (permission.affected > 0) return permission;
       throw new HttpNotFoundException("Aucune permission n'a été modifiée");
     } else if (await this.permissionWithThisNameAlreadyExists(changedName.name))
-      throw new HttpException(STATUS_CODE.DUPLICATED.status, STATUS_CODE.DUPLICATED.message);
+      throw new HttpException(StatusCodes.CONFLICT, 'Cette permission existe déjà');
 
     throw new InternalServerErrorException();
   }

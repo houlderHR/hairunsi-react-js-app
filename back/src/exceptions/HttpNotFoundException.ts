@@ -1,4 +1,3 @@
-import ERROR from '../utils/statusCode';
 import HttpException from './HttpException';
 
 class HttpNotFoundException extends HttpException {

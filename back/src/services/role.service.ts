@@ -2,7 +2,6 @@ import { ValidationError, validate } from 'class-validator';
 import { AppDataSource } from '../database/data-source';
 import { Role } from '../entities/role.entity';
 import { CreateOrUpdateRoleDto } from '../dto/role/createOrUpdateRoleDto';
-import ERROR from '../utils/statusCode';
 import TYPEORM_ERROR from '../utils/errorTypeorm';
 import { plainToClass } from 'class-transformer';
 import HttpException from '../exceptions/HttpException';
