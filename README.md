@@ -1,6 +1,10 @@
+<p align="center">
+  <img src="./front//public/images/logo/logo-hairun.png" alt="hairun-si"/>
+</p>
+
 # HAIRUN SI PROJECT FRONT
 
-## Technologies
+## Technologies Front
 
 ![image](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
