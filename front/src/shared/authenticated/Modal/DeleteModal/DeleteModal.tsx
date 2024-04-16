@@ -25,7 +25,7 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
       <h2 className="text-secondary text-xl mb-3 font-medium">{description}</h2>
       <h3 className="text-gray-1 text-base">{confirmation}</h3>
     </div>
-    <div className="flex gap-2">
+    <div className="flex flex-col md:flex-row gap-2">
       <Button title="Annuler" icon="x" className="uppercase" onClick={onClose} />
       <Button
         title="Supprimer"

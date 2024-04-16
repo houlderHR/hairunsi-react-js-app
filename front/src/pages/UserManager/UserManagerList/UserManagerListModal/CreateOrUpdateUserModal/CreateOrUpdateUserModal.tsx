@@ -101,9 +101,9 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                 <InputFileWithDragAndDrop file={file} setFile={setFile} />
               </div>
               <div className="names">
-                <Input type="text" placeholder="Matricule" additionalClass="h-[8vh]" />
-                <Input type="text" placeholder="Nom" additionalClass="h-[8vh]" />
-                <Input type="text" placeholder="Prénom" additionalClass="h-[8vh]" />
+                <Input type="text" placeholder="Matricule" />
+                <Input type="text" placeholder="Nom" />
+                <Input type="text" placeholder="Prénom" />
               </div>
             </div>
             <div className="relative">
