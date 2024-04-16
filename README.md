@@ -1,50 +1,4 @@
-# HAIRUN SI FRONT
-
-## Technologies Front
-
-![image](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![image](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-
-## Running server locally
-
-### Prerequisites
-
-First, ensure you have the following installed:
-
-1. Node - Download and install node version **>20.9.0**.
-2. Git - Download and install Git.
-
-After that, open your terminal to clone repository on gitlab
-
-### Clone repository
-
-```
-git clone git@gitlab.com:digitallforyou/formation/hairun-si/hairunsi-react-js-app.git
-cd hairunsi-react-js-app/front
-```
-
-### Install dependencies
-
-You'll need to install some node modules defined on the package.json to run the React app
-
-```
-npm install
-```
-
-### Run the App
-
-```
-npm run dev
-```
-
-This command will start the React development server
-
-Now open your browser on: [http://localhost:5173](http://localhost:5173) to see the project
-
-# HAIRUN SI API
-
-A `node` server with a set of `RESTful` services using entirely `TypeScript` language.
+# HAIRUN SI
 
 ## Technologies
 
@@ -52,10 +6,16 @@ A `node` server with a set of `RESTful` services using entirely `TypeScript` lan
 ![image](https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![image](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
-## Running server locally
+## Project architecture
 
-### Prerequisites
+The project is divided into 2 main parts:
+
+- back
+- front
+
+## Prerequisites
 
 First, ensure you have the following installed:
 
@@ -66,39 +26,55 @@ First, ensure you have the following installed:
 
 After that, open your terminal to clone repository on gitlab
 
-### Clone repository
+## Clone repository
 
 ```
 $ git clone git@gitlab.com:digitallforyou/formation/hairun-si/hairunsi-react-js-app.git
-$ cd hairunsi-react-js-app/back
 ```
 
-### Environment configuration
+## Running APP locally
 
-Create file `.env` on the back folder and make your configuration like that
+### back
+
+Switch into the `back` folder:
 
 ```
-PORT= <port api>
-DATABASE_HOST= <Adresse of the database>
-DATABASE_PORT= <Database port >
-DATABASE_USERNAME= <Username>
-DATABASE_PASSWORD= <Password>
-DATABASE_NAME= <Database name>
+cd hairunsi-react-js-app/back
 ```
 
-### Install dependencies
+#### **Configuration**
 
-You'll need to install some node modules defined on the package.json to run the API
+Copy file .env.example inside .env
 
-`npm install`
+After that, build the docker container
 
-### Run the App
+```
+docker-compose  build
+```
 
-`npm run start`
+And to start postgresql container, launch
+
+```
+docker-compose up -d
+```
+
+#### **Install dependencies**
+
+You'll need to install some node modules defined on the package.json to run the node app
+
+```
+npm install
+```
+
+#### **Run the App**
+
+```
+npm run start
+```
 
 This commande create database on your local PC and run the API
 
-Now open your browser on: _http://localhost:PORT/_
+Now open your browser on: _http://localhost:8080/_
 
 You'll have available the following `RESTful` services:
 
@@ -134,8 +110,34 @@ PUT http://localhost:PORT/file/:id
 DELETE http://localhost:PORT/file/:id
 ```
 
-### Build the App
+#### **Build the App**
 
 `npm run build`
 
 This will generate a `dist` directory(JavaScript output files).
+
+### front
+
+Switch into the `front` folder:
+
+```
+cd hairunsi-react-js-app/front
+```
+
+#### **Install dependencies**
+
+You'll need to install some node modules defined on the package.json to run the React app
+
+```
+npm install
+```
+
+#### **Run the App**
+
+```
+npm run start
+```
+
+This command will start the React development server
+
+Now open your browser on: [http://localhost:5173](http://localhost:5173) to see the project
