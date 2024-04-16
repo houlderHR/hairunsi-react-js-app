@@ -1,29 +1,34 @@
-import { validate } from 'class-validator';
+import { DeleteResult } from 'typeorm';
+import { ValidationError, validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { AppDataSource } from '../database/data-source';
 import { Permission } from '../entities/permission.entity';
 import { CreateAndUpdatePermissionDto } from '../dto/permission/CreateAndUpdatePermissionDto';
-import { ErrorMessage } from '../exceptions/ErrorMessage';
+import HttpException from '../exceptions/HttpException';
+import HttpNotFoundException from '../exceptions/HttpNotFoundException';
+import InternalServerErrorException from '../exceptions/InternalServerErrorException';
+import ERROR from '../utils/statusCode';
 
 class PermissionService {
-  async createPermission(
-    permissionDto: CreateAndUpdatePermissionDto,
-  ): Promise<Permission | ErrorMessage[] | ErrorMessage> {
+  async createPermission(permissionDto: CreateAndUpdatePermissionDto): Promise<Permission> {
+    const errors = await validate(plainToClass(CreateAndUpdatePermissionDto, permissionDto));
+    if (errors.length > 0) {
+      const errorsMessage = errors.map(({ property, constraints }: ValidationError) => ({
+        property,
+        constraints,
+      }));
+      throw new HttpException(ERROR.UNPROCESSABLE_ENTITY.status, errorsMessage);
+    }
     try {
-      const errors = await validate(plainToClass(CreateAndUpdatePermissionDto, permissionDto));
-      if (errors.length > 0) {
-        const errorsMessage: ErrorMessage[] = [];
-        errors.map((error) =>
-          errorsMessage.push(new ErrorMessage(error.constraints, error.property)),
-        );
-        return errorsMessage;
-      }
       const permission: CreateAndUpdatePermissionDto = new Permission();
       permission.name = permissionDto.name;
       const saved = await AppDataSource.getRepository(Permission).save(permission);
       return saved;
     } catch (error) {
-      return new ErrorMessage('La permission portant ce nom existe déjà');
+      if (error.code === '23505') {
+        throw new HttpException(ERROR.DUPLICATED.status, ERROR.DUPLICATED.message);
+      }
+      throw new InternalServerErrorException();
     }
   }
 
@@ -35,62 +40,61 @@ class PermissionService {
     else return false;
   }
 
-  async getAllPermissions(): Promise<Permission[] | ErrorMessage> {
-    const permissions = await AppDataSource.getRepository(Permission).find();
-    if (permissions.length > 0) {
+  async getAllPermissions(): Promise<Permission[]> {
+    try {
+      const permissions = await AppDataSource.getRepository(Permission).find();
       return permissions;
+    } catch (error) {
+      throw new HttpNotFoundException('Aucune permission existante');
     }
-    return new ErrorMessage('Aucune permission existante');
   }
 
-  async getPermission(id: string): Promise<Permission | ErrorMessage> {
-    const permission: ErrorMessage | Permission[] = await await AppDataSource.getRepository(
-      Permission,
-    ).findBy({ id });
-    if (permission.length === 0)
-      return new ErrorMessage('Aucune permission existante avec cet identifiant');
-    else return permission[0];
+  async getPermission(id: string): Promise<Permission> {
+    try {
+      const permission: Permission[] = await AppDataSource.getRepository(Permission).findBy({ id });
+      return permission[0];
+    } catch (error) {
+      throw new HttpNotFoundException('Aucune permission existante avec cet identifiant');
+    }
   }
 
   async updateNameOfPermission(
     id: string,
     updatePermissionDto: CreateAndUpdatePermissionDto,
-  ): Promise<Permission | ErrorMessage[] | ErrorMessage> {
+  ): Promise<Permission> {
     const changedName: CreateAndUpdatePermissionDto = plainToClass(
       CreateAndUpdatePermissionDto,
       updatePermissionDto,
     );
-    const errors = await validate(changedName);
-
+    const errors = await validate(plainToClass(CreateAndUpdatePermissionDto, changedName));
     if (errors.length > 0) {
-      console.log(errors);
-      const errorsMessage: ErrorMessage[] = [];
-      errors.map((error) => {
-        errorsMessage.push({
-          property: error.property,
-          message: error.constraints,
-        });
-      });
-      return errorsMessage;
+      const errorsMessage = errors.map(({ property, constraints }: ValidationError) => ({
+        property,
+        constraints,
+      }));
+      throw new HttpException(ERROR.UNPROCESSABLE_ENTITY.status, errorsMessage);
     }
-    if ((await this.getPermission(id)) instanceof ErrorMessage) return this.getPermission(id);
-    if (await this.permissionWithThisNameAlreadyExists(changedName.name)) {
-      return new ErrorMessage('Permission déjà existante');
-    } else {
-      const permission = await AppDataSource.getRepository(Permission).save({
-        id,
-        name: changedName.name,
-      });
-      return permission;
+
+    try {
+      if ((await this.getPermission(id)) instanceof HttpNotFoundException)
+        return this.getPermission(id);
+      if (!(await this.permissionWithThisNameAlreadyExists(changedName.name))) {
+        const permission = await AppDataSource.getRepository(Permission).save({
+          id,
+          name: changedName.name,
+        });
+        return permission;
+      }
+      throw new HttpException(ERROR.DUPLICATED.status, ERROR.DUPLICATED.message);
+    } catch (error) {
+      throw new InternalServerErrorException();
     }
   }
 
-  async deleteOnePermission(id: string): Promise<ErrorMessage> {
-    // if ((await this.getPermission(id)) instanceof ErrorMessage) return this.getPermission(id);
-
-    if ((await AppDataSource.getRepository(Permission).delete(id)).affected > 0)
-      return new ErrorMessage('Permission supprimée', null, 204);
-    return new ErrorMessage('Suppression échouée', null, 404);
+  async deleteOnePermission(id: string): Promise<DeleteResult> {
+    const deleted = await AppDataSource.getRepository(Permission).delete({ id });
+    if (deleted.affected > 0) return deleted;
+    throw new HttpNotFoundException("Aucune permission n'a été supprimée");
   }
 }
 

@@ -1,5 +1,5 @@
 import { IsString, Length } from 'class-validator';
-import { Job } from '../../entities/job.entity';
+import { Job } from '../../entities/post.entity';
 
 export class CreateDepartmentDto {
   @IsString({ message: 'Le nom doit etre une chaine de caractère' })

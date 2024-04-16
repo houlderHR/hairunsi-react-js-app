@@ -11,8 +11,8 @@ import { User } from './user.entity';
 import { Role } from './role.entity';
 import { Department } from './department.entity';
 
-@Entity('Job')
-export class Job {
+@Entity('posts')
+export class Post {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
