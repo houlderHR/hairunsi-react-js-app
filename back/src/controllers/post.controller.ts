@@ -15,8 +15,10 @@ class PostController {
   }
 
   async getAll(req: Request, res: Response) {
+    let relations = Object.keys(req.query).map((query) => query);
+
     try {
-      const posts: Post[] = await PostService.getAllPosts();
+      const posts: Post[] = await PostService.getAllPosts(relations);
       return res.status(StatusCodes.OK).json(posts);
     } catch (error) {
       return res.status(error.status).json(error);
@@ -24,9 +26,11 @@ class PostController {
   }
 
   async getOne(req: Request, res: Response) {
+    let relations = Object.keys(req.query).map((query) => query);
+
     try {
       const id: string = req.params.id;
-      const post: Post = await PostService.getPost(id);
+      const post: Post = await PostService.getPost(id, relations);
       return res.status(StatusCodes.OK).json(post);
     } catch (error) {
       return res.status(error.status).json(error);
@@ -36,7 +40,7 @@ class PostController {
   async updateName(req: Request, res: Response) {
     try {
       const id: string = req.params.id;
-      const post: Post | UpdateResult = await PostService.updateNameOfPost(id, req.body);
+      const post: Post | UpdateResult = await PostService.updatePost(id, req.body);
       return res.status(StatusCodes.OK).json(post);
     } catch (error) {
       return res.status(error.status).json(error);
