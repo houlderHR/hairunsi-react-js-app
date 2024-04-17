@@ -46,14 +46,10 @@ class UserService {
 
   public async getUserById(uuid: string, relations?: string[]): Promise<User> {
     try {
-      const user = await this.getUserRepository().findOneOrFail({
+      return await this.getUserRepository().findOneOrFail({
         where: { uuid },
         relations: relations,
       });
-
-      if (user) return user;
-
-      // throw new HttpNotFoundException("Cet utilisateur n'existe pas");
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         throw new HttpNotFoundException("Cet utilisateur n'existe pas");
@@ -68,14 +64,12 @@ class UserService {
 
     const errors = await validate(updateUserDto);
     if (errors.length > 0) {
-      if (errors.length > 0) {
-        const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
-          property,
-          constraints,
-        }));
+      const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
+        property,
+        constraints,
+      }));
 
-        throw new HttpException(422, validationErrors);
-      }
+      throw new HttpException(422, validationErrors);
     }
 
     const post = await postService.getPost(updateUserDto.post);
