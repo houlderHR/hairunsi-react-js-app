@@ -36,7 +36,6 @@ class UserController {
 
       return response.status(StatusCodes.OK).json(user);
     } catch (error) {
-      console.log(error);
       return response.status(error.status).json(error);
     }
   }

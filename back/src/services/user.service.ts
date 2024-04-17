@@ -35,7 +35,6 @@ class UserService {
     try {
       return await this.getUserRepository().save(user);
     } catch (error) {
-      console.log(error);
       if (error.code === '23505') {
         throw new HttpException(StatusCodes.CONFLICT, "L'utilisateur existe déja");
       }
