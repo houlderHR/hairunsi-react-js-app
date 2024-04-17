@@ -14,14 +14,12 @@ class UserService {
   public async createUser(createUserDto: CreateUserDto): Promise<User> {
     const errors = await validate(createUserDto);
     if (errors.length > 0) {
-      if (errors.length > 0) {
-        const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
-          property,
-          constraints,
-        }));
+      const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
+        property,
+        constraints,
+      }));
 
-        throw new HttpException(422, validationErrors);
-      }
+      throw new HttpException(422, validationErrors);
     }
 
     const post = await postService.getPost(createUserDto.post);
