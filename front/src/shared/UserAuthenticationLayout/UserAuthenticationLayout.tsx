@@ -28,13 +28,13 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
   showLoginLink = false,
 }) => (
   <div className="grid md:grid-cols-[30%_70%] md:px-0 px-4 h-full min-h-screen">
-    <div className="bg-primary h-full relative md:flex flex-col hidden">
+    <div className="bg-primary h-full relative md:flex flex-col justify-end hidden">
       <img
         src="images/background/bg-only-left.png"
         alt="background"
         className="absolute z-0 w-full h-full top-0 left-0 bg-cover right-0 bg-no-repeat"
       />
-      <div className="z-10 mt-[594px] text-white mx-5 2xl:mx-[77px]">
+      <div className="z-10 text-white mx-5 2xl:mx-[77px] mb-[40%]">
         <h3 className="lg:text-[54px] text-4xl leading-9 lg:leading-[60px] break-words font-normal">
           {title}
         </h3>
