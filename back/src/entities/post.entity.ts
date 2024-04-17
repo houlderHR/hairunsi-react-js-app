@@ -3,13 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  OneToMany,
   ManyToMany,
   JoinTable,
-  CreateDateColumn,
-  UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
-import { User } from './user.entity';
 import { Role } from './role.entity';
 import { Department } from './department.entity';
 
@@ -22,6 +19,12 @@ export class Post {
     length: 255,
   })
   name: string;
+
+  @ManyToOne(() => Department, { nullable: false })
+  @JoinColumn({
+    name: 'id_department',
+  })
+  department: Department;
 
   @ManyToMany(() => Role)
   @JoinTable({ name: 'Role_Job' })

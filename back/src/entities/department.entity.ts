@@ -19,6 +19,9 @@ export class Department {
   })
   name: string;
 
+  @OneToMany(() => Post, (post) => post.id)
+  posts: Post[];
+
   @CreateDateColumn()
   created_at: Date;
 
