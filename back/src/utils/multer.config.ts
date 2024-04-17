@@ -14,13 +14,13 @@ export const fileStorage = multer.diskStorage({
 });
 
 export const fileFilter = (req: Request, file: Express.Multer.File, cb: FileNameCallback): void => {
-  if (
-    file.mimetype === 'image/png' ||
-    file.mimetype === 'image/jpg' ||
-    file.mimetype === 'image/jpeg'
-  ) {
-    cb(null, true);
-  } else {
-    return cb(new Error('Wrong extension type'), false);
+  switch (file.mimetype) {
+    case 'image/png':
+    case 'image/jpg':
+    case 'image/jpeg':
+      cb(null, true);
+      break;
+    default:
+      return cb(new Error('Wrong extension type'), false);
   }
 };
