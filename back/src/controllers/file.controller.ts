@@ -1,15 +1,23 @@
 import { Request, Response } from 'express';
 import FileService from '../services/file.service';
 import { StatusCodes } from 'http-status-codes';
+import { v2 as cloudinary } from 'cloudinary';
 
 class FileController {
-  async create(req: Request, res: Response) {
+  async create(req, res: Response) {
+    console.log('FILE: ', req.file);
     try {
-      const createdFile = await FileService.create(req.body);
-      return res.status(StatusCodes.CREATED).json(createdFile);
+      const result = await cloudinary.uploader.upload(req.file.path);
+      res.json({ imageURl: result.secure_url });
     } catch (error) {
-      return res.status(error.status).json(error);
+      console.log(error);
     }
+    // try {
+    //   const createdFile = await FileService.create(req.body);
+    //   return res.status(StatusCodes.CREATED).json(createdFile);
+    // } catch (error) {
+    //   return res.status(error.status).json(error);
+    // }
   }
 
   async getAll(req: Request, res: Response) {
