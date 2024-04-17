@@ -9,10 +9,17 @@ import {
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  uuid: string;
 
   @PrimaryGeneratedColumn('increment')
-  matricule: number;
+  id: number;
+
+  @Column({
+    name: 'matricule',
+    type: 'varchar',
+    generatedType: 'STORED',
+  })
+  matricule: string;
 
   @Column('varchar', {
     length: 255,

@@ -25,7 +25,7 @@ class UserController {
 
   public async getById(request: Request, response: Response): Promise<Response> {
     try {
-      const user = await userService.getUserById(request.params.id);
+      const user = await userService.getUserById(request.params.uuid);
 
       return response.status(StatusCodes.OK).json(user);
     } catch (error) {
@@ -36,7 +36,7 @@ class UserController {
 
   public async delete(request: Request, response: Response): Promise<Response> {
     try {
-      await userService.deleteUser(request.params.id);
+      await userService.deleteUser(request.params.uuid);
 
       return response.status(StatusCodes.OK).json({ message: 'Utilisateur supprimé avec succés' });
     } catch (error) {
@@ -47,7 +47,7 @@ class UserController {
   public async update(request: Request, response: Response): Promise<Response> {
     try {
       const updateUserDto: UpdateUserDto = plainToClass(UpdateUserDto, request.body);
-      let user = await userService.updateUser(request.params.id, updateUserDto);
+      let user = await userService.updateUser(request.params.uuid, updateUserDto);
 
       return response.status(StatusCodes.OK).json(user);
     } catch (error) {

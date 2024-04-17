@@ -1,4 +1,4 @@
-import { IsDate, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsDate, IsDateString, IsString, MaxLength, MinLength } from 'class-validator';
 
 class UpdateUserDto {
   @IsString({ message: 'Le nom doit etre renseigner' })
@@ -11,7 +11,7 @@ class UpdateUserDto {
   @MaxLength(255, { message: 'Le prenom ne doit pas dépasser les 255 caractères' })
   lastname: string;
 
-  @IsDate({ message: 'La date de naissance doit etre rensigner' })
+  @IsDateString({}, { message: 'Le format du date est incorrect' })
   birth_date: Date;
 }
 
