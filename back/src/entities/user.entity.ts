@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Post } from './post.entity';
+import { Role } from './role.entity';
 
 @Entity('users')
 export class User {
@@ -43,6 +44,12 @@ export class User {
     name: 'id_post',
   })
   post: Post;
+
+  @ManyToOne(() => Role, { nullable: false })
+  @JoinColumn({
+    name: 'id_role',
+  })
+  role: Role;
 
   @CreateDateColumn()
   created_at: Date;

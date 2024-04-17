@@ -9,6 +9,7 @@ import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import UpdateUserDto from '../dto/user/UpdateUserDto';
 import { StatusCodes } from 'http-status-codes';
 import postService from './post.service';
+import roleService from './role.service';
 
 class UserService {
   public async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -23,12 +24,16 @@ class UserService {
     }
 
     const post = await postService.getPost(createUserDto.post);
+    const role = await roleService.getOne(createUserDto.role);
 
     const user = new User();
-    user.firstname = createUserDto.firstname;
-    user.lastname = createUserDto.lastname;
-    user.post = post;
-    user.birth_date = new Date(createUserDto.birth_date);
+    Object.assign(user, {
+      firstname: createUserDto.firstname,
+      lastname: createUserDto.lastname,
+      birth_date: createUserDto.birth_date,
+      post: post,
+      role: role,
+    });
 
     try {
       return await this.getUserRepository().save(user);
@@ -70,10 +75,15 @@ class UserService {
     }
 
     const post = await postService.getPost(updateUserDto.post);
-    user.firstname = updateUserDto.firstname;
-    user.lastname = updateUserDto.lastname;
-    user.birth_date = updateUserDto.birth_date;
-    user.post = post;
+    const role = await roleService.getOne(updateUserDto.role);
+
+    Object.assign(user, {
+      firstname: updateUserDto.firstname,
+      lastname: updateUserDto.lastname,
+      birth_date: updateUserDto.birth_date,
+      post: post,
+      role: role,
+    });
 
     try {
       return await this.getUserRepository().save(user);
