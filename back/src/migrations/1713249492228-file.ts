@@ -41,6 +41,12 @@ export class File1713249492228 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'public_id',
+            type: 'varchar',
+            length: '255',
+            isNullable: false,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             isNullable: false,

@@ -8,6 +8,7 @@ import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import { File } from '../entities/file.entity';
 import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
 import { StatusCodes } from 'http-status-codes';
+import { v2 as cloudinary } from 'cloudinary';
 
 class FileService {
   async create(newFileDto: CreateOrUpdateFileDto): Promise<File> {
@@ -64,6 +65,7 @@ class FileService {
           }));
           throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, validationErrors);
         }
+        await cloudinary.uploader.destroy(file.public_id);
         AppDataSource.getRepository(File).merge(file, updateFile);
         const result = await AppDataSource.getRepository(File).save(file);
         return result;
@@ -79,8 +81,12 @@ class FileService {
   }
 
   async delete(id: string) {
+    const file = await AppDataSource.getRepository(File).findOne({ where: { id } });
     const result = await AppDataSource.getRepository(File).delete(id);
-    if (result.affected > 0) return result;
+    if (result.affected > 0) {
+      await cloudinary.uploader.destroy(file.public_id);
+      return result;
+    }
     if (result.affected == 0)
       throw new HttpNotFoundException("Le fichier à supprimer n'existe pas");
     throw new InternalServerErrorException();

@@ -29,6 +29,11 @@ export class File {
   @Column('int')
   size: number;
 
+  @Column('varchar', {
+    length: 255,
+  })
+  public_id: string;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',

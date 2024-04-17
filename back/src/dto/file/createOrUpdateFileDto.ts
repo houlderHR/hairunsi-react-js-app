@@ -9,4 +9,6 @@ export class CreateOrUpdateFileDto {
   type: string;
   @IsNumber({}, { message: 'Size doit être un nombre' })
   size: number;
+  @Length(8, 255, { message: 'Le public id doit avoir au minimum 8 caractères' })
+  public_id: string;
 }
