@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { Post } from './post.entity';
 
 @Entity('users')
 export class User {
@@ -34,6 +37,12 @@ export class User {
 
   @Column('timestamp')
   birth_date: Date;
+
+  @ManyToOne(() => Post, { nullable: false })
+  @JoinColumn({
+    name: 'id_post',
+  })
+  post: Post;
 
   @CreateDateColumn()
   created_at: Date;

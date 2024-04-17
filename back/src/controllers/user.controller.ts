@@ -18,18 +18,24 @@ class UserController {
   }
 
   public async get(request: Request, response: Response): Promise<Response> {
-    const users = await userService.getAllUser();
+    let relations = Object.keys(request.query).map((query) => query);
+    try {
+      const users = await userService.getAllUser(relations);
 
-    return response.status(StatusCodes.OK).json(users);
+      return response.status(StatusCodes.OK).json(users);
+    } catch (error) {
+      return response.status(error.status).json(error);
+    }
   }
 
   public async getById(request: Request, response: Response): Promise<Response> {
+    let relations = Object.keys(request.query).map((query) => query);
+
     try {
-      const user = await userService.getUserById(request.params.uuid);
+      const user = await userService.getUserById(request.params.uuid, relations);
 
       return response.status(StatusCodes.OK).json(user);
     } catch (error) {
-      console.log(error);
       return response.status(error.status).json(error);
     }
   }
