@@ -23,6 +23,7 @@ class RoleService {
     try {
       const role: CreateOrUpdateRoleDto = new Role();
       role.name = newRoleDto.name;
+      role.permissions = newRoleDto.permissions;
       const saved = await AppDataSource.getRepository(Role).save(role);
       return saved;
     } catch (error) {
@@ -35,8 +36,11 @@ class RoleService {
 
   async getAll(): Promise<Role[]> {
     try {
-      return await AppDataSource.getRepository(Role).find();
+      return await AppDataSource.getRepository(Role).find({
+        relations: { permissions: true },
+      });
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException();
     }
   }

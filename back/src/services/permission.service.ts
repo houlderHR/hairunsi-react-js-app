@@ -42,9 +42,12 @@ class PermissionService {
 
   async getAllPermissions(): Promise<Permission[]> {
     try {
-      const permissions = await AppDataSource.getRepository(Permission).find();
+      const permissions = await AppDataSource.getRepository(Permission).find({
+        relations: { roles: true },
+      });
       return permissions;
     } catch (error) {
+      console.log(error);
       throw new HttpNotFoundException('Aucune permission existante');
     }
   }

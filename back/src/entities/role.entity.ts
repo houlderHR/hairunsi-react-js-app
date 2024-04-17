@@ -7,7 +7,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Post } from './post.entity';
 import { Permission } from './permission.entity';
 
 @Entity('roles')
@@ -35,7 +34,15 @@ export class Role {
   })
   updated_at: Date;
 
-  @ManyToMany(() => Permission)
-  @JoinTable({ name: 'permission_role' })
+  @ManyToMany(() => Permission, (permission) => permission.roles)
+  @JoinTable({
+    name: 'permission_role',
+    joinColumn: { name: 'id_role' },
+    inverseJoinColumn: {
+      name: 'id_permission',
+      foreignKeyConstraintName: 'permissions',
+      referencedColumnName: 'id',
+    },
+  })
   permissions: Permission[];
 }
