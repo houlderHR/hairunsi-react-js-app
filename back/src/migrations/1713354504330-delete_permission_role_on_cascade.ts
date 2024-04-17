@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class DetelePermissionRoleOnCascade1713354504330 implements MigrationInterface {
+export class DeletePermissionRoleOnCascade1713354504330 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('permission_role');
     await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
