@@ -1,4 +1,5 @@
-import { IsDate, IsDateString, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsDateString, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
+import { UUID } from 'crypto';
 
 class UpdateUserDto {
   @IsString({ message: 'Le nom doit etre renseigner' })
@@ -13,6 +14,9 @@ class UpdateUserDto {
 
   @IsDateString({}, { message: 'Le format du date est incorrect' })
   birth_date: Date;
+
+  @IsUUID(undefined, { message: 'Le poste doit etre rensigner et valide' })
+  post: UUID;
 }
 
 export default UpdateUserDto;

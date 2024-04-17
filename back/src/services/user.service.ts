@@ -1,4 +1,4 @@
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, EntityNotFoundError, Repository } from 'typeorm';
 import { AppDataSource } from '../database/data-source';
 import CreateUserDto from '../dto/user/CreateUserDto';
 import { User } from '../entities/user.entity';
@@ -8,6 +8,7 @@ import InternalServerErrorException from '../exceptions/InternalServerErrorExcep
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import UpdateUserDto from '../dto/user/UpdateUserDto';
 import { StatusCodes } from 'http-status-codes';
+import postService from './post.service';
 
 class UserService {
   public async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -23,12 +24,15 @@ class UserService {
       }
     }
 
-    try {
-      const user = new User();
-      user.firstname = createUserDto.firstname;
-      user.lastname = createUserDto.lastname;
-      user.birth_date = new Date(createUserDto.birth_date);
+    const post = await postService.getPost(createUserDto.post);
 
+    const user = new User();
+    user.firstname = createUserDto.firstname;
+    user.lastname = createUserDto.lastname;
+    user.post = post;
+    user.birth_date = new Date(createUserDto.birth_date);
+
+    try {
       return await this.getUserRepository().save(user);
     } catch (error) {
       console.log(error);
@@ -40,11 +44,22 @@ class UserService {
     }
   }
 
-  public async getUserById(uuid: string): Promise<User> {
+  public async getUserById(uuid: string, relations?: string[]): Promise<User> {
     try {
-      return await this.getUserRepository().findOneByOrFail({ uuid });
+      const user = await this.getUserRepository().findOneOrFail({
+        where: { uuid },
+        relations: relations,
+      });
+
+      if (user) return user;
+
+      // throw new HttpNotFoundException("Cet utilisateur n'existe pas");
     } catch (error) {
-      throw new HttpNotFoundException("Cet utilisateur n'existe pas");
+      if (error instanceof EntityNotFoundError) {
+        throw new HttpNotFoundException("Cet utilisateur n'existe pas");
+      }
+
+      throw new InternalServerErrorException();
     }
   }
 
@@ -63,23 +78,29 @@ class UserService {
       }
     }
 
-    try {
-      user.firstname = updateUserDto.firstname;
-      user.lastname = updateUserDto.lastname;
-      user.birth_date = updateUserDto.birth_date;
+    const post = await postService.getPost(updateUserDto.post);
+    user.firstname = updateUserDto.firstname;
+    user.lastname = updateUserDto.lastname;
+    user.birth_date = updateUserDto.birth_date;
+    user.post = post;
 
+    try {
       return await this.getUserRepository().save(user);
     } catch (error) {
       if (error.code === '23505') {
-        throw new HttpException(StatusCodes.CONFLICT, 'Le département existe déja');
+        throw new HttpException(StatusCodes.CONFLICT, "L'utilisateur existe déja");
       }
 
       throw new InternalServerErrorException();
     }
   }
 
-  public async getAllUser(): Promise<User[]> {
-    return await this.getUserRepository().find();
+  public async getAllUser(relations?: string[]): Promise<User[]> {
+    try {
+      return await this.getUserRepository().find({ relations: relations });
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 
   public async deleteUser(uuid: string): Promise<DeleteResult> {
