@@ -22,8 +22,7 @@ class RoleService {
     }
     try {
       const role: CreateOrUpdateRoleDto = new Role();
-      role.name = newRoleDto.name;
-      role.permissions = newRoleDto.permissions;
+      Object.assign(role, newRoleDto);
       const saved = await AppDataSource.getRepository(Role).save(role);
       return saved;
     } catch (error) {
