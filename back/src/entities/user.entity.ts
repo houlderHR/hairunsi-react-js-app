@@ -44,7 +44,8 @@ export class User {
     name: 'id_post',
   })
   post: Post;
-  @ManyToOne(() => Role, (role) => role.users, { nullable: false })
+
+  @ManyToOne(() => Role, { nullable: false })
   @JoinColumn({
     name: 'id_role',
   })

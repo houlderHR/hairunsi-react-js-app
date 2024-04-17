@@ -22,9 +22,6 @@ export class Role {
   })
   name: string;
 
-  @OneToMany(() => User, (user) => user.role)
-  users: User[];
-
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',

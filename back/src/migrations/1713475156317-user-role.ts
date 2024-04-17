@@ -5,7 +5,7 @@ export class UserRole1713475156317 implements MigrationInterface {
     await queryRunner.addColumn(
       'users',
       new TableColumn({
-        name: 'role',
+        name: 'id_role',
         type: 'uuid',
         isNullable: false,
       }),
@@ -13,7 +13,7 @@ export class UserRole1713475156317 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'users',
       new TableForeignKey({
-        columnNames: ['role'],
+        columnNames: ['id_role'],
         referencedColumnNames: ['id'],
         referencedTableName: 'roles',
       }),
