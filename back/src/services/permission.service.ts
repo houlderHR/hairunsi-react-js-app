@@ -47,7 +47,6 @@ class PermissionService {
       });
       return permissions;
     } catch (error) {
-      console.log(error);
       throw new HttpNotFoundException('Aucune permission existante');
     }
   }

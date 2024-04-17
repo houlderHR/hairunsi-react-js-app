@@ -40,7 +40,6 @@ class RoleService {
         relations: { permissions: true },
       });
     } catch (error) {
-      console.log(error);
       throw new InternalServerErrorException();
     }
   }
