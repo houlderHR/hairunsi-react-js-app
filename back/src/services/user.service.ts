@@ -10,10 +10,17 @@ import UpdateUserDto from '../dto/user/UpdateUserDto';
 import { StatusCodes } from 'http-status-codes';
 import postService from './post.service';
 import roleService from './role.service';
+import { v2 as cloudinary } from 'cloudinary';
+import { bufferToDataUri, getTypeFile } from '../utils/utils.method';
+import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
+import FileService from '../services/file.service';
+import { File } from '../entities/file.entity';
+import fileService from '../services/file.service';
 
 class UserService {
-  public async createUser(createUserDto: CreateUserDto): Promise<User> {
+  public async createUser(image, createUserDto: CreateUserDto): Promise<User> {
     const errors = await validate(createUserDto);
+    let createdImage: File;
     if (errors.length > 0) {
       const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
         property,
@@ -21,6 +28,25 @@ class UserService {
       }));
 
       throw new HttpException(422, validationErrors);
+    }
+
+    if (image) {
+      const result = await cloudinary.uploader.upload(
+        bufferToDataUri(image.buffer, image.mimetype),
+        {
+          folder: 'uploads',
+        },
+      );
+      if (result) {
+        let newFile: CreateOrUpdateFileDto = {
+          name: `${Date.now()}_${image.originalname}`,
+          path: result.secure_url,
+          size: result.bytes,
+          type: getTypeFile(result.resource_type),
+          public_id: result.public_id,
+        };
+        createdImage = await FileService.create(newFile);
+      }
     }
 
     const post = await postService.getPost(createUserDto.post);
@@ -31,6 +57,7 @@ class UserService {
       firstname: createUserDto.firstname,
       lastname: createUserDto.lastname,
       birth_date: createUserDto.birth_date,
+      image: createdImage?.id || '',
       post: post,
       role: role,
     });
@@ -61,9 +88,9 @@ class UserService {
     }
   }
 
-  public async updateUser(uuid: string, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.getUserRepository().findOneByOrFail({ uuid });
-
+  public async updateUser(image, uuid: string, updateUserDto: UpdateUserDto): Promise<User> {
+    let user = await this.getUserById(uuid);
+    let newImage: File;
     const errors = await validate(updateUserDto);
     if (errors.length > 0) {
       const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
@@ -74,6 +101,25 @@ class UserService {
       throw new HttpException(422, validationErrors);
     }
 
+    if (image) {
+      const result = await cloudinary.uploader.upload(
+        bufferToDataUri(image.buffer, image.mimetype),
+        {
+          folder: 'uploads',
+        },
+      );
+      if (result) {
+        let newFile: CreateOrUpdateFileDto = {
+          name: `${Date.now()}_${image.originalname}`,
+          path: result.secure_url,
+          size: result.bytes,
+          type: getTypeFile(result.resource_type),
+          public_id: result.public_id,
+        };
+        newImage = await FileService.update(user.image.id, newFile);
+      }
+    }
+
     const post = await postService.getPost(updateUserDto.post);
     const role = await roleService.getOne(updateUserDto.role);
 
@@ -81,6 +127,7 @@ class UserService {
       firstname: updateUserDto.firstname,
       lastname: updateUserDto.lastname,
       birth_date: updateUserDto.birth_date,
+      image: newImage?.id || user.image,
       post: post,
       role: role,
     });
@@ -105,6 +152,11 @@ class UserService {
   }
 
   public async deleteUser(uuid: string): Promise<DeleteResult> {
+    const user = await this.getUserById(uuid, ['image']);
+    if (user) {
+      await fileService.delete(user.image.id);
+    }
+
     let deleteResult = await this.getUserRepository().delete({ uuid });
 
     if (deleteResult.affected > 0) {

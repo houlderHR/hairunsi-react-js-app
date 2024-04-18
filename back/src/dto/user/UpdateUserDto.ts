@@ -14,7 +14,6 @@ class UpdateUserDto {
 
   @IsDateString({}, { message: 'Le format du date est incorrect' })
   birth_date: Date;
-
   @IsUUID(undefined, { message: 'Le poste doit etre rensigner et valide' })
   post: UUID;
   @IsUUID(undefined, { message: 'Le role doit etre rensigner et valide' })

@@ -82,6 +82,7 @@ class FileService {
 
   async delete(id: string) {
     const file = await AppDataSource.getRepository(File).findOne({ where: { id } });
+
     const result = await AppDataSource.getRepository(File).delete(id);
     if (result.affected > 0) {
       await cloudinary.uploader.destroy(file.public_id);

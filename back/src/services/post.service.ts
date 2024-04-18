@@ -28,7 +28,6 @@ class PostService {
       const saved = await AppDataSource.getRepository(Post).save(poste);
       return saved;
     } catch (error) {
-      console.log(error);
       if (error.code === '23505') {
         throw new HttpException(StatusCodes.CONFLICT, 'Le poste existe déjà');
       }
