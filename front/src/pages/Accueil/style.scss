@@ -7,9 +7,9 @@
     @apply flex flex-col justify-center items-center w-full bg-white;
 
     .container-accueil {
-      @apply flex flex-col justify-center items-center max-[639px]:flex max-[639px]:flex-col max-[639px]:h-screen max-[639px]:justify-center max-[639px]:space-y-10 bg-transparent sm:h-screen sm:flex sm:flex-col sm:justify-center;
+      @apply flex flex-col justify-start  bg-transparent sm:min-h-screen h-full sm:flex pt-[214px] sm:flex-col;
       .header-content {
-        @apply flex flex-col justify-between items-center w-[520px] h-[111px] bg-transparent;
+        @apply flex flex-col justify-between items-center bg-transparent;
 
         .title {
           @apply text-center w-[374px] lg:h-[55px] md:h-[40px] sm:h-[40px] font-medium lg:text-[48px] sm:text-[30px] md:text-[30px] md:font-medium max-[639px]:text-[20px] max-[639px]:font-medium;
@@ -20,7 +20,7 @@
         }
       }
       .body-content {
-        @apply w-full h-auto lg:w-[40vw] md:w-[80vw] sm:w-[80vw] lg:h-[250px] bg-transparent flex flex-row justify-around content-center sm:flex sm:flex-wrap sm:justify-between mx-1 my-20 max-[639px]:flex max-[639px]:flex-wrap;
+        @apply bg-transparent flex flex-col justify-around content-center sm:flex sm:flex-wrap sm:justify-between md:flex-row mt-20 md:gap-32 gap-7;
       }
     }
   }

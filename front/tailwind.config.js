@@ -20,6 +20,7 @@ export default {
         'gray-7': '#DEDEDE',
         'danger-2': '#EF4F4E',
         'white-1': '#F0F0F0',
+        'purple-1': '#667799',
       },
       fontFamily: {
         ubuntu: ['Ubuntu', 'sans-serif'],
@@ -34,6 +35,10 @@ export default {
         ssm: '20px',
         mmd: '56px',
         llg: '62px',
+      },
+      screens: {
+        smd: '1000px',
+        lgg: '1599px',
       },
     },
   },

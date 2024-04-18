@@ -1,6 +1,7 @@
 import './style.scss';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import PopupNotification from '../PopupNotification';
 
 interface ObjProps {
   path: string;
@@ -13,6 +14,7 @@ const OptionButton: FC<ObjProps> = ({ path, src, title }) => (
     <div className="button-option-container">
       <img src={src} alt="projet" className="button-option-image" />
       <div className="button-option-label">{title}</div>
+      {title === 'Congé' && <PopupNotification />}
     </div>
   </Link>
 );
