@@ -24,3 +24,8 @@ export const fileFilter = (req: Request, file: Express.Multer.File, cb: FileName
       return cb(new Error('Wrong extension type'), false);
   }
 };
+
+export const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: fileFilter,
+});

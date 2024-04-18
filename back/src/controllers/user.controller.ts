@@ -1,16 +1,19 @@
 import { plainToClass } from 'class-transformer';
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import CreateUserDto from '../dto/user/CreateUserDto';
 import userService from '../services/user.service';
 import UpdateUserDto from '../dto/user/UpdateUserDto';
 import { StatusCodes } from 'http-status-codes';
+import { v2 as cloudinary } from 'cloudinary';
+import { bufferToDataUri, getTypeFile } from '../utils/utils.method';
+import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
+import FileService from '../services/file.service';
 
 class UserController {
-  public async create(request: Request, response: Response): Promise<Response> {
+  public async create(request, response: Response): Promise<Response> {
     try {
       const createUserDto: CreateUserDto = plainToClass(CreateUserDto, request.body);
-      const user = await userService.createUser(createUserDto);
-
+      const user = await userService.createUser(request.file, createUserDto);
       return response.status(StatusCodes.CREATED).json(user);
     } catch (error) {
       return response.status(error.status).json(error);
@@ -53,7 +56,8 @@ class UserController {
   public async update(request: Request, response: Response): Promise<Response> {
     try {
       const updateUserDto: UpdateUserDto = plainToClass(UpdateUserDto, request.body);
-      let user = await userService.updateUser(request.params.uuid, updateUserDto);
+
+      let user = await userService.updateUser(request.file, request.params.uuid, updateUserDto);
 
       return response.status(StatusCodes.OK).json(user);
     } catch (error) {

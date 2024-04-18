@@ -18,7 +18,7 @@ class FileController {
         );
         if (result) {
           let newFile: CreateOrUpdateFileDto = {
-            name: req.file.originalname,
+            name: `${Date.now()}_${result.originalname}`,
             path: result.secure_url,
             size: result.bytes,
             type: getTypeFile(result.resource_type),

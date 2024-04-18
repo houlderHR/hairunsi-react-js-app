@@ -6,9 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToOne,
 } from 'typeorm';
 import { Post } from './post.entity';
 import { Role } from './role.entity';
+import { File } from './file.entity';
 
 @Entity('users')
 export class User {
@@ -38,6 +40,12 @@ export class User {
 
   @Column('timestamp')
   birth_date: Date;
+
+  @OneToOne(() => File, (file) => file.id)
+  @JoinColumn({
+    name: 'id_file',
+  })
+  image: File;
 
   @ManyToOne(() => Post, { nullable: false })
   @JoinColumn({

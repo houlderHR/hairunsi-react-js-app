@@ -2,12 +2,7 @@ import { Router } from 'express';
 import FileController from '../controllers/file.controller';
 import REGEX from '../utils/regex';
 import * as multer from 'multer';
-import { fileFilter, fileStorage } from '../utils/multer.config';
-
-const upload = multer({
-  storage: multer.memoryStorage(),
-  fileFilter: fileFilter,
-});
+import { upload } from '../utils/multer.config';
 
 const routerFile = Router();
 
