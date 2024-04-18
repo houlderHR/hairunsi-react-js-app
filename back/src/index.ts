@@ -2,6 +2,8 @@ import { Express } from 'express';
 import { config } from 'dotenv';
 import './database/data-source';
 import { v2 as cloudinary } from 'cloudinary';
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 import express = require('express');
 var cors = require('cors');
@@ -23,6 +25,18 @@ const app: Express = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(router);
+
+var options = {};
+
+app.use(
+  '/api-hairunsi-docs',
+  (req, res, next) => {
+    swaggerDocument.host = req.get('host');
+    next();
+  },
+  swaggerUi.serveFiles(swaggerDocument, options),
+  swaggerUi.setup(),
+);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
