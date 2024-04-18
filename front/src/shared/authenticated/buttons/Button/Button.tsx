@@ -13,12 +13,21 @@ interface ButtonProps {
   icon?: string;
   title: string;
   className?: string;
+  classTitle?: string;
   variant?: string;
   iconSize?: number;
   onClick?: () => void;
 }
 
-const Button: FC<ButtonProps> = ({ icon, title, className, onClick, variant, iconSize = 14 }) => {
+const Button: FC<ButtonProps> = ({
+  icon,
+  title,
+  className,
+  classTitle,
+  onClick,
+  variant,
+  iconSize = 14,
+}) => {
   let classNameValue: string = '';
   switch (variant) {
     case ButtonVariant.PRIMARY:
@@ -50,7 +59,7 @@ const Button: FC<ButtonProps> = ({ icon, title, className, onClick, variant, ico
           <Icon name={icon} size={iconSize} />
         </span>
       )}
-      <span>{title}</span>
+      <span className={classTitle}>{title}</span>
     </button>
   );
 };

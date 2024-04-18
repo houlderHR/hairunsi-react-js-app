@@ -20,6 +20,7 @@ export default {
         'gray-7': '#DEDEDE',
         'danger-2': '#EF4F4E',
         'white-1': '#F0F0F0',
+        'purple-1': '#667799',
       },
       fontFamily: {
         ubuntu: ['Ubuntu', 'sans-serif'],
