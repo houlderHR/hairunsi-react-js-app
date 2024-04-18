@@ -1,0 +1,482 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My API",
+    "description": "Description",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": ["http"],
+  "tags": [
+    {
+      "name": "Permission",
+      "description": "Everything about permission"
+    },
+    {
+      "name": "File",
+      "description": "Operations about File"
+    }
+  ],
+  "paths": {
+    "/permission/": {
+      "post": {
+        "tags": ["Permission"],
+        "summary": "Create permission",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createpermission",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreatePermission"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/PermissionResponseOk"
+            }
+          },
+          "409": {
+            "description": "Permission already exist"
+          },
+          "422": {
+            "description": "Conflict field"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Permission"],
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "All permission",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PermissionResponseOk"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/permission/:id": {
+      "get": {
+        "tags": ["Permission"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Permission"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Permission"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/department/:id": {
+      "get": {
+        "tags": ["Department"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Department"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": ["Department"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/role/": {
+      "post": {
+        "tags": ["Role"],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": ["Role"],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/role/:id": {
+      "get": {
+        "tags": ["Role"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": ["Role"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Role"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/file/": {
+      "post": {
+        "tags": ["File"],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": ["File"],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/file/:id": {
+      "get": {
+        "tags": ["File"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": ["File"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": ["File"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/:uuid": {
+      "get": {
+        "tags": ["User"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": ["User"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/post/": {
+      "post": {
+        "tags": ["Post"],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "tags": ["Post"],
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/post/:id": {
+      "get": {
+        "tags": ["Post"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": ["Post"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Post"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CreatePermission": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Permission"
+      }
+    },
+    "PermissionResponseOk": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "uuid"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Permission"
+      }
+    }
+  }
+}
