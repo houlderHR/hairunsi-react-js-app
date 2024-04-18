@@ -29,8 +29,8 @@ app.use(router);
 var options = {};
 
 app.use(
-  '/api-docs',
-  function (req, res, next) {
+  '/api-hairunsi-docs',
+  (req, res, next) => {
     swaggerDocument.host = req.get('host');
     next();
   },
