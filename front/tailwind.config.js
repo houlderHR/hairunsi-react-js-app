@@ -35,6 +35,10 @@ export default {
         mmd: '56px',
         llg: '62px',
       },
+      screens: {
+        smd: '1000px',
+        lgg: '1599px',
+      },
     },
   },
   plugins: [],

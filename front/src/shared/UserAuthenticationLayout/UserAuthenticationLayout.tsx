@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import routes from '../../routes/paths';
 
 interface UserAuthenticationProps {
-  title: string;
+  title: string | React.ReactNode;
   subTitle?: string;
   showLogo?: boolean;
   contentTitle?: string;
@@ -35,14 +35,18 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
         className="absolute z-0 w-full h-full top-0 left-0 bg-cover right-0 bg-no-repeat"
       />
       <div className="z-10 text-white mx-5 2xl:mx-[77px] mb-[40%]">
-        <h3 className="lg:text-[54px] text-4xl leading-9 lg:leading-[60px] break-words font-normal">
+        <h3 className="xl:text-[40px] xl:leading-10 lgg:text-[50px] text-3xl lg:leading-9 2xl:leading-[50px] 3xl:leading-[55px] break-words font-normal">
           {title}
         </h3>
-        {subTitle && <span className="text-base mt-1 leading-2">{subTitle}</span>}
+        {subTitle && (
+          <span className="text-[12px] lg:text-[14px] 2xl:text-base mt-3 2xl:mt-5 inline-block leading-4">
+            {subTitle}
+          </span>
+        )}
       </div>
     </div>
     <div className="flex w-full flex-col items-center justify-center px-4">
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col w-full md:w-auto items-center">
         {showLogo && (
           <img
             src="images/logo/logo-hairun-no-text.png"
@@ -51,12 +55,14 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
           />
         )}
         {contentTitle && (
-          <h3 className="text-black-1 text-3xl font-medium mb-1 leading-9 mt-20">{contentTitle}</h3>
+          <h3 className="text-black-1 text-3xl font-medium mb-1 leading-9 mt-10 2xl:mt-20">
+            {contentTitle}
+          </h3>
         )}
         {children}
         {showLoginLink && (
-          <div className="mt-20 pt-7 border-t border-gray-5 text-black-1 px-11">
-            <p className="text-sm leading-4">
+          <div className="2xl:mt-20 mt-10 pt-7 border-t border-gray-5 text-black-1 px-11">
+            <p className="text-sm lg:text-sm leading-4">
               Vous avez d&eacute;ja un compte&nbsp;?&nbsp;
               <strong>
                 <NavLink to={routes.unauthenticated.subpaths.login.path}>Connectez-vous</NavLink>
