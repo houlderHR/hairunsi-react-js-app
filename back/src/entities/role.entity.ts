@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Permission } from './permission.entity';
 import { User } from './user.entity';
+import { UUID } from 'crypto';
 
 @Entity('roles')
 export class Role {
