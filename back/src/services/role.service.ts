@@ -30,7 +30,6 @@ class RoleService {
       const saved = await AppDataSource.getRepository(Role).save(role);
       return saved;
     } catch (error) {
-      console.log(error);
       if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code) {
         throw new HttpException(StatusCodes.CONFLICT, 'Le rôle existe déja');
       }
@@ -64,7 +63,6 @@ class RoleService {
 
   async update(id: string, updateRole: CreateOrUpdateRoleDto): Promise<Role> {
     let role = await this.getOne(id);
-    console.log(role);
     try {
       const errors = await validate(plainToClass(CreateOrUpdateRoleDto, updateRole));
       if (errors.length > 0) {
@@ -78,9 +76,6 @@ class RoleService {
         ...updateRole,
         permissions: await this.getAllPermissionsByIdList(updateRole.permissions),
       });
-      // role.name = updateRole.name;
-      // role.permissions = await this.getAllPermissionsByIdList(updateRole.permissions);
-      // console.log(role);
 
       const result = await AppDataSource.getRepository(Role).save(role);
       return result;
