@@ -1,0 +1,245 @@
+{
+  "definitions": {
+    "CreateUser": [
+      {
+        "name": "firstname",
+        "in": "formData",
+        "type": "string"
+      },
+      {
+        "name": "lastname",
+        "in": "formData",
+        "type": "string",
+        "required": "true"
+      },
+      {
+        "name": "birth_date",
+        "in": "formData",
+        "type": "string",
+        "format": "date",
+        "required": "true"
+      },
+      {
+        "name": "role",
+        "in": "formData",
+        "type": "string",
+        "required": "true"
+      },
+      {
+        "name": "post",
+        "in": "formData",
+        "type": "string",
+        "required": "true"
+      },
+      {
+        "name": "image",
+        "in": "formData",
+        "type": "file",
+        "format": "binary",
+        "required": "true"
+      }
+    ],
+    "UpdateUser": [
+      {
+        "name": "uuid",
+        "in": "path",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "name": "firstname",
+        "in": "formData",
+        "type": "string"
+      },
+      {
+        "name": "lastname",
+        "in": "formData",
+        "type": "string",
+        "required": "true"
+      },
+      {
+        "name": "birth_date",
+        "in": "formData",
+        "type": "string",
+        "format": "date",
+        "required": "true"
+      },
+      {
+        "name": "role",
+        "in": "formData",
+        "type": "string",
+        "required": "true"
+      },
+      {
+        "name": "post",
+        "in": "formData",
+        "type": "string",
+        "required": "true"
+      },
+      {
+        "name": "image",
+        "in": "formData",
+        "type": "file",
+        "format": "binary",
+        "required": "true"
+      }
+    ],
+    "UserResponseOk": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "matricule": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "birth_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "role": {
+          "type": "object"
+        },
+        "post": {
+          "$ref": "./post.json#/definitions/Post/PostResponseOk"
+        },
+        "image": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    }
+  },
+  "path": {
+    "user": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createuser",
+        "consumes": "multipart/form-data",
+        "parameters": {
+          "$ref": "#/definitions/CreateUser"
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/UserResponseOk"
+            }
+          },
+          "409": {
+            "description": "User already exist"
+          },
+          "422": {
+            "description": "Conflict field"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "Get All User",
+        "description": "Get all user",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserResponseOk"
+              }
+            }
+          },
+          "404": {
+            "description": "Aucun utilisateur existante"
+          }
+        }
+      }
+    },
+    "userUUID": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get user by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid${REGEX.UID}",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserResponseOk"
+            }
+          },
+          "404": {
+            "description": "Aucun utilisateur existante"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete an user",
+        "description": "Delete an user",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "utilisateur supprimé avec succés"
+          },
+          "404": {
+            "description": "utilisateur poste n'a été trouvé pour etre supprimé"
+          }
+        }
+      },
+      "put": {
+        "tags": ["User"],
+        "summary": "Update user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateuser",
+        "consumes": "multipart/form-data",
+        "parameters": {
+          "$ref": "#/definitions/UpdateUser"
+        },
+        "responses": {
+          "201": {
+            "description": "User updated successfully",
+            "schema": {
+              "$ref": "#/definitions/UserResponseOk"
+            }
+          },
+          "409": {
+            "description": "User already exist"
+          },
+          "422": {
+            "description": "Conflict field"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,13 +1,9 @@
 import { plainToClass } from 'class-transformer';
-import { Request, Response, Router } from 'express';
+import { Request, Response } from 'express';
 import CreateUserDto from '../dto/user/CreateUserDto';
 import userService from '../services/user.service';
 import UpdateUserDto from '../dto/user/UpdateUserDto';
 import { StatusCodes } from 'http-status-codes';
-import { v2 as cloudinary } from 'cloudinary';
-import { bufferToDataUri, getTypeFile } from '../utils/utils.method';
-import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
-import FileService from '../services/file.service';
 
 class UserController {
   public async create(request, response: Response): Promise<Response> {
