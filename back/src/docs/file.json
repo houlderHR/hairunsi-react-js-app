@@ -1,0 +1,47 @@
+{
+  "data": {
+    "fileWithId": {
+      "get": {
+        "tags": ["File"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/file/FileResponseOk"
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "file": {
+      "FileResponseOk": {
+        "type": "object",
+        "properties": {
+          "id": "string",
+          "name": "string",
+          "path": "string",
+          "type": "string",
+          "size": "number",
+          "public_id": "string"
+        },
+        "xml": {
+          "name": "Permission"
+        }
+      }
+    }
+  }
+}

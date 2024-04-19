@@ -104,78 +104,8 @@
         }
       }
     },
-    "/file/": {
-      "post": {
-        "tags": ["File"],
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "get": {
-        "tags": ["File"],
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/file/:id": {
-      "get": {
-        "tags": ["File"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id${REGEX.UID}",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "put": {
-        "tags": ["File"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id${REGEX.UID}",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "tags": ["File"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id${REGEX.UID}",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
+    "/file/{id}": {
+      "$ref": "src/docs/file.json#/data/fileWithId"
     },
     "/user/:uuid": {
       "get": {
@@ -246,6 +176,9 @@
     },
     "post": {
       "$ref": "src/docs/post.json#/definitions/Post"
+    },
+    "file": {
+      "$ref": "src/docs/file.json#/definitions/file"
     }
   }
 }
