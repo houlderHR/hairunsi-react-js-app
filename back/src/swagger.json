@@ -7,7 +7,7 @@
   },
   "host": "localhost:8080",
   "basePath": "/",
-  "schemes": ["http"],
+  "schemes": ["http", "https"],
   "tags": [
     {
       "name": "Permission",
@@ -436,7 +436,7 @@
       },
       "get": {
         "tags": ["Post"],
-        "summary": "Create post",
+        "summary": "Get all posts",
         "description": "This can only be done by the logged in user.",
         "operationId": "getpost",
         "produces": ["application/json"],
@@ -459,13 +459,14 @@
         }
       }
     },
-    "/post/:id": {
+    "/post/{id}": {
       "get": {
         "tags": ["Post"],
+        "summary": "Get post by ID",
         "description": "",
         "parameters": [
           {
-            "name": "id${REGEX.UID}",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -473,24 +474,51 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Post/PostResponseOk"
+            }
+          },
+          "404": {
+            "description": "Aucune poste existante"
           }
         }
       },
       "put": {
         "tags": ["Post"],
+        "summary": "Update post",
         "description": "",
         "parameters": [
           {
-            "name": "id${REGEX.UID}",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#/definitions/Post/CreatePost"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Updated",
+            "schema": {
+              "$ref": "#/definitions/Post/PostResponseOk"
+            }
+          },
+          "400": {
+            "description": "Post already exist"
+          },
+          "422": {
+            "description": "Conflict field"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -499,15 +527,18 @@
         "description": "",
         "parameters": [
           {
-            "name": "id${REGEX.UID}",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Poste supprimé avec succés"
+          },
+          "404": {
+            "description": "Aucun poste n'a été trouvé pour etre supprimé"
           }
         }
       }
@@ -546,7 +577,7 @@
           "name": {
             "type": "string"
           },
-          "id_department": {
+          "department": {
             "type": "uuid"
           }
         },
