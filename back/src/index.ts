@@ -3,8 +3,8 @@ import { config } from 'dotenv';
 import './database/data-source';
 import { v2 as cloudinary } from 'cloudinary';
 const swaggerUi = require('swagger-ui-express');
+const refParser = require('json-schema-ref-parser');
 const swaggerDocument = require('./swagger.json');
-import refParser from '@apidevtools/json-schema-ref-parser';
 
 import express = require('express');
 var cors = require('cors');
