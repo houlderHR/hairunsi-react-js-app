@@ -1,7 +1,9 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
-config();
+
+const ENV = process.env.NODE_ENV;
+config({ path: ENV === 'dev' ? '.env' : '.env.production' });
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -12,8 +14,8 @@ export const AppDataSource = new DataSource({
   database: process.env.DATABASE_NAME,
   synchronize: false,
   logging: false,
-  entities: ['src/entities/*.entity{.ts,.js}'],
-  migrations: ['src/migrations/**/*.ts'],
+  entities: [process.env.TYPEORM_ENTITIES],
+  migrations: [process.env.TYPEORM_MIGRATIONS],
 });
 AppDataSource.initialize()
   .then(() => {

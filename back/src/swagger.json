@@ -20,57 +20,57 @@
   ],
   "paths": {
     "/permission/": {
-      "$ref": "src/docs/permission.json#/data/permission"
+      "$ref": "docs/permission.json#/data/permission"
     },
     "/permission/{id}": {
-      "$ref": "src/docs/permission.json#/data/permissionWithId"
+      "$ref": "docs/permission.json#/data/permissionWithId"
     },
     "/department/": {
-      "$ref": "src/docs/department.json#/data/department"
+      "$ref": "docs/department.json#/data/department"
     },
     "/department/{id}": {
-      "$ref": "src/docs/department.json#/data/departmentWithId"
+      "$ref": "docs/department.json#/data/departmentWithId"
     },
     "/role/": {
-      "$ref": "src/docs/role.json#/data/Role"
+      "$ref": "docs/role.json#/data/Role"
     },
     "/role/{id}": {
-      "$ref": "src/docs/role.json#/data/RoleWithId"
+      "$ref": "docs/role.json#/data/RoleWithId"
     },
     "/file/{id}": {
-      "$ref": "src/docs/file.json#/data/fileWithId"
+      "$ref": "docs/file.json#/data/fileWithId"
     },
     "/user/": {
-      "$ref": "src/docs/user.json#/path/user"
+      "$ref": "docs/user.json#/path/user"
     },
     "/user/{uuid}": {
-      "$ref": "src/docs/user.json#/path/userUUID"
+      "$ref": "docs/user.json#/path/userUUID"
     },
     "/post/": {
-      "$ref": "src/docs/post.json#/path/post"
+      "$ref": "docs/post.json#/path/post"
     },
     "/post/{id}": {
-      "$ref": "src/docs/post.json#/path/postId"
+      "$ref": "docs/post.json#/path/postId"
     }
   },
   "definitions": {
     "permission": {
-      "$ref": "src/docs/permission.json#/definitions/permission"
+      "$ref": "docs/permission.json#/definitions/permission"
     },
     "department": {
-      "$ref": "src/docs/department.json#/definitions/department"
+      "$ref": "docs/department.json#/definitions/department"
     },
     "post": {
-      "$ref": "src/docs/post.json#/definitions/Post"
+      "$ref": "docs/post.json#/definitions/Post"
     },
     "file": {
-      "$ref": "src/docs/file.json#/definitions/file"
+      "$ref": "docs/file.json#/definitions/file"
     },
     "user": {
-      "$ref": "src/docs/user.json#/definitions"
+      "$ref": "docs/user.json#/definitions"
     },
     "role": {
-      "$ref": "src/docs/role.json#/definitions/Role"
+      "$ref": "docs/role.json#/definitions/Role"
     }
   }
 }
