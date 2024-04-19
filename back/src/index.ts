@@ -12,7 +12,9 @@ var cors = require('cors');
 import bodyParser = require('body-parser');
 import router from './routes/';
 
-config();
+const ENV = process.env.NODE_ENV;
+config({ path: ENV === 'dev' ? '.env' : '.env.production' });
+console.log(ENV);
 
 cloudinary.config({
   api_secret: process.env.CLOUD_SECRET,
