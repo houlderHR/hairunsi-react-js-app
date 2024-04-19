@@ -32,77 +32,10 @@
       "$ref": "src/docs/department.json#/data/departmentWithId"
     },
     "/role/": {
-      "post": {
-        "tags": ["Role"],
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "get": {
-        "tags": ["Role"],
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
+      "$ref": "src/docs/role.json#/data/role"
     },
-    "/role/:id": {
-      "get": {
-        "tags": ["Role"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id${REGEX.UID}",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "put": {
-        "tags": ["Role"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id${REGEX.UID}",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Role"],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id${REGEX.UID}",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
+    "/role/{id}": {
+      "$ref": "src/docs/role.json#/data/roleWithId"
     },
     "/file/{id}": {
       "$ref": "src/docs/file.json#/data/fileWithId"
@@ -135,6 +68,9 @@
     },
     "user": {
       "$ref": "src/docs/user.json#/definitions"
+    },
+    "role": {
+      "$ref": "src/docs/role.json#/definitions/Role"
     }
   }
 }

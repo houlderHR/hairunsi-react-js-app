@@ -1,0 +1,174 @@
+{
+  "definitions": {
+    "Role": {
+      "CreateRole": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "uuid"
+          }
+        },
+        "xml": {
+          "name": "Role"
+        }
+      },
+      "RoleResponseOk": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "permissions": { "type": "string" }
+        }
+      }
+    }
+  },
+  "path": {
+    "Role": {
+      "Role": {
+        "tags": ["Role"],
+        "summary": "Create role",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createRole",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Role/CreateRole"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Role/RoleResponseOk"
+            }
+          },
+          "409": {
+            "description": "Role already exist"
+          },
+          "422": {
+            "description": "Conflict field"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Role"],
+        "summary": "Get all Roles",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "getRole",
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": "All Role",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Role/RoleResponseOk"
+              }
+            }
+          },
+          "400": {
+            "description": "Aucun Rolee existant"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "RoleId": {
+      "get": {
+        "tags": ["Role"],
+        "summary": "Get Role by ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Role/RoleResponseOk"
+            }
+          },
+          "404": {
+            "description": "Aucune Role existante"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Role"],
+        "summary": "Update Role",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#/definitions/Role/CreateRole"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "schema": {
+              "$ref": "#/definitions/Role/RoleResponseOk"
+            }
+          },
+          "400": {
+            "description": "Role already exist"
+          },
+          "422": {
+            "description": "Conflict field"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Role"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Role supprimé avec succés"
+          },
+          "404": {
+            "description": "Aucun role n'a été trouvé pour etre supprimé"
+          }
+        }
+      }
+    }
+  }
+}
