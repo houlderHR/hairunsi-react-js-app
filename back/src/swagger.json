@@ -32,10 +32,10 @@
       "$ref": "src/docs/department.json#/data/departmentWithId"
     },
     "/role/": {
-      "$ref": "src/docs/role.json#/data/role"
+      "$ref": "src/docs/role.json#/data/Role"
     },
     "/role/{id}": {
-      "$ref": "src/docs/role.json#/data/roleWithId"
+      "$ref": "src/docs/role.json#/data/RoleWithId"
     },
     "/file/{id}": {
       "$ref": "src/docs/file.json#/data/fileWithId"

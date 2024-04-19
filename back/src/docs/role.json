@@ -1,35 +1,9 @@
 {
-  "definitions": {
+  "data": {
     "Role": {
-      "CreateRole": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "permissions": {
-            "type": "uuid"
-          }
-        },
-        "xml": {
-          "name": "Role"
-        }
-      },
-      "RoleResponseOk": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "permissions": { "type": "string" }
-        }
-      }
-    }
-  },
-  "path": {
-    "Role": {
-      "Role": {
+      "post": {
         "tags": ["Role"],
-        "summary": "Create role",
+        "summary": "Create Role",
         "description": "This can only be done by the logged in user.",
         "operationId": "createRole",
         "produces": ["application/json"],
@@ -63,10 +37,8 @@
       },
       "get": {
         "tags": ["Role"],
+        "description": "",
         "summary": "Get all Roles",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "getRole",
-        "produces": ["application/json"],
         "responses": {
           "201": {
             "description": "All Role",
@@ -77,20 +49,16 @@
               }
             }
           },
-          "400": {
-            "description": "Aucun Rolee existant"
-          },
-          "500": {
-            "description": "Internal server error"
+          "404": {
+            "description": "Not found"
           }
         }
       }
     },
-    "RoleId": {
+    "RoleWithId": {
       "get": {
         "tags": ["Role"],
-        "summary": "Get Role by ID",
-        "description": "",
+        "description": "Get a Role",
         "parameters": [
           {
             "name": "id",
@@ -107,14 +75,15 @@
             }
           },
           "404": {
-            "description": "Aucune Role existante"
+            "description": "Not found"
           }
         }
       },
       "put": {
         "tags": ["Role"],
-        "summary": "Update Role",
-        "description": "",
+        "description": "Update a Role",
+        "summary": "Update a Role",
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -125,20 +94,20 @@
           {
             "in": "body",
             "name": "body",
-            "required": "true",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/Role/CreateRole"
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "Updated",
+          "201": {
+            "description": "Created",
             "schema": {
               "$ref": "#/definitions/Role/RoleResponseOk"
             }
           },
-          "400": {
+          "409": {
             "description": "Role already exist"
           },
           "422": {
@@ -151,7 +120,8 @@
       },
       "delete": {
         "tags": ["Role"],
-        "description": "",
+        "description": "Delete a Role",
+        "summary": "Delete a Role",
         "parameters": [
           {
             "name": "id",
@@ -162,11 +132,52 @@
         ],
         "responses": {
           "200": {
-            "description": "Role supprimé avec succés"
+            "description": "OK"
           },
           "404": {
-            "description": "Aucun role n'a été trouvé pour etre supprimé"
+            "description": "Not found"
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Role": {
+      "CreateRole": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "permission.json#/definitions/permission/PermissionResponseOk"
+            }
+          }
+        },
+        "xml": {
+          "name": "Role"
+        }
+      },
+      "RoleResponseOk": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "permission.json#/definitions/permission/PermissionResponseOk"
+            }
+          }
+        },
+        "xml": {
+          "name": "Role"
         }
       }
     }
