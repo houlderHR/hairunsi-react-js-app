@@ -4,6 +4,7 @@ import './database/data-source';
 import { v2 as cloudinary } from 'cloudinary';
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+import refParser from '@apidevtools/json-schema-ref-parser';
 
 import express = require('express');
 var cors = require('cors');
@@ -28,16 +29,18 @@ app.use(router);
 
 var options = {};
 
-app.use(
-  '/api-hairunsi-docs',
-  (req, res, next) => {
-    swaggerDocument.host = req.get('host');
-    next();
-  },
-  swaggerUi.serveFiles(swaggerDocument, options),
-  swaggerUi.setup(),
-);
+refParser.dereference(swaggerDocument).then((swaggerFile) => {
+  app.use(
+    '/api-hairunsi-docs',
+    (req, res, next) => {
+      swaggerDocument.host = req.get('host');
+      next();
+    },
+    swaggerUi.serveFiles(swaggerFile, options),
+    swaggerUi.setup(),
+  );
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+  });
 });
