@@ -13,7 +13,19 @@ import bodyParser = require('body-parser');
 import router from './routes/';
 
 const ENV = process.env.NODE_ENV;
-config({ path: ENV === 'dev' ? '.env' : '.env.production' });
+
+const getenv = (env): string => {
+  switch (env) {
+    case 'local':
+      return '.env.production';
+    case 'prod':
+      return '.env.local';
+
+    default:
+      return '.env';
+  }
+};
+config({ path: getenv(ENV) });
 console.log(ENV);
 
 cloudinary.config({

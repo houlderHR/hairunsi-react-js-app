@@ -3,7 +3,20 @@ import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 
 const ENV = process.env.NODE_ENV;
-config({ path: ENV === 'dev' ? '.env' : '.env.production' });
+
+const getenv = (env): string => {
+  switch (env) {
+    case 'local':
+      return '.env.production';
+    case 'prod':
+      return '.env.local';
+
+    default:
+      return '.env';
+  }
+};
+config({ path: getenv(ENV) });
+console.log(ENV);
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
