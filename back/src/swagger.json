@@ -243,6 +243,9 @@
     },
     "department": {
       "$ref": "src/docs/department.json#/definitions/department"
+    },
+    "post": {
+      "$ref": "src/docs/post.json#/definitions/Post"
     }
   }
 }
