@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { useGetRoleQuery } from '../../../queries/role.query';
 import CardRole from '../../../shared/authenticated/CardUserManager/CardRole';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
@@ -8,6 +9,10 @@ import UserManagerRoleModal from './UserManagerRoleModal';
 const UserManagerRole: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
   const [user, setUser] = useState<UserObject | undefined>();
+  const role = useGetRoleQuery();
+
+  console.log('ROLE: ', role);
+
   const openUpdateModal = (userData: UserObject) => () => {
     setShowModal(ModalShowStateType.UPDATE);
     setUser(userData);
