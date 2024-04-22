@@ -1,9 +1,7 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { config } from 'dotenv';
 
-const ENV = process.env.NODE_ENV;
-config({ path: ENV === 'dev' ? '.env' : '.env.production' });
+import '../utils/configEnv';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
