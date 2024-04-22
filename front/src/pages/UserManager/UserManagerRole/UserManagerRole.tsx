@@ -1,26 +1,27 @@
 import { FC, useState } from 'react';
-import { useGetRoleQuery } from '../../../queries/role.query';
+import { useGetRoleQuery } from '../../../hooks/useRole';
 import CardRole from '../../../shared/authenticated/CardUserManager/CardRole';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
-import USER_TYPE_LIST, { UserObject } from './constants';
+import { RoleDto } from '../../dto/role.dto';
 import UserManagerRoleModal from './UserManagerRoleModal';
 
 const UserManagerRole: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
-  const [user, setUser] = useState<UserObject | undefined>();
-  const role = useGetRoleQuery();
+  const [role, setRole] = useState<RoleDto | undefined>();
+  const { data, error, isLoading } = useGetRoleQuery();
 
-  console.log('ROLE: ', role);
-
-  const openUpdateModal = (userData: UserObject) => () => {
+  const openUpdateModal = (roleData: RoleDto) => () => {
     setShowModal(ModalShowStateType.UPDATE);
-    setUser(userData);
+    setRole(roleData);
   };
-  const openDeleteModal = () => {
+  const openDeleteModal = (roleData: RoleDto) => () => {
     setShowModal(ModalShowStateType.DELETE);
+    setRole(roleData);
   };
 
+  if (error) return <div>{error.message}</div>;
+  if (isLoading) return <div>Loading...</div>;
   return (
     <>
       <HeadManager
@@ -28,19 +29,19 @@ const UserManagerRole: FC = () => {
         onOpen={() => setShowModal(ModalShowStateType.CREATE)}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
-        {USER_TYPE_LIST.map((item, index) => (
+        {data.map((item: RoleDto, index: number) => (
           <CardRole
             key={item.id}
             openUpdateModal={openUpdateModal(item)}
-            openDeleteModal={openDeleteModal}
-            title={item.role}
+            openDeleteModal={openDeleteModal(item)}
+            title={item.name}
             maxElement={11}
             iconVisible={index === 0}
-            items={item.module}
+            items={item.permissions}
           />
         ))}
       </div>
-      <UserManagerRoleModal user={user} modalState={showModal} setShowModal={setShowModal} />
+      <UserManagerRoleModal role={role} modalState={showModal} setShowModal={setShowModal} />
     </>
   );
 };
