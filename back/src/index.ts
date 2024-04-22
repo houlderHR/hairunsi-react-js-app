@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { config } from 'dotenv';
+import './utils/configEnv';
 import './database/data-source';
 import { v2 as cloudinary } from 'cloudinary';
 const swaggerUi = require('swagger-ui-express');
@@ -11,22 +11,6 @@ var cors = require('cors');
 
 import bodyParser = require('body-parser');
 import router from './routes/';
-
-const ENV = process.env.NODE_ENV;
-
-const getenv = (env): string => {
-  switch (env) {
-    case 'local':
-      return '.env.production';
-    case 'prod':
-      return '.env.local';
-
-    default:
-      return '.env';
-  }
-};
-config({ path: getenv(ENV) });
-console.log(ENV);
 
 cloudinary.config({
   api_secret: process.env.CLOUD_SECRET,
