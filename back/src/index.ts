@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { config } from 'dotenv';
+import './utils/configEnv';
 import './database/data-source';
 import { v2 as cloudinary } from 'cloudinary';
 const swaggerUi = require('swagger-ui-express');
@@ -11,10 +11,6 @@ var cors = require('cors');
 
 import bodyParser = require('body-parser');
 import router from './routes/';
-
-const ENV = process.env.NODE_ENV;
-config({ path: ENV === 'dev' ? '.env' : '.env.production' });
-console.log(ENV);
 
 cloudinary.config({
   api_secret: process.env.CLOUD_SECRET,
