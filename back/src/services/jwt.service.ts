@@ -5,14 +5,16 @@ class JwtService {
     return new Promise((resolve, reject) => {
       jwt.sign(
         { data: { userId: 1 } },
-        'reset-password-secret-key-hairun-to-introduce-in-dotenv-after',
+        process.env.RESET_PASSWORD_PRIVATE_KEY,
         { expiresIn: 60 },
         (error, token) => {
+          if (error) {
+            reject(error);
+          }
+
           if (token) {
             resolve(token);
           }
-
-          reject(error);
         },
       );
     });
@@ -20,19 +22,15 @@ class JwtService {
 
   async verifyJwtResetPasswordToken(token: string) {
     return new Promise((resolve, reject) => {
-      jwt.verify(
-        token,
-        'reset-password-secret-key-hairun-to-introduce-in-dotenv-after',
-        (error, decoded) => {
-          if (error) {
-            reject(error);
-          }
+      jwt.verify(token, process.env.RESET_PASSWORD_PRIVATE_KEY, (error, decoded) => {
+        if (error) {
+          reject(error);
+        }
 
-          if (token) {
-            resolve(decoded);
-          }
-        },
-      );
+        if (token) {
+          resolve(decoded);
+        }
+      });
     });
   }
 }

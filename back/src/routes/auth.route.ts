@@ -9,6 +9,7 @@ routerAuth.post('/recovery-password', authController.recoveryPassword);
 export default routerAuth;
 =======
 import AuthController from '../controllers/auth.controller';
+require('../utils/configEnv');
 
 const authRoute = Router();
 

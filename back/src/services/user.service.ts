@@ -172,6 +172,10 @@ class UserService {
     throw new InternalServerErrorException();
   }
 
+  public async checkIfEmailExist(email: string) {
+    return true;
+  }
+
   private getUserRepository(): Repository<User> {
     return AppDataSource.getRepository(User);
   }
