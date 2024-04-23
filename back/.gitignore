@@ -7,3 +7,5 @@ temp/
 
 .env
 .env.production
+package-lock.json
+yarn.lock
