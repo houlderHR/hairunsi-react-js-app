@@ -5,7 +5,9 @@ import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 import Mailer from '../utils/mailer';
 import HttpException from '../exceptions/HttpException';
-import jwtService from './jwt.service';
+import JwtService from './jwt.service';
+import ResetPasswordDto from '../dto/auth/ResetPasswordDto';
+import { ValidationError, validate } from 'class-validator';
 
 class AuthService {
   async recoveryPassword(email: string) {
@@ -33,9 +35,10 @@ class AuthService {
 
   async generateForgotPasswordLink() {
     try {
-      let resetPasswordToken = await jwtService.generateJwtResetPassword();
-      const resetPasswordUrl = `http://localhost:5173/${resetPasswordToken}`;
-      console.log(resetPasswordToken);
+      let resetPasswordToken = await JwtService.generateJwtResetPassword();
+      const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}?token=${resetPasswordToken}`;
+      // Send forgot password to email
+      return resetPasswordUrl;
     } catch (error) {
       throw new HttpException(StatusCodes.GONE, { message: 'Ce lien est expiré' });
     }
@@ -43,10 +46,34 @@ class AuthService {
 
   async verifyResetPasswordUrlToken(token: string) {
     try {
-      await jwtService.verifyJwtResetPasswordToken(token);
+      await JwtService.verifyJwtResetPasswordToken(token);
     } catch (error) {
       console.log(error);
       throw new HttpException(StatusCodes.UNAUTHORIZED, { error: 'Invalid url' });
     }
   }
+
+  async resetUserPassword(resetPasswordDto: ResetPasswordDto) {
+    if (resetPasswordDto.password !== resetPasswordDto.confirmPassword) {
+      throw new HttpException(StatusCodes.FORBIDDEN, {
+        message: 'Le mot de passe ne correspond pas',
+      });
+    }
+
+    const errors = await validate(resetPasswordDto);
+    if (errors.length > 0) {
+      const validationErrors = errors.map(({ property, constraints }: ValidationError) => ({
+        property,
+        constraints,
+      }));
+
+      throw new HttpException(422, validationErrors);
+    }
+
+    // edit user password
+    // Hash password
+    // Save new user password
+  }
 }
+
+export default new AuthService();

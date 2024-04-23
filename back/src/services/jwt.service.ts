@@ -27,7 +27,8 @@ class JwtService {
           reject(error);
         }
 
-        if (token) {
+        if (decoded) {
+          console.log(decoded);
           resolve(decoded);
         }
       });
