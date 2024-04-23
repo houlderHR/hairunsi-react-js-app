@@ -16,6 +16,7 @@ import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
 import FileService from '../services/file.service';
 import { File } from '../entities/file.entity';
 import fileService from '../services/file.service';
+import { HashPassword } from '../utils/hash';
 
 class UserService {
   public async createUser(image, createUserDto: CreateUserDto): Promise<User> {
@@ -58,7 +59,7 @@ class UserService {
       lastname: createUserDto.lastname,
       birth_date: createUserDto.birth_date,
       email: createUserDto.email,
-      password: createUserDto.password || '',
+      password: (await HashPassword(createUserDto.password)) || '',
       image: createdImage?.id || '',
       post: post,
       role: role,
