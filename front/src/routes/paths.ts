@@ -28,7 +28,7 @@ const routes = {
         path: '/reset-password-success',
       },
       forgotPassword: {
-        path: 'forgot-password',
+        path: '/forgot-password',
       },
       redirectEmail: {
         path: 'redirect-email',
