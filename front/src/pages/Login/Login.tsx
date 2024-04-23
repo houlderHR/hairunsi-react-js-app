@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
@@ -6,6 +8,11 @@ import Input from '../../shared/inputs/Input';
 import InputIcon from '../../shared/inputs/InputIcon';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import InputType from '../../shared/UserAuthenticationLayout/constants';
+
+interface IUser {
+  'E-mail': string;
+  'Mot de passe': string;
+}
 
 const Login = () => {
   const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
@@ -17,7 +24,13 @@ const Login = () => {
       setInputType(InputType.TEXT);
     }
   };
+  const { register, handleSubmit } = useForm<IUser>();
+  const email = register('E-mail');
+  const pass = register('Mot de passe');
 
+  const onSubmit: SubmitHandler<IUser> = async (data) => {
+    await axios.post();
+  };
   return (
     <UserAuthenticationLayout
       showLogo
@@ -33,13 +46,20 @@ const Login = () => {
         <h3 className="text-xs lg:text-[14px] mt-5 3xl:mt-20 text-gray-1 md:px-20">
           Merci de vous connecter à votre compte HaiRun SI
         </h3>
-        <div className="mt-12 flex flex-col gap-y-5 w-full">
+        <form className="mt-12 flex flex-col gap-y-5 w-full" onSubmit={handleSubmit(onSubmit)}>
           <Input
             placeholder="Adresse e-mail"
             additionalClass="!py-3 xl:!py-4 text-sm 2xl:text-base"
             type="text"
+            refs={email.ref}
+            name={email.name}
+            onChange={email.onChange}
+            onBlur={email.onBlur}
+            required
           />
           <InputIcon
+            required
+            inputs={pass}
             endIcon={
               <Icon
                 name="eye"
@@ -61,7 +81,7 @@ const Login = () => {
             </label>
           </div>
           <button
-            type="button"
+            type="submit"
             className="mt-2 mb-10 2xl:mb-20 px-2 py-3 text-xs lg:text-sm border bg-grey1 text-white text-[14px] rounded-md uppercase bg-gray-7"
           >
             Se connecter
@@ -73,7 +93,7 @@ const Login = () => {
               <b>Cliquez ici.</b>
             </Link>
           </span>
-        </div>
+        </form>
       </div>
     </UserAuthenticationLayout>
   );
