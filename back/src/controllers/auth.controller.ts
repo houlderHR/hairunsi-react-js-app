@@ -22,8 +22,7 @@ class AuthController {
     try {
       await authService.verifyResetPasswordUrlToken(request.body.token);
       response.status(StatusCodes.ACCEPTED).json({
-        message:
-          'On vous a envoyé un email de réinitialisation de mot de passe, veuillez le consulter',
+        message: 'Lien du reset password accépté',
       });
     } catch (error) {
       return response.status(error.status).json(error);

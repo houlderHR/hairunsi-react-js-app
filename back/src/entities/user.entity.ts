@@ -53,6 +53,14 @@ export class User {
   })
   password: string;
 
+  @Column({
+    type: 'varchar',
+    name: 'reset_password_token',
+    length: 255,
+    nullable: true,
+  })
+  resetPasswordToken: string;
+
   @OneToOne(() => File, (file) => file.id)
   @JoinColumn({
     name: 'id_file',

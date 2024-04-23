@@ -1,10 +1,12 @@
+import { User } from '../entities/user.entity';
+
 var jwt = require('jsonwebtoken');
 
 class JwtService {
-  async generateJwtResetPassword() {
+  generateJwtResetPassword(user: User): Promise<string> {
     return new Promise((resolve, reject) => {
       jwt.sign(
-        { data: { userId: 1 } },
+        { data: { userId: user.uuid, email: user.email } },
         process.env.RESET_PASSWORD_PRIVATE_KEY,
         { expiresIn: 60 },
         (error, token) => {
@@ -28,8 +30,7 @@ class JwtService {
         }
 
         if (decoded) {
-          console.log(decoded);
-          resolve(decoded);
+          resolve(decoded.data);
         }
       });
     });

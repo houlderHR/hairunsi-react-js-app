@@ -1,6 +1,4 @@
 import { StatusCodes } from 'http-status-codes';
-import { AppDataSource } from '../database/data-source';
-import { User } from '../entities/user.entity';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 import Mailer from '../utils/mailer';
@@ -8,6 +6,8 @@ import HttpException from '../exceptions/HttpException';
 import JwtService from './jwt.service';
 import ResetPasswordDto from '../dto/auth/ResetPasswordDto';
 import { ValidationError, validate } from 'class-validator';
+import { User } from '../entities/user.entity';
+import { AppDataSource } from '../database/data-source';
 
 class AuthService {
   async recoveryPassword(email: string) {
@@ -34,8 +34,15 @@ class AuthService {
   }
 
   async generateForgotPasswordLink() {
+    const user = await AppDataSource.getRepository(User).findOneOrFail({
+      where: { uuid: '04782cc5-b875-4042-9dc9-c08cfea2a6da' },
+    });
     try {
-      let resetPasswordToken = await JwtService.generateJwtResetPassword();
+      let resetPasswordToken = await JwtService.generateJwtResetPassword(user);
+
+      user.resetPasswordToken = resetPasswordToken;
+      await AppDataSource.getRepository(User).save(user);
+
       const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}?token=${resetPasswordToken}`;
       // Send forgot password to email
       return resetPasswordUrl;
@@ -46,10 +53,13 @@ class AuthService {
 
   async verifyResetPasswordUrlToken(token: string) {
     try {
-      await JwtService.verifyJwtResetPasswordToken(token);
+      const user = await JwtService.verifyJwtResetPasswordToken(token);
+      console.log(user);
     } catch (error) {
-      console.log(error);
-      throw new HttpException(StatusCodes.UNAUTHORIZED, { error: 'Invalid url' });
+      throw new HttpException(
+        StatusCodes.GONE,
+        'Ce lien de réinitialisation du mot de passe est expiré,veuillez rééssayer de nouveau',
+      );
     }
   }
 
