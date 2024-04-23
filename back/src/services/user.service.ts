@@ -57,6 +57,8 @@ class UserService {
       firstname: createUserDto.firstname,
       lastname: createUserDto.lastname,
       birth_date: createUserDto.birth_date,
+      email: createUserDto.email,
+      password: createUserDto.password || '',
       image: createdImage?.id || '',
       post: post,
       role: role,

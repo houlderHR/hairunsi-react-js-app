@@ -41,6 +41,18 @@ export class User {
   @Column('timestamp')
   birth_date: Date;
 
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
+  email: string;
+
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
+  password: string;
+
   @OneToOne(() => File, (file) => file.id)
   @JoinColumn({
     name: 'id_file',
