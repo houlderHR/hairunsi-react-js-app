@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
+<<<<<<< HEAD
 import { AppDataSource } from '../database/data-source';
 import { User } from '../entities/user.entity';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
@@ -27,6 +28,23 @@ class AuthService {
       if (error.status == StatusCodes.NOT_FOUND || error.status == StatusCodes.BAD_REQUEST)
         throw error;
       throw new InternalServerErrorException();
+=======
+import HttpException from '../exceptions/HttpException';
+import JwtService from './jwt.service';
+
+class AuthService {
+  async forgotPassword() {
+    let token = await JwtService.generateJwtResetPassword();
+    console.log(token);
+  }
+
+  async verifyResetPasswordUrlToken(token: string) {
+    try {
+      await JwtService.verifyJwtResetPasswordToken(token);
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(StatusCodes.UNAUTHORIZED, { error: 'Invalid url' });
+>>>>>>> d39ebf8 (✨ Add signature url)
     }
   }
 }
