@@ -11,7 +11,6 @@ var cors = require('cors');
 
 import bodyParser = require('body-parser');
 import router from './routes/';
-import sendMail from './utils/sendMail';
 
 cloudinary.config({
   api_secret: process.env.CLOUD_SECRET,
@@ -27,7 +26,7 @@ app.use(bodyParser.json());
 app.use(router);
 
 var options = {};
-sendMail('Récuperation', 'dr.andriamampitasoa@gmail.com', 'http://dsfqfd/dsfqdffq.com');
+
 refParser.dereference(swaggerDocument).then((swaggerFile) => {
   app.use(
     '/api-hairunsi-docs',
