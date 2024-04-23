@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import Icon from '../../shared/Icon';
-import Input from '../../shared/inputs/Input';
 import InputIcon from '../../shared/inputs/InputIcon';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import Button from '../../shared/UserAuthenticationLayout/Button';
@@ -37,10 +36,20 @@ const ResetPassword: FC = () => {
         </ul>
       </div>
       <div className="mt-12 flex flex-col cursor-pointer gap-5 w-full">
-        <Input
-          placeholder="Adresse e-mail"
-          additionalClass="!py-3 xl:!py-4 text-sm 2xl:text-base"
-          type="text"
+        <InputIcon
+          endIcon={
+            <Icon
+              name="eye"
+              className="hover:text-secondary !h-3 lg:h-[15px]"
+              onClick={toggleInputType}
+              height={15}
+              width={22}
+            />
+          }
+          additionalClass="bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl pr-10"
+          additionalInputClass="text-base text-sm 2xl:text-base !py-3 xl:!py-4 placeholder:text-gray-1 leading-3 py-4 focus:placeholder:opacity-0 "
+          placeholder="Nouveau mot de passe"
+          type={inputType}
         />
         <InputIcon
           endIcon={
@@ -52,9 +61,9 @@ const ResetPassword: FC = () => {
               width={22}
             />
           }
-          additionalClass="bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl"
+          additionalClass="bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl pr-10"
           additionalInputClass="text-base text-sm 2xl:text-base !py-3 xl:!py-4 placeholder:text-gray-1 leading-3 py-4 focus:placeholder:opacity-0 "
-          placeholder="Mot de passe"
+          placeholder="Confirmation du nouveau mot de passe"
           type={inputType}
         />
         <Button additionalClass=" ">CONFIRMER</Button>

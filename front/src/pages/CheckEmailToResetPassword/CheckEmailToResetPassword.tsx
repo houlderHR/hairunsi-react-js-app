@@ -15,7 +15,7 @@ const CheckEmailToResetPassword: FC = () => (
       <div className="content">
         <div className="description">
           V&eacute;rifiez votre bo&icirc;te e-mail. Pour r&eacute;initialiser votre mot de passe,
-          suivez les instructions envoy&eacute;es dans votre boî&icirc;te e-mail.
+          suivez les instructions envoy&eacute;es dans votre bo&icirc;te e-mail.
         </div>
         <div className="confirmation">
           Vous n&apos;avez pas re&ccedil;u d&apos;e-mail ? V&eacute;rifiez vos spam ou essayez une

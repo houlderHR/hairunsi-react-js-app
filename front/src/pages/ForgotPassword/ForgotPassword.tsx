@@ -18,7 +18,7 @@ const ForgotPassword: FC = () => (
         Saisissez votre adresse e-mail dans le champ ci-dessous.
       </p>
       <Input type="email" placeholder="Email" additionalClass="focus:border-secondary border" />
-      <Button>Se conn&eacute;cter</Button>
+      <Button>Envoyer</Button>
     </div>
   </UserAuthenticationLayout>
 );

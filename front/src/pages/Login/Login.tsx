@@ -69,7 +69,7 @@ const Login = () => {
           <hr className="mx-20" />
           <span className="text-black-1 mt-8 text-sm lg:text-[14px]">
             Mot de passe oublié?&nbsp;
-            <Link to={routes.unauthenticated.subpaths.resetPassword.path}>
+            <Link to={routes.unauthenticated.subpaths.forgotPassword.path}>
               <b>Cliquez ici.</b>
             </Link>
           </span>
