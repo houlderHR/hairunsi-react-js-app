@@ -1,9 +1,11 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import useGetPermissionQuery from '../../../../../hooks/usePermission';
 import CardItemRole from '../../../../../shared/authenticated/CardUserManager/CardRole/CardItemRole';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import Input from '../../../../../shared/inputs/Input';
 import InputIcon from '../../../../../shared/inputs/InputIcon';
+import { PermissionDto } from '../../../../dto/permission.dto';
 import { MODULE_ROLE_LIST } from '../../constants';
 
 interface CreateModalRoleProps {
@@ -12,17 +14,31 @@ interface CreateModalRoleProps {
 
 const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose }) => {
   const [show, setShow] = useState(false);
-  const [moduleRole, setModuleRole] = useState(MODULE_ROLE_LIST);
-  const [moduleListSelected, setmoduleListSelected] = useState<string[]>([]);
+  const { data, error, isLoading } = useGetPermissionQuery();
+  const [moduleRole, setModuleRole] = useState<PermissionDto[]>([]);
+  const [moduleListSelected, setmoduleListSelected] = useState<PermissionDto[]>([]);
 
-  const setValue = (elem: string) => {
-    const unselectedListModule = moduleRole.filter((item) => item !== elem);
+  useEffect(() => {
+    if (data) {
+      setModuleRole(data);
+    }
+  }, [data]);
+
+  if (error) return <div>{error.message}</div>;
+  if (isLoading) return <div>Loading...</div>;
+
+  const setValue = (elem: PermissionDto) => {
+    const unselectedListModule = moduleRole.filter(
+      (item: PermissionDto) => item.name !== elem.name,
+    );
     setmoduleListSelected((prevList) => [...prevList, elem]);
     setModuleRole(unselectedListModule);
   };
 
-  const deleteItem = (elem: string) => {
-    setmoduleListSelected((prevList) => prevList.filter((item) => item !== elem));
+  const deleteItem = (elem: PermissionDto) => {
+    setmoduleListSelected((prevList) =>
+      prevList.filter((item: PermissionDto) => item.name !== elem.name),
+    );
     setModuleRole((prevList) => [...prevList, elem]);
   };
 
@@ -47,9 +63,9 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose }) => {
                 <CardItemRole
                   addClass="rounded-md border-gray-4"
                   icon="x-1"
-                  title={item}
+                  title={item.name}
                   deleteItem={deleteItem}
-                  key={item}
+                  key={item.id}
                 />
               ))}
           </div>

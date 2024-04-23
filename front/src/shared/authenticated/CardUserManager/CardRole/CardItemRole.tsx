@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { PermissionDto } from '../../../../pages/dto/permission.dto';
 
 interface CardItemRoleProps {
   title: string;
   icon?: string;
   addClass: string;
-  deleteItem?: (elem: string) => void;
+  deleteItem?: (elem: PermissionDto) => void;
 }
 
 const CardItemRole: FC<CardItemRoleProps> = ({ title, icon, addClass, deleteItem }) => (
