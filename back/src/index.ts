@@ -11,6 +11,7 @@ var cors = require('cors');
 
 import bodyParser = require('body-parser');
 import router from './routes/';
+import sendMail from './utils/sendMail';
 
 cloudinary.config({
   api_secret: process.env.CLOUD_SECRET,
