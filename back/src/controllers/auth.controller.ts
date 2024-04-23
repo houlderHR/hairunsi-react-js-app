@@ -20,7 +20,7 @@ class AuthController {
 
   public async verifyForgotPasswordLinkToken(request: Request, response: Response) {
     try {
-      await authService.verifyResetPasswordUrlToken(request.body.token);
+      await authService.verifyResetPasswordUrlToken(request.headers.token_password as string);
       response.status(StatusCodes.ACCEPTED).json({
         message: 'Lien du reset password accépté',
       });

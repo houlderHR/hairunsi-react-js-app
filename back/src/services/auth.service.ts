@@ -43,7 +43,7 @@ class AuthService {
       user.resetPasswordToken = resetPasswordToken;
       await AppDataSource.getRepository(User).save(user);
 
-      const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}?token=${resetPasswordToken}`;
+      const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}reset-password?token=${resetPasswordToken}`;
       // Send forgot password to email
       return resetPasswordUrl;
     } catch (error) {
