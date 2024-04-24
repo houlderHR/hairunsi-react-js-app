@@ -7,8 +7,8 @@ class Mailer {
   private transporter: nodemailer.Transporter;
   private OAuth_client;
 
-  constructor(isOAuth2: boolean) {
-    if (isOAuth2) {
+  constructor() {
+    if (process.env.CLIENT_ID && process.env.CLIENT_SECRET && process.env.REFRESH_TOKEN) {
       const OAuth2 = google.auth.OAuth2;
       this.OAuth_client = new OAuth2(process.env.CLIENT_ID, process.env.CLIENT_SECRET);
       this.OAuth_client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });

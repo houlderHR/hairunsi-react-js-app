@@ -20,7 +20,7 @@ class AuthService {
       });
       if (!result) throw new HttpNotFoundException("Le mail n'existe pas");
       try {
-        const mailer = new Mailer(true);
+        const mailer = new Mailer();
         return await mailer.sendMail(
           'Récupération mot de passe',
           result.email,
