@@ -6,6 +6,10 @@ export const bufferToDataUri = (buffer: Buffer, mimetype: string) => {
   return dataURI;
 };
 
+export const removeSpace = (elem: string) => {
+  return elem.split(' ').join('');
+};
+
 export const getTypeFile = (mimetype: string) => {
   let result: string = '';
   switch (mimetype) {
