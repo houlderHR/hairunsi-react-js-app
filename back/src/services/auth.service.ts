@@ -82,14 +82,10 @@ class AuthService {
       const userValidTokenPayload = await jwtService.verifyJwtResetPasswordToken(token, true);
       user = await this.getUserRepository().findOneOrFail({
         where: { uuid: userValidTokenPayload.uuid },
-        select: ['resetPasswordToken', 'email', 'password', 'uuid'],
+        select: ['email', 'password', 'uuid'],
       });
     } catch (_) {
       throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "Une erreur s'est produite");
-    }
-
-    if (!(user.resetPasswordToken === token)) {
-      throw new HttpException(StatusCodes.GONE, 'Ce lien est invalide');
     }
 
     const errors = await validate(resetPasswordDto);
@@ -113,7 +109,7 @@ class AuthService {
       user.resetPasswordToken = null;
       await this.getUserRepository().update({ uuid: user.uuid }, user);
 
-      return 'ok';
+      return { message: 'Mot de passe changé avec succés' };
     } catch (error) {
       throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error');
     }

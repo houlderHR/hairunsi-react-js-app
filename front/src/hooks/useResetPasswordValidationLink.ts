@@ -23,6 +23,8 @@ const useCheckPasswordValidationLink = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const token = location.search.replace(TOKEN_QUERY_PARAM, '');
+
   const {
     isSuccess: isUrlValid,
     isLoading: isValidationLoading,
@@ -39,7 +41,7 @@ const useCheckPasswordValidationLink = () => {
     }
   });
 
-  return { isUrlValid, isValidationLoading, isUrlError };
+  return { isUrlValid, isValidationLoading, isUrlError, token };
 };
 
 export default useCheckPasswordValidationLink;
