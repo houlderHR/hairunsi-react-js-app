@@ -31,6 +31,12 @@ class UserService {
       throw new HttpException(422, validationErrors);
     }
 
+    if (await this.checkIfUserWithThisEmailAlreadyExists(createUserDto.email))
+      throw new HttpException(
+        StatusCodes.CONFLICT,
+        "L'utilisateur existe déja: adresse e-mail non disponible",
+      );
+
     if (image) {
       const result = await cloudinary.uploader.upload(
         bufferToDataUri(image.buffer, image.mimetype),
@@ -131,6 +137,8 @@ class UserService {
       lastname: updateUserDto.lastname,
       birth_date: updateUserDto.birth_date,
       image: newImage?.id || user.image,
+      email: user.email,
+      password: user.password,
       post: post,
       role: role,
     });
@@ -173,8 +181,13 @@ class UserService {
     throw new InternalServerErrorException();
   }
 
-  public async checkIfEmailExist(email: string) {
-    return true;
+  public async checkIfUserWithThisEmailAlreadyExists(email: string) {
+    const user = await AppDataSource.getRepository(User).findOne({
+      where: { email: email },
+      relations: ['post', 'role', 'image'],
+    });
+    if (user) return true;
+    return false;
   }
 
   private getUserRepository(): Repository<User> {

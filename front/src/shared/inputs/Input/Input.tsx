@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ChangeHandler, RefCallBack } from 'react-hook-form';
+import { Noop, RefCallBack } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
 interface InputProps {
@@ -7,27 +7,24 @@ interface InputProps {
   type: string;
   additionalClass?: string;
   value?: string;
-  name: string;
-  refs: RefCallBack;
-  onChange?: ChangeHandler;
-  onBlur: ChangeHandler;
+  ref: RefCallBack;
+  onChange: (...event: []) => void;
+  onBlur: Noop;
   required: boolean;
 }
 
 const Input: FC<InputProps> = ({
-  refs,
-  name,
+  ref,
   placeholder,
   type,
   additionalClass,
   onChange,
   onBlur,
-  value = '',
+  value,
   required,
 }) => (
   <input
-    name={name}
-    ref={refs}
+    ref={ref}
     className={twMerge(
       additionalClass,
       'rounded border border-gray-1 p-4 w-full leading-3 focus:placeholder:opacity-0 focus:outline-none focus:border-secondary cursor-pointer',
@@ -38,6 +35,7 @@ const Input: FC<InputProps> = ({
     onChange={onChange}
     onBlur={onBlur}
     required={required}
+    value={value}
   />
 );
 

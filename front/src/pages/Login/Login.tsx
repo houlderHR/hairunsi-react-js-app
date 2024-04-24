@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
@@ -25,9 +25,7 @@ const Login = () => {
       setInputType(InputType.TEXT);
     }
   };
-  const { register, handleSubmit } = useForm<IUser>();
-  const email = register('E-mail');
-  const pass = register('Mot de passe');
+  const { handleSubmit, control } = useForm<IUser>();
 
   const onSubmit: SubmitHandler<IUser> = async (data) => {
     let response;
@@ -72,32 +70,47 @@ const Login = () => {
           Merci de vous connecter à votre compte HaiRun SI
         </h3>
         <form className="mt-12 flex flex-col gap-y-5 w-full" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            placeholder="Adresse e-mail"
-            additionalClass="!py-3 xl:!py-4 text-sm 2xl:text-base"
-            type="text"
-            refs={email.ref}
-            name={email.name}
-            onChange={email.onChange}
-            onBlur={email.onBlur}
-            required
-          />
-          <InputIcon
-            required
-            inputs={pass}
-            endIcon={
-              <Icon
-                name="eye"
-                className="hover:text-secondary !h-3 lg:h-[15px]"
-                onClick={toggleInputType}
-                height={15}
-                width={22}
+          <Controller
+            control={control}
+            name="E-mail"
+            render={({ field: { ref, onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Adresse e-mail"
+                additionalClass="!py-3 xl:!py-4 text-sm 2xl:text-base"
+                type="text"
+                ref={ref}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                required
               />
-            }
-            additionalClass="bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl"
-            additionalInputClass="text-base placeholder:text-gray-1 text-sm 2xl:text-base leading-3 !py-3 xl:!py-4 focus:placeholder:opacity-0 "
-            placeholder="Mot de passe"
-            type={inputType}
+            )}
+          />
+          <Controller
+            control={control}
+            name="Mot de passe"
+            render={({ field: { ref, onChange, onBlur, value } }) => (
+              <InputIcon
+                ref={ref}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
+                required
+                endIcon={
+                  <Icon
+                    name="eye"
+                    className="hover:text-secondary !h-3 lg:h-[15px]"
+                    onClick={toggleInputType}
+                    height={15}
+                    width={22}
+                  />
+                }
+                additionalClass="bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl"
+                additionalInputClass="text-base placeholder:text-gray-1 text-sm 2xl:text-base leading-3 !py-3 xl:!py-4 focus:placeholder:opacity-0 "
+                placeholder="Mot de passe"
+                type={inputType}
+              />
+            )}
           />
           <div className="flex justify-left text-gray-1 mb-4">
             <label className="flex flex-row items-center" htmlFor="remember">

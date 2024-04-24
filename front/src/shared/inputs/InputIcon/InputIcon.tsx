@@ -6,8 +6,8 @@ interface InputIconProps {
   icon?: string;
   placeholder: string;
   additionalClass?: string;
-  additionalInputClass?: string;
   value?: string;
+  additionalInputClass?: string;
   type?: string;
   endIcon?: React.ReactNode;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
