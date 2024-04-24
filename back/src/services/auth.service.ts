@@ -3,7 +3,7 @@ import { AppDataSource } from '../database/data-source';
 import { User } from '../entities/user.entity';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
-import sendMail from '../utils/sendMail';
+import Mailer from '../utils/mailer';
 import HttpException from '../exceptions/HttpException';
 
 class AuthService {
@@ -14,7 +14,12 @@ class AuthService {
       });
       if (!result) throw new HttpNotFoundException("Le mail n'existe pas");
       try {
-        return await sendMail('Récupération mot de passe', result.email, 'generatelink(user)');
+        const mailer = new Mailer(true);
+        return await mailer.sendMail(
+          'Récupération mot de passe',
+          result.email,
+          'generatelink(user)',
+        );
       } catch (error) {
         throw new HttpException(StatusCodes.BAD_REQUEST, "Impossible d'envoyer le mail");
       }
