@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -8,6 +7,7 @@ import Input from '../../shared/inputs/Input';
 import InputIcon from '../../shared/inputs/InputIcon';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import InputType from '../../shared/UserAuthenticationLayout/constants';
+import http from '../../utils/http-common';
 
 interface IUser {
   'E-mail': string;
@@ -15,6 +15,7 @@ interface IUser {
 }
 
 const Login = () => {
+  const [match, setMatch] = useState<string>('');
   const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
 
   const toggleInputType = () => {
@@ -29,7 +30,31 @@ const Login = () => {
   const pass = register('Mot de passe');
 
   const onSubmit: SubmitHandler<IUser> = async (data) => {
-    await axios.post();
+    let response;
+    try {
+      response = await http.post('/auth/login', {
+        email: data['E-mail'],
+        password: data['Mot de passe'],
+      });
+      window.localStorage.setItem('user', response.data);
+      window.location.replace('/accueil');
+    } catch (error) {
+      const err = error.response.data;
+      if (err.status === 422) {
+        err.error.map((e) => {
+          if (e.constraints.matches) {
+            return setMatch(e.constraints.matches);
+          }
+          return '';
+        });
+      }
+      if (err.status === 404) {
+        setMatch(err.error);
+      }
+      if (err.status === 401) {
+        setMatch(err.error);
+      }
+    }
   };
   return (
     <UserAuthenticationLayout
@@ -80,6 +105,8 @@ const Login = () => {
               <span className="text-xs lg:text-sm inline-block ml-2">Se souvenir de moi</span>
             </label>
           </div>
+
+          <div className="text-red-500 my-0 ml-0 font-thin flex justify-start">{match}</div>
           <button
             type="submit"
             className="mt-2 mb-10 2xl:mb-20 px-2 py-3 text-xs lg:text-sm border bg-grey1 text-white text-[14px] rounded-md uppercase bg-gray-7"
