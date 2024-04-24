@@ -11,11 +11,10 @@ export type InputField = {
 
 const ForgotPassword: FC = () => {
   const { control, handleSubmit } = useForm<InputField>();
-  const onSubmit = handleSubmit((data) => );
+  const mutation = useSendMail(data);
+  const onSubmit = handleSubmit((data) => sendMail(data));
 
-  const sendMail =(data: InputField)=> {
-      useSendMail(data)
-  }
+  const sendMail = (data: InputField) => {};
 
   return (
     <UserAuthenticationLayout
