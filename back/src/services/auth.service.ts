@@ -15,7 +15,7 @@ import { Repository } from 'typeorm';
 class AuthService {
   async recoveryPassword(email: string) {
     try {
-      const result = await AppDataSource.getRepository(User).findOne({
+      const result = await this.getUserRepository().findOne({
         where: { email: email.trim() },
       });
       if (!result) throw new HttpNotFoundException("Le mail n'existe pas");
@@ -24,7 +24,7 @@ class AuthService {
         return await mailer.sendMail(
           'Récupération mot de passe',
           result.email,
-          'generatelink(user)',
+          await this.generateForgotPasswordLink(result),
         );
       } catch (error) {
         throw new HttpException(StatusCodes.BAD_REQUEST, "Impossible d'envoyer le mail");
@@ -36,10 +36,7 @@ class AuthService {
     }
   }
 
-  async generateForgotPasswordLink() {
-    const user = await this.getUserRepository().findOneOrFail({
-      where: { uuid: '04782cc5-b875-4042-9dc9-c08cfea2a6da' },
-    });
+  async generateForgotPasswordLink(user: User) {
     try {
       let resetPasswordToken = await JwtService.generateJwtResetPassword(user);
 
@@ -47,7 +44,7 @@ class AuthService {
       await AppDataSource.getRepository(User).save(user);
 
       const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}reset-password?token=${resetPasswordToken}`;
-      // Send forgot password to email
+
       return resetPasswordUrl;
     } catch (error) {
       throw new HttpException(StatusCodes.GONE, { message: 'Ce lien est expiré' });
@@ -112,7 +109,6 @@ class AuthService {
 
       return 'ok';
     } catch (error) {
-      console.log(error);
       throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error');
     }
   }

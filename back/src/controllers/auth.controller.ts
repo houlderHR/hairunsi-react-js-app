@@ -14,12 +14,6 @@ class AuthController {
     }
   }
 
-  public async forgotPassword(request: Request, response: Response) {
-    const link = await authService.generateForgotPasswordLink();
-    console.log(link);
-    response.status(StatusCodes.ACCEPTED).json({ message: 'Reset password OK' });
-  }
-
   public async verifyForgotPasswordLinkToken(request: Request, response: Response) {
     try {
       await authService.verifyResetPasswordUrlToken(request.headers.token_password as string);
