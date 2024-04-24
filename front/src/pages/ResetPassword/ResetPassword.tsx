@@ -59,9 +59,9 @@ const ResetPassword = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isLoading },
     setError,
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm({ resolver: yupResolver(schema), mode: 'onChange' });
 
   const toggleInputType = () => {
     if (inputType === InputType.TEXT) {
@@ -88,6 +88,7 @@ const ResetPassword = () => {
       if (responseError.response?.status === 500) {
         navigate(routes.unauthenticated.subpaths.errorResetPassword.path);
       }
+
       if (responseError.response?.status === 422) {
         const err = responseError.response?.data?.error;
         mapError(err, (property, type) => {
@@ -121,7 +122,7 @@ const ResetPassword = () => {
         </p>
       )}
       {/* {JSON.stringify(errors)} */}
-      {isUrlValid && (
+      {!isUrlValid && (
         <>
           <p className="text-xs lg:text-sm text-gray-1 font-medium leading-4">
             Entrez et confirmez votre nouveau mot de passe
@@ -163,7 +164,7 @@ const ResetPassword = () => {
                     }
                     additionalClass={twMerge(
                       errors.password &&
-                        'outline-red-500 outline text-red-500 !border-transparent ',
+                        'outline-red-500 outline outline-2 text-red-500 !border-transparent ',
                       'bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl pr-10',
                     )}
                     additionalInputClass={twMerge(
@@ -202,7 +203,7 @@ const ResetPassword = () => {
                     }
                     additionalClass={twMerge(
                       errors.confirmPassword &&
-                        'outline-red-500 outline text-red-500 placeholder:text-red-500 !border-transparent',
+                        'outline-red-500 outline text-red-500 outline-2 placeholder:text-red-500 !border-transparent',
                       'bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl pr-10',
                     )}
                     additionalInputClass={twMerge(
@@ -220,7 +221,7 @@ const ResetPassword = () => {
                 </div>
               )}
             />
-            <Button additionalClass=" ">CONFIRMER</Button>
+            <Button disabled={isLoading}>CONFIRMER</Button>
           </form>
         </>
       )}
