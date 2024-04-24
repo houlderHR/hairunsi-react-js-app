@@ -8,7 +8,7 @@ class JwtService {
       jwt.sign(
         { data: { userId: user.uuid, email: user.email } },
         process.env.RESET_PASSWORD_PRIVATE_KEY,
-        { expiresIn: 60 },
+        { expiresIn: 120 },
         (error, token) => {
           if (error) {
             reject(error);
@@ -22,17 +22,25 @@ class JwtService {
     });
   }
 
-  async verifyJwtResetPasswordToken(token: string) {
+  async verifyJwtResetPasswordToken(
+    token: string,
+    ignoreJwtTimeout?: boolean,
+  ): Promise<{ uuid: string; email: string }> {
     return new Promise((resolve, reject) => {
-      jwt.verify(token, process.env.RESET_PASSWORD_PRIVATE_KEY, (error, decoded) => {
-        if (error) {
-          reject(error);
-        }
+      jwt.verify(
+        token,
+        process.env.RESET_PASSWORD_PRIVATE_KEY,
+        { ignoreExpiration: ignoreJwtTimeout },
+        (error, decoded) => {
+          if (error) {
+            reject(error);
+          }
 
-        if (decoded) {
-          resolve(decoded.data);
-        }
-      });
+          if (decoded) {
+            resolve(decoded.data);
+          }
+        },
+      );
     });
   }
 }

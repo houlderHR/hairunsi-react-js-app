@@ -15,6 +15,7 @@ const authRoute = Router();
 
 authRoute.post('/forgot-password', AuthController.forgotPassword);
 authRoute.post('/forgot-password-check-url', AuthController.verifyForgotPasswordLinkToken);
+authRoute.post('/reset-password', AuthController.resetUserPassword);
 
 export default authRoute;
 >>>>>>> d39ebf8 (✨ Add signature url)

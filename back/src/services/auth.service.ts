@@ -8,6 +8,9 @@ import ResetPasswordDto from '../dto/auth/ResetPasswordDto';
 import { ValidationError, validate } from 'class-validator';
 import { User } from '../entities/user.entity';
 import { AppDataSource } from '../database/data-source';
+import jwtService from './jwt.service';
+import { hashPassword } from '../utils/bcrypt';
+import { Repository } from 'typeorm';
 
 class AuthService {
   async recoveryPassword(email: string) {
@@ -34,7 +37,7 @@ class AuthService {
   }
 
   async generateForgotPasswordLink() {
-    const user = await AppDataSource.getRepository(User).findOneOrFail({
+    const user = await this.getUserRepository().findOneOrFail({
       where: { uuid: '04782cc5-b875-4042-9dc9-c08cfea2a6da' },
     });
     try {
@@ -54,8 +57,14 @@ class AuthService {
   async verifyResetPasswordUrlToken(token: string) {
     try {
       const user = await JwtService.verifyJwtResetPasswordToken(token);
-      console.log(user);
+      await this.getUserRepository().findOneOrFail({
+        where: { uuid: user.uuid, resetPasswordToken: token },
+      });
     } catch (error) {
+      if (error.status === StatusCodes.GONE) {
+        throw error;
+      }
+
       throw new HttpException(
         StatusCodes.GONE,
         'Ce lien de réinitialisation du mot de passe est expiré,veuillez rééssayer de nouveau',
@@ -63,11 +72,21 @@ class AuthService {
     }
   }
 
-  async resetUserPassword(resetPasswordDto: ResetPasswordDto) {
-    if (resetPasswordDto.password !== resetPasswordDto.confirmPassword) {
-      throw new HttpException(StatusCodes.FORBIDDEN, {
-        message: 'Le mot de passe ne correspond pas',
+  async resetUserPassword(resetPasswordDto: ResetPasswordDto, token: string) {
+    let user: User;
+
+    try {
+      const userValidTokenPayload = await jwtService.verifyJwtResetPasswordToken(token, true);
+      user = await this.getUserRepository().findOneOrFail({
+        where: { uuid: userValidTokenPayload.uuid },
+        select: ['resetPasswordToken', 'email', 'password', 'uuid'],
       });
+    } catch (_) {
+      throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "Une erreur s'est produite");
+    }
+
+    if (!(user.resetPasswordToken === token)) {
+      throw new HttpException(StatusCodes.GONE, 'Ce lien est invalide');
     }
 
     const errors = await validate(resetPasswordDto);
@@ -80,9 +99,26 @@ class AuthService {
       throw new HttpException(422, validationErrors);
     }
 
-    // edit user password
-    // Hash password
-    // Save new user password
+    if (resetPasswordDto.password !== resetPasswordDto.confirmPassword) {
+      throw new HttpException(StatusCodes.FORBIDDEN, {
+        message: 'Le mot de passe ne correspond pas',
+      });
+    }
+
+    try {
+      user.password = await hashPassword(resetPasswordDto.password);
+      user.resetPasswordToken = null;
+      await this.getUserRepository().update({ uuid: user.uuid }, user);
+
+      return 'ok';
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error');
+    }
+  }
+
+  private getUserRepository(): Repository<User> {
+    return AppDataSource.getRepository(User);
   }
 }
 

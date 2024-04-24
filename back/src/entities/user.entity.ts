@@ -56,6 +56,7 @@ export class User {
   @Column({
     type: 'varchar',
     name: 'reset_password_token',
+    select: false,
     length: 255,
     nullable: true,
   })
