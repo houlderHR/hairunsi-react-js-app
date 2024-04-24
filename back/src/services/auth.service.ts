@@ -43,6 +43,12 @@ class AuthService {
       user.resetPasswordToken = resetPasswordToken;
       await AppDataSource.getRepository(User).save(user);
 
+      let timeout = setTimeout(async () => {
+        user.resetPasswordToken = null;
+        await AppDataSource.getRepository(User).save(user);
+        clearTimeout(timeout);
+      }, +process.env.RESET_PASSWORD_TOKEN_DURATION * 1000);
+
       const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}reset-password?token=${resetPasswordToken}`;
 
       return resetPasswordUrl;

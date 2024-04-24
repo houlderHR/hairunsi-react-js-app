@@ -8,7 +8,7 @@ class JwtService {
       jwt.sign(
         { data: { userId: user.uuid, email: user.email } },
         process.env.RESET_PASSWORD_PRIVATE_KEY,
-        { expiresIn: 120 },
+        { expiresIn: +process.env.RESET_PASSWORD_TOKEN_DURATION },
         (error, token) => {
           if (error) {
             reject(error);
