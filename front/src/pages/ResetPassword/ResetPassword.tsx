@@ -9,6 +9,7 @@ import useResetPassword from '../../hooks/useResetPassword';
 import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
 import InputIcon from '../../shared/inputs/InputIcon';
+import Spinner from '../../shared/Spinner';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import Button from '../../shared/UserAuthenticationLayout/Button';
 import InputType from '../../shared/UserAuthenticationLayout/constants';
@@ -42,7 +43,7 @@ const ResetPassword = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isLoading },
+    formState: { errors, isLoading, isSubmitting, disabled },
     setError,
   } = useForm({ resolver: yupResolver(schema), mode: 'onChange' });
 
@@ -65,11 +66,15 @@ const ResetPassword = () => {
         },
       });
 
-      navigate(routes.unauthenticated.subpaths.resetPasswordSuccess.path);
+      navigate(routes.unauthenticated.subpaths.resetPasswordSuccess.path, {
+        state: { isResetPasswordSuccess: true },
+      });
     } catch (error) {
       const responseError = error as AxiosError;
       if (responseError.response?.status === 500) {
-        navigate(routes.unauthenticated.subpaths.errorResetPassword.path);
+        navigate(routes.unauthenticated.subpaths.errorResetPassword.path, {
+          state: { isResetPasswordError: false },
+        });
       }
 
       if (responseError.response?.status === 422) {
@@ -93,22 +98,21 @@ const ResetPassword = () => {
       showLogo
       showLoginLink
     >
-      {isValidationLoading && <p>Chargement ...</p>}
+      {isValidationLoading && <Spinner />}
       {isUrlError && (
         <p className="text-xs lg:text-sm text-gray-1 font-medium text-center leading-4">
-          Votre lien de réinitialisation du mot de passe est éxpiré,veuillez
+          Votre lien de r&eacute;initialisation du mot de passe est &eacute;xpir&eacute;,veuillez
           <strong>
             <NavLink
               className="text-secondary"
               to={routes.unauthenticated.subpaths.forgotPassword.path}
             >
-              &nbsp;rééssayer
+              &nbsp;r&eacute;&eacute;ssayer
             </NavLink>
           </strong>
           !
         </p>
       )}
-      {/* {JSON.stringify(errors)} */}
       {isUrlValid && (
         <>
           <p className="text-xs lg:text-sm text-gray-1 font-medium leading-4">
@@ -205,7 +209,13 @@ const ResetPassword = () => {
                 </div>
               )}
             />
-            <Button disabled={isLoading}>CONFIRMER</Button>
+            <Button
+              additionalClass="flex flex-row items-center justify-center gap-2 justify-center"
+              disabled={isLoading || isSubmitting || disabled}
+            >
+              CONFIRMER
+              {isSubmitting && <Spinner />}
+            </Button>
           </form>
         </>
       )}

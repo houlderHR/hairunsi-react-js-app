@@ -12,6 +12,8 @@ import jwtService from './jwt.service';
 import { hashPassword } from '../utils/bcrypt';
 import { Repository } from 'typeorm';
 
+let timeoutQueue: Record<string, number> = {};
+
 class AuthService {
   async recoveryPassword(email: string) {
     try {
@@ -39,15 +41,19 @@ class AuthService {
   async generateForgotPasswordLink(user: User) {
     try {
       let resetPasswordToken = await JwtService.generateJwtResetPassword(user);
-
       user.resetPasswordToken = resetPasswordToken;
-      await AppDataSource.getRepository(User).save(user);
+      await this.getUserRepository().save(user);
 
-      let timeout = setTimeout(async () => {
+      this.clearTimeoutUser(user);
+      const timeout = setTimeout(async () => {
         user.resetPasswordToken = null;
-        await AppDataSource.getRepository(User).save(user);
-        clearTimeout(timeout);
+        await this.getUserRepository().save(user);
+        clearTimeout(timeoutQueue[user.id]);
+        delete timeoutQueue[user.id];
       }, +process.env.RESET_PASSWORD_TOKEN_DURATION * 1000 * 7.5);
+
+      const timeOutId = +timeout;
+      Object.assign(timeoutQueue, { ...timeoutQueue, [user.id]: timeOutId });
 
       const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}reset-password?token=${resetPasswordToken}`;
 
@@ -72,6 +78,12 @@ class AuthService {
         StatusCodes.GONE,
         'Ce lien de réinitialisation du mot de passe est expiré,veuillez rééssayer de nouveau',
       );
+    }
+  }
+
+  private clearTimeoutUser(user: User) {
+    if (timeoutQueue && timeoutQueue[user.id]) {
+      clearTimeout(timeoutQueue[user.id]);
     }
   }
 
@@ -126,7 +138,7 @@ class AuthService {
     }
 
     try {
-      user.password = await hashPassword(resetPasswordDto.password.trim());
+      user.password = await hashPassword(resetPasswordDto.password);
       user.resetPasswordToken = null;
       await this.getUserRepository().update({ uuid: user.uuid }, user);
 
@@ -140,7 +152,7 @@ class AuthService {
     let keyTest = { firstname: user.firstname, lastname: user.lastname, email: user.email };
 
     return Object.keys(keyTest).some((key) =>
-      password.toLowerCase().trim().includes(keyTest[key].toLowerCase()),
+      password.toLowerCase().trim().replace(/\s/g, '').includes(keyTest[key].toLowerCase()),
     );
   }
 

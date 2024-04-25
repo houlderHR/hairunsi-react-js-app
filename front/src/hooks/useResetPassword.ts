@@ -66,13 +66,12 @@ const useResetPassword = () => {
     queryKey: ['ValidUrl'],
     queryFn: () => fetchValidationUrl(location.search.replace(TOKEN_QUERY_PARAM, '')),
     retry: false,
-    refetchOnReconnect: true,
     refetchInterval: 1000 * 60 * 15,
   });
 
   useEffect(() => {
     if (!location.search.startsWith(TOKEN_QUERY_PARAM)) {
-      navigate(routes.unauthenticated.subpaths.login.path);
+      navigate(routes.unauthenticated.subpaths.forgotPassword.path);
     }
   });
 
