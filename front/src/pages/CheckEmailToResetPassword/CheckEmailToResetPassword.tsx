@@ -23,7 +23,7 @@ const CheckEmailToResetPassword: FC = () => (
         </div>
       </div>
       <div className="button">
-        <Button>RENVOYER</Button>
+        <Button type="submit">RENVOYER</Button>
       </div>
     </div>
   </UserAuthenticationLayout>

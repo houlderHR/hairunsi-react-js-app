@@ -37,10 +37,9 @@ class Mailer {
     }
   }
 
-  getTemplate(link: string) {
+  getTemplate(username: string, link: string) {
     const emailContent = {
-      title: 'Réinitialisation de mot de passe',
-      content: "Cet email vient de l'équipe de hairun.",
+      username: username,
       link: link,
     };
     const emailTemplateSource = fs.readFileSync('template/email.hbs', 'utf8');
@@ -48,8 +47,8 @@ class Mailer {
     return template(emailContent);
   }
 
-  async sendMail(subject: string, recipient: string, link: string) {
-    const htmlToSend = this.getTemplate(link);
+  async sendMail(subject: string, username: string, recipient: string, link: string) {
+    const htmlToSend = this.getTemplate(username, link);
 
     var mailOptions = {
       from: process.env.MAIL_USER,
