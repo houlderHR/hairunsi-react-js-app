@@ -16,7 +16,7 @@ import LoginDto from '../dto/user/LoginDto';
 import { plainToClass } from 'class-transformer';
 import { ComparePassword } from '../utils/hash';
 import Unauthorized from '../exceptions/Unauthorized';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
 class AuthService {
   async recoveryPassword(email: string) {
@@ -152,10 +152,19 @@ class AuthService {
 
     if (user) {
       if (await ComparePassword(user.password, userDto.password))
-        return sign({ user }, process.env.TOKEN_KEY);
+        return sign({ user }, process.env.TOKEN_KEY, { expiresIn: userDto.duration });
       throw new Unauthorized('Mot de passe incorrect');
     }
     throw new HttpNotFoundException("Cet utilisateur n'existe pas");
+  }
+
+  async decodeToken(token: string) {
+    try {
+      const decodedToken = verify(token, process.env.TOKEN_KEY);
+      return { authorized: true, decodedToken };
+    } catch (error) {
+      throw new Unauthorized('Expiré');
+    }
   }
 
   private getUserRepository(): Repository<User> {

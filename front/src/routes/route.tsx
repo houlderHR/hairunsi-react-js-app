@@ -13,44 +13,82 @@ import UserManager from '../pages/UserManager';
 import UserManagerList from '../pages/UserManager/UserManagerList/UserManagerList';
 import UserManagerRole from '../pages/UserManager/UserManagerRole';
 import UserManagerType from '../pages/UserManager/UserManagerType';
+import ProtectedRoute from '../shared/authenticated/ProtectedRoute/ProtectedRoute';
+import PublicRoute from '../shared/unauthenticated/PublicRoute/PublicRoute';
 import routes from './paths';
 
 const router = createBrowserRouter([
   {
     path: routes.unauthenticated.path,
-    element: <Home />,
+    element: (
+      <PublicRoute>
+        <Home />
+      </PublicRoute>
+    ),
   },
   {
     path: routes.unauthenticated.subpaths.login.path,
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
   },
   {
     path: routes.unauthenticated.subpaths.resetPassword.path,
-    element: <ResetPassword />,
+    element: (
+      <PublicRoute>
+        <ResetPassword />
+      </PublicRoute>
+    ),
   },
   {
     path: routes.unauthenticated.subpaths.forgotPassword.path,
-    element: <ForgotPassword />,
+    element: (
+      <PublicRoute>
+        <ForgotPassword />
+      </PublicRoute>
+    ),
   },
   {
     path: routes.unauthenticated.subpaths.redirectEmail.path,
-    element: <RedirectEmail />,
+    element: (
+      <PublicRoute>
+        <RedirectEmail />
+      </PublicRoute>
+    ),
   },
   {
     path: routes.unauthenticated.subpaths.resetPasswordSuccess.path,
-    element: <ResetPasswordSuccess />,
+    element: (
+      <PublicRoute>
+        <ResetPasswordSuccess />
+      </PublicRoute>
+    ),
   },
   {
     path: routes.unauthenticated.subpaths.checkEmailToResetPassword.path,
-    element: <CheckEmailToResetPassword />,
+    element: (
+      <PublicRoute>
+        <CheckEmailToResetPassword />
+      </PublicRoute>
+    ),
   },
   {
     path: routes.unauthenticated.subpaths.errorResetPassword.path,
-    element: <ErrorResetPassword />,
+    element: (
+      <PublicRoute>
+        <ErrorResetPassword />
+      </PublicRoute>
+    ),
   },
   {
     path: routes.authentified.path,
-    element: <Authenticated />,
+    element: (
+      <ProtectedRoute>
+        <Authenticated />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: routes.authentified.subpaths.accueil.path,

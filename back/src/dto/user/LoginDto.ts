@@ -12,6 +12,11 @@ class LoginDto {
   @IsDefined({ message: 'Vérifier que le champ "Mot de passe" existe bien.' })
   @IsString({ message: 'Le mot de passe doit etre renseigné' })
   password: string;
+
+  @IsDefined({
+    message: "Vérifier que l'utilisateur a bien mentionné si il veut qu'on se souvienne de lui",
+  })
+  duration: string;
 }
 
 export default LoginDto;

@@ -1,13 +1,14 @@
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
 import Input from '../../shared/inputs/Input';
 import InputIcon from '../../shared/inputs/InputIcon';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import InputType from '../../shared/UserAuthenticationLayout/constants';
-import http from '../../utils/http-common';
+import { login, manageErrorMessage } from '../../utils/authentication';
 
 interface IUser {
   'E-mail': string;
@@ -15,6 +16,7 @@ interface IUser {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
   const [match, setMatch] = useState<string>('');
   const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
 
@@ -28,30 +30,16 @@ const Login = () => {
   const { handleSubmit, control } = useForm<IUser>();
 
   const onSubmit: SubmitHandler<IUser> = async (data) => {
+    const rememberMe = document.getElementById('remember') as HTMLInputElement;
+
     let response;
     try {
-      response = await http.post('/auth/login', {
-        email: data['E-mail'],
-        password: data['Mot de passe'],
-      });
-      window.localStorage.setItem('user', response.data);
-      window.location.replace('/accueil');
+      response = await login(data, rememberMe);
+      window.localStorage.setItem('token', response.data);
+      navigate(routes.authentified.subpaths.accueil.path);
     } catch (error) {
-      const err = error.response.data;
-      if (err.status === 422) {
-        err.error.map((e) => {
-          if (e.constraints.matches) {
-            return setMatch(e.constraints.matches);
-          }
-          return '';
-        });
-      }
-      if (err.status === 404) {
-        setMatch(err.error);
-      }
-      if (err.status === 401) {
-        setMatch(err.error);
-      }
+      const errors = error as AxiosError;
+      setMatch(manageErrorMessage(errors));
     }
   };
   return (
@@ -78,7 +66,7 @@ const Login = () => {
                 placeholder="Adresse e-mail"
                 additionalClass="!py-3 xl:!py-4 text-sm 2xl:text-base"
                 type="text"
-                ref={ref}
+                refs={ref}
                 onChange={onChange}
                 onBlur={onBlur}
                 value={value}
@@ -91,7 +79,7 @@ const Login = () => {
             name="Mot de passe"
             render={({ field: { ref, onChange, onBlur, value } }) => (
               <InputIcon
-                ref={ref}
+                refs={ref}
                 onChange={onChange}
                 onBlur={onBlur}
                 value={value}

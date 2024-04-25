@@ -48,6 +48,15 @@ class AuthController {
       res.status(error.status).json(error);
     }
   }
+
+  async decodeToken(req: Request, res: Response) {
+    try {
+      const token = await authService.decodeToken(req.body.token);
+      res.status(StatusCodes.OK).json(token);
+    } catch (error) {
+      res.status(error.status).json(error);
+    }
+  }
 }
 
 export default new AuthController();

@@ -7,14 +7,14 @@ interface InputProps {
   type: string;
   additionalClass?: string;
   value?: string;
-  ref: RefCallBack;
+  refs: RefCallBack;
   onChange: (...event: []) => void;
   onBlur: Noop;
   required: boolean;
 }
 
 const Input: FC<InputProps> = ({
-  ref,
+  refs,
   placeholder,
   type,
   additionalClass,
@@ -24,7 +24,7 @@ const Input: FC<InputProps> = ({
   required,
 }) => (
   <input
-    ref={ref}
+    ref={refs}
     className={twMerge(
       additionalClass,
       'rounded border border-gray-1 p-4 w-full leading-3 focus:placeholder:opacity-0 focus:outline-none focus:border-secondary cursor-pointer',
