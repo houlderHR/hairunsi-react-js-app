@@ -47,7 +47,7 @@ class AuthService {
         user.resetPasswordToken = null;
         await AppDataSource.getRepository(User).save(user);
         clearTimeout(timeout);
-      }, +process.env.RESET_PASSWORD_TOKEN_DURATION * 1000);
+      }, +process.env.RESET_PASSWORD_TOKEN_DURATION * 1000 * 7.5);
 
       const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}reset-password?token=${resetPasswordToken}`;
 
@@ -82,10 +82,17 @@ class AuthService {
       const userValidTokenPayload = await jwtService.verifyJwtResetPasswordToken(token, true);
       user = await this.getUserRepository().findOneOrFail({
         where: { uuid: userValidTokenPayload.uuid },
-        select: ['email', 'password', 'uuid'],
+        select: ['email', 'lastname', 'firstname', 'password', 'uuid', 'resetPasswordToken'],
       });
     } catch (_) {
       throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "Une erreur s'est produite");
+    }
+
+    if (!(user.resetPasswordToken === token)) {
+      throw new HttpException(
+        StatusCodes.GONE,
+        'Ce lien de récupération de mot de passe est éxpiré',
+      );
     }
 
     const errors = await validate(resetPasswordDto);
@@ -98,6 +105,20 @@ class AuthService {
       throw new HttpException(422, validationErrors);
     }
 
+    if (this.checkIfPasswordContainPersonalInformation(user, resetPasswordDto.password)) {
+      const validationErrors = [
+        {
+          property: 'password',
+          constraints: {
+            containPersonalInformation:
+              'Votre mot de passe ne doit pas contenir vos informations personelles',
+          },
+        },
+      ];
+
+      throw new HttpException(422, validationErrors);
+    }
+
     if (resetPasswordDto.password !== resetPasswordDto.confirmPassword) {
       throw new HttpException(StatusCodes.FORBIDDEN, {
         message: 'Le mot de passe ne correspond pas',
@@ -105,7 +126,7 @@ class AuthService {
     }
 
     try {
-      user.password = await hashPassword(resetPasswordDto.password);
+      user.password = await hashPassword(resetPasswordDto.password.trim());
       user.resetPasswordToken = null;
       await this.getUserRepository().update({ uuid: user.uuid }, user);
 
@@ -113,6 +134,14 @@ class AuthService {
     } catch (error) {
       throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error');
     }
+  }
+
+  private checkIfPasswordContainPersonalInformation(user: User, password: string) {
+    let keyTest = { firstname: user.firstname, lastname: user.lastname, email: user.email };
+
+    return Object.keys(keyTest).some((key) =>
+      password.toLowerCase().trim().includes(keyTest[key].toLowerCase()),
+    );
   }
 
   private getUserRepository(): Repository<User> {

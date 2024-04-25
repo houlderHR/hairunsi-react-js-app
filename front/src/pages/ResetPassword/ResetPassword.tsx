@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import * as yup from 'yup';
-import useCheckPasswordValidationLink from '../../hooks/useResetPasswordValidationLink';
+import useResetPassword from '../../hooks/useResetPassword';
 import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
 import InputIcon from '../../shared/inputs/InputIcon';
@@ -13,29 +13,6 @@ import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import Button from '../../shared/UserAuthenticationLayout/Button';
 import InputType from '../../shared/UserAuthenticationLayout/constants';
 import http from '../../utils/http-common';
-
-const mapError = (
-  error: { property: string; constraints: Record<string, string> }[],
-  cb: (property: 'password' | 'confirmPassword', type: 'min' | 'matches' | 'oneOf') => void,
-) => {
-  let property: 'password' | 'confirmPassword' = 'password';
-  let type: 'min' | 'matches' | 'oneOf' = 'min';
-  for (let i = 0; i < error.length; i += 1) {
-    if (error[i].property === 'password') {
-      property = 'password';
-      if (error[i].constraints.isStrongPassword) {
-        type = 'matches';
-      }
-      if (error[i].constraints.minLength) {
-        type = 'min';
-      }
-      break;
-    }
-    property = 'confirmPassword';
-    type = 'oneOf';
-  }
-  cb(property, type);
-};
 
 const schema = yup.object({
   password: yup
@@ -48,12 +25,18 @@ const schema = yup.object({
   confirmPassword: yup
     .string()
     .required(' doit etre requis')
-    .oneOf([yup.ref('password')], ' doit correspondre'),
+    .oneOf([yup.ref('password')], ' doit correspondre au mot de passe'),
 });
+
+type ResetPasswordErrorType = {
+  status: number;
+  error: { property: string; constraints: Record<string, string> }[];
+};
 
 const ResetPassword = () => {
   const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
-  const { isUrlValid, isValidationLoading, isUrlError, token } = useCheckPasswordValidationLink();
+  const { isUrlValid, isValidationLoading, isUrlError, token, refetch, mapError } =
+    useResetPassword();
   const navigate = useNavigate();
 
   const {
@@ -90,10 +73,14 @@ const ResetPassword = () => {
       }
 
       if (responseError.response?.status === 422) {
-        const err = responseError.response?.data?.error;
-        mapError(err, (property, type) => {
-          setError(property, { type });
+        const { error: errorResponse } = responseError.response?.data as ResetPasswordErrorType;
+        mapError(errorResponse, (property, type, message) => {
+          setError(property, { type, message });
         });
+      }
+
+      if (responseError.response?.status === 410) {
+        refetch();
       }
     }
   };
@@ -122,7 +109,7 @@ const ResetPassword = () => {
         </p>
       )}
       {/* {JSON.stringify(errors)} */}
-      {!isUrlValid && (
+      {isUrlValid && (
         <>
           <p className="text-xs lg:text-sm text-gray-1 font-medium leading-4">
             Entrez et confirmez votre nouveau mot de passe
@@ -136,12 +123,18 @@ const ResetPassword = () => {
               <li className={twMerge(errors.password?.type === 'matches' && 'text-red-500')}>
                 Contenir au moins une majuscule, un charactère sp&eacute;cial et un chiffre
               </li>
-              <li>Ne pas contenir vos donn&eacute;es personnels</li>
+              <li
+                className={twMerge(
+                  errors.password?.type === 'containPersonalInformation' && 'text-red-500',
+                )}
+              >
+                Ne pas contenir vos donn&eacute;es personnels
+              </li>
             </ul>
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="mt-12 flex flex-col cursor-pointer gap-5 w-full"
+            className="mt-12 flex flex-col cursor-pointer gap-7 md:gap-5 w-full"
           >
             <Controller
               name="password"
@@ -175,7 +168,7 @@ const ResetPassword = () => {
                     type={inputType}
                   />
                   {errors.password && (
-                    <span className="text-red-500 absolute left-1 top-full mt-0.5 text-xs font-medium">
+                    <span className="text-red-500 absolute left-1 leading-[11px] top-full mt-0.5 text-xs font-medium">
                       Le mot de passe {errors.password.message}
                     </span>
                   )}
@@ -192,15 +185,6 @@ const ResetPassword = () => {
                     onBlur={onBlur}
                     inputRef={ref}
                     value={value}
-                    endIcon={
-                      <Icon
-                        name="eye"
-                        className="hover:text-secondary !h-3 lg:h-[15px]"
-                        onClick={toggleInputType}
-                        height={15}
-                        width={22}
-                      />
-                    }
                     additionalClass={twMerge(
                       errors.confirmPassword &&
                         'outline-red-500 outline text-red-500 outline-2 placeholder:text-red-500 !border-transparent',
@@ -210,11 +194,11 @@ const ResetPassword = () => {
                       'text-base text-sm 2xl:text-base !py-3 xl:!py-4 placeholder:text-gray-1 leading-3 py-4 focus:placeholder:opacity-0 ',
                       errors.confirmPassword && 'placeholder:text-red-400',
                     )}
-                    placeholder="Nouveau mot de passe"
+                    placeholder="Confirmer votre mot de passe"
                     type={inputType}
                   />
                   {errors.confirmPassword && (
-                    <span className="text-red-500 absolute left-1 top-full mt-1 text-xs font-medium">
+                    <span className="text-red-500 absolute left-1 leading-[11px] top-full mt-0.5 text-xs font-medium">
                       Le mot de passe {errors.confirmPassword.message}
                     </span>
                   )}
