@@ -2,6 +2,7 @@ import * as nodemailer from 'nodemailer';
 import * as handlebars from 'handlebars';
 import * as fs from 'fs';
 import { google } from 'googleapis';
+import { generateToken } from './utils.method';
 
 class Mailer {
   private transporter: nodemailer.Transporter;
@@ -57,9 +58,10 @@ class Mailer {
       html: htmlToSend,
     };
     return new Promise((resolve, reject) => {
+      const token = generateToken({ link: link }, '2 min');
       this.transporter.sendMail(mailOptions, (error, info) => {
         if (error) reject({ isSending: false, error: error });
-        resolve({ isSending: true, data: info.response });
+        resolve({ isSending: true, token: token });
       });
     });
   }

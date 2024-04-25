@@ -3,7 +3,6 @@ import authService from '../services/auth.service';
 import { StatusCodes } from 'http-status-codes';
 import ResetPasswordDto from '../dto/auth/ResetPasswordDto';
 import { plainToClass } from 'class-transformer';
-
 class AuthController {
   async recoveryPassword(req: Request, res: Response) {
     try {
@@ -18,7 +17,7 @@ class AuthController {
     try {
       await authService.verifyResetPasswordUrlToken(request.headers.token_password as string);
       response.status(StatusCodes.ACCEPTED).json({
-        message: 'Lien du reset password accépté',
+        message: 'Lien du reset password accepté',
       });
     } catch (error) {
       return response.status(error.status).json(error);

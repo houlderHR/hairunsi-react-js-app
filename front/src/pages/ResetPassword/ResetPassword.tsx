@@ -14,6 +14,7 @@ import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import Button from '../../shared/UserAuthenticationLayout/Button';
 import InputType from '../../shared/UserAuthenticationLayout/constants';
 import http from '../../utils/http-common';
+import { EMAIL_RESET_PW, TOKEN_RESET_PW } from '../../utils/react-query-key';
 
 const schema = yup.object({
   password: yup
@@ -46,7 +47,8 @@ const ResetPassword = () => {
     setFocus,
   } = useForm({ resolver: yupResolver(schema), mode: 'onChange' });
   const navigate = useNavigate();
-
+  localStorage.removeItem(TOKEN_RESET_PW);
+  localStorage.removeItem(EMAIL_RESET_PW);
   const toggleInputType = () => {
     if (inputType === InputType.TEXT) {
       setInputType(InputType.PASSWORD);

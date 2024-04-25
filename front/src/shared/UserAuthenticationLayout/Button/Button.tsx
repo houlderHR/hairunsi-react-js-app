@@ -3,13 +3,20 @@ import { twMerge } from 'tailwind-merge';
 
 type ButtonType = {
   additionalClass?: string;
+<<<<<<< HEAD
   disabled?: boolean;
+=======
+  onClick?: () => void;
+  onSubmit?: () => void;
+>>>>>>> 88bd330 (✨ improve code sending mail on front and add loading page)
   type: 'button' | 'submit';
 };
 
 const Button: FC<PropsWithChildren<ButtonType>> = ({
   disabled = false,
   additionalClass = '',
+  onClick,
+  onSubmit,
   type = 'submit',
   children,
 }) => (
@@ -20,6 +27,8 @@ const Button: FC<PropsWithChildren<ButtonType>> = ({
       'w-full bg-primary 3xl:py-5 xl:py-4 py-3 hover:bg-secondary duration-300 uppercase mt-3 md:mt-10 text-white rounded text-xs lg:text-sm leading-4 font-medium',
       additionalClass,
     )}
+    onClick={onClick}
+    onSubmit={onSubmit}
   >
     {children}
   </button>

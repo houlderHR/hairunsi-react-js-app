@@ -9,7 +9,15 @@ interface InputField {
 const useSendMail = () =>
   useMutation({
     mutationFn: (data: InputField) =>
-      http.post(`${BASE_PATH}/recovery-password`, { email: data.email }).then((res) => res.data),
+      http
+        .post(
+          `${BASE_PATH}/recovery-password`,
+          { email: data.email },
+          {
+            headers: { Authorization: `email: ${data}` },
+          },
+        )
+        .then((res) => res.data),
   });
 
 export default useSendMail;
