@@ -6,7 +6,7 @@ class JwtService {
   generateJwtResetPassword(user: User): Promise<string> {
     return new Promise((resolve, reject) => {
       jwt.sign(
-        { data: { userId: user.uuid, email: user.email } },
+        { data: { uuid: user.uuid, email: user.email } },
         process.env.RESET_PASSWORD_PRIVATE_KEY,
         { expiresIn: +process.env.RESET_PASSWORD_TOKEN_DURATION },
         (error, token) => {

@@ -43,20 +43,17 @@ class AuthService {
       let resetPasswordToken = await JwtService.generateJwtResetPassword(user);
       user.resetPasswordToken = resetPasswordToken;
       await this.getUserRepository().save(user);
-
       this.clearTimeoutUser(user);
       const timeout = setTimeout(async () => {
         user.resetPasswordToken = null;
         await this.getUserRepository().save(user);
-        clearTimeout(timeoutQueue[user.id]);
-        delete timeoutQueue[user.id];
+        this.clearTimeoutUser(user);
       }, +process.env.RESET_PASSWORD_TOKEN_DURATION * 1000 * 7.5);
-
       const timeOutId = +timeout;
       Object.assign(timeoutQueue, { ...timeoutQueue, [user.id]: timeOutId });
 
       const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}reset-password?token=${resetPasswordToken}`;
-
+      console.log(resetPasswordUrl);
       return resetPasswordUrl;
     } catch (error) {
       throw new HttpException(StatusCodes.GONE, { message: 'Ce lien est expiré' });
@@ -81,15 +78,8 @@ class AuthService {
     }
   }
 
-  private clearTimeoutUser(user: User) {
-    if (timeoutQueue && timeoutQueue[user.id]) {
-      clearTimeout(timeoutQueue[user.id]);
-    }
-  }
-
   async resetUserPassword(resetPasswordDto: ResetPasswordDto, token: string) {
     let user: User;
-
     try {
       const userValidTokenPayload = await jwtService.verifyJwtResetPasswordToken(token, true);
       user = await this.getUserRepository().findOneOrFail({
@@ -148,12 +138,21 @@ class AuthService {
     }
   }
 
-  private checkIfPasswordContainPersonalInformation(user: User, password: string) {
+  private checkIfPasswordContainPersonalInformation(user: User, password: string): boolean {
     let keyTest = { firstname: user.firstname, lastname: user.lastname, email: user.email };
 
     return Object.keys(keyTest).some((key) =>
       password.toLowerCase().trim().replace(/\s/g, '').includes(keyTest[key].toLowerCase()),
     );
+  }
+
+  private clearTimeoutUser(user: User) {
+    if (timeoutQueue && timeoutQueue[user.id]) {
+      clearTimeout(timeoutQueue[user.id]);
+      timeoutQueue = Object.keys(timeoutQueue)
+        .filter((key) => +key !== user.id)
+        .reduce((acc, value) => ({ ...acc, [value]: timeoutQueue[value] }), {});
+    }
   }
 
   private getUserRepository(): Repository<User> {
