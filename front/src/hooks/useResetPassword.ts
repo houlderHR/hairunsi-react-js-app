@@ -61,12 +61,10 @@ const useResetPassword = () => {
     isSuccess: isUrlValid,
     isLoading: isValidationLoading,
     isError: isUrlError,
-    refetch,
   } = useQuery({
     queryKey: ['ValidUrl'],
     queryFn: () => fetchValidationUrl(location.search.replace(TOKEN_QUERY_PARAM, '')),
     retry: false,
-    refetchInterval: 1000 * 60 * 15,
   });
 
   useEffect(() => {
@@ -75,7 +73,7 @@ const useResetPassword = () => {
     }
   });
 
-  return { isUrlValid, isValidationLoading, isUrlError, token, refetch, mapError };
+  return { isUrlValid, isValidationLoading, isUrlError, token, mapError };
 };
 
 export default useResetPassword;

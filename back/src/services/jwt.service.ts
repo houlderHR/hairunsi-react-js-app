@@ -1,4 +1,5 @@
 import { User } from '../entities/user.entity';
+import { ResetPasswordConfig } from '../utils/resetPasswordConfig';
 
 var jwt = require('jsonwebtoken');
 
@@ -8,7 +9,7 @@ class JwtService {
       jwt.sign(
         { data: { uuid: user.uuid, email: user.email } },
         process.env.RESET_PASSWORD_PRIVATE_KEY,
-        { expiresIn: +process.env.RESET_PASSWORD_TOKEN_DURATION },
+        { expiresIn: ResetPasswordConfig.duration },
         (error, token) => {
           if (error) {
             reject(error);

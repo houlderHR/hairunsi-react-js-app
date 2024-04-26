@@ -11,6 +11,7 @@ import { AppDataSource } from '../database/data-source';
 import jwtService from './jwt.service';
 import { hashPassword } from '../utils/bcrypt';
 import { Repository } from 'typeorm';
+import { ResetPasswordConfig } from '../utils/resetPasswordConfig';
 
 let timeoutQueue: Record<string, number> = {};
 
@@ -49,7 +50,7 @@ class AuthService {
         user.resetPasswordToken = null;
         await this.getUserRepository().save(user);
         this.clearTimeoutUser(user);
-      }, +process.env.RESET_PASSWORD_TOKEN_DURATION * 1000 * 7.5);
+      }, ResetPasswordConfig.duration * 1000);
       const timeOutId = +timeout;
       Object.assign(timeoutQueue, { ...timeoutQueue, [user.id]: timeOutId });
 
@@ -89,13 +90,6 @@ class AuthService {
       });
     } catch (_) {
       throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "Une erreur s'est produite");
-    }
-
-    if (!(user.resetPasswordToken === token)) {
-      throw new HttpException(
-        StatusCodes.GONE,
-        'Ce lien de récupération de mot de passe est éxpiré',
-      );
     }
 
     const errors = await validate(resetPasswordDto);
