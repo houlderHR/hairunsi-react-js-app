@@ -45,6 +45,7 @@ const ResetPassword = () => {
     handleSubmit,
     formState: { errors, isLoading, isSubmitting, disabled },
     setError,
+    setFocus,
   } = useForm({ resolver: yupResolver(schema), mode: 'onChange' });
 
   const toggleInputType = () => {
@@ -81,6 +82,7 @@ const ResetPassword = () => {
         const { error: errorResponse } = responseError.response?.data as ResetPasswordErrorType;
         mapError(errorResponse, (property, type, message) => {
           setError(property, { type, message });
+          setFocus(property);
         });
       }
 

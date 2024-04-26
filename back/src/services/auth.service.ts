@@ -43,6 +43,7 @@ class AuthService {
       let resetPasswordToken = await JwtService.generateJwtResetPassword(user);
       user.resetPasswordToken = resetPasswordToken;
       await this.getUserRepository().save(user);
+
       this.clearTimeoutUser(user);
       const timeout = setTimeout(async () => {
         user.resetPasswordToken = null;
@@ -131,7 +132,7 @@ class AuthService {
       user.password = await hashPassword(resetPasswordDto.password);
       user.resetPasswordToken = null;
       await this.getUserRepository().update({ uuid: user.uuid }, user);
-
+      this.clearTimeoutUser(user);
       return { message: 'Mot de passe changé avec succés' };
     } catch (error) {
       throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error');
