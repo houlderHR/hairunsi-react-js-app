@@ -4,11 +4,11 @@ import rateLimit from 'express-rate-limit';
 require('../utils/configEnv');
 
 const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000,
+  windowMs: 60 * 60 * 1000, //1h
   max: 3,
   message: 'Trop de requêtes de cet utilisateur, veuillez réessayer plus tard.',
   keyGenerator: function (req) {
-    return req.headers.authorization;
+    return req.headers['x-user-email'].toString();
   },
 });
 

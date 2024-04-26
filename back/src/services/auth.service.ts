@@ -19,6 +19,7 @@ import { sign, verify } from 'jsonwebtoken';
 
 import { checkIfPasswordContainPersonalInformation } from '../utils/utils.method';
 class AuthService {
+  mailer = new Mailer();
   async recoveryPassword(email: string) {
     try {
       const result = await this.getUserRepository().findOne({
@@ -26,10 +27,9 @@ class AuthService {
       });
       if (!result) throw new HttpNotFoundException("Le mail n'existe pas");
       try {
-        const mailer = new Mailer();
         const link = await this.generateForgotPasswordLink(result);
-        return await mailer.sendMail(
-          'Récupération mot de passe',
+        return await this.mailer.sendMail(
+          'Récupération de mot de passe',
           result.lastname,
           result.email,
           link,
@@ -54,6 +54,8 @@ class AuthService {
       throw new HttpException(StatusCodes.GONE, { message: 'Ce lien est expiré' });
     }
   }
+
+  async verifyTokenForRecoveryPwd(token: string) {}
 
   async verifyResetPasswordUrlToken(token: string) {
     try {

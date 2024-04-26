@@ -14,7 +14,7 @@ const useSendMail = () =>
           `${BASE_PATH}/recovery-password`,
           { email: data.email },
           {
-            headers: { Authorization: `email: ${data}` },
+            headers: { Authorization: `email: ${data}`, 'x-user-email': data.email },
           },
         )
         .then((res) => res.data),

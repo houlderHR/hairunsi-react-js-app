@@ -14,7 +14,6 @@ import REGEX_MAIL_HAIRUN from '../../utils/regex';
 export type InputField = {
   email: string;
 };
-
 const ForgotPassword: FC = () => {
   const {
     control,
@@ -33,7 +32,8 @@ const ForgotPassword: FC = () => {
       localStorage.setItem(EMAIL_RESET_PW, data.email);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        setErrorAxios(error.response?.data.error);
+        if (error.response?.data?.error) setErrorAxios(error.response?.data.error);
+        else setErrorAxios(error.response?.data);
       } else {
         setErrorAxios("Une erreur s'est produite");
       }

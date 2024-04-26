@@ -61,7 +61,7 @@ class Mailer {
       const token = generateToken({ link: link }, '2 min');
       this.transporter.sendMail(mailOptions, (error, info) => {
         if (error) reject({ isSending: false, error: error });
-        resolve({ isSending: true, token: token });
+        if (info) resolve({ isSending: true, token: token });
       });
     });
   }
