@@ -29,7 +29,7 @@ const ResetPasswordSuccess: FC = () => {
             className="text-secondary mb-12 hover:text-primary duration-300"
           />
           <h3 className="font-medium text-3xl text-black-1 leading-9 mb-1">F&eacute;licitation</h3>
-          <span className="text-gray-1 text-sm leading-4 font-medium">
+          <span className="text-gray-1 text-sm leading-4 font-medium text-center">
             Votre mot de passe a &eacute;t&eacute; cr&eacute;&eacute; avec succ&egrave;s. Vous
             pouvez maintenant acc&eacute;der &agrave; votre espace priv&eacute;.
           </span>
