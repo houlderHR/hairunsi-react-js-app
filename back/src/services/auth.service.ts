@@ -19,7 +19,6 @@ import { sign, verify } from 'jsonwebtoken';
 
 import { checkIfPasswordContainPersonalInformation } from '../utils/utils.method';
 class AuthService {
-  mailer = new Mailer();
   async recoveryPassword(email: string) {
     try {
       const result = await this.getUserRepository().findOne({
@@ -28,7 +27,8 @@ class AuthService {
       if (!result) throw new HttpNotFoundException("Le mail n'existe pas");
       try {
         const link = await this.generateForgotPasswordLink(result);
-        return await this.mailer.sendMail(
+        const mailer = new Mailer();
+        return await mailer.sendMail(
           'Récupération de mot de passe',
           result.lastname,
           result.email,

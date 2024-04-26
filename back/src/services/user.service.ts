@@ -169,13 +169,13 @@ class UserService {
 
   public async deleteUser(uuid: string): Promise<DeleteResult> {
     const user = await this.getUserById(uuid, ['image']);
-    if (user) {
-      await fileService.delete(user.image.id);
-    }
 
     let deleteResult = await this.getUserRepository().delete({ uuid });
 
     if (deleteResult.affected > 0) {
+      // if (user) {
+      //   await cloudinary.uploader.destroy(user.image.public_id);
+      // }
       return deleteResult;
     }
 

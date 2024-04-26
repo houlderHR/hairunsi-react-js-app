@@ -45,6 +45,8 @@ class UserController {
 
       return response.status(StatusCodes.OK).json({ message: 'Utilisateur supprimé avec succés' });
     } catch (error) {
+      console.log('ERROR: ', error);
+
       return response.status(error.status).json(error);
     }
   }
