@@ -9,12 +9,12 @@ export const TOKEN_QUERY_PARAM = '?token=';
 const mapError = (
   error: { property: string; constraints: Record<string, string> }[],
   cb: (
-    property: 'password' | 'confirmPassword',
+    property: 'password' | 'confirmPassword' | ['password', 'confirmPassword'],
     type: 'min' | 'matches' | 'oneOf' | 'containPersonalInformation',
     message?: string,
   ) => void,
 ) => {
-  let property: 'password' | 'confirmPassword' = 'password';
+  let property: 'password' | 'confirmPassword' | ['password', 'confirmPassword'] = 'password';
   let type: 'min' | 'matches' | 'oneOf' | 'containPersonalInformation' = 'min';
   let message = '';
   for (let i = 0; i < error.length; i += 1) {
@@ -35,6 +35,7 @@ const mapError = (
           type = 'min';
           break;
       }
+      break;
     }
     property = 'confirmPassword';
     type = 'oneOf';

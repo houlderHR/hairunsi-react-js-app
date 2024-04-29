@@ -48,7 +48,7 @@ class AuthService {
     try {
       let resetPasswordToken = await JwtService.generateJwtResetPassword(user);
       const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}reset-password?token=${resetPasswordToken}`;
-
+      console.log(resetPasswordUrl);
       return resetPasswordUrl;
     } catch (error) {
       throw new HttpException(StatusCodes.GONE, { message: 'Ce lien est expiré' });
