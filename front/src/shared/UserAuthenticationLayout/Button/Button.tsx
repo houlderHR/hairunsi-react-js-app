@@ -3,12 +3,9 @@ import { twMerge } from 'tailwind-merge';
 
 type ButtonType = {
   additionalClass?: string;
-<<<<<<< HEAD
   disabled?: boolean;
-=======
   onClick?: () => void;
   onSubmit?: () => void;
->>>>>>> 88bd330 (✨ improve code sending mail on front and add loading page)
   type: 'button' | 'submit';
 };
 

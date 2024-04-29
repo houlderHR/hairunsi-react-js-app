@@ -8,7 +8,7 @@ import Input from '../../shared/inputs/Input';
 import Loading from '../../shared/Loading/Loading';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import Button from '../../shared/UserAuthenticationLayout/Button';
-import REGEX_MAIL_HAIRUN from '../../utils/regex';
+import { REGEX_MAIL_HAIRUN } from '../../utils/regex';
 import { EMAIL_RESET_PW, TOKEN_RESEND_MAIL } from '../../utils/token-const';
 
 export type InputField = {

@@ -213,6 +213,7 @@ const ResetPassword = () => {
               )}
             />
             <Button
+              type="submit"
               additionalClass="flex flex-row items-center justify-center gap-2 justify-center"
               disabled={isLoading || isSubmitting || disabled}
             >

@@ -54,6 +54,7 @@ class JwtService {
       if (decoded) resolve(decoded.data);
     });
   }
+
   generateTokenClassic(email: string) {
     return new Promise((resolve, reject) => {
       jwt.sign(email, SECRET_KEY_TOKEN_RESEND_MAIL, (error, token) => {
