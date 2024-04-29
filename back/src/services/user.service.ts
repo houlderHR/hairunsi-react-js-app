@@ -16,7 +16,7 @@ import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
 import FileService from '../services/file.service';
 import { File } from '../entities/file.entity';
 import fileService from '../services/file.service';
-import { HashPassword } from '../utils/hash';
+import { hashPassword } from '../utils/bcrypt';
 
 class UserService {
   public async createUser(image, createUserDto: CreateUserDto): Promise<User> {
@@ -60,16 +60,21 @@ class UserService {
     const role = await roleService.getOne(createUserDto.role);
 
     const user = new User();
-    Object.assign(user, {
-      firstname: createUserDto.firstname,
-      lastname: createUserDto.lastname,
-      birth_date: createUserDto.birth_date,
-      email: createUserDto.email,
-      password: (await HashPassword(createUserDto.password)) || '',
-      image: createdImage?.id || '',
-      post: post,
-      role: role,
-    });
+    try {
+      const pass = await hashPassword(createUserDto.password);
+      Object.assign(user, {
+        firstname: createUserDto.firstname,
+        lastname: createUserDto.lastname,
+        birth_date: createUserDto.birth_date,
+        email: createUserDto.email,
+        password: pass || '',
+        image: createdImage?.id || '',
+        post: post,
+        role: role,
+      });
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
 
     try {
       return await this.getUserRepository().save(user);

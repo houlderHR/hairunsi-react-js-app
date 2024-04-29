@@ -11,12 +11,8 @@ import { AppDataSource } from '../database/data-source';
 import jwtService from './jwt.service';
 import { hashPassword } from '../utils/bcrypt';
 import { Repository } from 'typeorm';
-<<<<<<< HEAD
 import { ResetPasswordConfig } from '../utils/resetPasswordConfig';
-import LoginDto from '../dto/user/LoginDto';
-=======
 import LoginDto from '../dto/auth/LoginDto';
->>>>>>> e3768b7 (🎨 Controller, regex for email, DTO for Login, login duration)
 import { plainToClass } from 'class-transformer';
 import { ComparePassword } from '../utils/hash';
 import Unauthorized from '../exceptions/Unauthorized';

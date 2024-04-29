@@ -101,7 +101,7 @@ const Login = () => {
             name="password"
             render={({ field: { ref, onChange, onBlur, value } }) => (
               <InputIcon
-                refs={ref}
+                inputRef={ref}
                 onChange={onChange}
                 onBlur={onBlur}
                 value={value}
