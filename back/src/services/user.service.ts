@@ -173,9 +173,9 @@ class UserService {
     let deleteResult = await this.getUserRepository().delete({ uuid });
 
     if (deleteResult.affected > 0) {
-      // if (user) {
-      //   await cloudinary.uploader.destroy(user.image.public_id);
-      // }
+      if (user) {
+        await cloudinary.uploader.destroy(user.image.public_id);
+      }
       return deleteResult;
     }
 
