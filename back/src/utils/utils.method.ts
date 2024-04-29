@@ -1,3 +1,4 @@
+import { User } from '../entities/user.entity';
 import { TYPE_FILE } from './constants';
 
 export const bufferToDataUri = (buffer: Buffer, mimetype: string) => {
@@ -21,4 +22,15 @@ export const getTypeFile = (mimetype: string) => {
       break;
   }
   return result;
+};
+
+export const checkIfPasswordContainPersonalInformation = (
+  user: User,
+  password: string,
+): boolean => {
+  let keyTest = { firstname: user.firstname, lastname: user.lastname, email: user.email };
+
+  return Object.keys(keyTest).some((key) =>
+    password.toLowerCase().trim().replace(/\s/g, '').includes(keyTest[key].toLowerCase()),
+  );
 };

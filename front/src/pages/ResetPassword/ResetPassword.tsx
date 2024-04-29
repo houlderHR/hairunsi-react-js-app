@@ -36,9 +36,8 @@ type ResetPasswordErrorType = {
 
 const ResetPassword = () => {
   const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
-  const { isUrlValid, isValidationLoading, isUrlError, token, mapError } = useResetPassword();
-  const navigate = useNavigate();
-
+  const { isUrlValid, isValidationLoading, isUrlError, token, mapError, refetch } =
+    useResetPassword();
   const {
     control,
     handleSubmit,
@@ -46,6 +45,7 @@ const ResetPassword = () => {
     setError,
     setFocus,
   } = useForm({ resolver: yupResolver(schema), mode: 'onChange' });
+  const navigate = useNavigate();
 
   const toggleInputType = () => {
     if (inputType === InputType.TEXT) {
@@ -83,6 +83,10 @@ const ResetPassword = () => {
           setError(property, { type, message });
           setFocus(property);
         });
+      }
+
+      if (responseError.response?.status === 410) {
+        refetch();
       }
     }
   };

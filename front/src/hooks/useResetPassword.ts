@@ -20,17 +20,21 @@ const mapError = (
   for (let i = 0; i < error.length; i += 1) {
     if (error[i].property === 'password') {
       property = 'password';
-      if (error[i].constraints.isStrongPassword) {
-        type = 'matches';
+      switch (true) {
+        case error[i].constraints.isStrongPassword !== undefined:
+          type = 'matches';
+          break;
+        case error[i].constraints.minLength !== undefined:
+          type = 'min';
+          break;
+        case error[i].constraints.containPersonalInformation !== undefined:
+          type = 'containPersonalInformation';
+          message = ' ne doit pas contenir vos informations personelles';
+          break;
+        default:
+          type = 'min';
+          break;
       }
-      if (error[i].constraints.minLength) {
-        type = 'min';
-      }
-      if (error[i].constraints.containPersonalInformation) {
-        type = 'containPersonalInformation';
-        message = ' ne doit pas contenir vos informations personelles';
-      }
-      break;
     }
     property = 'confirmPassword';
     type = 'oneOf';
@@ -48,6 +52,7 @@ const fetchValidationUrl = async (token: string) => {
       },
     },
   );
+
   return response;
 };
 
@@ -61,6 +66,7 @@ const useResetPassword = () => {
     isSuccess: isUrlValid,
     isLoading: isValidationLoading,
     isError: isUrlError,
+    refetch,
   } = useQuery({
     queryKey: ['ValidUrl'],
     queryFn: () => fetchValidationUrl(location.search.replace(TOKEN_QUERY_PARAM, '')),
@@ -73,7 +79,7 @@ const useResetPassword = () => {
     }
   });
 
-  return { isUrlValid, isValidationLoading, isUrlError, token, mapError };
+  return { isUrlValid, isValidationLoading, isUrlError, token, mapError, refetch };
 };
 
 export default useResetPassword;
