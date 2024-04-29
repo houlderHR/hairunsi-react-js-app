@@ -1,5 +1,6 @@
 import { User } from '../entities/user.entity';
 import { ResetPasswordConfig } from '../utils/resetPasswordConfig';
+import { SECRET_KEY_TOKEN_RESEND_MAIL } from '../utils/token';
 
 var jwt = require('jsonwebtoken');
 
@@ -51,6 +52,32 @@ class JwtService {
       const decoded = jwt.decode(token);
       if (!decoded) reject(decoded);
       if (decoded) resolve(decoded.data);
+    });
+  }
+  generateTokenClassic(email: string) {
+    return new Promise((resolve, reject) => {
+      jwt.sign(email, SECRET_KEY_TOKEN_RESEND_MAIL, (error, token) => {
+        if (error) {
+          reject(error);
+        }
+
+        if (token) {
+          resolve(token);
+        }
+      });
+    });
+  }
+
+  async verifyTokenClassicForRecoveryPwd(token: string) {
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, SECRET_KEY_TOKEN_RESEND_MAIL, (error, token) => {
+        if (error) {
+          reject(error);
+        }
+        if (token) {
+          resolve(token);
+        }
+      });
     });
   }
 }

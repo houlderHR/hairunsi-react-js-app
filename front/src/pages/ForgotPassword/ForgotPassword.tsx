@@ -1,15 +1,15 @@
 import axios from 'axios';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import useSendMail from '../../hooks/useAuth';
-import { TOKEN_QUERY_PARAM } from '../../hooks/useResetPasswordValidationLink';
+import { useSendMail } from '../../hooks/useAuth';
+import routes from '../../routes/paths';
 import Input from '../../shared/inputs/Input';
 import Loading from '../../shared/Loading/Loading';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import Button from '../../shared/UserAuthenticationLayout/Button';
-import { EMAIL_RESET_PW } from '../../utils/react-query-key';
 import REGEX_MAIL_HAIRUN from '../../utils/regex';
+import { EMAIL_RESET_PW, TOKEN_RESEND_MAIL } from '../../utils/token-const';
 
 export type InputField = {
   email: string;
@@ -23,13 +23,12 @@ const ForgotPassword: FC = () => {
   const mutation = useSendMail();
   const navigate = useNavigate();
   const [errorAxios, setErrorAxios] = useState('');
-
   const onSubmit = handleSubmit(async (data) => {
     try {
       const result = await mutation.mutateAsync(data);
-      localStorage.setItem(TOKEN_QUERY_PARAM, result.token);
-      navigate('/check-email');
+      localStorage.setItem(TOKEN_RESEND_MAIL, result.token);
       localStorage.setItem(EMAIL_RESET_PW, data.email);
+      navigate(routes.unauthenticated.subpaths.checkEmailToResetPassword.path);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.data?.error) setErrorAxios(error.response?.data.error);
@@ -39,6 +38,11 @@ const ForgotPassword: FC = () => {
       }
     }
   });
+
+  useEffect(() => {
+    localStorage.removeItem(EMAIL_RESET_PW);
+    localStorage.removeItem(TOKEN_RESEND_MAIL);
+  }, []);
 
   return (
     <UserAuthenticationLayout

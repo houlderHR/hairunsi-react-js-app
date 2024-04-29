@@ -13,6 +13,17 @@ class AuthController {
     }
   }
 
+  public async verifyTokenForRecoveryPwd(req: Request, res: Response) {
+    try {
+      await authService.verifyTokenForRecoveryPwd(req.headers.token_resend_mail as string);
+      res.status(StatusCodes.ACCEPTED).json({
+        message: 'Autorisé à accéder au page',
+      });
+    } catch (error) {
+      return res.status(error.status).json(error);
+    }
+  }
+
   public async verifyForgotPasswordLinkToken(request: Request, response: Response) {
     try {
       await authService.verifyResetPasswordUrlToken(request.headers.token_password as string);

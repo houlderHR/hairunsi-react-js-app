@@ -2,6 +2,7 @@ import * as nodemailer from 'nodemailer';
 import * as handlebars from 'handlebars';
 import * as fs from 'fs';
 import { google } from 'googleapis';
+import jwtService from '../services/jwt.service';
 
 export type AuthType = {
   user?: string;
@@ -94,10 +95,11 @@ class Mailer {
       subject: subject,
       html: htmlToSend,
     };
-    return new Promise((resolve, reject) => {
+    const token = await jwtService.generateTokenClassic(link);
+    return new Promise(async (resolve, reject) => {
       this.transporter.sendMail(mailOptions, (error, info) => {
         if (error) reject({ isSending: false, error: error });
-        if (info) resolve({ isSending: true, data: info.response });
+        if (info) resolve({ isSending: true, token: token });
       });
     });
   }

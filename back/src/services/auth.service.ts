@@ -55,7 +55,14 @@ class AuthService {
     }
   }
 
-  async verifyTokenForRecoveryPwd(token: string) {}
+  async verifyTokenForRecoveryPwd(token: string) {
+    try {
+      const decode = await jwtService.verifyTokenClassicForRecoveryPwd(token);
+      return decode;
+    } catch (error) {
+      throw new HttpException(StatusCodes.GONE, "Impossible d'accéder à cette page");
+    }
+  }
 
   async verifyResetPasswordUrlToken(token: string) {
     try {
