@@ -3,14 +3,14 @@ import { Noop, RefCallBack } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
 interface InputProps {
-  placeholder: string;
+  placeholder?: string;
   type: string;
   additionalClass?: string;
   value?: string;
-  refs: RefCallBack;
-  onChange: (...event: []) => void;
-  onBlur: Noop;
-  required: boolean;
+  refs?: RefCallBack;
+  onChange?: (...event: []) => void;
+  onBlur?: Noop;
+  required?: boolean;
 }
 
 const Input: FC<InputProps> = ({
@@ -20,7 +20,7 @@ const Input: FC<InputProps> = ({
   additionalClass,
   onChange,
   onBlur,
-  value,
+  value = '',
   required,
 }) => (
   <input
@@ -29,7 +29,6 @@ const Input: FC<InputProps> = ({
       additionalClass,
       'rounded border border-gray-1 p-4 w-full leading-3 focus:placeholder:opacity-0 focus:outline-none focus:border-secondary cursor-pointer',
     )}
-    defaultValue={value}
     type={type}
     placeholder={placeholder}
     onChange={onChange}

@@ -2,7 +2,11 @@ import { FC, useState } from 'react';
 import Icon from '../../../Icon';
 import Dropdown from '../DropDown';
 
-const UserStatusBar: FC = () => {
+interface IUserStatusBar {
+  logout: () => void;
+}
+
+const UserStatusBar: FC<IUserStatusBar> = ({ logout }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -27,7 +31,7 @@ const UserStatusBar: FC = () => {
         <Icon width={10} height={5} name="sharp-arrow-drop-down" />
         {show && (
           <div className="absolute z-10 -bottom-4 translate-y-full w-auto sm:w-full rounded text-[10px] bg-primary right-0">
-            <Dropdown />
+            <Dropdown onClick={logout} />
           </div>
         )}
       </div>

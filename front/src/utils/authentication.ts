@@ -1,38 +1,38 @@
 import { AxiosError } from 'axios';
+import UNAUTHENTICATED from '../routes/endpoints';
 import http from './http-common';
 
-interface IUser {
-  'E-mail': string;
-  'Mot de passe': string;
-}
-
-export const login = async (data: IUser, rememberMe: HTMLInputElement) => {
-  const user = await http.post('/auth/login', {
-    email: data['E-mail'],
-    password: data['Mot de passe'],
+export const login = async (
+  email: string | undefined,
+  password: string | undefined,
+  rememberMe: HTMLInputElement,
+) => {
+  const user = await http.post(UNAUTHENTICATED.login, {
+    email,
+    password,
     duration: rememberMe?.checked ? '7d' : '1d',
   });
 
   return user;
 };
 
-export const decodeToken = (token: string | null) => http.post('/auth/decode-token', { token });
+export const decodeToken = (token: string | null) =>
+  http.post(UNAUTHENTICATED.decode_token, { token });
 
 export const manageErrorMessage = (errors: AxiosError) => {
+  const returnedErrors: string[] = [];
   switch (errors?.response?.data?.status) {
     case 422:
-      errors?.response?.data?.error.map((e) => {
-        if (e.constraints.matches) {
-          return e.constraints.matches;
+      for (let i = 0; i < errors.response.data?.error.length; i += 1) {
+        const element = errors.response.data?.error[i];
+        if (element.constraints.isDefined) {
+          returnedErrors.push(element.constraints.isDefined);
         }
-        return '';
-      });
+      }
       break;
-    case 404:
-      return errors?.response?.data?.error;
-    case 401:
-      return errors?.response?.data?.error;
     default:
-      return errors?.response?.data?.error;
+      returnedErrors.push(errors?.response?.data?.error);
+      break;
   }
+  return returnedErrors;
 };

@@ -36,51 +36,27 @@ const router = createBrowserRouter([
   },
   {
     path: routes.unauthenticated.subpaths.resetPassword.path,
-    element: (
-      <PublicRoute>
-        <ResetPassword />
-      </PublicRoute>
-    ),
+    element: <ResetPassword />,
   },
   {
     path: routes.unauthenticated.subpaths.forgotPassword.path,
-    element: (
-      <PublicRoute>
-        <ForgotPassword />
-      </PublicRoute>
-    ),
+    element: <ForgotPassword />,
   },
   {
     path: routes.unauthenticated.subpaths.redirectEmail.path,
-    element: (
-      <PublicRoute>
-        <RedirectEmail />
-      </PublicRoute>
-    ),
+    element: <RedirectEmail />,
   },
   {
     path: routes.unauthenticated.subpaths.resetPasswordSuccess.path,
-    element: (
-      <PublicRoute>
-        <ResetPasswordSuccess />
-      </PublicRoute>
-    ),
+    element: <ResetPasswordSuccess />,
   },
   {
     path: routes.unauthenticated.subpaths.checkEmailToResetPassword.path,
-    element: (
-      <PublicRoute>
-        <CheckEmailToResetPassword />
-      </PublicRoute>
-    ),
+    element: <CheckEmailToResetPassword />,
   },
   {
     path: routes.unauthenticated.subpaths.errorResetPassword.path,
-    element: (
-      <PublicRoute>
-        <ErrorResetPassword />
-      </PublicRoute>
-    ),
+    element: <ErrorResetPassword />,
   },
   {
     path: routes.authentified.path,
