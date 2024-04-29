@@ -130,7 +130,9 @@ const Login = () => {
           </div>
           {!errors.email &&
             match.map((message: string) => (
-              <div className="text-red-500 my-0 ml-0 font-thin flex justify-start">{message}</div>
+              <div className="text-red-500 my-0 ml-0 font-thin flex justify-start" key={message}>
+                {message}
+              </div>
             ))}
 
           {errors && errors.email && (
