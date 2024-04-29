@@ -11,7 +11,6 @@ import { AppDataSource } from '../database/data-source';
 import jwtService from './jwt.service';
 import { hashPassword } from '../utils/bcrypt';
 import { Repository } from 'typeorm';
-import { ResetPasswordConfig } from '../utils/resetPasswordConfig';
 import LoginDto from '../dto/auth/LoginDto';
 import { plainToClass } from 'class-transformer';
 import { ComparePassword } from '../utils/hash';
