@@ -56,6 +56,7 @@ export class User {
   @OneToOne(() => File, (file) => file.id)
   @JoinColumn({
     name: 'id_file',
+    referencedColumnName: 'id',
   })
   image: File;
 

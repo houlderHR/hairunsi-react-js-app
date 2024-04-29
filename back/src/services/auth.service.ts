@@ -26,11 +26,13 @@ class AuthService {
       });
       if (!result) throw new HttpNotFoundException("Le mail n'existe pas");
       try {
-        const mailer = new Mailer();
+        const link = await this.generateForgotPasswordLink(result);
+        const mailer = await Mailer.getInstance();
         return await mailer.sendMail(
-          'Récupération mot de passe',
+          'Récupération de mot de passe',
+          result.lastname,
           result.email,
-          await this.generateForgotPasswordLink(result),
+          link,
         );
       } catch (error) {
         throw new HttpException(StatusCodes.BAD_REQUEST, "Impossible d'envoyer le mail");
@@ -50,6 +52,15 @@ class AuthService {
       return resetPasswordUrl;
     } catch (error) {
       throw new HttpException(StatusCodes.GONE, { message: 'Ce lien est expiré' });
+    }
+  }
+
+  async verifyTokenForRecoveryPwd(token: string) {
+    try {
+      const decode = await jwtService.verifyTokenClassicForRecoveryPwd(token);
+      return decode;
+    } catch (error) {
+      throw new HttpException(StatusCodes.GONE, "Impossible d'accéder à cette page");
     }
   }
 

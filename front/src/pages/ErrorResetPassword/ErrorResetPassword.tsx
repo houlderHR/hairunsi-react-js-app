@@ -32,7 +32,7 @@ const ErrorResetPassword: FC = () => {
             </div>
           </div>
           <div className="button">
-            <Button>
+            <Button type="button">
               <Link
                 to={routes.unauthenticated.subpaths.login.path}
                 className="flex flex-row w-full items-center justify-center gap-4"
