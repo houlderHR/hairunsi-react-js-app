@@ -11,7 +11,7 @@ import { AppDataSource } from '../database/data-source';
 import jwtService from './jwt.service';
 import { hashPassword } from '../utils/bcrypt';
 import { Repository } from 'typeorm';
-
+import { ResetPasswordConfig } from '../utils/resetPasswordConfig';
 class AuthService {
   async recoveryPassword(email: string) {
     try {
@@ -39,16 +39,6 @@ class AuthService {
   async generateForgotPasswordLink(user: User) {
     try {
       let resetPasswordToken = await JwtService.generateJwtResetPassword(user);
-
-      user.resetPasswordToken = resetPasswordToken;
-      await AppDataSource.getRepository(User).save(user);
-
-      let timeout = setTimeout(async () => {
-        user.resetPasswordToken = null;
-        await AppDataSource.getRepository(User).save(user);
-        clearTimeout(timeout);
-      }, +process.env.RESET_PASSWORD_TOKEN_DURATION * 1000);
-
       const resetPasswordUrl = `${process.env.FRONT_END_BASE_ROUTE}reset-password?token=${resetPasswordToken}`;
 
       return resetPasswordUrl;
@@ -59,10 +49,14 @@ class AuthService {
 
   async verifyResetPasswordUrlToken(token: string) {
     try {
-      const user = await JwtService.verifyJwtResetPasswordToken(token);
-      await this.getUserRepository().findOneOrFail({
-        where: { uuid: user.uuid, resetPasswordToken: token },
+      const payloadUser = await JwtService.getJwtResetPasswordPayload(token);
+
+      const user = await this.getUserRepository().findOneOrFail({
+        where: { uuid: payloadUser.uuid },
+        select: ['password', 'uuid', 'email'],
       });
+
+      return await JwtService.verifyJwtResetPasswordToken(token, user);
     } catch (error) {
       if (error.status === StatusCodes.GONE) {
         throw error;
@@ -77,19 +71,16 @@ class AuthService {
 
   async resetUserPassword(resetPasswordDto: ResetPasswordDto, token: string) {
     let user: User;
-
     try {
-      const userValidTokenPayload = await jwtService.verifyJwtResetPasswordToken(token, true);
+      const payloadUser = await JwtService.getJwtResetPasswordPayload(token);
       user = await this.getUserRepository().findOneOrFail({
-        where: { uuid: userValidTokenPayload.uuid },
-        select: ['resetPasswordToken', 'email', 'password', 'uuid'],
+        where: { uuid: payloadUser.uuid },
+        select: ['email', 'lastname', 'firstname', 'password', 'uuid'],
       });
+
+      await jwtService.verifyJwtResetPasswordToken(token, user, true);
     } catch (_) {
       throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "Une erreur s'est produite");
-    }
-
-    if (!(user.resetPasswordToken === token)) {
-      throw new HttpException(StatusCodes.GONE, 'Ce lien est invalide');
     }
 
     const errors = await validate(resetPasswordDto);
@@ -102,6 +93,20 @@ class AuthService {
       throw new HttpException(422, validationErrors);
     }
 
+    if (this.checkIfPasswordContainPersonalInformation(user, resetPasswordDto.password)) {
+      const validationErrors = [
+        {
+          property: 'password',
+          constraints: {
+            containPersonalInformation:
+              'Votre mot de passe ne doit pas contenir vos informations personelles',
+          },
+        },
+      ];
+
+      throw new HttpException(422, validationErrors);
+    }
+
     if (resetPasswordDto.password !== resetPasswordDto.confirmPassword) {
       throw new HttpException(StatusCodes.FORBIDDEN, {
         message: 'Le mot de passe ne correspond pas',
@@ -110,13 +115,19 @@ class AuthService {
 
     try {
       user.password = await hashPassword(resetPasswordDto.password);
-      user.resetPasswordToken = null;
       await this.getUserRepository().update({ uuid: user.uuid }, user);
-
-      return 'ok';
+      return { message: 'Mot de passe changé avec succés' };
     } catch (error) {
       throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error');
     }
+  }
+
+  private checkIfPasswordContainPersonalInformation(user: User, password: string): boolean {
+    let keyTest = { firstname: user.firstname, lastname: user.lastname, email: user.email };
+
+    return Object.keys(keyTest).some((key) =>
+      password.toLowerCase().trim().replace(/\s/g, '').includes(keyTest[key].toLowerCase()),
+    );
   }
 
   private getUserRepository(): Repository<User> {

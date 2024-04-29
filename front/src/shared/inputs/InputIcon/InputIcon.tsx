@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, Ref } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Icon from '../../Icon';
 
@@ -11,6 +11,8 @@ interface InputIconProps {
   type?: string;
   endIcon?: React.ReactNode;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  inputRef: Ref<HTMLInputElement>;
 }
 
 const InputIcon: FC<InputIconProps> = ({
@@ -18,6 +20,8 @@ const InputIcon: FC<InputIconProps> = ({
   additionalClass,
   additionalInputClass,
   onChange,
+  onBlur,
+  inputRef,
   endIcon,
   icon,
   type = 'text',
@@ -38,6 +42,8 @@ const InputIcon: FC<InputIconProps> = ({
       type={type}
       defaultValue={value}
       onChange={onChange}
+      onBlur={onBlur}
+      ref={inputRef}
       placeholder={placeholder}
       className={twMerge(
         'bg-transparent cursor-pointer py-3 w-full border-transparent text-xs placeholder:text-black-1 focus:outline-none',
