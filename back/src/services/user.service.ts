@@ -16,6 +16,7 @@ import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
 import FileService from '../services/file.service';
 import { File } from '../entities/file.entity';
 import fileService from '../services/file.service';
+import { hashPassword } from '../utils/bcrypt';
 
 class UserService {
   public async createUser(image, createUserDto: CreateUserDto): Promise<User> {
@@ -29,6 +30,12 @@ class UserService {
 
       throw new HttpException(422, validationErrors);
     }
+
+    if (await this.checkIfUserWithThisEmailAlreadyExists(createUserDto.email))
+      throw new HttpException(
+        StatusCodes.CONFLICT,
+        "L'utilisateur existe déja: adresse e-mail non disponible",
+      );
 
     if (image) {
       const result = await cloudinary.uploader.upload(
@@ -53,16 +60,21 @@ class UserService {
     const role = await roleService.getOne(createUserDto.role);
 
     const user = new User();
-    Object.assign(user, {
-      firstname: createUserDto.firstname,
-      lastname: createUserDto.lastname,
-      birth_date: createUserDto.birth_date,
-      email: createUserDto.email,
-      password: createUserDto.password || '',
-      image: createdImage?.id || '',
-      post: post,
-      role: role,
-    });
+    try {
+      const pass = await hashPassword(createUserDto.password);
+      Object.assign(user, {
+        firstname: createUserDto.firstname,
+        lastname: createUserDto.lastname,
+        birth_date: createUserDto.birth_date,
+        email: createUserDto.email,
+        password: pass || '',
+        image: createdImage?.id || '',
+        post: post,
+        role: role,
+      });
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
 
     try {
       return await this.getUserRepository().save(user);
@@ -130,6 +142,8 @@ class UserService {
       lastname: updateUserDto.lastname,
       birth_date: updateUserDto.birth_date,
       image: newImage?.id || user.image,
+      email: user.email,
+      password: user.password,
       post: post,
       role: role,
     });
@@ -172,8 +186,13 @@ class UserService {
     throw new InternalServerErrorException();
   }
 
-  public async checkIfEmailExist(email: string) {
-    return true;
+  public async checkIfUserWithThisEmailAlreadyExists(email: string) {
+    const user = await AppDataSource.getRepository(User).findOne({
+      where: { email: email },
+      relations: ['post', 'role', 'image'],
+    });
+    if (user) return true;
+    return false;
   }
 
   private getUserRepository(): Repository<User> {

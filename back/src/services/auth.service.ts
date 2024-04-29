@@ -12,6 +12,12 @@ import jwtService from './jwt.service';
 import { hashPassword } from '../utils/bcrypt';
 import { Repository } from 'typeorm';
 import { ResetPasswordConfig } from '../utils/resetPasswordConfig';
+import LoginDto from '../dto/auth/LoginDto';
+import { plainToClass } from 'class-transformer';
+import { ComparePassword } from '../utils/hash';
+import Unauthorized from '../exceptions/Unauthorized';
+import { sign, verify } from 'jsonwebtoken';
+
 class AuthService {
   async recoveryPassword(email: string) {
     try {
@@ -112,7 +118,6 @@ class AuthService {
         message: 'Le mot de passe ne correspond pas',
       });
     }
-
     try {
       user.password = await hashPassword(resetPasswordDto.password);
       await this.getUserRepository().update({ uuid: user.uuid }, user);
@@ -128,6 +133,38 @@ class AuthService {
     return Object.keys(keyTest).some((key) =>
       password.toLowerCase().trim().replace(/\s/g, '').includes(keyTest[key].toLowerCase()),
     );
+  }
+
+  async login(userDto: LoginDto) {
+    const errors = await validate(plainToClass(LoginDto, userDto));
+    if (errors.length > 0) {
+      const errorsMessage = errors.map(({ property, constraints }: ValidationError) => ({
+        property,
+        constraints,
+      }));
+      throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, errorsMessage);
+    }
+
+    const user = await AppDataSource.getRepository(User).findOne({
+      where: { email: userDto.email },
+      relations: ['post', 'role', 'image'],
+    });
+
+    if (user) {
+      if (await ComparePassword(user.password, userDto.password))
+        return sign({ user }, process.env.TOKEN_KEY, { expiresIn: userDto.duration });
+      throw new Unauthorized('Mot de passe incorrect');
+    }
+    throw new HttpNotFoundException("Cet utilisateur n'existe pas");
+  }
+
+  async decodeToken(token: string) {
+    try {
+      const decodedToken = verify(token, process.env.TOKEN_KEY);
+      return { authorized: true, decodedToken };
+    } catch (error) {
+      throw new Unauthorized('Expiré');
+    }
   }
 
   private getUserRepository(): Repository<User> {
