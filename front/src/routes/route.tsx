@@ -13,16 +13,26 @@ import UserManager from '../pages/UserManager';
 import UserManagerList from '../pages/UserManager/UserManagerList/UserManagerList';
 import UserManagerRole from '../pages/UserManager/UserManagerRole';
 import UserManagerType from '../pages/UserManager/UserManagerType';
+import ProtectedRoute from '../shared/authenticated/ProtectedRoute/ProtectedRoute';
+import PublicRoute from '../shared/unauthenticated/PublicRoute/PublicRoute';
 import routes from './paths';
 
 const router = createBrowserRouter([
   {
     path: routes.unauthenticated.path,
-    element: <Home />,
+    element: (
+      <PublicRoute>
+        <Home />
+      </PublicRoute>
+    ),
   },
   {
     path: routes.unauthenticated.subpaths.login.path,
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
   },
   {
     path: routes.unauthenticated.subpaths.resetPassword.path,
@@ -50,7 +60,11 @@ const router = createBrowserRouter([
   },
   {
     path: routes.authentified.path,
-    element: <Authenticated />,
+    element: (
+      <ProtectedRoute>
+        <Authenticated />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: routes.authentified.subpaths.accueil.path,

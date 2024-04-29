@@ -2,7 +2,7 @@ const routes = {
   authentified: {
     path: '',
     subpaths: {
-      accueil: { path: 'accueil' },
+      accueil: { path: '/accueil' },
       project: { path: '/projects' },
       leaveDay: { path: '/leave-day' },
       userManager: {
