@@ -1,3 +1,3 @@
 export const ResetPasswordConfig = {
-  duration: 120,
+  duration: 60,
 };
