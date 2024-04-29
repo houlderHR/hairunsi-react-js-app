@@ -44,6 +44,7 @@ class UserService {
           folder: 'uploads',
         },
       );
+
       if (result) {
         let newFile: CreateOrUpdateFileDto = {
           name: `${Date.now()}_${image.originalname}`,
@@ -57,6 +58,7 @@ class UserService {
     }
 
     const post = await postService.getPost(createUserDto.post);
+
     const role = await roleService.getOne(createUserDto.role);
 
     const user = new User();

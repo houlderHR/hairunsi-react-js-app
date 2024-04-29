@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity('files')
 export class File {
@@ -33,6 +36,9 @@ export class File {
     length: 255,
   })
   public_id: string;
+
+  @OneToOne(() => User, (user) => user.image, { onDelete: 'CASCADE' })
+  user?: User;
 
   @CreateDateColumn({
     name: 'created_at',

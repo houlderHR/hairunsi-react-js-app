@@ -53,7 +53,7 @@ export class User {
   })
   password: string;
 
-  @OneToOne(() => File, (file) => file.id)
+  @OneToOne(() => File, (file) => file.user, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn({
     name: 'id_file',
     referencedColumnName: 'id',
