@@ -62,7 +62,7 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
         {children}
         {showLoginLink && (
           <div className="2xl:mt-20 mt-10 pt-7 border-t border-gray-5 text-black-1 md:px-11">
-            <p className="text-xs md:text-sm leading-none md:leading-4">
+            <p className="text-xs md:text-sm leading-none md:leading-4 text-center">
               Vous avez d&eacute;ja un compte&nbsp;?&nbsp;
               <strong>
                 <NavLink to={routes.unauthenticated.subpaths.login.path}>Connectez-vous</NavLink>

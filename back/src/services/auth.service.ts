@@ -11,13 +11,13 @@ import { AppDataSource } from '../database/data-source';
 import jwtService from './jwt.service';
 import { hashPassword } from '../utils/bcrypt';
 import { Repository } from 'typeorm';
-import { ResetPasswordConfig } from '../utils/resetPasswordConfig';
 import LoginDto from '../dto/auth/LoginDto';
 import { plainToClass } from 'class-transformer';
 import { ComparePassword } from '../utils/hash';
 import Unauthorized from '../exceptions/Unauthorized';
 import { sign, verify } from 'jsonwebtoken';
 
+import { checkIfPasswordContainPersonalInformation } from '../utils/utils.method';
 class AuthService {
   async recoveryPassword(email: string) {
     try {
@@ -63,11 +63,7 @@ class AuthService {
       });
 
       return await JwtService.verifyJwtResetPasswordToken(token, user);
-    } catch (error) {
-      if (error.status === StatusCodes.GONE) {
-        throw error;
-      }
-
+    } catch (_) {
       throw new HttpException(
         StatusCodes.GONE,
         'Ce lien de réinitialisation du mot de passe est expiré,veuillez rééssayer de nouveau',
@@ -83,10 +79,17 @@ class AuthService {
         where: { uuid: payloadUser.uuid },
         select: ['email', 'lastname', 'firstname', 'password', 'uuid'],
       });
-
-      await jwtService.verifyJwtResetPasswordToken(token, user, true);
     } catch (_) {
       throw new HttpException(StatusCodes.INTERNAL_SERVER_ERROR, "Une erreur s'est produite");
+    }
+
+    try {
+      await jwtService.verifyJwtResetPasswordToken(token, user, true);
+    } catch (_) {
+      throw new HttpException(
+        StatusCodes.GONE,
+        'Ce lien de réinitialisation du mot de passe est expiré,veuillez rééssayer de nouveau',
+      );
     }
 
     const errors = await validate(resetPasswordDto);
@@ -99,7 +102,7 @@ class AuthService {
       throw new HttpException(422, validationErrors);
     }
 
-    if (this.checkIfPasswordContainPersonalInformation(user, resetPasswordDto.password)) {
+    if (checkIfPasswordContainPersonalInformation(user, resetPasswordDto.password)) {
       const validationErrors = [
         {
           property: 'password',
