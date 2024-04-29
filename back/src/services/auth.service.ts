@@ -27,7 +27,7 @@ class AuthService {
       if (!result) throw new HttpNotFoundException("Le mail n'existe pas");
       try {
         const link = await this.generateForgotPasswordLink(result);
-        const mailer = new Mailer();
+        const mailer = await Mailer.getInstance();
         return await mailer.sendMail(
           'Récupération de mot de passe',
           result.lastname,
