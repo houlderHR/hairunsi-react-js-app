@@ -8,7 +8,7 @@ class JwtService {
     return new Promise((resolve, reject) => {
       jwt.sign(
         { data: { uuid: user.uuid, email: user.email } },
-        process.env.RESET_PASSWORD_PRIVATE_KEY,
+        `${process.env.RESET_PASSWORD_PRIVATE_KEY}${user.password}`,
         { expiresIn: ResetPasswordConfig.duration },
         (error, token) => {
           if (error) {
@@ -25,12 +25,13 @@ class JwtService {
 
   async verifyJwtResetPasswordToken(
     token: string,
+    user: User,
     ignoreJwtTimeout?: boolean,
   ): Promise<{ uuid: string; email: string }> {
     return new Promise((resolve, reject) => {
       jwt.verify(
         token,
-        process.env.RESET_PASSWORD_PRIVATE_KEY,
+        `${process.env.RESET_PASSWORD_PRIVATE_KEY}${user.password}`,
         { ignoreExpiration: ignoreJwtTimeout },
         (error, decoded) => {
           if (error) {
@@ -42,6 +43,14 @@ class JwtService {
           }
         },
       );
+    });
+  }
+
+  getJwtResetPasswordPayload(token: string): Promise<{ uuid: string }> {
+    return new Promise((resolve, reject) => {
+      const decoded = jwt.decode(token);
+      if (!decoded) reject(decoded);
+      if (decoded) resolve(decoded.data);
     });
   }
 }
