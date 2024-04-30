@@ -72,7 +72,7 @@ const Login = () => {
       subTitle="Prêt à démarrer votre journée? Connectez-vous avec votre identifiant et mot de passe pour accéder à la plateforme et ces fonctionnalités."
       contentTitle="Connexion"
     >
-      <div className="text-center">
+      <div className="w-full text-center">
         <h3 className="text-xs lg:text-[14px] mt-0 3xl:mt-20 text-gray-1 md:px-20">
           Merci de vous connecter à votre compte HaiRun SI
         </h3>
@@ -142,8 +142,8 @@ const Login = () => {
               type="submit"
               className={
                 !watch('email')?.match(REGEX_EMAIL) || !watch('password')
-                  ? 'mt-1 px-2 py-3 text-xs lg:text-sm border text-white text-[14px] rounded-md uppercase bg-[#DEDEDE] !cursor-not-allowed'
-                  : 'mt-1 px-2 py-3 text-xs lg:text-sm border text-white text-[14px] rounded-md uppercase bg-primary'
+                  ? 'mt-1 px-2 py-3 text-sm border text-white text-[14px] rounded-md uppercase bg-[#DEDEDE] !cursor-not-allowed'
+                  : 'mt-1 px-2 py-3 text-sm border text-white text-[14px] rounded-md uppercase bg-primary'
               }
             >
               Se connecter

@@ -46,7 +46,7 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
       </div>
     </div>
     <div className="flex w-full flex-col items-center justify-center py-6 2xl:py-4 px-4">
-      <div className="flex flex-col w-full max-w-[480px] items-center">
+      <div className="flex flex-col w-full md:max-w-[480px] items-center">
         {showLogo && (
           <img
             src="images/logo/logo-hairun-no-text.png"
