@@ -1,6 +1,4 @@
 import { AxiosError } from 'axios';
-import UNAUTHENTICATED from '../routes/endpoints';
-import http from './http-common';
 
 type ErrorLoginWithConstraints = {
   status: number;
@@ -11,24 +9,7 @@ type ErrorLoginWithoutConstraints = {
   error: string;
 };
 
-export const login = async (
-  email: string | undefined,
-  password: string | undefined,
-  rememberMe: HTMLInputElement,
-) => {
-  const user = await http.post(UNAUTHENTICATED.login, {
-    email,
-    password,
-    duration: rememberMe?.checked ? '7d' : '1d',
-  });
-
-  return user;
-};
-
-export const decodeToken = (token: string | null) =>
-  http.post(UNAUTHENTICATED.decode_token, { token });
-
-export const manageErrorMessage = (errors: AxiosError) => {
+const manageErrorMessage = (errors: AxiosError) => {
   const returnedErrors: string[] = [];
   let errorLoginWithConstraints: ErrorLoginWithConstraints;
   let errorLoginWithoutConstraints: ErrorLoginWithoutConstraints;
@@ -49,3 +30,5 @@ export const manageErrorMessage = (errors: AxiosError) => {
   }
   return returnedErrors;
 };
+
+export default manageErrorMessage;

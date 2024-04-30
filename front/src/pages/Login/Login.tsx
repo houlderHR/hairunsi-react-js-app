@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
+import { login } from '../../hooks/useAuth';
 import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
 import Input from '../../shared/inputs/Input';
 import InputIcon from '../../shared/inputs/InputIcon';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import InputType from '../../shared/UserAuthenticationLayout/constants';
-import { login, manageErrorMessage } from '../../utils/authentication';
+import manageErrorMessage from '../../utils/manageError';
 import { REGEX_EMAIL } from '../../utils/regex';
 
 const user = yup

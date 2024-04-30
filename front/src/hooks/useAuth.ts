@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UNAUTHENTICATED from '../routes/endpoints';
 import routes from '../routes/paths';
 import http from '../utils/http-common';
 import { TOKEN_RESEND_MAIL } from '../utils/token-const';
@@ -10,6 +11,23 @@ const BASE_PATH = '/auth';
 interface InputField {
   email: string;
 }
+
+export const login = async (
+  email: string | undefined,
+  password: string | undefined,
+  rememberMe: HTMLInputElement,
+) => {
+  const user = await http.post(UNAUTHENTICATED.login, {
+    email,
+    password,
+    duration: rememberMe?.checked ? '7d' : '1d',
+  });
+
+  return user;
+};
+
+export const decodeToken = (token: string | null) =>
+  http.post(UNAUTHENTICATED.decode_token, { token });
 
 export const getDecodeToken = async (token: string) => {
   const result = await http.post(
