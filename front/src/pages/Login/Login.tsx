@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
+import { login } from '../../hooks/useAuth';
 import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
 import Input from '../../shared/inputs/Input';
 import InputIcon from '../../shared/inputs/InputIcon';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
 import InputType from '../../shared/UserAuthenticationLayout/constants';
-import { login, manageErrorMessage } from '../../utils/authentication';
+import manageErrorMessage from '../../utils/manageError';
 import { REGEX_EMAIL } from '../../utils/regex';
 
 const user = yup
@@ -71,31 +72,38 @@ const Login = () => {
       subTitle="Prêt à démarrer votre journée? Connectez-vous avec votre identifiant et mot de passe pour accéder à la plateforme et ces fonctionnalités."
       contentTitle="Connexion"
     >
-      <div className="text-center w-full">
-        <h3 className="text-xs lg:text-[14px] mt-5 3xl:mt-20 text-gray-1 md:px-20">
+      <div className="text-center">
+        <h3 className="text-xs lg:text-[14px] mt-0 3xl:mt-20 text-gray-1 md:px-20">
           Merci de vous connecter à votre compte HaiRun SI
         </h3>
         <form className="mt-12 flex flex-col gap-y-5 w-full" onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            control={control}
-            name="email"
-            render={({ field: { ref, onChange, onBlur, value } }) => (
-              <Input
-                placeholder="Adresse e-mail"
-                additionalClass={
-                  (watch('email')?.match(REGEX_EMAIL) && value?.length > 0) || !watch('email')
-                    ? '!py-3 xl:!py-4 text-sm 2xl:text-base'
-                    : '!py-3 xl:!py-4 text-sm 2xl:text-base !border-2 !border-red-500'
-                }
-                type="text"
-                refs={ref}
-                onChange={onChange}
-                onBlur={onBlur}
-                value={value}
-                required
-              />
+          <div className="flex flex-col relative">
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { ref, onChange, onBlur, value } }) => (
+                <Input
+                  placeholder="Adresse e-mail"
+                  additionalClass={
+                    (watch('email')?.match(REGEX_EMAIL) && value?.length > 0) || !watch('email')
+                      ? '!py-3 xl:!py-4 text-sm 2xl:text-base'
+                      : '!py-3 xl:!py-4 text-sm 2xl:text-base !border-2 !border-red-500'
+                  }
+                  type="text"
+                  refs={ref}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  required
+                />
+              )}
+            />
+            {errors && errors.email && (
+              <div className="absolute text-red-500 my-0 ml-0 font-normal flex justify-start top-full mt-0 leading-none">
+                {errors.email.message}
+              </div>
             )}
-          />
+          </div>
           <Controller
             control={control}
             name="password"
@@ -122,39 +130,42 @@ const Login = () => {
               />
             )}
           />
-          <div className="flex justify-left text-gray-1 mb-4">
+          <div className="flex justify-left text-gray-1 mb-1">
             <label className="flex flex-row items-center" htmlFor="remember">
               <input type="checkbox" name="" id="remember" />
-              <span className="text-xs lg:text-sm inline-block ml-2">Se souvenir de moi</span>
+              <span className="text-xs lg:text-sm inline-block ml-5">Se souvenir de moi</span>
             </label>
           </div>
-          {!errors.email &&
-            match.map((message: string) => (
-              <div className="text-red-500 my-0 ml-0 font-thin flex justify-start">{message}</div>
-            ))}
 
-          {errors && errors.email && (
-            <div className="text-red-500 my-0 ml-0 font-thin flex justify-start -top-5">
-              {errors.email.message}
+          <div className="flex flex-col relative 2xl:mb-20 mb-10">
+            <button
+              type="submit"
+              className={
+                !watch('email')?.match(REGEX_EMAIL) || !watch('password')
+                  ? 'mt-1 px-2 py-3 text-xs lg:text-sm border text-white text-[14px] rounded-md uppercase bg-[#DEDEDE] !cursor-not-allowed'
+                  : 'mt-1 px-2 py-3 text-xs lg:text-sm border text-white text-[14px] rounded-md uppercase bg-primary'
+              }
+            >
+              Se connecter
+            </button>
+            <div className="absolute top-full mt-1 flex flex-col justify-start items-start text-start">
+              {!errors.email &&
+                match.map((message: string) => (
+                  <div className="leading-none text-red-500 my-0 ml-0 font-normal" key={message}>
+                    - {message}
+                  </div>
+                ))}
             </div>
-          )}
-          <button
-            type="submit"
-            className={
-              !watch('email')?.match(REGEX_EMAIL) || !watch('password')
-                ? 'mt-2 mb-10 2xl:mb-20 px-2 py-3 text-xs lg:text-sm border bg-grey1 text-white text-[14px] rounded-md uppercase bg-grey-7 !cursor-not-allowed'
-                : 'mt-2 mb-10 2xl:mb-20 px-2 py-3 text-xs lg:text-sm border bg-grey1 text-white text-[14px] rounded-md uppercase bg-primary'
-            }
-          >
-            Se connecter
-          </button>
-          <hr className="mx-20" />
-          <span className="text-black-1 mt-8 text-sm lg:text-[14px]">
-            Mot de passe oublié?&nbsp;
-            <Link to={routes.unauthenticated.subpaths.forgotPassword.path}>
-              <b>Cliquez ici.</b>
-            </Link>
-          </span>
+          </div>
+          <div className="flex flex-col">
+            <hr className="mx-20" />
+            <span className="text-black-1 mt-7 text-sm lg:text-[14px]">
+              Mot de passe oublié?&nbsp;
+              <Link to={routes.unauthenticated.subpaths.forgotPassword.path}>
+                <b>Cliquez ici.</b>
+              </Link>
+            </span>
+          </div>
         </form>
       </div>
     </UserAuthenticationLayout>

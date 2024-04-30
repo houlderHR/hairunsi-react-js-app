@@ -57,7 +57,7 @@ const ForgotPassword: FC = () => {
         <Loading />
       ) : (
         <form onSubmit={onSubmit} className="w-full">
-          <p className="text-sm text-gray-1 mb-12 font-medium leading-4">
+          <p className="text-sm text-center text-gray-1 mb-12 font-medium leading-4">
             Saisissez votre adresse e-mail dans le champ ci-dessous.
           </p>
 

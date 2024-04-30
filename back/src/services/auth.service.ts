@@ -9,15 +9,15 @@ import { ValidationError, validate } from 'class-validator';
 import { User } from '../entities/user.entity';
 import { AppDataSource } from '../database/data-source';
 import jwtService from './jwt.service';
-import { hashPassword } from '../utils/bcrypt';
 import { Repository } from 'typeorm';
 import LoginDto from '../dto/auth/LoginDto';
 import { plainToClass } from 'class-transformer';
-import { ComparePassword } from '../utils/hash';
+import { ComparePassword, hashPassword } from '../utils/hash';
 import Unauthorized from '../exceptions/Unauthorized';
 import { sign, verify } from 'jsonwebtoken';
 
 import { checkIfPasswordContainPersonalInformation } from '../utils/utils.method';
+import { TOKEN_KEY } from '../utils/token';
 class AuthService {
   async recoveryPassword(email: string) {
     try {
@@ -141,14 +141,6 @@ class AuthService {
     }
   }
 
-  private checkIfPasswordContainPersonalInformation(user: User, password: string): boolean {
-    let keyTest = { firstname: user.firstname, lastname: user.lastname, email: user.email };
-
-    return Object.keys(keyTest).some((key) =>
-      password.toLowerCase().trim().replace(/\s/g, '').includes(keyTest[key].toLowerCase()),
-    );
-  }
-
   async login(userDto: LoginDto) {
     const errors = await validate(plainToClass(LoginDto, userDto));
     if (errors.length > 0) {
@@ -166,7 +158,7 @@ class AuthService {
 
     if (user) {
       if (await ComparePassword(user.password, userDto.password))
-        return sign({ user }, process.env.TOKEN_KEY, { expiresIn: userDto.duration });
+        return sign({ user }, TOKEN_KEY, { expiresIn: userDto.duration });
       throw new Unauthorized('Mot de passe incorrect');
     }
     throw new HttpNotFoundException("Cet utilisateur n'existe pas");
@@ -174,7 +166,7 @@ class AuthService {
 
   async decodeToken(token: string) {
     try {
-      const decodedToken = verify(token, process.env.TOKEN_KEY);
+      const decodedToken = verify(token, TOKEN_KEY);
       return { authorized: true, decodedToken };
     } catch (error) {
       throw new Unauthorized('Expiré');

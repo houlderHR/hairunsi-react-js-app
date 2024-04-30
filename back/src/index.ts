@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import './utils/configEnv';
+import './utils/config';
 import './database/data-source';
 import { v2 as cloudinary } from 'cloudinary';
 const swaggerUi = require('swagger-ui-express');
