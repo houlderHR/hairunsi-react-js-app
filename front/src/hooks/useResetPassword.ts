@@ -9,33 +9,32 @@ export const TOKEN_QUERY_PARAM = '?token=';
 const mapError = (
   error: { property: string; constraints: Record<string, string> }[],
   cb: (
-    property: 'password' | 'confirmPassword',
+    property: 'password' | 'confirmPassword' | ['password', 'confirmPassword'],
     type: 'min' | 'matches' | 'oneOf' | 'containPersonalInformation',
     message?: string,
   ) => void,
 ) => {
-  let property: 'password' | 'confirmPassword' = 'password';
+  let property: 'password' | 'confirmPassword' | ['password', 'confirmPassword'] = 'password';
   let type: 'min' | 'matches' | 'oneOf' | 'containPersonalInformation' = 'min';
   let message = '';
-  for (let i = 0; i < error.length; i += 1) {
-    if (error[i].property === 'password') {
-      property = 'password';
-      switch (true) {
-        case error[i].constraints.isStrongPassword !== undefined:
-          type = 'matches';
-          break;
-        case error[i].constraints.minLength !== undefined:
-          type = 'min';
-          break;
-        case error[i].constraints.containPersonalInformation !== undefined:
-          type = 'containPersonalInformation';
-          message = ' ne doit pas contenir vos informations personelles';
-          break;
-        default:
-          type = 'min';
-          break;
-      }
+  if (error[0].property === 'password') {
+    property = 'password';
+    switch (true) {
+      case error[0].constraints.isStrongPassword !== undefined:
+        type = 'matches';
+        break;
+      case error[0].constraints.minLength !== undefined:
+        type = 'min';
+        break;
+      case error[0].constraints.containPersonalInformation !== undefined:
+        type = 'containPersonalInformation';
+        message = ' ne doit pas contenir vos informations personelles';
+        break;
+      default:
+        type = 'min';
+        break;
     }
+  } else {
     property = 'confirmPassword';
     type = 'oneOf';
   }
