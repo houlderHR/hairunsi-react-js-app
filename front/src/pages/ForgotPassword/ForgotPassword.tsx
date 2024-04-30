@@ -2,6 +2,7 @@ import axios from 'axios';
 import { FC, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
 import { useSendMail } from '../../hooks/useAuth';
 import routes from '../../routes/paths';
 import Input from '../../shared/inputs/Input';
@@ -75,7 +76,10 @@ const ForgotPassword: FC = () => {
               <Input
                 type="email"
                 placeholder="Email"
-                additionalClass="focus:border-secondary border"
+                additionalClass={twMerge(
+                  `${errors.email || errorAxios ? '!border-1 !border-red-500' : ''}`,
+                  'focus:border-secondary border',
+                )}
                 onChange={onChange}
                 onBlur={onBlur}
                 value={value}
