@@ -46,7 +46,7 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
       </div>
     </div>
     <div className="flex w-full flex-col items-center justify-center py-6 2xl:py-4 px-4">
-      <div className="flex flex-col w-full md:w-auto items-center">
+      <div className="flex flex-col w-full max-w-[480px] items-center">
         {showLogo && (
           <img
             src="images/logo/logo-hairun-no-text.png"
@@ -55,14 +55,14 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
           />
         )}
         {contentTitle && (
-          <h3 className="text-black-1 text-3xl font-medium mb-1 leading-9 mt-10 2xl:mt-20">
+          <h3 className="text-black-1 text-center text-3xl font-medium mb-1 leading-9 mt-10 2xl:mt-20">
             {contentTitle}
           </h3>
         )}
         {children}
         {showLoginLink && (
           <div className="2xl:mt-20 mt-10 pt-7 border-t border-gray-5 text-black-1 md:px-11">
-            <p className="text-xs md:text-sm leading-none md:leading-4 text-center">
+            <p className="text-xs lg:text-sm leading-none md:leading-4 text-center">
               Vous avez d&eacute;ja un compte&nbsp;?&nbsp;
               <strong>
                 <NavLink to={routes.unauthenticated.subpaths.login.path}>Connectez-vous</NavLink>

@@ -7,7 +7,7 @@
     @apply flex flex-col justify-center items-center gap-y-5;
 
     .content {
-      @apply flex flex-col w-[50vw] text-[14px] text-[#808080] font-medium gap-y-7;
+      @apply flex flex-col md:w-[50vw] w-full text-[14px] text-[#808080] font-medium gap-y-7;
 
       .description {
         @apply w-full px-[15%] text-center;
@@ -18,7 +18,7 @@
       }
     }
     .button {
-      @apply w-full px-[10em];
+      @apply max-w-[480px] sm:w-[480px] w-full;
     }
   }
 }

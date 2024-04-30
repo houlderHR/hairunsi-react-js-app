@@ -108,7 +108,7 @@ const ResetPassword = () => {
     >
       {isValidationLoading && <Spinner />}
       {isUrlError && (
-        <p className="text-xs lg:text-sm text-gray-1 font-medium text-center leading-4">
+        <p className="md:w-[50vw] w-full text-xs lg:text-sm text-gray-1 font-medium text-center leading-4">
           Votre lien de r&eacute;initialisation du mot de passe est &eacute;xpir&eacute;,veuillez
           <strong>
             <NavLink

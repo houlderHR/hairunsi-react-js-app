@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { decodeToken } from '../../../hooks/useAuth';
 import routes from '../../../routes/paths';
-import { decodeToken } from '../../../utils/authentication';
 
 interface Props {}
 

@@ -6,7 +6,7 @@ type ButtonType = {
   disabled?: boolean;
   onClick?: () => void;
   onSubmit?: () => void;
-  type: 'button' | 'submit';
+  type?: 'button' | 'submit';
 };
 
 const Button: FC<PropsWithChildren<ButtonType>> = ({
