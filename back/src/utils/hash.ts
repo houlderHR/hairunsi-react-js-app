@@ -1,8 +1,9 @@
 import { genSalt, hash, compare } from 'bcrypt';
+import { BCRYPT_SALT } from './token';
 
 export const hashPassword = (password: string): Promise<string> => {
   return new Promise((resolve, reject) => {
-    genSalt(+process.env.BCRYPT_SALT, (error, salt) => {
+    genSalt(BCRYPT_SALT, (error, salt) => {
       if (error) {
         reject(error);
       }

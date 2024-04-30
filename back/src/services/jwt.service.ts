@@ -1,6 +1,6 @@
 import { User } from '../entities/user.entity';
 import { ResetPasswordConfig } from '../utils/resetPasswordConfig';
-import { SECRET_KEY_TOKEN_RESEND_MAIL } from '../utils/token';
+import { RESET_PASSWORD_PRIVATE_KEY, SECRET_KEY_TOKEN_RESEND_MAIL } from '../utils/token';
 
 var jwt = require('jsonwebtoken');
 
@@ -9,7 +9,7 @@ class JwtService {
     return new Promise((resolve, reject) => {
       jwt.sign(
         { data: { uuid: user.uuid, email: user.email } },
-        `${process.env.RESET_PASSWORD_PRIVATE_KEY}${user.password}`,
+        `${RESET_PASSWORD_PRIVATE_KEY}${user.password}`,
         { expiresIn: ResetPasswordConfig.duration },
         (error, token) => {
           if (error) {
@@ -32,7 +32,7 @@ class JwtService {
     return new Promise((resolve, reject) => {
       jwt.verify(
         token,
-        `${process.env.RESET_PASSWORD_PRIVATE_KEY}${user.password}`,
+        `${RESET_PASSWORD_PRIVATE_KEY}${user.password}`,
         { ignoreExpiration: ignoreJwtTimeout },
         (error, decoded) => {
           if (error) {

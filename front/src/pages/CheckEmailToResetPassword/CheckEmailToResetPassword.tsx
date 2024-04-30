@@ -39,7 +39,12 @@ const CheckEmailToResetPassword: FC = () => {
 
   return (
     <UserAuthenticationLayout
-      title="Vérifiez votre e-mail"
+      title={
+        <span>
+          Vérifiez votre <br />
+          e-mail
+        </span>
+      }
       contentTitle="Vérification"
       subTitle="Des instructions ont été envoyées dans votre boîte e-mail. Merci de le vérifier."
       showLogo

@@ -11,7 +11,7 @@ const ButtonOutlined: FC<ButtonProps> = ({ title, addClass }) => (
     type="button"
     className={twMerge(
       addClass,
-      `border px-ssm py-2.5 text-[12px] lg:px-llg lg:py-ssm lg:text-[16px] border-white-300 rounded-md text-white uppercase mt-20 hover:cursor-pointer`,
+      `border px-ssm py-2.5 text-[14px] lg:px-llg lg:py-ssm lg:text-[14px] border-white-300 rounded-md text-white uppercase mt-20 hover:cursor-pointer`,
     )}
   >
     {title}

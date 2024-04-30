@@ -17,6 +17,7 @@ import Unauthorized from '../exceptions/Unauthorized';
 import { sign, verify } from 'jsonwebtoken';
 
 import { checkIfPasswordContainPersonalInformation } from '../utils/utils.method';
+import { TOKEN_KEY } from '../utils/token';
 class AuthService {
   async recoveryPassword(email: string) {
     try {
@@ -157,7 +158,7 @@ class AuthService {
 
     if (user) {
       if (await ComparePassword(user.password, userDto.password))
-        return sign({ user }, process.env.TOKEN_KEY, { expiresIn: userDto.duration });
+        return sign({ user }, TOKEN_KEY, { expiresIn: userDto.duration });
       throw new Unauthorized('Mot de passe incorrect');
     }
     throw new HttpNotFoundException("Cet utilisateur n'existe pas");
@@ -165,7 +166,7 @@ class AuthService {
 
   async decodeToken(token: string) {
     try {
-      const decodedToken = verify(token, process.env.TOKEN_KEY);
+      const decodedToken = verify(token, TOKEN_KEY);
       return { authorized: true, decodedToken };
     } catch (error) {
       throw new Unauthorized('Expiré');

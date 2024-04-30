@@ -2,6 +2,15 @@ import { AxiosError } from 'axios';
 import UNAUTHENTICATED from '../routes/endpoints';
 import http from './http-common';
 
+type ErrorLoginWithConstraints = {
+  status: number;
+  error: { property: string; constraints: Record<string, string> }[];
+};
+type ErrorLoginWithoutConstraints = {
+  status: number;
+  error: string;
+};
+
 export const login = async (
   email: string | undefined,
   password: string | undefined,
@@ -21,17 +30,21 @@ export const decodeToken = (token: string | null) =>
 
 export const manageErrorMessage = (errors: AxiosError) => {
   const returnedErrors: string[] = [];
-  switch (errors?.response?.data?.status) {
+  let errorLoginWithConstraints: ErrorLoginWithConstraints;
+  let errorLoginWithoutConstraints: ErrorLoginWithoutConstraints;
+  switch (errors?.response?.status) {
     case 422:
-      for (let i = 0; i < errors.response.data?.error.length; i += 1) {
-        const element = errors.response.data?.error[i];
+      errorLoginWithConstraints = errors.response?.data as ErrorLoginWithConstraints;
+      for (let i = 0; i < errorLoginWithConstraints.error.length; i += 1) {
+        const element = errorLoginWithConstraints.error[i];
         if (element.constraints.isDefined) {
           returnedErrors.push(element.constraints.isDefined);
         }
       }
       break;
     default:
-      returnedErrors.push(errors?.response?.data?.error);
+      errorLoginWithoutConstraints = errors.response?.data as ErrorLoginWithoutConstraints;
+      returnedErrors.push(errorLoginWithoutConstraints.error);
       break;
   }
   return returnedErrors;

@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import FileController from '../controllers/file.controller';
 import REGEX from '../utils/regex';
-import * as multer from 'multer';
 import { upload } from '../utils/multer.config';
 
 const routerFile = Router();
