@@ -34,6 +34,7 @@ const mapError = (
         type = 'min';
         break;
     }
+  } else {
     property = 'confirmPassword';
     type = 'oneOf';
   }
