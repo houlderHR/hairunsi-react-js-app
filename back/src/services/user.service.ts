@@ -15,8 +15,7 @@ import { bufferToDataUri, getTypeFile } from '../utils/utils.method';
 import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
 import FileService from '../services/file.service';
 import { File } from '../entities/file.entity';
-import fileService from '../services/file.service';
-import { hashPassword } from '../utils/bcrypt';
+import { hashPassword } from '../utils/hash';
 
 class UserService {
   public async createUser(image, createUserDto: CreateUserDto): Promise<User> {
