@@ -144,7 +144,7 @@ const Login = () => {
             type="submit"
             className={
               !watch('email')?.match(REGEX_EMAIL) || !watch('password')
-                ? 'mt-2 mb-10 2xl:mb-20 px-2 py-3 text-xs lg:text-sm border text-white text-[14px] rounded-md uppercase bg-[#DEDEDE] '
+                ? 'mt-2 mb-10 2xl:mb-20 px-2 py-3 text-xs lg:text-sm border text-white text-[14px] rounded-md uppercase bg-[#DEDEDE] !cursor-not-allowed'
                 : 'mt-2 mb-10 2xl:mb-20 px-2 py-3 text-xs lg:text-sm border text-white text-[14px] rounded-md uppercase bg-primary'
             }
           >
