@@ -82,6 +82,11 @@ const ResetPassword = () => {
       if (responseError.response?.status === 422) {
         const { error: errorResponse } = responseError.response?.data as ResetPasswordErrorType;
         mapError(errorResponse, (property, type, message) => {
+          if (Array.isArray(property)) {
+            property.map((_property) => setError(_property, { type, message }));
+            setFocus(property[0]);
+            return;
+          }
           setError(property, { type, message });
           setFocus(property);
         });
