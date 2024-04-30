@@ -20,16 +20,15 @@ const Home: FC = () => {
           </div>
           <div className="mt-20 text-white">
             <h2 className="text-2xl xl:text-4xl font-bold xl:font-normal">
-              <div>{t('description.part2')}</div>
-              {/* Bienvenue sur HaiRun SI! */}
+              <div>{t('welcome.hairunsi')}</div>
             </h2>
             <h3 className="mt-1 text-sm text-center xl:text-base px-12 sm:px-3.5 2xl:px-36">
-              Une plateforme de gestion et d&apos;organisation en interne de vos r&ecirc;ves.
+              {t('plateform.manage.organisation')}
             </h3>
           </div>
           <div>
             <Link to={routes.unauthenticated.subpaths.login.path}>
-              <ButtonOutlined title="commencer" />
+              <ButtonOutlined title={t('start')} />
             </Link>
           </div>
         </div>
