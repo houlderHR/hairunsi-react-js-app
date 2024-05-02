@@ -33,20 +33,25 @@ class Mailer {
   }
 
   createTransporter(secure: boolean, auth?: AuthType) {
-    let service: { service?: string } = {};
-    if (process.env.MAIL_HOST.includes('gmail')) {
-      service.service = 'gmail';
+    try {
+      let service: { service?: string } = {};
+      if (process.env.MAIL_HOST && process.env.MAIL_HOST.includes('gmail')) {
+        service.service = 'gmail';
+      }
+      return {
+        host: process.env.MAIL_HOST,
+        port: Number(process.env.MAIL_PORT),
+        ...service,
+        secure: secure,
+        auth: {
+          user: process.env.MAIL_USER,
+          ...auth,
+        },
+      };
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
-    return {
-      host: process.env.MAIL_HOST,
-      port: Number(process.env.MAIL_PORT),
-      ...service,
-      secure: secure,
-      auth: {
-        user: process.env.MAIL_USER,
-        ...auth,
-      },
-    };
   }
 
   protected async initialize() {

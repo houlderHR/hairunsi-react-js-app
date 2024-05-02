@@ -124,7 +124,7 @@ const Login = () => {
                   />
                 }
                 additionalClass="bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl"
-                additionalInputClass="text-base placeholder:text-gray-1 text-sm 2xl:text-base leading-3 !py-3 xl:!py-4 focus:placeholder:opacity-0 "
+                additionalInputClass="text-base placeholder:text-gray-1 text-sm 2xl:text-base leading-3 !py-3 xl:!py-4 focus:placeholder:opacity-0 pr-10"
                 placeholder="Mot de passe"
                 type={inputType}
               />
