@@ -22,6 +22,8 @@ const ForgotPassword: FC = () => {
     formState: { errors },
   } = useForm<InputField>();
   const mutation = useSendMail();
+  const [isAlreadyRendered, setIsAlreadyRendered] = useState(false);
+
   const navigate = useNavigate();
   const [errorAxios, setErrorAxios] = useState('');
   const onSubmit = handleSubmit(async (data) => {
@@ -41,9 +43,12 @@ const ForgotPassword: FC = () => {
   });
 
   useEffect(() => {
-    localStorage.removeItem(EMAIL_RESET_PW);
-    localStorage.removeItem(TOKEN_RESEND_MAIL);
-  }, []);
+    if (!isAlreadyRendered) {
+      localStorage.removeItem(EMAIL_RESET_PW);
+      localStorage.removeItem(TOKEN_RESEND_MAIL);
+      setIsAlreadyRendered(true);
+    }
+  }, [isAlreadyRendered]);
 
   return (
     <UserAuthenticationLayout

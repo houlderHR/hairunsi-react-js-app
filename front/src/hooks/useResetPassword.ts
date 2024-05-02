@@ -70,6 +70,7 @@ const useResetPassword = () => {
     queryKey: ['ValidUrl'],
     queryFn: () => fetchValidationUrl(location.search.replace(TOKEN_QUERY_PARAM, '')),
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {

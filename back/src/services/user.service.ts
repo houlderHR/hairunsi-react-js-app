@@ -29,12 +29,14 @@ class UserService {
 
       throw new HttpException(422, validationErrors);
     }
+    const isUserExist = await this.checkIfUserWithThisEmailAlreadyExists(createUserDto.email);
 
-    if (await this.checkIfUserWithThisEmailAlreadyExists(createUserDto.email))
+    if (isUserExist) {
       throw new HttpException(
         StatusCodes.CONFLICT,
         "L'utilisateur existe déja: adresse e-mail non disponible",
       );
+    }
 
     if (image) {
       const result = await cloudinary.uploader.upload(
@@ -190,8 +192,7 @@ class UserService {
       where: { email: email },
       relations: ['post', 'role', 'image'],
     });
-    if (user) return true;
-    return false;
+    return user;
   }
 
   private getUserRepository(): Repository<User> {

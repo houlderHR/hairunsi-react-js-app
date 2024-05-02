@@ -21,15 +21,20 @@ class Mailer {
   private constructor() {}
 
   getAccessToken(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const OAuth2 = google.auth.OAuth2;
+    let OAuth2;
+    try {
+      OAuth2 = google.auth.OAuth2;
       this.OAuth_client = new OAuth2(process.env.CLIENT_ID, process.env.CLIENT_SECRET);
-      this.OAuth_client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
-      this.OAuth_client.getAccessToken((error, token) => {
-        if (error) reject(error);
-        else resolve(token);
+      return new Promise((resolve, reject) => {
+        this.OAuth_client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
+        this.OAuth_client.getAccessToken((error, token) => {
+          if (error) reject(error);
+          if (token) resolve(token);
+        });
       });
-    });
+    } catch (error) {
+      throw error;
+    }
   }
 
   createTransporter(secure: boolean, auth?: AuthType) {
@@ -49,7 +54,6 @@ class Mailer {
         },
       };
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
@@ -105,14 +109,16 @@ class Mailer {
       subject: subject,
       html: htmlToSend,
     };
-    const token = await jwtService.generateTokenClassic(link);
+    const token = await jwtService.generateTokenClassic(recipient);
     return new Promise(async (resolve, reject) => {
-      this.transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          reject({ isSending: false, error: error });
-        }
-        if (info) resolve({ isSending: true, token: token });
-      });
+      if (this.transporter) {
+        this.transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            reject({ isSending: false, error: error });
+          }
+          if (info) resolve({ isSending: true, token: token });
+        });
+      } else reject();
     });
   }
 }
