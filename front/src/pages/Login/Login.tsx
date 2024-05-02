@@ -73,7 +73,7 @@ const Login = () => {
       contentTitle="Connexion"
     >
       <div className="w-full text-center">
-        <h3 className="text-xs lg:text-[14px] mt-0 3xl:mt-20 text-gray-1 md:px-20">
+        <h3 className="text-xs lg:text-[14px] font-medium mt-0 3xl:mt-20 text-gray-1 text-center">
           Merci de vous connecter à votre compte HaiRun SI
         </h3>
         <form className="mt-12 flex flex-col gap-y-5 w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -132,8 +132,8 @@ const Login = () => {
           />
           <div className="flex justify-left text-gray-1 mb-1">
             <label className="flex flex-row items-center" htmlFor="remember">
-              <input type="checkbox" name="" id="remember" />
-              <span className="text-xs lg:text-sm inline-block ml-5">Se souvenir de moi</span>
+              <input type="checkbox" name="" id="remember" className="w-[18px] h-[18px]" />
+              <span className="text-sm lg:text-sm inline-block ml-4">Se souvenir de moi</span>
             </label>
           </div>
 
