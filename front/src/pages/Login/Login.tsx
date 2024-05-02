@@ -73,7 +73,7 @@ const Login = () => {
       contentTitle="Connexion"
     >
       <div className="w-full text-center">
-        <h3 className="text-xs lg:text-[14px] mt-0 3xl:mt-20 text-gray-1 md:px-20">
+        <h3 className="text-xs lg:text-[14px] font-medium mt-0 3xl:mt-20 text-gray-1 text-center">
           Merci de vous connecter à votre compte HaiRun SI
         </h3>
         <form className="mt-12 flex flex-col gap-y-5 w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -87,7 +87,7 @@ const Login = () => {
                   additionalClass={
                     (watch('email')?.match(REGEX_EMAIL) && value?.length > 0) || !watch('email')
                       ? '!py-3 xl:!py-4 text-sm 2xl:text-base'
-                      : '!py-3 xl:!py-4 text-sm 2xl:text-base !border-2 !border-red-500'
+                      : '!py-3 xl:!py-4 text-sm 2xl:text-base !border-1 !border-red-500'
                   }
                   type="text"
                   refs={ref}
@@ -98,8 +98,8 @@ const Login = () => {
                 />
               )}
             />
-            {errors && errors.email && (
-              <div className="absolute text-red-500 my-0 ml-0 font-normal flex justify-start top-full mt-0 leading-none">
+            {watch('email') && errors && errors.email && (
+              <div className="absolute text-red-500 my-0 ml-0 font-medium text-xs flex justify-start top-full mt-1 leading-none">
                 {errors.email.message}
               </div>
             )}
@@ -124,7 +124,7 @@ const Login = () => {
                   />
                 }
                 additionalClass="bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl"
-                additionalInputClass="text-base placeholder:text-gray-1 text-sm 2xl:text-base leading-3 !py-3 xl:!py-4 focus:placeholder:opacity-0 "
+                additionalInputClass="text-base placeholder:text-gray-1 text-sm 2xl:text-base leading-3 !py-3 xl:!py-4 focus:placeholder:opacity-0 pr-10"
                 placeholder="Mot de passe"
                 type={inputType}
               />
@@ -132,8 +132,8 @@ const Login = () => {
           />
           <div className="flex justify-left text-gray-1 mb-1">
             <label className="flex flex-row items-center" htmlFor="remember">
-              <input type="checkbox" name="" id="remember" />
-              <span className="text-xs lg:text-sm inline-block ml-5">Se souvenir de moi</span>
+              <input type="checkbox" name="" id="remember" className="w-[18px] h-[18px]" />
+              <span className="text-sm lg:text-sm inline-block ml-4">Se souvenir de moi</span>
             </label>
           </div>
 
@@ -151,8 +151,11 @@ const Login = () => {
             <div className="absolute top-full mt-1 flex flex-col justify-start items-start text-start">
               {!errors.email &&
                 match.map((message: string) => (
-                  <div className="leading-none text-red-500 my-0 ml-0 font-normal" key={message}>
-                    - {message}
+                  <div
+                    className="leading-none text-red-500 my-0 ml-0 text-xs font-medium"
+                    key={message}
+                  >
+                    {message}
                   </div>
                 ))}
             </div>
