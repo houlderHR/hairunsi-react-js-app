@@ -87,7 +87,7 @@ const Login = () => {
                   additionalClass={
                     (watch('email')?.match(REGEX_EMAIL) && value?.length > 0) || !watch('email')
                       ? '!py-3 xl:!py-4 text-sm 2xl:text-base'
-                      : '!py-3 xl:!py-4 text-sm 2xl:text-base !border-2 !border-red-500'
+                      : '!py-3 xl:!py-4 text-sm 2xl:text-base !border-1 !border-red-500'
                   }
                   type="text"
                   refs={ref}
@@ -98,8 +98,8 @@ const Login = () => {
                 />
               )}
             />
-            {errors && errors.email && (
-              <div className="absolute text-red-500 my-0 ml-0 font-normal flex justify-start top-full mt-0 leading-none">
+            {watch('email') && errors && errors.email && (
+              <div className="absolute text-red-500 my-0 ml-0 font-medium text-xs flex justify-start top-full mt-1 leading-none">
                 {errors.email.message}
               </div>
             )}
@@ -151,8 +151,11 @@ const Login = () => {
             <div className="absolute top-full mt-1 flex flex-col justify-start items-start text-start">
               {!errors.email &&
                 match.map((message: string) => (
-                  <div className="leading-none text-red-500 my-0 ml-0 font-normal" key={message}>
-                    - {message}
+                  <div
+                    className="leading-none text-red-500 my-0 ml-0 text-xs font-medium"
+                    key={message}
+                  >
+                    {message}
                   </div>
                 ))}
             </div>

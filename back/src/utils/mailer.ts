@@ -33,9 +33,14 @@ class Mailer {
   }
 
   createTransporter(secure: boolean, auth?: AuthType) {
+    let service: { service?: string } = {};
+    if (process.env.MAIL_HOST.includes('gmail')) {
+      service.service = 'gmail';
+    }
     return {
       host: process.env.MAIL_HOST,
       port: Number(process.env.MAIL_PORT),
+      ...service,
       secure: secure,
       auth: {
         user: process.env.MAIL_USER,
@@ -98,7 +103,9 @@ class Mailer {
     const token = await jwtService.generateTokenClassic(link);
     return new Promise(async (resolve, reject) => {
       this.transporter.sendMail(mailOptions, (error, info) => {
-        if (error) reject({ isSending: false, error: error });
+        if (error) {
+          reject({ isSending: false, error: error });
+        }
         if (info) resolve({ isSending: true, token: token });
       });
     });
