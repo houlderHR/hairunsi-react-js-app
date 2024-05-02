@@ -33,15 +33,25 @@ class Mailer {
   }
 
   createTransporter(secure: boolean, auth?: AuthType) {
-    return {
-      host: process.env.MAIL_HOST,
-      port: Number(process.env.MAIL_PORT),
-      secure: secure,
-      auth: {
-        user: process.env.MAIL_USER,
-        ...auth,
-      },
-    };
+    try {
+      let service: { service?: string } = {};
+      if (process.env.MAIL_HOST && process.env.MAIL_HOST.includes('gmail')) {
+        service.service = 'gmail';
+      }
+      return {
+        host: process.env.MAIL_HOST,
+        port: Number(process.env.MAIL_PORT),
+        ...service,
+        secure: secure,
+        auth: {
+          user: process.env.MAIL_USER,
+          ...auth,
+        },
+      };
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 
   protected async initialize() {
@@ -98,7 +108,9 @@ class Mailer {
     const token = await jwtService.generateTokenClassic(link);
     return new Promise(async (resolve, reject) => {
       this.transporter.sendMail(mailOptions, (error, info) => {
-        if (error) reject({ isSending: false, error: error });
+        if (error) {
+          reject({ isSending: false, error: error });
+        }
         if (info) resolve({ isSending: true, token: token });
       });
     });

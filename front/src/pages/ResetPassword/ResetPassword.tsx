@@ -168,8 +168,7 @@ const ResetPassword = () => {
                       />
                     }
                     additionalClass={twMerge(
-                      errors.password &&
-                        'outline-red-500 outline outline-2 text-red-500 !border-transparent ',
+                      errors.password && '!border-red-500 border !border-1 text-red-500',
                       'bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl pr-10',
                     )}
                     additionalInputClass={twMerge(
@@ -199,7 +198,7 @@ const ResetPassword = () => {
                     value={value}
                     additionalClass={twMerge(
                       errors.confirmPassword &&
-                        'outline-red-500 outline text-red-500 outline-2 placeholder:text-red-500 !border-transparent',
+                        '!border-red-500 border !border-1 text-red-500 placeholder:text-red-500',
                       'bg-transparent border rounded border-gray-1 active:border-secondary border text-base text-xl pr-10',
                     )}
                     additionalInputClass={twMerge(

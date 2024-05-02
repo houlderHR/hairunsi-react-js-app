@@ -60,34 +60,39 @@ const ForgotPassword: FC = () => {
           <p className="text-sm text-center text-gray-1 mb-12 font-medium leading-4">
             Saisissez votre adresse e-mail dans le champ ci-dessous.
           </p>
-
-          <Controller
-            name="email"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: { value: true, message: 'Remplir le champ' },
-              pattern: {
-                value: REGEX_MAIL_HAIRUN,
-                message: 'Le mail doit se terminer par @hairun-technology.com',
-              },
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                type="email"
-                placeholder="Email"
-                additionalClass={twMerge(
-                  `${errors.email || errorAxios ? '!border-1 !border-red-500' : ''}`,
-                  'focus:border-secondary border',
-                )}
-                onChange={onChange}
-                onBlur={onBlur}
-                value={value}
-              />
-            )}
-          />
-          {errors.email && <p className="text-red-500 text-sm pt-2">{errors.email.message}</p>}
-          {errorAxios && <p className="text-red-500 text-sm pt-2">{errorAxios}</p>}
+          <div className="flex flex-col relative">
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: { value: true, message: 'Remplir le champ' },
+                pattern: {
+                  value: REGEX_MAIL_HAIRUN,
+                  message: 'Le mail doit se terminer par @hairun-technology.com',
+                },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  additionalClass={twMerge(
+                    `${errors.email || errorAxios ? '!border-1 !border-red-500' : ''}`,
+                    'focus:border-secondary border',
+                  )}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                />
+              )}
+            />
+            <div className="absolute top-full mt-1">
+              {errors.email && (
+                <p className="text-red-500 text-xs font-medium">{errors.email.message}</p>
+              )}
+              {errorAxios && <p className="text-red-500 text-xs font-medium">{errorAxios}</p>}
+            </div>
+          </div>
           <Button type="submit">Envoyer</Button>
         </form>
       )}
