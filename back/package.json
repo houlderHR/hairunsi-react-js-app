@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
-    "build": "rm -rf ./build && tsc && cp ./src/swagger.json ./build && cp -r ./docs ./build",
+    "build": "rm -rf ./build && tsc && cp ./src/swagger.json ./build && cp ./src/index.html ./build && cp -r ./docs ./build",
     "prod": "typeorm-ts-node-commonjs migration:run -d ./build/database/data-source.js;NODE_ENV=prod nodemon build/index.js",
     "prod_local": "typeorm-ts-node-commonjs migration:run -d ./build/database/data-source.js;NODE_ENV=local nodemon build/index.js",
     "start": "ts-node src/index.ts",
