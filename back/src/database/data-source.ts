@@ -1,11 +1,13 @@
 import 'reflect-metadata';
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 import '../utils/config';
 
-import { entities, migrations } from '../utils/config';
+import { entities, factories, migrations, seeds } from '../utils/config';
+import { SeederOptions, runSeeders } from 'typeorm-extension';
+import logger from '../utils/logger';
 
-export const AppDataSource = new DataSource({
+const options: DataSourceOptions & SeederOptions = {
   type: 'postgres',
   host: process.env.DATABASE_HOST,
   port: parseInt(process.env.DATABASE_PORT!),
@@ -14,11 +16,17 @@ export const AppDataSource = new DataSource({
   database: process.env.DATABASE_NAME,
   synchronize: false,
   logging: false,
+  seedTracking: false,
   entities: [entities],
   migrations: [migrations],
-});
+  seeds: [seeds],
+  factories: [factories],
+};
+
+export const AppDataSource = new DataSource(options);
 AppDataSource.initialize()
-  .then(() => {
-    console.log('Connection success');
+  .then(async () => {
+    await runSeeders(AppDataSource);
+    logger.info('Connection success');
   })
-  .catch((e) => console.error(e));
+  .catch((e) => logger.error(e));
