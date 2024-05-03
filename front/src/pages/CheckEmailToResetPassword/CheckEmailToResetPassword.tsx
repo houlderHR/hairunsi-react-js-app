@@ -2,7 +2,7 @@ import './style.scss';
 import axios from 'axios';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSendMail } from '../../hooks/useAuth';
+import { useCheckTokenSendMail, useSendMail } from '../../hooks/useAuth';
 import routes from '../../routes/paths';
 import Loading from '../../shared/Loading/Loading';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
@@ -14,10 +14,10 @@ const CheckEmailToResetPassword: FC = () => {
   const mutation = useSendMail();
   const navigate = useNavigate();
   const checkEmail = localStorage.getItem(EMAIL_RESET_PW);
-  const checkToken = localStorage.getItem(TOKEN_RESEND_MAIL);
+  const { data } = useCheckTokenSendMail();
 
   useEffect(() => {
-    if (checkEmail === null || checkEmail === '' || checkToken === null || checkToken === '') {
+    if (!data || checkEmail === null || checkEmail === '') {
       localStorage.removeItem(EMAIL_RESET_PW);
       localStorage.removeItem(TOKEN_RESEND_MAIL);
       navigate(routes.unauthenticated.subpaths.login.path);

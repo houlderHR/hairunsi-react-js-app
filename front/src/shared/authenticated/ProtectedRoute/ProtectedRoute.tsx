@@ -13,7 +13,10 @@ const ProtectedRoute: FC<PropsWithChildren<Props>> = ({ children }) => {
   useEffect(() => {
     decodeToken(token)
       .then(() => setIsAuthenticated(true))
-      .catch(() => navigate(routes.unauthenticated.subpaths.login.path));
+      .catch(() => {
+        window.localStorage.removeItem('token');
+        navigate(routes.unauthenticated.subpaths.login.path);
+      });
   });
 
   if (isAuthenticated) return children;

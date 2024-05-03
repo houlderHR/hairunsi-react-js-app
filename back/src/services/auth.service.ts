@@ -34,6 +34,7 @@ class AuthService {
           result.email,
           link,
         );
+        throw new InternalServerErrorException();
       } catch (error) {
         throw new HttpException(StatusCodes.BAD_REQUEST, "Impossible d'envoyer le mail");
       }
