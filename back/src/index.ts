@@ -1,4 +1,4 @@
-import { Express } from 'express';
+import { Express, NextFunction, Request } from 'express';
 import './utils/config';
 import './database/data-source';
 import { v2 as cloudinary } from 'cloudinary';
@@ -23,12 +23,26 @@ const port = process.env.PORT || 8080;
 const app: Express = express();
 
 app.use(cors());
+app.use((_, response: express.Response, next: NextFunction) => {
+  response.header(
+    'Access-Control-Allow-Origin',
+    process.env.FRONT_END_BASE_ROUTE.toString().slice(
+      0,
+      process.env.FRONT_END_BASE_ROUTE.toString().length - 1,
+    ),
+  );
+  response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 app.use(bodyParser.json());
 app.use(router);
 
 var options = {};
 
 refParser.dereference(swaggerDocument).then((swaggerFile) => {
+  app.get('/', function (req, res) {
+    res.sendFile('index.html', { root: __dirname + '/' });
+  });
   app.use(
     '/api-hairunsi-docs',
     (req, res, next) => {
