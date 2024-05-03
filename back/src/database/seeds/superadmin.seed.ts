@@ -12,45 +12,45 @@ export default class SuperAdminSeed implements Seeder {
   track = false;
 
   public async run(dataSource: DataSource, factoryManager: SeederFactoryManager): Promise<any> {
-    const repository = dataSource.getRepository(Department);
-    let department = await repository.findOneBy({ name: 'Direction' });
-    if (!department) {
-      department = await repository.save({ name: 'Direction' });
-    }
-
-    let postRepository = dataSource.getRepository(Post);
-    let post = await postRepository.findOneBy({ name: 'Directeur' });
-    if (!post) {
-      post = await postRepository.save({ name: 'Directeur', department: department });
-    }
-
-    let permissionRepository = dataSource.getRepository(Permission);
-    let permission = await permissionRepository.findOneBy({ name: 'Tout faire' });
-    if (!permission) {
-      permission = await permissionRepository.save({ name: 'Tout faire' });
-    }
-
-    let roleRepository = dataSource.getRepository(Role);
-    let role = await roleRepository.findOneBy({ name: 'Super admin' });
-    if (!role) {
-      role = await roleRepository.save({ name: 'Super admin', permissions: [permission] });
-    }
-
-    let fileRepository = dataSource.getRepository(File);
-    let file = await fileRepository.findOneBy({ name: 'hairun_admin' });
-    if (!file) {
-      file = await fileRepository.save({
-        name: 'hairun_admin',
-        path: 'hairun',
-        public_id: '123456',
-        size: 160,
-        type: 'png',
-      });
-    }
-
     let userRepository = dataSource.getRepository(User);
     let user: User = await userRepository.findOneBy({ email: 'test@hairun-technology.com' });
     if (!user) {
+      const repository = dataSource.getRepository(Department);
+      let department = await repository.findOneBy({ name: 'Direction' });
+      if (!department) {
+        department = await repository.save({ name: 'Direction' });
+      }
+
+      let postRepository = dataSource.getRepository(Post);
+      let post = await postRepository.findOneBy({ name: 'Directeur' });
+      if (!post) {
+        post = await postRepository.save({ name: 'Directeur', department: department });
+      }
+
+      let permissionRepository = dataSource.getRepository(Permission);
+      let permission = await permissionRepository.findOneBy({ name: 'Tout faire' });
+      if (!permission) {
+        permission = await permissionRepository.save({ name: 'Tout faire' });
+      }
+
+      let roleRepository = dataSource.getRepository(Role);
+      let role = await roleRepository.findOneBy({ name: 'Super admin' });
+      if (!role) {
+        role = await roleRepository.save({ name: 'Super admin', permissions: [permission] });
+      }
+
+      let fileRepository = dataSource.getRepository(File);
+      let file = await fileRepository.findOneBy({ name: 'hairun_admin' });
+      if (!file) {
+        file = await fileRepository.save({
+          name: 'hairun_admin',
+          path: 'hairun',
+          public_id: '123456',
+          size: 160,
+          type: 'png',
+        });
+      }
+
       const password = await hashPassword('hairunM@2024*');
 
       await userRepository.save({
@@ -63,7 +63,7 @@ export default class SuperAdminSeed implements Seeder {
         role: role,
         image: file,
       });
-      console.log('Super admin successfully added to the app');
+      console.log('Super admin added successfully one time into the app');
     }
   }
 }
