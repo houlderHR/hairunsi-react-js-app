@@ -29,4 +29,4 @@ AppDataSource.initialize()
     await runSeeders(AppDataSource);
     logger.info('Connection success');
   })
-  .catch((e) => console.error(e));
+  .catch((e) => logger.error(e));
