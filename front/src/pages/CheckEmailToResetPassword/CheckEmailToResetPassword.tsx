@@ -13,16 +13,20 @@ const CheckEmailToResetPassword: FC = () => {
   const [errorAxios, setErrorAxios] = useState('');
   const mutation = useSendMail();
   const navigate = useNavigate();
+  const [isAuthorize, setIsAuthorize] = useState(false);
   const checkEmail = localStorage.getItem(EMAIL_RESET_PW);
-  const { data } = useCheckTokenSendMail();
+  const { data, isLoading } = useCheckTokenSendMail();
 
   useEffect(() => {
-    if (!data || checkEmail === null || checkEmail === '') {
-      localStorage.removeItem(EMAIL_RESET_PW);
-      localStorage.removeItem(TOKEN_RESEND_MAIL);
-      navigate(routes.unauthenticated.subpaths.login.path);
+    if (!isLoading) {
+      setIsAuthorize(true);
+      if (!data || checkEmail === null || checkEmail === '') {
+        localStorage.removeItem(EMAIL_RESET_PW);
+        localStorage.removeItem(TOKEN_RESEND_MAIL);
+        navigate(routes.unauthenticated.subpaths.login.path);
+      }
     }
-  });
+  }, [setIsAuthorize, data, checkEmail, isLoading, navigate]);
 
   const resendEmail = async () => {
     try {
@@ -36,43 +40,44 @@ const CheckEmailToResetPassword: FC = () => {
       }
     }
   };
-
-  return (
-    <UserAuthenticationLayout
-      title={
-        <span>
-          Vérifiez votre <br />
-          e-mail
-        </span>
-      }
-      contentTitle="Vérification"
-      subTitle="Des instructions ont été envoyées dans votre boîte e-mail. Merci de le vérifier."
-      showLogo
-      showLoginLink
-    >
-      <div className="container-check-password">
-        <div className="content">
-          <div className="description">
-            V&eacute;rifiez votre bo&icirc;te e-mail. Pour r&eacute;initialiser votre mot de passe,
-            suivez les instructions envoy&eacute;es dans votre bo&icirc;te e-mail.
+  if (isAuthorize)
+    return (
+      <UserAuthenticationLayout
+        title={
+          <span>
+            Vérifiez votre <br />
+            e-mail
+          </span>
+        }
+        contentTitle="Vérification"
+        subTitle="Des instructions ont été envoyées dans votre boîte e-mail. Merci de le vérifier."
+        showLogo
+        showLoginLink
+      >
+        <div className="container-check-password">
+          <div className="content">
+            <div className="description">
+              V&eacute;rifiez votre bo&icirc;te e-mail. Pour r&eacute;initialiser votre mot de
+              passe, suivez les instructions envoy&eacute;es dans votre bo&icirc;te e-mail.
+            </div>
+            <div className="confirmation">
+              Vous n&apos;avez pas re&ccedil;u d&apos;e-mail ? V&eacute;rifiez vos spam ou essayez
+              une autre adresse e-mail ou cliquez sur le bouton ci-dessous
+            </div>
           </div>
-          <div className="confirmation">
-            Vous n&apos;avez pas re&ccedil;u d&apos;e-mail ? V&eacute;rifiez vos spam ou essayez une
-            autre adresse e-mail ou cliquez sur le bouton ci-dessous
-          </div>
+          {mutation.isPending && <Loading />}
+          {!mutation.isPending && !errorAxios && (
+            <div className="button">
+              <Button type="button" onClick={resendEmail}>
+                RENVOYER
+              </Button>
+            </div>
+          )}
+          {errorAxios && <p className="text-red-500 text-sm pt-2">{errorAxios}</p>}
         </div>
-        {mutation.isPending && <Loading />}
-        {!mutation.isPending && !errorAxios && (
-          <div className="button">
-            <Button type="button" onClick={resendEmail}>
-              RENVOYER
-            </Button>
-          </div>
-        )}
-        {errorAxios && <p className="text-red-500 text-sm pt-2">{errorAxios}</p>}
-      </div>
-    </UserAuthenticationLayout>
-  );
+      </UserAuthenticationLayout>
+    );
+  return null;
 };
 
 export default CheckEmailToResetPassword;
