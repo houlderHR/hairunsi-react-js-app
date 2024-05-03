@@ -57,7 +57,6 @@ export const useSendMail = () =>
 export const useCheckTokenSendMail = () => {
   const checkToken = localStorage.getItem(TOKEN_RESEND_MAIL);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (!checkToken) {
       navigate(routes.unauthenticated.subpaths.login.path);

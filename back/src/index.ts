@@ -40,6 +40,8 @@ refParser.dereference(swaggerDocument).then((swaggerFile) => {
   );
 
   app.listen(port, () => {
-    logger.info(`Server is running at http://localhost:${port}`);
+    logger.info(
+      `Server is running ${process.env.ENV == 'dev' ? 'at http://localhost:' + port : ''}`,
+    );
   });
 });
