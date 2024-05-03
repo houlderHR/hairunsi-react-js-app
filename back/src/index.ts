@@ -41,7 +41,7 @@ refParser.dereference(swaggerDocument).then((swaggerFile) => {
 
   app.listen(port, () => {
     logger.info(
-      `Server is running ${process.env.ENV == 'dev' ? 'at http://localhost:' + port : ''}`,
+      `Server is running ${process.env.NODE_ENV === 'dev' ? 'at http://localhost:' + port : ''}`,
     );
   });
 });
