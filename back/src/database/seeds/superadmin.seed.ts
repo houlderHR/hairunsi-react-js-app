@@ -7,6 +7,7 @@ import { Role } from '../../entities/role.entity';
 import { User } from '../../entities/user.entity';
 import { hashPassword } from '../../utils/hash';
 import { File } from '../../entities/file.entity';
+import logger from '../../utils/logger';
 
 export default class SuperAdminSeed implements Seeder {
   track = false;
@@ -63,7 +64,7 @@ export default class SuperAdminSeed implements Seeder {
         role: role,
         image: file,
       });
-      console.log('Super admin added successfully one time into the app');
+      logger.info('Super admin added successfully one time into the app');
     }
   }
 }

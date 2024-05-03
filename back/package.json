@@ -42,6 +42,8 @@
     "nodemailer": "^6.9.13",
     "nodemailer-express-handlebars": "^6.1.2",
     "pg": "^8.4.0",
+    "pino": "^9.0.0",
+    "pino-pretty": "^11.0.0",
     "reflect-metadata": "^0.1.13",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.0",

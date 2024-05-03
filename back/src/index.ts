@@ -11,6 +11,7 @@ var cors = require('cors');
 
 import bodyParser = require('body-parser');
 import router from './routes/';
+import logger from './utils/logger';
 
 cloudinary.config({
   api_secret: process.env.CLOUD_SECRET,
@@ -39,6 +40,6 @@ refParser.dereference(swaggerDocument).then((swaggerFile) => {
   );
 
   app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    logger.info(`Server is running at http://localhost:${port}`);
   });
 });

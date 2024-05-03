@@ -5,6 +5,7 @@ import '../utils/config';
 
 import { entities, factories, migrations, seeds } from '../utils/config';
 import { SeederOptions, runSeeders } from 'typeorm-extension';
+import logger from '../utils/logger';
 
 const options: DataSourceOptions & SeederOptions = {
   type: 'postgres',
@@ -26,6 +27,6 @@ export const AppDataSource = new DataSource(options);
 AppDataSource.initialize()
   .then(async () => {
     await runSeeders(AppDataSource);
-    console.log('Connection success');
+    logger.info('Connection success');
   })
   .catch((e) => console.error(e));
