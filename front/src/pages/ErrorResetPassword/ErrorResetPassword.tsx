@@ -15,6 +15,9 @@ const ErrorResetPassword: FC = () => {
     if (!state?.isResetPasswordError) {
       navigate(routes.unauthenticated.subpaths.login.path);
     }
+    return () => {
+      window.history.replaceState({}, '');
+    };
   });
 
   if (state?.isResetPasswordError) {

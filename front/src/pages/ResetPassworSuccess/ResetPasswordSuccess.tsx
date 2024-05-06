@@ -3,7 +3,6 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import routes from '../../routes/paths';
 import Icon from '../../shared/Icon';
 import UserAuthenticationLayout from '../../shared/UserAuthenticationLayout';
-import Button from '../../shared/UserAuthenticationLayout/Button';
 
 const ResetPasswordSuccess: FC = () => {
   const location = useLocation();
@@ -14,6 +13,9 @@ const ResetPasswordSuccess: FC = () => {
     if (!state?.isResetPasswordSuccess) {
       navigate(routes.unauthenticated.subpaths.login.path);
     }
+    return () => {
+      window.history.replaceState({}, '');
+    };
   });
 
   if (state?.isResetPasswordSuccess) {
@@ -33,17 +35,15 @@ const ResetPasswordSuccess: FC = () => {
             Votre mot de passe a &eacute;t&eacute; cr&eacute;&eacute; avec succ&egrave;s. Vous
             pouvez maintenant acc&eacute;der &agrave; votre espace priv&eacute;.
           </span>
-          <Button>
-            <NavLink
-              to={routes.unauthenticated.subpaths.login.path}
-              className="flex flex-row items-center justify-center h-full w-full gap-6"
-            >
-              Se conn&eacute;cter
-              <span>
-                <Icon name="arrow-right" width={18} height={10} />
-              </span>
-            </NavLink>
-          </Button>
+          <NavLink
+            to={routes.unauthenticated.subpaths.login.path}
+            className="w-full bg-primary 3xl:py-5 py-4  hover:bg-secondary duration-300 uppercase mt-3 md:mt-10 text-white rounded text-sm leading-4 font-medium flex items-center justify-center gap-5"
+          >
+            Se conn&eacute;cter
+            <span>
+              <Icon name="arrow-right" width={18} height={10} />
+            </span>
+          </NavLink>
         </div>
       </UserAuthenticationLayout>
     );
