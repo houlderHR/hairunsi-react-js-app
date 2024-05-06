@@ -30,7 +30,7 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
   <div className="grid md:grid-cols-[30%_70%] md:px-0 px-4 h-full min-h-screen">
     <div className="bg-primary h-full relative md:flex flex-col justify-end hidden">
       <img
-        src="images/background/bg-only-left.png"
+        src="/images/background/bg-only-left.png"
         alt="background"
         className="absolute z-0 w-full h-full top-0 left-0 bg-cover right-0 bg-no-repeat"
       />
