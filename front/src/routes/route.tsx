@@ -6,6 +6,7 @@ import ErrorResetPassword from '../pages/ErrorResetPassword';
 import ForgotPassword from '../pages/ForgotPassword';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
+import PageNotFound from '../pages/PageNotFound/PageNotFound';
 import RedirectEmail from '../pages/RedirectEmail';
 import ResetPassword from '../pages/ResetPassword';
 import ResetPasswordSuccess from '../pages/ResetPassworSuccess';
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: '*',
+    element: <PageNotFound />,
   },
 ]);
 
