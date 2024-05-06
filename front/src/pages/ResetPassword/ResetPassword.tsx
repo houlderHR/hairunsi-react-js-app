@@ -27,7 +27,7 @@ const schema = yup.object({
   confirmPassword: yup
     .string()
     .required(' doit etre requis')
-    .oneOf([yup.ref('password')], ' doit correspondre au mot de passe'),
+    .oneOf([yup.ref('password')], ' ne correspond pas'),
 });
 
 type ResetPasswordErrorType = {
