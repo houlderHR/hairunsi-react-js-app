@@ -37,7 +37,7 @@ type ResetPasswordErrorType = {
 
 const ResetPassword = () => {
   const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
-  const { isUrlValid, isValidationLoading, isUrlError, token, mapError, refetch } =
+  const { isUrlValid, isValidationLoading, isUrlError, token, mapError, refetch, isFetching } =
     useResetPassword();
   const {
     control,
@@ -106,7 +106,7 @@ const ResetPassword = () => {
       showLogo
       showLoginLink
     >
-      {isValidationLoading && <Spinner />}
+      {(isValidationLoading || isFetching) && <Spinner />}
       {isUrlError && (
         <p className="md:w-[50vw] w-full text-xs lg:text-sm text-gray-1 font-medium text-center leading-4">
           Votre lien de r&eacute;initialisation du mot de passe est &eacute;xpir&eacute;,veuillez
@@ -121,7 +121,7 @@ const ResetPassword = () => {
           !
         </p>
       )}
-      {isUrlValid && (
+      {isUrlValid && !isFetching && (
         <>
           <p className="text-xs lg:text-sm text-gray-1 font-medium leading-4">
             Entrez et confirmez votre nouveau mot de passe
