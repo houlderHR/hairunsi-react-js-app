@@ -134,7 +134,7 @@ Copy file .env.example inside .env.development.local
 #### **Run the App**
 
 ```
-npm run start
+npm run dev
 ```
 
 This command will start the React development server
