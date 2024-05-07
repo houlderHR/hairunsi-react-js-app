@@ -34,6 +34,7 @@ const CheckEmailToResetPassword: FC = () => {
       await mutation.mutateAsync({ email });
     } catch (err) {
       if (axios.isAxiosError(err)) {
+        if (err.status === 500) navigate(routes.server_error.path);
         setErrorAxios(err.response?.data);
       } else {
         setErrorAxios("Une erreur s'est produite");

@@ -6,7 +6,6 @@ import ErrorResetPassword from '../pages/ErrorResetPassword';
 import ForgotPassword from '../pages/ForgotPassword';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
-import PageNotFound from '../pages/PageNotFound/PageNotFound';
 import RedirectEmail from '../pages/RedirectEmail';
 import ResetPassword from '../pages/ResetPassword';
 import ResetPasswordSuccess from '../pages/ResetPassworSuccess';
@@ -15,6 +14,8 @@ import UserManagerList from '../pages/UserManager/UserManagerList/UserManagerLis
 import UserManagerRole from '../pages/UserManager/UserManagerRole';
 import UserManagerType from '../pages/UserManager/UserManagerType';
 import ProtectedRoute from '../shared/authenticated/ProtectedRoute/ProtectedRoute';
+import InternalServerError from '../shared/InternalServerError/InternalServerError';
+import PageNotFound from '../shared/PageNotFound/PageNotFound';
 import PublicRoute from '../shared/unauthenticated/PublicRoute/PublicRoute';
 import routes from './paths';
 
@@ -120,6 +121,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: routes.server_error.path,
+    element: <InternalServerError />,
   },
   {
     path: '*',

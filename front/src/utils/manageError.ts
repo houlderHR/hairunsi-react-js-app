@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import routes from '../routes/paths';
 
 type ErrorLoginWithConstraints = {
   status: number;
@@ -22,6 +23,9 @@ const manageErrorMessage = (errors: AxiosError) => {
           returnedErrors.push(element.constraints.isDefined);
         }
       }
+      break;
+    case 500:
+      window.location.assign(routes.server_error.path);
       break;
     default:
       errorLoginWithoutConstraints = errors.response?.data as ErrorLoginWithoutConstraints;

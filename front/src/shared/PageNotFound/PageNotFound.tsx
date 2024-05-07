@@ -2,7 +2,7 @@ import './style.scss';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { Link } from 'react-router-dom';
 import routes from '../../routes/paths';
-import Icon from '../../shared/Icon';
+import Icon from '../Icon';
 
 const PageNotFound = () => (
   <div className="container-error-not-found">
