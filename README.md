@@ -44,7 +44,9 @@ cd hairunsi-react-js-app/back
 
 #### **Configuration**
 
+```
 Copy file .env.example inside .env
+```
 
 After that, build the docker container
 
@@ -68,9 +70,25 @@ npm install
 
 #### **Run the App**
 
+To run app on development mode, launch this command
+
 ```
-npm run start
+npm run dev
 ```
+
+To run app on production mode:
+
+- first, build the app by launching the following command
+
+  ```
+  npm run build
+  ```
+
+- after that, launch the app
+
+  ```
+  npm run start
+  ```
 
 This commande create database on your local PC and run the API
 
@@ -81,7 +99,9 @@ You'll have available the following `RESTful` services on swagger documentation 
 
 #### **Build the App**
 
-`npm run build`
+```
+npm run build
+```
 
 This will generate a `build` directory(JavaScript output files).
 
@@ -90,7 +110,9 @@ This will generate a `build` directory(JavaScript output files).
 Switch into the `front` folder:
 
 ```
+
 cd hairunsi-react-js-app/front
+
 ```
 
 #### **Install dependencies**
@@ -98,7 +120,15 @@ cd hairunsi-react-js-app/front
 You'll need to install some node modules defined on the package.json to run the React app
 
 ```
+
 npm install
+
+```
+
+#### **Configuration**
+
+```
+Copy file .env.example inside .env
 ```
 
 #### **Run the App**
@@ -110,3 +140,11 @@ npm run start
 This command will start the React development server
 
 Now open your browser on: [http://localhost:5173](http://localhost:5173) to see the project
+
+#### **Build the App**
+
+```
+npm run build
+```
+
+This will generate a `dist` directory.
