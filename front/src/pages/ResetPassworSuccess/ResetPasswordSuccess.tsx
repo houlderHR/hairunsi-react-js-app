@@ -39,7 +39,7 @@ const ResetPasswordSuccess: FC = () => {
             to={routes.unauthenticated.subpaths.login.path}
             className="w-full bg-primary 3xl:py-5 py-4  hover:bg-secondary duration-300 uppercase mt-3 md:mt-10 text-white rounded text-sm leading-4 font-medium flex items-center justify-center gap-5"
           >
-            Se conn&eacute;cter
+            Se connecter
             <span>
               <Icon name="arrow-right" width={18} height={10} />
             </span>

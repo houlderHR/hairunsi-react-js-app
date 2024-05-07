@@ -54,7 +54,7 @@ const ForgotPassword: FC = () => {
     <UserAuthenticationLayout
       showLogo
       showLoginLink
-      title="Mot de passe oublié?"
+      title="Mot de passe oublié ?"
       subTitle="Entrer dans le champ correspondant l'adresse e-mail que vous utilisez habituellement pour changer votre mot de passe."
       contentTitle="Récupération"
     >

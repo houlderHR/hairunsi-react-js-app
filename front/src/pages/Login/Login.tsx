@@ -69,12 +69,19 @@ const Login = () => {
           Bienvenue sur <br /> <strong>HaiRun SI</strong> !
         </span>
       }
-      subTitle="Prêt à démarrer votre journée? Connectez-vous avec votre identifiant et mot de passe pour accéder à la plateforme et ces fonctionnalités."
+      subTitle={
+        <>
+          Prêt à démarrer votre journée?
+          <br />
+          Connectez-vous avec votre identifiant et mot de passe pour accéder à la plateforme et ces
+          fonctionnalités.
+        </>
+      }
       contentTitle="Connexion"
     >
       <div className="w-full text-center">
         <h3 className="text-xs lg:text-[14px] font-medium mt-0 3xl:mt-20 text-gray-1 text-center">
-          Merci de vous connecter à votre compte HaiRun SI
+          Merci de vous connecter à votre compte HaiRun SI.
         </h3>
         <form className="mt-12 flex flex-col gap-y-5 w-full" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col relative">

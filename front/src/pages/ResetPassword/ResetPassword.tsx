@@ -133,14 +133,14 @@ const ResetPassword = () => {
                 Au moins contenir 8 charact&egrave;res
               </li>
               <li className={twMerge(errors.password?.type === 'matches' && 'text-red-500')}>
-                Contenir au moins une majuscule, un charactère sp&eacute;cial et un chiffre
+                Contenir au moins une majuscule, un caractère sp&eacute;cial et un chiffre
               </li>
               <li
                 className={twMerge(
                   errors.password?.type === 'containPersonalInformation' && 'text-red-500',
                 )}
               >
-                Ne pas contenir vos donn&eacute;es personnels
+                Ne pas contenir vos donn&eacute;es personnelles
               </li>
             </ul>
           </div>
