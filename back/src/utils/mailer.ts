@@ -104,7 +104,7 @@ class Mailer {
   async sendMail(subject: string, username: string, recipient: string, link: string) {
     const htmlToSend = this.getTemplate(username, link);
     var mailOptions = {
-      from: process.env.MAIL_USER,
+      from: `HairunTechnology <${process.env.MAIL_USER}>`,
       to: recipient,
       subject: subject,
       html: htmlToSend,
