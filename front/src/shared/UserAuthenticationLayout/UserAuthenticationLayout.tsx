@@ -4,7 +4,7 @@ import routes from '../../routes/paths';
 
 interface UserAuthenticationProps {
   title: string | React.ReactNode;
-  subTitle?: string;
+  subTitle?: string | React.ReactNode;
   showLogo?: boolean;
   contentTitle?: string;
   showLoginLink?: boolean;
@@ -63,9 +63,9 @@ const UserAuthenticationLayout: FC<PropsWithChildren<UserAuthenticationProps>> =
         {showLoginLink && (
           <div className="2xl:mt-20 mt-10 pt-7 border-t border-gray-5 text-black-1 md:px-11">
             <p className="text-xs lg:text-sm leading-none md:leading-4 text-center">
-              Vous avez d&eacute;ja un compte&nbsp;?&nbsp;
+              Vous avez d&eacute;jà un compte&nbsp;?&nbsp;
               <strong>
-                <NavLink to={routes.unauthenticated.subpaths.login.path}>Connectez-vous</NavLink>
+                <NavLink to={routes.unauthenticated.subpaths.login.path}>Connectez-vous.</NavLink>
               </strong>
             </p>
           </div>
