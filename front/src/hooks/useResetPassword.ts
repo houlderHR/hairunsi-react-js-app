@@ -66,6 +66,7 @@ const useResetPassword = () => {
     isLoading: isValidationLoading,
     isError: isUrlError,
     refetch,
+    isFetching,
   } = useQuery({
     queryKey: ['ValidUrl'],
     queryFn: () => fetchValidationUrl(location.search.replace(TOKEN_QUERY_PARAM, '')),
@@ -79,7 +80,7 @@ const useResetPassword = () => {
     }
   });
 
-  return { isUrlValid, isValidationLoading, isUrlError, token, mapError, refetch };
+  return { isUrlValid, isValidationLoading, isUrlError, token, mapError, refetch, isFetching };
 };
 
 export default useResetPassword;
