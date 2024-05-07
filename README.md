@@ -125,6 +125,12 @@ npm install
 
 ```
 
+#### **Configuration**
+
+```
+Copy file .env.example inside .env
+```
+
 #### **Run the App**
 
 ```
