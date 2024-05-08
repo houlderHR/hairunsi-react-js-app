@@ -87,7 +87,7 @@ refParser.dereference(swaggerDocument).then((swaggerFile) => {
   } else {
     app.listen(port, () => {
       logger.info(
-        `Server is running ${process.env.NODE_ENV === 'dev' ? 'http://' + originHost : ''}`,
+        `Server is running ${process.env.NODE_ENV === 'dev' ? 'at http://' + originHost : ''}`,
       );
     });
   }
