@@ -80,14 +80,14 @@ refParser.dereference(swaggerDocument).then((swaggerFile) => {
     server.listen(port, () => {
       logger.info(
         `Server is running ${
-          process.env.NODE_ENV === 'dev' ? 'at (https || http)://localhost:' + port : ''
+          process.env.NODE_ENV === 'dev' ? 'at (https || http)://' + originHost : ''
         }`,
       );
     });
   } else {
     app.listen(port, () => {
       logger.info(
-        `Server is running ${process.env.NODE_ENV === 'dev' ? 'at http://localhost:' + port : ''}`,
+        `Server is running ${process.env.NODE_ENV === 'dev' ? 'http://' + originHost : ''}`,
       );
     });
   }
