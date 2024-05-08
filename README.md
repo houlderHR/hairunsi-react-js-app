@@ -92,10 +92,16 @@ To run app on production mode:
   npm run build
   ```
 
-- after that, launch the app
+- after that, launch the app on production
 
   ```
   npm run prod
+  ```
+
+  to launch the app on production local
+
+  ```
+  npm run prod_local
   ```
 
 This commande create database on your local PC and run the API
