@@ -7,16 +7,16 @@
         "description": "This can only be done by the logged in user.",
         "operationId": "createdepartment",
         "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/department/CreateDepartment"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/department/CreateDepartment"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Created",
@@ -105,16 +105,18 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/department/CreateDepartment"
-            }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/department/CreateDepartment"
+              }
+            }
+          }
+        },
         "responses": {
           "default": {
             "description": ""

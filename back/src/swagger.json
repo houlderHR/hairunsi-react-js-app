@@ -8,6 +8,7 @@
   "host": "localhost:8080",
   "basePath": "/",
   "schemes": ["http", "https"],
+  "servers": [],
   "tags": [
     {
       "name": "Permission",
@@ -51,6 +52,13 @@
     },
     "/post/{id}": {
       "$ref": "docs/post.json#/path/postId"
+    }
+  },
+  "components": {
+    "schemas": {
+      "permission": {
+        "$ref": "docs/permission.json#/definitions/permission"
+      }
     }
   },
   "definitions": {

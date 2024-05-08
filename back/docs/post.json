@@ -33,16 +33,16 @@
         "description": "This can only be done by the logged in user.",
         "operationId": "createpost",
         "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Post/CreatePost"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Post/CreatePost"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Created",

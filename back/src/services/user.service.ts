@@ -19,6 +19,8 @@ import { hashPassword } from '../utils/hash';
 
 class UserService {
   public async createUser(image, createUserDto: CreateUserDto): Promise<User> {
+    console.log('TEST');
+
     const errors = await validate(createUserDto);
     let createdImage: File;
     if (errors.length > 0) {

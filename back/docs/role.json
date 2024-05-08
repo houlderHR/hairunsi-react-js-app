@@ -7,16 +7,16 @@
         "description": "This can only be done by the logged in user.",
         "operationId": "createRole",
         "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Role/CreateRole"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Role/CreateRole"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Created",
@@ -90,16 +90,18 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Role/CreateRole"
-            }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Role/CreateRole"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Created",
@@ -152,7 +154,7 @@
           "permissions": {
             "type": "array",
             "items": {
-              "$ref": "permission.json#/definitions/permission/PermissionResponseOk"
+              "type": "string"
             }
           }
         },
