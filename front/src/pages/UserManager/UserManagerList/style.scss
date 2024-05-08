@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .container-user {
+    @apply w-full h-[72vh] flex flex-col justify-between bg-[#ffffff] py-2 px-[16px];
+
+    .container-list {
+      @apply bg-slate-500 w-auto h-auto my-[20px] rounded-[12px];
+    }
+    .container-pagination {
+      @apply w-full flex flex-col justify-center items-end text-[#808080] text-[16px];
+      .content-pagination {
+        @apply w-[317px] h-[24px] bg-transparent flex flex-row justify-between;
+        .line {
+          @apply flex flex-row justify-between w-[180px];
+          .line-number {
+            @apply flex flex-row justify-between w-[40px];
+          }
+        }
+        .page {
+          @apply w-[100px];
+        }
+      }
+    }
+  }
+}

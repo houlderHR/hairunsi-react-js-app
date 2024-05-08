@@ -1,0 +1,157 @@
+{
+  "data": {
+    "department": {
+      "post": {
+        "tags": ["Department"],
+        "summary": "Create a department",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createdepartment",
+        "produces": ["application/json"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/department/CreateDepartment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/department/DepartmentResponseOk"
+            }
+          },
+          "409": {
+            "description": "Department already exist"
+          },
+          "422": {
+            "description": "Conflict field"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Department"],
+        "description": "Get all departments",
+        "summary": "Get all departments",
+        "responses": {
+          "201": {
+            "description": "All department",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/department/DepartmentResponseOk"
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "departmentWithId": {
+      "get": {
+        "tags": ["Department"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/department/DepartmentResponseOk"
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Department"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": ["Department"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/department/CreateDepartment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "department": {
+      "CreateDepartment": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Department"
+        }
+      },
+      "DepartmentResponseOk": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Permission"
+        }
+      }
+    }
+  }
+}

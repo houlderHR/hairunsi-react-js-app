@@ -1,0 +1,174 @@
+{
+  "data": {
+    "permission": {
+      "post": {
+        "tags": ["Permission"],
+        "summary": "Create permission",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createpermission",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/permission/CreatePermission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/permission/PermissionResponseOk"
+            }
+          },
+          "409": {
+            "description": "Permission already exist"
+          },
+          "422": {
+            "description": "Conflict field"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Permission"],
+        "description": "",
+        "summary": "Get all permissions",
+        "responses": {
+          "201": {
+            "description": "All permission",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/permission/PermissionResponseOk"
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "permissionWithId": {
+      "get": {
+        "tags": ["Permission"],
+        "description": "Get a permission",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/permission/PermissionResponseOk"
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Permission"],
+        "description": "Update a permission",
+        "summary": "Update a permission",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/permission/CreatePermission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/permission/PermissionResponseOk"
+            }
+          },
+          "409": {
+            "description": "Permission already exist"
+          },
+          "422": {
+            "description": "Conflict field"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Permission"],
+        "description": "Delete a permission",
+        "summary": "Delete a permission",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "permission": {
+      "CreatePermission": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Permission"
+        }
+      },
+      "PermissionResponseOk": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Permission"
+        }
+      }
+    }
+  }
+}

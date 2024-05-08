@@ -1,0 +1,84 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Hairun SI documentation API",
+    "description": "Description",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": ["http", "https"],
+  "servers": [],
+  "tags": [
+    {
+      "name": "Permission",
+      "description": "Everything about permission"
+    },
+    {
+      "name": "File",
+      "description": "Operations about File"
+    }
+  ],
+  "paths": {
+    "/permission/": {
+      "$ref": "docs/permission.json#/data/permission"
+    },
+    "/permission/{id}": {
+      "$ref": "docs/permission.json#/data/permissionWithId"
+    },
+    "/department/": {
+      "$ref": "docs/department.json#/data/department"
+    },
+    "/department/{id}": {
+      "$ref": "docs/department.json#/data/departmentWithId"
+    },
+    "/role/": {
+      "$ref": "docs/role.json#/data/Role"
+    },
+    "/role/{id}": {
+      "$ref": "docs/role.json#/data/RoleWithId"
+    },
+    "/file/{id}": {
+      "$ref": "docs/file.json#/data/fileWithId"
+    },
+    "/user/": {
+      "$ref": "docs/user.json#/path/user"
+    },
+    "/user/{uuid}": {
+      "$ref": "docs/user.json#/path/userUUID"
+    },
+    "/post/": {
+      "$ref": "docs/post.json#/path/post"
+    },
+    "/post/{id}": {
+      "$ref": "docs/post.json#/path/postId"
+    }
+  },
+  "components": {
+    "schemas": {
+      "permission": {
+        "$ref": "docs/permission.json#/definitions/permission"
+      }
+    }
+  },
+  "definitions": {
+    "permission": {
+      "$ref": "docs/permission.json#/definitions/permission"
+    },
+    "department": {
+      "$ref": "docs/department.json#/definitions/department"
+    },
+    "post": {
+      "$ref": "docs/post.json#/definitions/Post"
+    },
+    "file": {
+      "$ref": "docs/file.json#/definitions/file"
+    },
+    "user": {
+      "$ref": "docs/user.json#/definitions"
+    },
+    "role": {
+      "$ref": "docs/role.json#/definitions/Role"
+    }
+  }
+}
