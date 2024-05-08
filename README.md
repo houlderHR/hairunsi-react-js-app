@@ -68,14 +68,6 @@ You'll need to install some node modules defined on the package.json to run the 
 npm install
 ```
 
-#### **Create key and Certificate for server**
-
-launch the following command
-
-```
-npm run openssl:generate
-```
-
 #### **Run the App**
 
 To run app on development mode, launch this command
@@ -95,30 +87,16 @@ To run app on production mode:
 - after that, launch the app on production
 
   ```
-  npm run prod
-  ```
-
-  to launch the app on production local
-
-  ```
-  npm run prod_local
+  npm run start
   ```
 
 This commande create database on your local PC and run the API
 
-Now open your browser on: _http://localhost:8080/_ ou _https://localhost:8080/_
+Now open your browser on: _http://localhost:8080/_ or _https://localhost:8080/_
 
 You'll have available the following `RESTful` services on swagger documentation on:
-[http://localhost:8080/api-hairunsi-docs/](http://localhost:8080/api-hairunsi-docs/) ou
+[http://localhost:8080/api-hairunsi-docs/](http://localhost:8080/api-hairunsi-docs/) or
 [https://localhost:8080/api-hairunsi-docs/](https://localhost:8080/api-hairunsi-docs/)
-
-#### **Build the App**
-
-```
-npm run build
-```
-
-This will generate a `build` directory(JavaScript output files).
 
 ### front
 
@@ -156,10 +134,28 @@ This command will start the React development server
 
 Now open your browser on: [http://localhost:5173](http://localhost:5173) to see the project
 
-#### **Build the App**
+### **Build the App**
+
+#### **Configure your env**
+
+If you want to launch the application in production mode locally.
+
+```
+Copy file .env.example inside .env.production.local
+```
+
+Now, build the app.
 
 ```
 npm run build
 ```
 
 This will generate a `dist` directory.
+
+#### **Run the app on production mode**
+
+```
+npm run start
+```
+
+Now open your browser on: [http://localhost:3000](http://localhost:3000) to see the application.
