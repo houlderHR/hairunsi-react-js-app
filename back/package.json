@@ -4,8 +4,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "rm -rf ./build && tsc && cp ./src/swagger.json ./build && cp ./src/index.html ./build && cp -r ./docs ./build",
-    "prod": "npm run typeorm migration:run -- -d ./build/database/data-source.js;NODE_ENV=prod nodemon build/index.js",
-    "start": "ts-node src/index.ts",
+    "start": "npm run typeorm migration:run -- -d ./build/database/data-source.js;NODE_ENV=prod nodemon build/index.js",
     "dev": "NODE_ENV=dev npm run migration:run;NODE_ENV=dev nodemon src/index.ts",
     "openssl:generate": "openssl req -nodes -new -x509 -keyout server.key -out server.cert",
     "typeorm": "typeorm-ts-node-commonjs",
