@@ -68,6 +68,14 @@ You'll need to install some node modules defined on the package.json to run the 
 npm install
 ```
 
+#### **Create key and Certificate for server**
+
+launch the following command
+
+```
+npm run openssl:generate
+```
+
 #### **Run the App**
 
 To run app on development mode, launch this command
@@ -87,15 +95,16 @@ To run app on production mode:
 - after that, launch the app
 
   ```
-  npm run start
+  npm run prod
   ```
 
 This commande create database on your local PC and run the API
 
-Now open your browser on: _http://localhost:8080/_
+Now open your browser on: _http://localhost:8080/_ ou _https://localhost:8080/_
 
 You'll have available the following `RESTful` services on swagger documentation on:
-[http://localhost:8080/api-hairunsi-docs/](http://localhost:8080/api-hairunsi-docs/)
+[http://localhost:8080/api-hairunsi-docs/](http://localhost:8080/api-hairunsi-docs/) ou
+[https://localhost:8080/api-hairunsi-docs/](https://localhost:8080/api-hairunsi-docs/)
 
 #### **Build the App**
 

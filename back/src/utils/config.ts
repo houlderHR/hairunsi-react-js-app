@@ -26,8 +26,7 @@ const getenv = (env): string => {
     case 'local':
       return '.env.production';
     case 'prod':
-      return '.env.local';
-
+      return '.env.production';
     default:
       return '.env';
   }

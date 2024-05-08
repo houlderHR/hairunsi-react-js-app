@@ -4,6 +4,8 @@ node_modules/
 build/
 tmp/
 temp/
+server.cert
+server.key
 
 .env
 .env.production

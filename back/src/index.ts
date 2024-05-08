@@ -20,7 +20,6 @@ cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_KEY,
 });
-
 const httpsOptions = {
   key: fs.readFileSync('server.key'),
   cert: fs.readFileSync('server.cert'),
@@ -44,8 +43,8 @@ app.use((req: Request, response: express.Response, next: NextFunction) => {
     `http://localhost:8080/api-hairunsi-docs/`,
     'https://localhost:8080/api-hairunsi-docs/',
   ];
-  if (origin.includes(req.get('host')))
-    response.header('Access-Control-Allow-Origin', req.get('host'));
+  if (origin.includes(req.headers.origin))
+    response.header('Access-Control-Allow-Origin', req.headers.origin);
   response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
