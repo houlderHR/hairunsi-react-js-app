@@ -73,6 +73,11 @@ const ResetPassword = () => {
       });
     } catch (error) {
       const responseError = error as AxiosError;
+
+      if (responseError.code === 'ERR_NETWORK')
+        navigate(routes.unauthenticated.subpaths.errorResetPassword.path, {
+          state: { isResetPasswordError: true },
+        });
       if (responseError.response?.status === 500) {
         navigate(routes.unauthenticated.subpaths.errorResetPassword.path, {
           state: { isResetPasswordError: false },
