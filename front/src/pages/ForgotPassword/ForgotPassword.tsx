@@ -34,6 +34,7 @@ const ForgotPassword: FC = () => {
       navigate(routes.unauthenticated.subpaths.checkEmailToResetPassword.path);
     } catch (error) {
       if (axios.isAxiosError(error)) {
+        if (error.code === 'ERR_NETWORK') navigate(routes.server_error.path);
         if (error.response?.status === 500) navigate(routes.server_error.path);
         if (error.response?.data?.error) setErrorAxios(error.response?.data.error);
         else setErrorAxios(error.response?.data);

@@ -57,6 +57,7 @@ const Login = () => {
       navigate(routes.authentified.subpaths.accueil.path);
     } catch (error) {
       const exceptions = error as AxiosError;
+      if (exceptions.code === 'ERR_NETWORK') navigate(routes.server_error.path);
       setMatch(manageErrorMessage(exceptions));
     }
   };
