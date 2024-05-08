@@ -21,16 +21,6 @@ let seeds: string, factories: string;
 })();
 export { entities, migrations, seeds, factories };
 
-const getenv = (env): string => {
-  switch (env) {
-    case 'local':
-      return '.env.production';
-    case 'prod':
-      return '.env.local';
-    default:
-      return '.env';
-  }
-};
-const configEnv = config({ path: getenv(ENV) });
+const configEnv = config();
 
 export default configEnv;
