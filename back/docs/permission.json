@@ -6,17 +6,16 @@
         "summary": "Create permission",
         "description": "This can only be done by the logged in user.",
         "operationId": "createpermission",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/permission/CreatePermission"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/permission/CreatePermission"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Created",
@@ -90,16 +89,18 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/permission/CreatePermission"
-            }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/permission/CreatePermission"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Created",

@@ -1,44 +1,42 @@
 {
   "definitions": {
-    "CreateUser": [
-      {
-        "name": "firstname",
-        "in": "formData",
-        "type": "string"
-      },
-      {
-        "name": "lastname",
-        "in": "formData",
-        "type": "string",
-        "required": "true"
-      },
-      {
-        "name": "birth_date",
-        "in": "formData",
-        "type": "string",
-        "format": "date",
-        "required": "true"
-      },
-      {
-        "name": "role",
-        "in": "formData",
-        "type": "string",
-        "required": "true"
-      },
-      {
-        "name": "post",
-        "in": "formData",
-        "type": "string",
-        "required": "true"
-      },
-      {
-        "name": "image",
-        "in": "formData",
-        "type": "file",
-        "format": "binary",
-        "required": "true"
+    "CreateUser": {
+      "type": "object",
+      "properties": {
+        "firstname": {
+          "type": "string",
+          "required": "true"
+        },
+        "lastname": {
+          "type": "string",
+          "required": "true"
+        },
+        "birth_date": {
+          "type": "date",
+          "required": "true"
+        },
+        "role": {
+          "type": "string",
+          "required": "true"
+        },
+        "post": {
+          "type": "string",
+          "required": "true"
+        },
+        "image": {
+          "type": "file",
+          "format": "binary"
+        },
+        "email": {
+          "type": "string",
+          "required": "true"
+        },
+        "password": {
+          "type": "string",
+          "required": "true"
+        }
       }
-    ],
+    },
     "UpdateUser": [
       {
         "name": "uuid",
@@ -126,6 +124,17 @@
         "description": "This can only be done by the logged in user.",
         "operationId": "createuser",
         "consumes": "multipart/form-data",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/CreateUser"
+              }
+            }
+          }
+        },
         "parameters": {
           "$ref": "#/definitions/CreateUser"
         },
