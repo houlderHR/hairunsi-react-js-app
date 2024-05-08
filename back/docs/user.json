@@ -37,45 +37,6 @@
         }
       }
     },
-    "CreateUserTMP": [
-      {
-        "name": "firstname",
-        "in": "formData",
-        "type": "string"
-      },
-      {
-        "name": "lastname",
-        "in": "formData",
-        "type": "string",
-        "required": "true"
-      },
-      {
-        "name": "birth_date",
-        "in": "formData",
-        "type": "string",
-        "format": "date",
-        "required": "true"
-      },
-      {
-        "name": "role",
-        "in": "formData",
-        "type": "string",
-        "required": "true"
-      },
-      {
-        "name": "post",
-        "in": "formData",
-        "type": "string",
-        "required": "true"
-      },
-      {
-        "name": "image",
-        "in": "formData",
-        "type": "file",
-        "format": "binary",
-        "required": "true"
-      }
-    ],
     "UpdateUser": [
       {
         "name": "uuid",
