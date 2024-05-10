@@ -9,5 +9,6 @@ routerRole.get('/', RoleController.getAll);
 routerRole.get(`/:id${REGEX.UID}`, RoleController.getOne);
 routerRole.put(`/:id${REGEX.UID}`, RoleController.update);
 routerRole.delete(`/:id${REGEX.UID}`, RoleController.delete);
+routerRole.get('/search', RoleController.search);
 
 export default routerRole;

@@ -4,6 +4,7 @@ import CreateUserDto from '../dto/user/CreateUserDto';
 import userService from '../services/user.service';
 import UpdateUserDto from '../dto/user/UpdateUserDto';
 import { StatusCodes } from 'http-status-codes';
+import SearchUserDto from '../dto/user/SearchUserDto';
 
 class UserController {
   public async create(request, response: Response): Promise<Response> {
@@ -54,6 +55,18 @@ class UserController {
       const updateUserDto: UpdateUserDto = plainToClass(UpdateUserDto, request.body);
 
       let user = await userService.updateUser(request.file, request.params.uuid, updateUserDto);
+
+      return response.status(StatusCodes.OK).json(user);
+    } catch (error) {
+      return response.status(error.status).json(error);
+    }
+  }
+
+  public async search(request: Request, response: Response): Promise<Response> {
+    try {
+      const searchUserDto: SearchUserDto = plainToClass(SearchUserDto, request.body);
+
+      let user = await userService.searchUser(searchUserDto);
 
       return response.status(StatusCodes.OK).json(user);
     } catch (error) {

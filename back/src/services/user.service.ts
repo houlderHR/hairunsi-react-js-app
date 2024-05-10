@@ -1,4 +1,4 @@
-import { DeleteResult, EntityNotFoundError, Repository } from 'typeorm';
+import { DeleteResult, EntityNotFoundError, Like, Repository } from 'typeorm';
 import { AppDataSource } from '../database/data-source';
 import CreateUserDto from '../dto/user/CreateUserDto';
 import { User } from '../entities/user.entity';
@@ -15,6 +15,7 @@ import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
 import FileService from '../services/file.service';
 import { File } from '../entities/file.entity';
 import { hashPassword } from '../utils/hash';
+import SearchUserDto from '../dto/user/SearchUserDto';
 
 class UserService {
   public async createUser(image, createUserDto: CreateUserDto): Promise<User> {
@@ -182,6 +183,28 @@ class UserService {
     }
 
     throw new InternalServerErrorException();
+  }
+
+  public async searchUser(searchUserDto: SearchUserDto): Promise<User[]> {
+    try {
+      const users = await this.getUserRepository()
+        .createQueryBuilder('u')
+        .orWhere('LOWER(u.lastname) like LOWER(:lastname)', {
+          lastname: `%${searchUserDto.search}%`,
+        })
+        .orWhere('LOWER(u.firstname) like LOWER(:firstname)', {
+          firstname: `%${searchUserDto.search}%`,
+        })
+        .orWhere('LOWER(u.matricule) like LOWER(:matricule)', {
+          matricule: `%${searchUserDto.search}%`,
+        })
+        .orderBy('u.created_at', 'DESC')
+        .getMany();
+
+      return users;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 
   public async checkIfUserWithThisEmailAlreadyExists(email: string) {

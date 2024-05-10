@@ -9,6 +9,7 @@ import InternalServerErrorException from '../exceptions/InternalServerErrorExcep
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import { StatusCodes } from 'http-status-codes';
 import { Permission } from '../entities/permission.entity';
+import SearchRoleDto from '../dto/role/SearchPermissionDto';
 
 class RoleService {
   async create(newRoleDto: CreateOrUpdateRoleDto): Promise<Role> {
@@ -96,6 +97,28 @@ class RoleService {
     throw new InternalServerErrorException();
   }
 
+  public async search(searchRoleDto: SearchRoleDto) {
+    try {
+      const roles = await this.getRepository()
+        .createQueryBuilder('r')
+        .innerJoin(
+          'r.permissions',
+          'permission',
+          'permission.name LIKE LOWER(:search) OR r.name LIKE LOWER(:search)',
+          {
+            search: `%${searchRoleDto.search}%`,
+          },
+        )
+        .leftJoinAndSelect('r.permissions', 'permissions')
+        .getMany();
+      console.log(roles);
+      return roles;
+    } catch (e) {
+      console.log(e);
+      throw new InternalServerErrorException();
+    }
+  }
+
   private async getAllPermissionsByIdList(id: string[]): Promise<Permission[]> {
     if (id.length > 0) {
       const queryBuilder = AppDataSource.getRepository(Permission)
@@ -108,6 +131,10 @@ class RoleService {
       return p;
     }
     return [];
+  }
+
+  private getRepository() {
+    return AppDataSource.getRepository(Role);
   }
 }
 

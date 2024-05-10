@@ -9,6 +9,7 @@ import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 import { StatusCodes } from 'http-status-codes';
 import roleService from './role.service';
+import SearchDepartmentDto from '../dto/department/SearchDepartmentDto';
 
 class DepartmentService {
   public async createDepartment(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
@@ -97,6 +98,20 @@ class DepartmentService {
         role: role,
       });
       return await this.getRepository().save(department);
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  public async search(searchDepartmentDto: SearchDepartmentDto): Promise<Department[]> {
+    try {
+      const departments = await this.getRepository()
+        .createQueryBuilder('d')
+        .orWhere('LOWER(d.name) like LOWER(:name)', { name: `%${searchDepartmentDto.search}%` })
+        .orderBy('d.created_at', 'DESC')
+        .getMany();
+
+      return departments;
     } catch (error) {
       throw new InternalServerErrorException();
     }
