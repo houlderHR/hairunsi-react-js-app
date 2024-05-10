@@ -58,7 +58,6 @@ class UserService {
     }
 
     const post = await postService.getPost(createUserDto.post);
-    const role = await roleService.getOne(createUserDto.role);
 
     const user = new User();
     try {
@@ -71,7 +70,6 @@ class UserService {
         password: pass || '',
         image: createdImage?.id || '',
         post: post,
-        role: role,
       });
     } catch (error) {
       throw new InternalServerErrorException();
@@ -136,7 +134,6 @@ class UserService {
     }
 
     const post = await postService.getPost(updateUserDto.post);
-    const role = await roleService.getOne(updateUserDto.role);
 
     Object.assign(user, {
       firstname: updateUserDto.firstname,
@@ -146,7 +143,6 @@ class UserService {
       email: user.email,
       password: user.password,
       post: post,
-      role: role,
     });
 
     try {
