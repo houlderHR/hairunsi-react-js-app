@@ -56,6 +56,8 @@ const Login = () => {
       window.localStorage.setItem('token', response.data);
       navigate(routes.authentified.subpaths.accueil.path);
     } catch (error) {
+      console.log('ERROR: ', error);
+
       const exceptions = error as AxiosError;
       if (exceptions.code === 'ERR_NETWORK') navigate(routes.server_error.path);
       setMatch(manageErrorMessage(exceptions));

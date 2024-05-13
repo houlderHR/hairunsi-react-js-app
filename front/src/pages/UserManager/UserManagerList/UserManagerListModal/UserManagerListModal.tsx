@@ -30,6 +30,7 @@ const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
         confirmation="Etes-vous sûr de vouloir supprimer cet utilisateur ?"
         onClose={onClose}
         icon="delete-user"
+        onDelete={() => {}}
       />
     );
 
