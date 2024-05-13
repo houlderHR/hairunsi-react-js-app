@@ -42,7 +42,7 @@ const UpdateRoleModal: FC<UpdateModalRoleProps> = ({ onClose, user }) => {
             additionalInputClass="text-base"
             icon="search"
           />
-          {show && <DropDown items={moduleRole} setValue={setValue} />}
+          {/* {show && <DropDown items={moduleRole} setValue={setValue} />} */}
         </div>
         <div className="min-h-48">
           <div className="flex flex-wrap gap-2 ">

@@ -16,7 +16,9 @@ interface ButtonProps {
   classTitle?: string;
   variant?: string;
   iconSize?: number;
+  type?: 'button' | 'submit';
   onClick?: () => void;
+  onSubmit?: () => void;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -25,7 +27,9 @@ const Button: FC<ButtonProps> = ({
   className,
   classTitle,
   onClick,
+  onSubmit,
   variant,
+  type,
   iconSize = 14,
 }) => {
   let classNameValue: string = '';
@@ -53,7 +57,12 @@ const Button: FC<ButtonProps> = ({
   }
 
   return (
-    <button type="button" className={twMerge(className, classNameValue)} onClick={onClick}>
+    <button
+      type={type === 'submit' ? 'submit' : 'button'}
+      className={twMerge(className, classNameValue)}
+      onClick={onClick}
+      onSubmit={onSubmit}
+    >
       {icon && (
         <span className="mt-1">
           <Icon name={icon} size={iconSize} />
