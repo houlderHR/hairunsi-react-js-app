@@ -34,7 +34,7 @@ export default class employee implements Seeder {
       let role = await roleRepository.findOneBy({ name: 'Employé' });
       if (!role) {
         role = await roleRepository.save({
-          name: 'Super admin',
+          name: 'Employé',
           permissions: [permissionUtilisateur, permissionUpdateUser],
         });
       }

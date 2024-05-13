@@ -89,7 +89,7 @@ class UserService {
     try {
       return await this.getUserRepository().findOneOrFail({
         where: { uuid },
-        relations: relations,
+        relations: ['post.department.role.permissions'],
       });
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
@@ -157,7 +157,9 @@ class UserService {
 
   public async getAllUser(relations?: string[]): Promise<User[]> {
     try {
-      return await this.getUserRepository().find({ relations: relations });
+      return await this.getUserRepository().find({
+        relations: ['post.department.role.permissions'],
+      });
     } catch (error) {
       throw new InternalServerErrorException();
     }
