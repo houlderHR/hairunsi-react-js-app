@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import RoleDto from '../dto/role.dto';
+import { CreateRoleDto } from '../dto/role.dto';
 import http from '../utils/http-common';
 import { QUERY_ROLE_KEY } from '../utils/query.constants';
 
@@ -11,10 +11,15 @@ export const useGetRoleQuery = () =>
     queryFn: () => http.get(BASE_PATH).then((res) => res.data),
   });
 
-export const useCreateRole = () =>
-  useMutation({
-    mutationFn: (data: RoleDto) => http.post(`${BASE_PATH}`, data).then((res) => res.data),
+export const useCreateRole = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: CreateRoleDto) => http.post(`${BASE_PATH}`, data).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_ROLE_KEY] });
+    },
   });
+};
 
 export const useDeleteRole = (id?: string) => {
   const queryClient = useQueryClient();

@@ -1,7 +1,12 @@
 import PermissionDto from './permission.dto';
 
-export default interface RoleDto {
+export interface RoleResponseDto {
   id: string;
   name: string;
   permissions: PermissionDto[];
+}
+
+export interface CreateRoleDto {
+  name: string;
+  permissions: string[];
 }

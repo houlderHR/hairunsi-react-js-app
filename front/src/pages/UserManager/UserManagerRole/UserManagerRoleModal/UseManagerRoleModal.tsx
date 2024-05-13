@@ -1,6 +1,6 @@
 import { FC } from 'react';
+import { RoleResponseDto } from '../../../../dto/role.dto';
 // import UpdateRoleModal from './UpdateRoleModal';
-import RoleDto from '../../../../dto/role.dto';
 import { useDeleteRole } from '../../../../hooks/useRole';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
@@ -9,7 +9,7 @@ import CreateRoleModal from './CreateRoleModal';
 interface UserManagerRoleModalProps {
   modalState: ModalShowStateType;
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
-  role?: RoleDto;
+  role?: RoleResponseDto;
 }
 
 const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({

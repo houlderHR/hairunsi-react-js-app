@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import RoleDto from '../../../dto/role.dto';
+import { RoleResponseDto } from '../../../dto/role.dto';
 import { useGetRoleQuery } from '../../../hooks/useRole';
 import { SearchType } from '../../../hooks/useSearch';
 import CardRole from '../../../shared/authenticated/CardUserManager/CardRole';
@@ -9,18 +9,18 @@ import UserManagerRoleModal from './UserManagerRoleModal';
 
 const UserManagerRole: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
-  const [allRole, setAllRole] = useState<RoleDto[] | undefined>();
-  const [role, setRole] = useState<RoleDto | undefined>();
+  const [allRole, setAllRole] = useState<RoleResponseDto[] | undefined>();
+  const [role, setRole] = useState<RoleResponseDto | undefined>();
   const { data, error, isLoading } = useGetRoleQuery();
-  const pushRoleType = (_role: RoleDto[] | undefined) => {
+  const pushRoleType = (_role: RoleResponseDto[] | undefined) => {
     setAllRole(_role);
   };
 
-  const openUpdateModal = (roleData: RoleDto) => () => {
+  const openUpdateModal = (roleData: RoleResponseDto) => () => {
     setShowModal(ModalShowStateType.UPDATE);
     setRole(roleData);
   };
-  const openDeleteModal = (roleData: RoleDto) => () => {
+  const openDeleteModal = (roleData: RoleResponseDto) => () => {
     setShowModal(ModalShowStateType.DELETE);
     setRole(roleData);
   };
@@ -44,7 +44,7 @@ const UserManagerRole: FC = () => {
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
         {allRole &&
-          allRole.map((item: RoleDto, index: number) => (
+          allRole.map((item: RoleResponseDto, index: number) => (
             <CardRole
               key={item.id}
               openUpdateModal={openUpdateModal(item)}
