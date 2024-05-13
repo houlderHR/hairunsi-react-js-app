@@ -9,7 +9,6 @@ import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import UpdateUserDto from '../dto/user/UpdateUserDto';
 import { StatusCodes } from 'http-status-codes';
 import postService from './post.service';
-import roleService from './role.service';
 import { v2 as cloudinary } from 'cloudinary';
 import { bufferToDataUri, getTypeFile } from '../utils/utils.method';
 import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
@@ -186,7 +185,7 @@ class UserService {
   public async checkIfUserWithThisEmailAlreadyExists(email: string) {
     const user = await AppDataSource.getRepository(User).findOne({
       where: { email: email },
-      relations: ['post', 'role', 'image'],
+      relations: ['post', 'image'],
     });
     return user;
   }
