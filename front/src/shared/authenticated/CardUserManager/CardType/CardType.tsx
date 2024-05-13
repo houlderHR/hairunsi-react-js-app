@@ -20,12 +20,12 @@ const CardType: FC<CardTypeProps> = ({
   <CardUserManager
     openDeleteModal={openDeleteModal}
     openUpdateModal={openUpdateModal}
-    title={user.title}
+    title={user.name}
     iconVisible={iconVisible}
   >
     <div className="flex mt-4 flex-row justify-start gap-x-4">
       <Icon name="user-guard" height={22} width={18} />
-      <p className="text-base">{user.name}</p>
+      <p className="text-base">{user.role.name}</p>
     </div>
   </CardUserManager>
 );

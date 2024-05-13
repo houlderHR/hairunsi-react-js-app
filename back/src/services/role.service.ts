@@ -98,18 +98,21 @@ class RoleService {
   }
 
   public async search(searchRoleDto: SearchRoleDto) {
+    let roles = [];
     try {
-      const roles = await this.getRepository()
-        .createQueryBuilder('r')
-        .innerJoinAndSelect(
-          'r.permissions',
-          'permission',
-          'LOWER(permission.name) LIKE LOWER(:search) OR LOWER(r.name) LIKE LOWER(:search)',
-          {
-            search: `%${searchRoleDto.search}%`,
-          },
-        )
-        .getMany();
+      if (searchRoleDto.search !== '') {
+        roles = await this.getRepository()
+          .createQueryBuilder('r')
+          .innerJoinAndSelect(
+            'r.permissions',
+            'permission',
+            'LOWER(permission.name) LIKE LOWER(:search) OR LOWER(r.name) LIKE LOWER(:search)',
+            {
+              search: `%${searchRoleDto.search}%`,
+            },
+          )
+          .getMany();
+      }
 
       return roles;
     } catch (e) {

@@ -104,12 +104,15 @@ class DepartmentService {
   }
 
   public async search(searchDepartmentDto: SearchDepartmentDto): Promise<Department[]> {
+    let departments = [];
     try {
-      const departments = await this.getRepository()
-        .createQueryBuilder('d')
-        .orWhere('LOWER(d.name) like LOWER(:name)', { name: `%${searchDepartmentDto.search}%` })
-        .orderBy('d.created_at', 'DESC')
-        .getMany();
+      if (searchDepartmentDto.search !== '')
+        departments = await this.getRepository()
+          .createQueryBuilder('d')
+          .orWhere('LOWER(d.name) like LOWER(:name)', { name: `%${searchDepartmentDto.search}%` })
+          .innerJoinAndSelect('d.role', 'r', 'd.role = r.id')
+          .orderBy('d.created_at', 'DESC')
+          .getMany();
 
       return departments;
     } catch (error) {

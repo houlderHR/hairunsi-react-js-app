@@ -56,7 +56,7 @@ class DepartmentController {
     try {
       const searchDepartmentDto: SearchDepartmentDto = plainToClass(
         SearchDepartmentDto,
-        request.body,
+        request.query,
       );
       const departments = await DepartmentService.search(searchDepartmentDto);
 

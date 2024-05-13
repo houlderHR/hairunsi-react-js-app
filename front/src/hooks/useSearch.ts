@@ -7,30 +7,33 @@ export enum SearchType {
   ROLE = 'role',
 }
 
-const searchUser = (search: string) => http.get('/user/search', { data: search });
-const searchRole = (search: string) => http.get('/user/role', { data: search });
-const searchDepartment = (search: string) => http.get('/user/type', { data: search });
+const searchUser = <T>(search: string) =>
+  http.get<T[]>('/user/search', { params: { search } }).then((response) => response.data);
+const searchRole = <T>(search: string) =>
+  http.get<T[]>('/role/search', { params: { search } }).then((response) => response.data);
+const searchDepartment = <T>(search: string) =>
+  http.get<T[]>('/department/search', { params: { search } }).then((response) => response.data);
 
-const getMutationSearchType = (searchType?: string) => {
+const getMutationSearchType = <T>(searchType?: string) => {
   switch (searchType) {
     case SearchType.USER:
-      return searchUser;
+      return searchUser<T>;
       break;
     case SearchType.ROLE:
-      return searchRole;
+      return searchRole<T>;
       break;
     case SearchType.TYPE:
-      return searchDepartment;
+      return searchDepartment<T>;
       break;
     default:
       return searchUser;
   }
 };
 
-const useSearch = (searchType?: string) => {
+const useSearch = <T>(searchType?: string) => {
   const { data, mutate } = useMutation({
     mutationKey: [searchType],
-    mutationFn: (search: string) => getMutationSearchType(searchType)(search),
+    mutationFn: (search: string) => getMutationSearchType<T>(searchType)(search),
   });
 
   return { data, mutate };

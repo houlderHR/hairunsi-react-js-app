@@ -56,7 +56,7 @@ class RoleController {
 
   public async search(request: Request, response: Response) {
     try {
-      const searchRoleDto: SearchRoleDto = plainToClass(SearchRoleDto, request.body);
+      const searchRoleDto: SearchRoleDto = plainToClass(SearchRoleDto, request.query);
 
       let permissions = await roleService.search(searchRoleDto);
 

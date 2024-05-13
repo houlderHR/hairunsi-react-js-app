@@ -186,20 +186,24 @@ class UserService {
   }
 
   public async searchUser(searchUserDto: SearchUserDto): Promise<User[]> {
+    let users = [];
     try {
-      const users = await this.getUserRepository()
-        .createQueryBuilder('u')
-        .orWhere('LOWER(u.lastname) like LOWER(:lastname)', {
-          lastname: `%${searchUserDto.search}%`,
-        })
-        .orWhere('LOWER(u.firstname) like LOWER(:firstname)', {
-          firstname: `%${searchUserDto.search}%`,
-        })
-        .orWhere('LOWER(u.matricule) like LOWER(:matricule)', {
-          matricule: `%${searchUserDto.search}%`,
-        })
-        .orderBy('u.created_at', 'DESC')
-        .getMany();
+      if (searchUserDto.search !== '')
+        users = await this.getUserRepository()
+          .createQueryBuilder('u')
+          .orWhere('LOWER(u.lastname) like LOWER(:lastname)', {
+            lastname: `%${searchUserDto.search}%`,
+          })
+          .orWhere('LOWER(u.firstname) like LOWER(:firstname)', {
+            firstname: `%${searchUserDto.search}%`,
+          })
+          .orWhere('LOWER(u.matricule) like LOWER(:matricule)', {
+            matricule: `%${searchUserDto.search}%`,
+          })
+          .innerJoinAndSelect('u.post', 'post')
+          .innerJoinAndSelect('post.department', 'department')
+          .orderBy('u.created_at', 'DESC')
+          .getMany();
 
       return users;
     } catch (error) {

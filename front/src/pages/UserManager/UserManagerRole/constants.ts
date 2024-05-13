@@ -1,8 +1,14 @@
-export interface UserObject {
+export type RoleType = {
+  id: string;
+  name: string;
+  permissions: Array<{ id: string; name: string }>;
+};
+
+export type UserObject = {
   id: number;
   role: string;
   module: string[];
-}
+};
 
 export const MODULE_ROLE_LIST = [
   'Accès projet',

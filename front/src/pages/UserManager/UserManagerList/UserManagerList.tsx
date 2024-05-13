@@ -1,45 +1,53 @@
 import './style.scss';
 import { FC, useState } from 'react';
+import { SearchType } from '../../../hooks/useSearch';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
 import DetailList from './DetailList';
-import ObjDetail from './obj-detail';
+import ObjDetail, { TitleDetail, UserType } from './obj-detail';
 import UserManagerUserModal from './UserManagerListModal/UserManagerListModal';
 import users from './users';
 
-const title: ObjDetail = {
+const title: TitleDetail = {
   matricule: 'matricule',
-  nom: 'Nom',
-  prenom: 'Prénom',
-  ddn: 'Date de naissance',
-  type: 'Type',
+  firstname: 'Nom',
+  lastname: 'Prénom',
+  birth_date: 'Date de naissance',
+  department: 'Type',
 };
 
 const UserManagerList: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
   const [userToUpdate, setUserToUpdate] = useState<ObjDetail | null>(null);
+  const [userSearch, setUserSearch] = useState<UserType[] | undefined>();
 
+  const pushSearchUser = (_user: UserType[] | undefined) => {
+    setUserSearch(_user);
+  };
   return (
     <>
       <div className="w-full h-1/4 my-1">
         <HeadManager
           title="NOUVEL UTILISATEUR"
           onOpen={() => setShowModal(ModalShowStateType.CREATE)}
+          pushSearch={pushSearchUser}
+          searchType={SearchType.USER}
         />
       </div>
       <div className="container-user">
         <div className="container-list">
           <div className="label-list">
             <DetailList
-              detail={title}
+              title={title}
               className="container-headdetail"
               categorie="head"
               setModal={setShowModal}
             />
-            {!users ? (
+            {!users && !userSearch ? (
               <>Pas d&apos;utilisateur</>
             ) : (
-              users.map((user, index) => (
+              userSearch?.length === 0 &&
+              users?.map((user, index) => (
                 <DetailList
                   detail={user}
                   className={index % 2 === 0 ? 'pair' : 'impair'}
@@ -50,6 +58,17 @@ const UserManagerList: FC = () => {
                 />
               ))
             )}
+            {userSearch?.length &&
+              userSearch?.map((user, index) => (
+                <DetailList
+                  detail={user}
+                  className={index % 2 === 0 ? 'pair' : 'impair'}
+                  categorie="detail"
+                  key={user.matricule}
+                  setModal={setShowModal}
+                  setUserToUpdate={setUserToUpdate}
+                />
+              ))}
           </div>
         </div>
         <div className="container-pagination">
