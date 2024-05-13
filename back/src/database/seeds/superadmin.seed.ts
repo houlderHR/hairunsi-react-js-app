@@ -17,15 +17,50 @@ export default class SuperAdminSeed implements Seeder {
     let user: User = await userRepository.findOneBy({ email: 'test@hairun-technology.com' });
     if (!user) {
       let permissionRepository = dataSource.getRepository(Permission);
-      let permission = await permissionRepository.findOneBy({ name: 'Tout faire' });
-      if (!permission) {
-        permission = await permissionRepository.save({ name: 'Tout faire' });
+      let [
+        permissionUtilisateur,
+        permissionCreateUser,
+        permissionUpdateUser,
+        permissionDeleteUser,
+      ] = [
+        await permissionRepository.findOneBy({ name: 'Accès tout utilisateur' }),
+        await permissionRepository.findOneBy({ name: 'Création tout utilisateur' }),
+        await permissionRepository.findOneBy({ name: 'Modification tout utilisateur' }),
+        await permissionRepository.findOneBy({ name: 'Suppression tout utilisateur' }),
+      ];
+      if (!permissionUtilisateur) {
+        permissionUtilisateur = await permissionRepository.save({ name: 'Accès tout utilisateur' });
       }
+      if (!permissionCreateUser) {
+        permissionCreateUser = await permissionRepository.save({
+          name: 'Création tout utilisateur',
+        });
+      }
+      if (!permissionUpdateUser) {
+        permissionUpdateUser = await permissionRepository.save({
+          name: 'Modification tout utilisateur',
+        });
+      }
+      if (!permissionDeleteUser) {
+        permissionDeleteUser = await permissionRepository.save({
+          name: 'Suppression tout utilisateur',
+        });
+      }
+
       let roleRepository = dataSource.getRepository(Role);
       let role = await roleRepository.findOneBy({ name: 'Super admin' });
       if (!role) {
-        role = await roleRepository.save({ name: 'Super admin', permissions: [permission] });
+        role = await roleRepository.save({
+          name: 'Super admin',
+          permissions: [
+            permissionUtilisateur,
+            permissionCreateUser,
+            permissionUpdateUser,
+            permissionDeleteUser,
+          ],
+        });
       }
+
       const repository = dataSource.getRepository(Department);
       let department = await repository.findOneBy({ name: 'Direction' });
       if (!department) {
