@@ -113,7 +113,6 @@ class RoleService {
 
       return roles;
     } catch (e) {
-      console.log(e);
       throw new InternalServerErrorException();
     }
   }
