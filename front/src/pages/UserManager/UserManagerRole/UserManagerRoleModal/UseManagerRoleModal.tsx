@@ -46,7 +46,7 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
     );
   }
   if (role && modalState === ModalShowStateType.UPDATE) {
-    // return <UpdateRoleModal role={role} onClose={onClose} />;
+    return <CreateRoleModal updateRole={role} onClose={onClose} />;
   }
 
   return null;

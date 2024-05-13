@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import PermissionDto from '../../../../../dto/permission.dto';
+import { RoleResponseDto } from '../../../../../dto/role.dto';
 import useGetPermissionQuery from '../../../../../hooks/usePermission';
 import { useCreateRole } from '../../../../../hooks/useRole';
 import routes from '../../../../../routes/paths';
@@ -16,6 +17,7 @@ import InputIcon from '../../../../../shared/inputs/InputIcon';
 
 interface CreateModalRoleProps {
   onClose: () => void;
+  updateRole?: RoleResponseDto;
 }
 
 const sortPermissionByName = (data: PermissionDto[]) =>
@@ -31,15 +33,15 @@ const sortPermissionByName = (data: PermissionDto[]) =>
     return 0;
   });
 
-const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose }) => {
+const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
   const [show, setShow] = useState(false);
   const [selectPermission, setSelectPermission] = useState(false);
   const { data, error, isLoading } = useGetPermissionQuery();
   const [permissions, setPermissions] = useState<PermissionDto[]>([]);
   const [permissionSelected, setPermissionSelected] = useState<PermissionDto[]>([]);
+  const [isAlreadyRendered, setIsAlreadyRendered] = useState(false);
   const navigate = useNavigate();
   const [errorAxios, setErrorAxios] = useState('');
-
   const mutation = useCreateRole();
   const {
     control,
@@ -69,11 +71,22 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose }) => {
       }
     }
   });
+
   useEffect(() => {
     if (data) {
       setPermissions(sortPermissionByName(data));
     }
-  }, [data]);
+    if (!isAlreadyRendered && updateRole) {
+      setSelectPermission(true);
+      setPermissionSelected(sortPermissionByName(updateRole.permissions));
+      // const resultat = permissions.filter(
+      //   (item) => !updateRole!.permissions.some((exclu) => exclu.id === item.id),
+      // );
+      // console.log('result: ', resultat);
+      // setPermissions(resultat);
+      setIsAlreadyRendered(true);
+    }
+  }, [data, isAlreadyRendered, updateRole]);
 
   if (error) return <div>{error.message}</div>;
   if (isLoading) return <div>Loading...</div>;
@@ -101,14 +114,14 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose }) => {
   };
 
   return (
-    <CreateModal onClose={onClose} title="Création de rôle">
+    <CreateModal onClose={onClose} title={updateRole ? 'Modification rôle' : 'Création de rôle'}>
       <form onSubmit={onSubmit} className="w-full">
         <div className="flex gap-4 flex-col w-full">
           <div>
             <Controller
               name="role"
               control={control}
-              defaultValue=""
+              defaultValue={updateRole ? updateRole.name : ''}
               rules={{
                 required: { value: true, message: 'Remplir le champ' },
               }}
