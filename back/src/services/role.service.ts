@@ -101,17 +101,16 @@ class RoleService {
     try {
       const roles = await this.getRepository()
         .createQueryBuilder('r')
-        .innerJoin(
+        .innerJoinAndSelect(
           'r.permissions',
           'permission',
-          'permission.name LIKE LOWER(:search) OR r.name LIKE LOWER(:search)',
+          'LOWER(permission.name) LIKE LOWER(:search) OR LOWER(r.name) LIKE LOWER(:search)',
           {
             search: `%${searchRoleDto.search}%`,
           },
         )
-        .leftJoinAndSelect('r.permissions', 'permissions')
         .getMany();
-      console.log(roles);
+
       return roles;
     } catch (e) {
       console.log(e);
