@@ -16,8 +16,6 @@ class UpdateUserDto {
   birth_date: Date;
   @IsUUID(undefined, { message: 'Le poste doit etre rensigner et valide' })
   post: UUID;
-  @IsUUID(undefined, { message: 'Le role doit etre rensigner et valide' })
-  role: UUID;
 }
 
 export default UpdateUserDto;

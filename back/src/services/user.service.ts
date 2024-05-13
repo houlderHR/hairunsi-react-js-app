@@ -9,7 +9,6 @@ import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import UpdateUserDto from '../dto/user/UpdateUserDto';
 import { StatusCodes } from 'http-status-codes';
 import postService from './post.service';
-import roleService from './role.service';
 import { v2 as cloudinary } from 'cloudinary';
 import { bufferToDataUri, getTypeFile } from '../utils/utils.method';
 import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
@@ -58,7 +57,6 @@ class UserService {
     }
 
     const post = await postService.getPost(createUserDto.post);
-    const role = await roleService.getOne(createUserDto.role);
 
     const user = new User();
     try {
@@ -71,7 +69,6 @@ class UserService {
         password: pass || '',
         image: createdImage?.id || '',
         post: post,
-        role: role,
       });
     } catch (error) {
       throw new InternalServerErrorException();
@@ -136,7 +133,6 @@ class UserService {
     }
 
     const post = await postService.getPost(updateUserDto.post);
-    const role = await roleService.getOne(updateUserDto.role);
 
     Object.assign(user, {
       firstname: updateUserDto.firstname,
@@ -146,7 +142,6 @@ class UserService {
       email: user.email,
       password: user.password,
       post: post,
-      role: role,
     });
 
     try {
@@ -190,7 +185,7 @@ class UserService {
   public async checkIfUserWithThisEmailAlreadyExists(email: string) {
     const user = await AppDataSource.getRepository(User).findOne({
       where: { email: email },
-      relations: ['post', 'role', 'image'],
+      relations: ['post', 'image'],
     });
     return user;
   }

@@ -16,28 +16,26 @@ export default class SuperAdminSeed implements Seeder {
     let userRepository = dataSource.getRepository(User);
     let user: User = await userRepository.findOneBy({ email: 'test@hairun-technology.com' });
     if (!user) {
+      let permissionRepository = dataSource.getRepository(Permission);
+      let permission = await permissionRepository.findOneBy({ name: 'Tout faire' });
+      if (!permission) {
+        permission = await permissionRepository.save({ name: 'Tout faire' });
+      }
+      let roleRepository = dataSource.getRepository(Role);
+      let role = await roleRepository.findOneBy({ name: 'Super admin' });
+      if (!role) {
+        role = await roleRepository.save({ name: 'Super admin', permissions: [permission] });
+      }
       const repository = dataSource.getRepository(Department);
       let department = await repository.findOneBy({ name: 'Direction' });
       if (!department) {
-        department = await repository.save({ name: 'Direction' });
+        department = await repository.save({ name: 'Direction', role: role });
       }
 
       let postRepository = dataSource.getRepository(Post);
       let post = await postRepository.findOneBy({ name: 'Directeur' });
       if (!post) {
         post = await postRepository.save({ name: 'Directeur', department: department });
-      }
-
-      let permissionRepository = dataSource.getRepository(Permission);
-      let permission = await permissionRepository.findOneBy({ name: 'Tout faire' });
-      if (!permission) {
-        permission = await permissionRepository.save({ name: 'Tout faire' });
-      }
-
-      let roleRepository = dataSource.getRepository(Role);
-      let role = await roleRepository.findOneBy({ name: 'Super admin' });
-      if (!role) {
-        role = await roleRepository.save({ name: 'Super admin', permissions: [permission] });
       }
 
       let fileRepository = dataSource.getRepository(File);
@@ -61,7 +59,6 @@ export default class SuperAdminSeed implements Seeder {
         email: 'test@hairun-technology.com',
         password: password,
         post: post,
-        role: role,
         image: file,
       });
       logger.info('Super admin added successfully one time into the app');

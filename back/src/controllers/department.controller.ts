@@ -21,14 +21,19 @@ class DepartmentController {
   }
 
   public async get(request: Request, response: Response): Promise<Response> {
-    const departments = await DepartmentService.getAllDepartment();
-
-    return response.status(StatusCodes.OK).json(departments);
+    let relations = Object.keys(request.query).map((query) => query);
+    try {
+      const departments = await DepartmentService.getAllDepartment(relations);
+      return response.status(StatusCodes.OK).json(departments);
+    } catch (error) {
+      return response.status(error.status).json(error);
+    }
   }
 
   public async getById(request: Request, response: Response): Promise<Response> {
+    let relations = Object.keys(request.query).map((query) => query);
     try {
-      const department = await DepartmentService.getDepartmentById(request.params.id);
+      const department = await DepartmentService.getDepartmentById(request.params.id, relations);
 
       return response.status(StatusCodes.OK).json(department);
     } catch (error) {

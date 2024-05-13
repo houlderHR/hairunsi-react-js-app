@@ -8,6 +8,7 @@ import { UpdateDepartmentDto } from '../dto/department/UpdateDepartmentDto';
 import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import InternalServerErrorException from '../exceptions/InternalServerErrorException';
 import { StatusCodes } from 'http-status-codes';
+import roleService from './role.service';
 
 class DepartmentService {
   public async createDepartment(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
@@ -23,7 +24,12 @@ class DepartmentService {
 
     try {
       const department = new Department();
+      const role = await roleService.getOne(createDepartmentDto.role);
       department.name = createDepartmentDto.name;
+      Object.assign(department, {
+        name: createDepartmentDto.name,
+        role: role,
+      });
 
       return await this.getRepository().save(department);
     } catch (error) {
@@ -35,16 +41,23 @@ class DepartmentService {
     }
   }
 
-  public async getDepartmentById(id: string): Promise<Department> {
+  public async getDepartmentById(id: string, relations?: string[]): Promise<Department> {
     try {
-      return await this.getRepository().findOneByOrFail({ id });
+      return await this.getRepository().findOneOrFail({
+        where: { id },
+        relations: relations,
+      });
     } catch (error) {
       throw new HttpNotFoundException("Le departement n'existe pas");
     }
   }
 
-  public async getAllDepartment(): Promise<Department[]> {
-    return await this.getRepository().find();
+  public async getAllDepartment(relations?: string[]): Promise<Department[]> {
+    try {
+      return await this.getRepository().find({ relations: relations });
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 
   public async deleteDepartment(id: string): Promise<DeleteResult> {
@@ -78,8 +91,11 @@ class DepartmentService {
     }
 
     try {
-      department.name = updateDepartmentDto.name;
-
+      const role = await roleService.getOne(updateDepartmentDto.role);
+      Object.assign(department, {
+        name: updateDepartmentDto.name,
+        role: role,
+      });
       return await this.getRepository().save(department);
     } catch (error) {
       throw new InternalServerErrorException();
