@@ -65,7 +65,6 @@ class UserController {
   public async search(request: Request, response: Response): Promise<Response> {
     try {
       const searchUserDto: SearchUserDto = plainToClass(SearchUserDto, request.query);
-      console.log(searchUserDto);
       let user = await userService.searchUser(searchUserDto);
 
       return response.status(StatusCodes.OK).json(user);

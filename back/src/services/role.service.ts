@@ -111,6 +111,8 @@ class RoleService {
               search: `%${searchRoleDto.search}%`,
             },
           )
+          .leftJoinAndSelect('r.permissions', 'permissions')
+          .orderBy('r.created_at', 'DESC')
           .getMany();
       }
 
