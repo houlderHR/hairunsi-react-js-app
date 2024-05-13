@@ -55,7 +55,7 @@ class DepartmentService {
 
   public async getAllDepartment(relations?: string[]): Promise<Department[]> {
     try {
-      return await this.getRepository().find({ relations: relations });
+      return await this.getRepository().find({ relations: relations, order: { name: 'ASC' } });
     } catch (error) {
       throw new InternalServerErrorException();
     }

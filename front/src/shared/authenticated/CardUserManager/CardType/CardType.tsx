@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { UserType } from '../../../../pages/UserManager/UserManagerType/constants';
+import { DepartmentType } from '../../../../pages/UserManager/UserManagerType/type';
 import Icon from '../../../Icon';
 import CardUserManager from '../CardUserManager';
 
 interface CardTypeProps {
-  user: UserType;
+  department: DepartmentType;
   iconVisible?: boolean;
   openUpdateModal: () => void;
   openDeleteModal: () => void;
@@ -12,7 +12,7 @@ interface CardTypeProps {
 
 // CardType
 const CardType: FC<CardTypeProps> = ({
-  user,
+  department,
   openUpdateModal,
   openDeleteModal,
   iconVisible = false,
@@ -20,12 +20,12 @@ const CardType: FC<CardTypeProps> = ({
   <CardUserManager
     openDeleteModal={openDeleteModal}
     openUpdateModal={openUpdateModal}
-    title={user.name}
+    title={department.name}
     iconVisible={iconVisible}
   >
     <div className="flex mt-4 flex-row justify-start gap-x-4">
       <Icon name="user-guard" height={22} width={18} />
-      <p className="text-base">{user.role.name}</p>
+      <p className="text-base">{department.role.name}</p>
     </div>
   </CardUserManager>
 );

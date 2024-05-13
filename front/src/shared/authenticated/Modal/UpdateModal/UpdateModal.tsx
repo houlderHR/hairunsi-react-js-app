@@ -10,7 +10,7 @@ interface UpdateModalProps {
 const UpdateModal: FC<PropsWithChildren<UpdateModalProps>> = ({ children, title, onClose }) => (
   <Modal onClose={onClose} title={title}>
     {children}
-    <Button title="Modifier" variant="secondary-1" />
+    {/* <Button title="Modifier" variant="secondary-1" /> */}
   </Modal>
 );
 

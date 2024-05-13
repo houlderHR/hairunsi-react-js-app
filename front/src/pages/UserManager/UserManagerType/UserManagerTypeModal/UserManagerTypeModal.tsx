@@ -1,20 +1,20 @@
 import { FC } from 'react';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
-import { UserType } from '../constants';
+import { DepartmentType } from '../type';
 import CreateTypeModal from './CreateTypeModal';
 import UpdateTypeModal from './UpdateTypeModal';
 
 interface UserManagerTypeModalProps {
   modalState: ModalShowStateType;
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
-  user?: UserType;
+  department?: DepartmentType;
 }
 
 const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   modalState,
   setShowModal,
-  user,
+  department,
 }) => {
   const onClose = () => {
     setShowModal(ModalShowStateType.CLOSE);
@@ -24,8 +24,8 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
     return <CreateTypeModal onClose={onClose} />;
   }
 
-  if (user && modalState === ModalShowStateType.UPDATE) {
-    return <UpdateTypeModal onClose={onClose} user={user} />;
+  if (department && modalState === ModalShowStateType.UPDATE) {
+    return <UpdateTypeModal onClose={onClose} department={department} />;
   }
   if (modalState === ModalShowStateType.DELETE) {
     return (

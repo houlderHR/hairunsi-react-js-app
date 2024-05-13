@@ -3,7 +3,7 @@ import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import Input from '../../../../../shared/inputs/Input';
 import InputIcon from '../../../../../shared/inputs/InputIcon';
-import { TypeList } from '../../constants';
+import { TypeList } from '../../type';
 
 interface CreateModalTypeProps {
   onClose: () => void;
