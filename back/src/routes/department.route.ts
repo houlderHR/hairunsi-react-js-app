@@ -9,5 +9,6 @@ router.get('', DepartmentController.get);
 router.get(`/:id${REGEX.UID}`, DepartmentController.getById);
 router.delete(`/:id${REGEX.UID}`, DepartmentController.delete);
 router.put(`/:id${REGEX.UID}`, DepartmentController.update);
+router.get('/search', DepartmentController.search);
 
 export default router;

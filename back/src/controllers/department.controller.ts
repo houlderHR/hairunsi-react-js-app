@@ -4,6 +4,7 @@ import DepartmentService from '../services/department.service';
 import { CreateDepartmentDto } from '../dto/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../dto/department/UpdateDepartmentDto';
 import { StatusCodes } from 'http-status-codes';
+import SearchDepartmentDto from '../dto/department/SearchDepartmentDto';
 
 class DepartmentController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -46,6 +47,20 @@ class DepartmentController {
       await DepartmentService.deleteDepartment(request.params.id);
 
       return response.status(StatusCodes.OK).json({ message: 'Departement supprimé avec succés' });
+    } catch (error) {
+      return response.status(error.status).json(error);
+    }
+  }
+
+  public async search(request: Request, response: Response): Promise<Response> {
+    try {
+      const searchDepartmentDto: SearchDepartmentDto = plainToClass(
+        SearchDepartmentDto,
+        request.query,
+      );
+      const departments = await DepartmentService.search(searchDepartmentDto);
+
+      return response.status(StatusCodes.OK).json(departments);
     } catch (error) {
       return response.status(error.status).json(error);
     }

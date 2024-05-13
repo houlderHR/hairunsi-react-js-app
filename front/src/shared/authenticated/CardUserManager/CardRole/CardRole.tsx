@@ -7,16 +7,16 @@ interface CardRoleProps {
   items: string[];
   maxElement: number;
   iconVisible?: boolean;
-  openUpdateModal: () => void;
-  openDeleteModal: () => void;
+  openUpdateModal?: () => void;
+  openDeleteModal?: () => void;
 }
 
 const CardRole: FC<CardRoleProps> = ({
   title,
   items,
   maxElement,
-  openUpdateModal,
-  openDeleteModal,
+  openUpdateModal = () => {},
+  openDeleteModal = () => {},
   iconVisible = false,
 }) => (
   <CardUserManager

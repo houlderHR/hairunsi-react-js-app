@@ -10,5 +10,6 @@ userRoute.get('', UserController.get);
 userRoute.get(`/:uuid${REGEX.UID}`, UserController.getById);
 userRoute.delete(`/:uuid${REGEX.UID}`, UserController.delete);
 userRoute.put(`/:uuid${REGEX.UID}`, upload.single('image'), UserController.update);
+userRoute.get('/search', UserController.search);
 
 export default userRoute;

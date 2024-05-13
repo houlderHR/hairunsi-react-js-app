@@ -1,23 +1,55 @@
-import { FC } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import useDebounce from '../../../hooks/useDebounce';
+import useSearch, { SearchType } from '../../../hooks/useSearch';
 import InputIcon from '../../inputs/InputIcon';
 import Button from '../buttons/Button';
 
-interface HeadManagerProps {
+interface HeadManagerProps<T> {
   onOpen: () => void;
   title: string;
+  searchType?: SearchType;
+  pushSearch: (s: T[] | undefined) => void;
 }
 
-const HeadManager: FC<HeadManagerProps> = ({ onOpen, title }) => (
-  <div className="flex flex-row gap-x-4">
-    <Button
-      classTitle="hidden md:inline-block"
-      onClick={onOpen}
-      icon="add"
-      title={title}
-      variant="secondary"
-    />
-    <InputIcon icon="search" placeholder="Search" />
-  </div>
-);
+const HeadManager = <T,>({
+  onOpen,
+  title,
+  pushSearch,
+  searchType = SearchType.USER,
+}: HeadManagerProps<T>) => {
+  const { data, mutate } = useSearch<T>(searchType);
+  const [search, setSearch] = useState<string>('');
+  const searchValue = useDebounce(search, 300);
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const loadSearch = useCallback(() => {
+    mutate(searchValue);
+  }, [searchValue, mutate]);
+
+  useEffect(() => {
+    loadSearch();
+  }, [loadSearch]);
+
+  useEffect(() => {
+    if (search === '') pushSearch(undefined);
+    else pushSearch(data);
+  }, [data, pushSearch, search]);
+
+  return (
+    <div className="flex flex-row gap-x-4">
+      <Button
+        classTitle="hidden md:inline-block"
+        onClick={onOpen}
+        icon="add"
+        title={title}
+        variant="secondary"
+      />
+      <InputIcon icon="search" onChange={onChange} value={search} placeholder="Search" />
+    </div>
+  );
+};
 
 export default HeadManager;
