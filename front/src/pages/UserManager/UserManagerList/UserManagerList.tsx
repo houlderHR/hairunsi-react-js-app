@@ -46,7 +46,7 @@ const UserManagerList: FC = () => {
             {!users && !userSearch ? (
               <>Pas d&apos;utilisateur</>
             ) : (
-              userSearch?.length === 0 &&
+              !userSearch &&
               users?.map((user, index) => (
                 <DetailList
                   detail={user}
@@ -58,7 +58,7 @@ const UserManagerList: FC = () => {
                 />
               ))
             )}
-            {userSearch?.length &&
+            {userSearch &&
               userSearch?.map((user, index) => (
                 <DetailList
                   detail={user}

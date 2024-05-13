@@ -31,7 +31,7 @@ const UserManagerRole: FC = () => {
         pushSearch={pushRoleType}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
-        {roles?.length === 0 &&
+        {!roles &&
           USER_TYPE_LIST.map((item, index) => (
             <CardRole
               key={item.id}
@@ -43,15 +43,16 @@ const UserManagerRole: FC = () => {
               items={item.module}
             />
           ))}
-        {roles?.map((item, index) => (
-          <CardRole
-            key={item.id}
-            title={item.name}
-            maxElement={11}
-            iconVisible={index === 0}
-            items={item.permissions.map((p) => p.name)}
-          />
-        ))}
+        {roles &&
+          roles?.map((item, index) => (
+            <CardRole
+              key={item.id}
+              title={item.name}
+              maxElement={11}
+              iconVisible={index === 0}
+              items={item.permissions.map((p) => p.name)}
+            />
+          ))}
       </div>
       <UserManagerRoleModal user={user} modalState={showModal} setShowModal={setShowModal} />
     </>

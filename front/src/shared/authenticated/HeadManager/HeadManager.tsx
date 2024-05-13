@@ -34,8 +34,9 @@ const HeadManager = <T,>({
   }, [loadSearch]);
 
   useEffect(() => {
-    pushSearch(data);
-  }, [data, pushSearch]);
+    if (search === '') pushSearch(undefined);
+    else pushSearch(data);
+  }, [data, pushSearch, search]);
 
   return (
     <div className="flex flex-row gap-x-4">

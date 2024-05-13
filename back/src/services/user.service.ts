@@ -202,7 +202,7 @@ class UserService {
           })
           .innerJoinAndSelect('u.post', 'post')
           .innerJoinAndSelect('post.department', 'department')
-          .orderBy('u.created_at', 'DESC')
+          .orderBy('u.id', 'DESC')
           .getMany();
 
       return users;
