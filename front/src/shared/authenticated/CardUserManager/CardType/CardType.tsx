@@ -5,23 +5,16 @@ import CardUserManager from '../CardUserManager';
 
 interface CardTypeProps {
   department: DepartmentType;
-  iconVisible?: boolean;
   openUpdateModal: () => void;
   openDeleteModal: () => void;
 }
 
 // CardType
-const CardType: FC<CardTypeProps> = ({
-  department,
-  openUpdateModal,
-  openDeleteModal,
-  iconVisible = false,
-}) => (
+const CardType: FC<CardTypeProps> = ({ department, openUpdateModal, openDeleteModal }) => (
   <CardUserManager
     openDeleteModal={openDeleteModal}
     openUpdateModal={openUpdateModal}
     title={department.name}
-    iconVisible={iconVisible}
   >
     <div className="flex mt-4 flex-row justify-start gap-x-4">
       <Icon name="user-guard" height={22} width={18} />
