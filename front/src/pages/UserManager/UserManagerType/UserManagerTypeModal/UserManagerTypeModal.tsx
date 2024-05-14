@@ -26,7 +26,7 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
     isSuccess,
     isError,
   } = useMutation({
-    mutationKey: ['deleteDepartment'],
+    mutationKey: ['deleteDepartment', department?.id],
     mutationFn: () =>
       http.delete<DepartmentType>(`department/${department?.id}`).then((response) => response.data),
   });
