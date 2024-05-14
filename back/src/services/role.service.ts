@@ -73,9 +73,12 @@ class RoleService {
         }));
         throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, validationErrors);
       }
-      AppDataSource.getRepository(Role).merge(role, {
-        ...updateRole,
-        permissions: await this.getAllPermissionsByIdList(updateRole.permissions),
+      Object.assign(role, {
+        name: updateRole.name,
+        permissions:
+          updateRole.permissions.length == 0
+            ? role.permissions
+            : await this.getAllPermissionsByIdList(updateRole.permissions),
       });
 
       const result = await AppDataSource.getRepository(Role).save(role);

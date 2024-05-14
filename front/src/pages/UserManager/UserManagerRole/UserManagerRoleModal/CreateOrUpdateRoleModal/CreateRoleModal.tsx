@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
 import PermissionDto from '../../../../../dto/permission.dto';
 import { RoleResponseDto } from '../../../../../dto/role.dto';
 import useGetPermissionQuery from '../../../../../hooks/usePermission';
-import { useCreateRole } from '../../../../../hooks/useRole';
+import { useCreateRole, useUpdateRole } from '../../../../../hooks/useRole';
 import routes from '../../../../../routes/paths';
 import Button from '../../../../../shared/authenticated/buttons/Button/Button';
 import CardItemRole from '../../../../../shared/authenticated/CardUserManager/CardRole/CardItemRole';
@@ -17,7 +17,7 @@ import InputIcon from '../../../../../shared/inputs/InputIcon';
 
 interface CreateModalRoleProps {
   onClose: () => void;
-  role?: RoleResponseDto;
+  updateRole?: RoleResponseDto;
 }
 
 const sortPermissionByName = (data: PermissionDto[]) =>
@@ -33,31 +33,38 @@ const sortPermissionByName = (data: PermissionDto[]) =>
     return 0;
   });
 
-const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, role }) => {
+const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
   const [show, setShow] = useState(false);
   const [selectPermission, setSelectPermission] = useState(false);
   const { data, error, isLoading } = useGetPermissionQuery();
   const [permissions, setPermissions] = useState<PermissionDto[]>([]);
-  const [permissionSelected, setPermissionSelected] = useState<PermissionDto[]>(role!.permissions);
+  const [permissionSelected, setPermissionSelected] = useState<PermissionDto[]>([]);
+  const [isAlreadyRendered, setIsAlreadyRendered] = useState(false);
   const navigate = useNavigate();
   const [errorAxios, setErrorAxios] = useState('');
-
   const mutation = useCreateRole();
+  const updateMutation = useUpdateRole(updateRole?.id);
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<{ role: string; permission: string }>();
+
   const onSubmit = handleSubmit(async (value) => {
     if (permissionSelected.length !== 0) setSelectPermission(true);
     else setSelectPermission(false);
     try {
       if (permissionSelected.length !== 0) {
+        let result;
         const newRole = {
           name: value.role,
           permissions: permissionSelected.map((item) => item.id),
         };
-        const result = await mutation.mutateAsync(newRole);
+        if (updateRole) {
+          result = await updateMutation.mutateAsync(newRole);
+        } else {
+          result = await mutation.mutateAsync(newRole);
+        }
         if (result) onClose();
       }
     } catch (err) {
@@ -71,19 +78,20 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, role }) => {
       }
     }
   });
+
   useEffect(() => {
     if (data) {
-      setPermissions(sortPermissionByName(data));
-    }
-    if (updateRole) {
-      setSelectPermission(true);
-      setPermissionSelected(sortPermissionByName(updateRole.permissions));
-      const resultat = permissions.filter(
-        (item) => !updateRole.permissions.some((exclu) => exclu.id === item.id),
+      const result = data.filter(
+        (item: PermissionDto) => !updateRole?.permissions.some((exclu) => exclu.id === item.id),
       );
-      setPermissions(resultat);
+      setPermissions(sortPermissionByName(result));
+      if (!isAlreadyRendered && updateRole) {
+        setSelectPermission(true);
+        setPermissionSelected(sortPermissionByName(updateRole.permissions));
+        setIsAlreadyRendered(true);
+      }
     }
-  }, [data, updateRole, permissions]);
+  }, [data, updateRole, isAlreadyRendered]);
 
   if (error) return <div>{error.message}</div>;
   if (isLoading) return <div>Loading...</div>;
@@ -154,7 +162,7 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, role }) => {
           <div className="min-h-48">
             {!selectPermission && (
               <p className="text-red-500 text-xs font-medium">
-                Vous devez séléctionner des permissions
+                Séléctionner au moins une permission
               </p>
             )}
             {errorAxios && <p className="text-red-500 text-xs font-medium">{errorAxios}</p>}
@@ -174,7 +182,7 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, role }) => {
             </div>
           </div>
         </div>
-        <Button type="submit" title="Créer" variant="secondary-1" />
+        <Button type="submit" title={updateRole ? 'Modifier' : 'Créer'} variant="secondary-1" />
       </form>
     </CreateModal>
   );

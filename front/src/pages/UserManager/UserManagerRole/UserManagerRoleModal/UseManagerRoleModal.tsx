@@ -4,7 +4,7 @@ import { RoleResponseDto } from '../../../../dto/role.dto';
 import { useDeleteRole } from '../../../../hooks/useRole';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
-import CreateRoleModal from './CreateRoleModal';
+import CreateRoleModal from './CreateOrUpdateRoleModal';
 
 interface UserManagerRoleModalProps {
   modalState: ModalShowStateType;
@@ -27,6 +27,7 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
       console.log(error);
     }
   };
+
   const onClose = () => {
     setShowModal(ModalShowStateType.CLOSE);
   };

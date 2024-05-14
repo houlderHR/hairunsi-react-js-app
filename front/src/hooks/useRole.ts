@@ -21,6 +21,17 @@ export const useCreateRole = () => {
   });
 };
 
+export const useUpdateRole = (id?: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: CreateRoleDto) =>
+      http.put(`${BASE_PATH}/${id}`, data).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_ROLE_KEY] });
+    },
+  });
+};
+
 export const useDeleteRole = (id?: string) => {
   const queryClient = useQueryClient();
   return useMutation({
