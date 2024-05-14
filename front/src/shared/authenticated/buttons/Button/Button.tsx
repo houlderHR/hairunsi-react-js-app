@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Icon from '../../../Icon';
 
@@ -11,12 +11,13 @@ enum ButtonVariant {
 
 interface ButtonProps {
   icon?: string;
-  title: string;
+  title: string | ReactNode;
   className?: string;
   classTitle?: string;
   variant?: string;
   iconSize?: number;
   type?: 'button' | 'submit';
+  disabled?: boolean;
   onClick?: () => void;
   onSubmit?: () => void;
 }
@@ -30,6 +31,7 @@ const Button: FC<ButtonProps> = ({
   onSubmit,
   variant,
   type,
+  disabled,
   iconSize = 14,
 }) => {
   let classNameValue: string = '';
@@ -62,6 +64,7 @@ const Button: FC<ButtonProps> = ({
       className={twMerge(className, classNameValue)}
       onClick={onClick}
       onSubmit={onSubmit}
+      disabled={disabled}
     >
       {icon && (
         <span className="mt-1">

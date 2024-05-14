@@ -1,35 +1,167 @@
-import { FC, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { FC, MouseEvent, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
+import * as yup from 'yup';
+import DepartmentDto from '../../../../../dto/department.dto';
+import { SearchType } from '../../../../../hooks/useSearch';
+import routes from '../../../../../routes/paths';
+import Button from '../../../../../shared/authenticated/buttons/Button';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import UpdateModal from '../../../../../shared/authenticated/Modal/UpdateModal';
 import Icon from '../../../../../shared/Icon';
 import Input from '../../../../../shared/inputs/Input';
 import InputIcon from '../../../../../shared/inputs/InputIcon';
-import { TypeList, UserType } from '../../constants';
+import Spinner from '../../../../../shared/Spinner';
+import http from '../../../../../utils/http-common';
+import mapError from '../../../../../utils/mapErrorResponse';
+import { REGEX_ID } from '../../../../../utils/regex';
+
+const schema = yup.object({
+  name: yup
+    .string()
+    .required('Le nom du département est requis')
+    .min(4, 'Le nom du département doit contenir au moin 4 caractères'),
+  role: yup.string().required('Vous devez séléctionner un rôle').matches(REGEX_ID),
+});
 
 interface UpdateModalTypeProps {
   onClose: () => void;
-  user: UserType;
-  setValue?: (elem: string) => void;
+  department: DepartmentDto;
 }
 
-const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, user, setValue }) => {
+const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { mutateAsync: onUpdateDepartment, isPending } = useMutation({
+    mutationKey: ['department', { department }],
+    mutationFn: (_department: { name: string | undefined; role: string | undefined }) =>
+      http
+        .put<DepartmentDto>(`department/${department?.id}`, _department)
+        .then((response) => response.data),
+  });
+  const {
+    control,
+    handleSubmit,
+    setValue: setRoleTypeValue,
+    getValues,
+    formState: { errors },
+    setError,
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: { name: department.name, role: department.role.id },
+  });
+
+  const updateDepartment = async (_data: {
+    name: string | undefined;
+    role: string | undefined;
+  }) => {
+    try {
+      await onUpdateDepartment({ ..._data });
+      await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
+      onClose();
+      await queryClient.invalidateQueries({ queryKey: ['department'] });
+    } catch (error) {
+      const errorResponse = error as AxiosError<{
+        status: number;
+        error: { property: 'name' | 'role'; constraints: Record<string, string> }[];
+      }>;
+      if (errorResponse.response?.status === 422 && errorResponse.response?.data) {
+        mapError<'name' | 'role'>(
+          errorResponse.response?.data?.error,
+          (_property, _type, _message) => {
+            setError(_property, { type: _type, message: _message });
+          },
+        );
+      }
+      if (errorResponse.code === 'ERR_NETWORK') {
+        navigate(routes.server_error.path);
+      }
+    }
+  };
+  const {
+    data: roles,
+    isLoading: isRoleLoading,
+    isSuccess: isRoleLoadingSuccessFully,
+  } = useQuery({
+    queryKey: ['dropdownRole'],
+    queryFn: () =>
+      http.get<{ id: string; name: string }[]>('role').then((response) => response.data),
+  });
+
+  const toggleShow = (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setShow((s) => !s);
+  };
+
+  const getRole = (_department: { id: string; name: string }, e?: MouseEvent<HTMLElement>) => {
+    e?.stopPropagation();
+    setShow(false);
+    setRoleTypeValue('role', _department.id);
+  };
+
+  const onSubmit = (data: { name: string | undefined; role: string | undefined }) => {
+    updateDepartment({ ...data });
+  };
+
   return (
     <UpdateModal onClose={onClose} title="Modification de type">
-      <div className="flex gap-4 flex-col w-full">
-        <Input type="text" value={user.title} placeholder="Nom du type" />
-        <div role="presentation" onClick={() => setShow((s) => !s)} className="relative">
-          <InputIcon
-            value={user.name}
-            placeholder="Rôle"
-            additionalClass="py-1 hover:bg-gray-50"
-            additionalInputClass="text-base"
-            icon="search"
-            endIcon={<Icon name="x" size={12} className="text-gray-500" />}
-          />
-          {show && <DropDown items={TypeList} setValue={setValue} />}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex gap-4 flex-col w-full">
+          <div className="relative">
+            <Controller
+              name="name"
+              control={control}
+              render={({ field: { onChange, onBlur, ref, value } }) => (
+                <Input
+                  value={value}
+                  type="text"
+                  placeholder="Nom du type"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  refs={ref}
+                  additionalClass={twMerge(
+                    errors.name && '!border-red-500 border !border-1 text-red-500',
+                    'bg-transparent border rounded border-gray-1 active:border-secondary border pr-10',
+                  )}
+                />
+              )}
+            />
+            {errors.name && (
+              <span className="text-red-500 absolute left-1 leading-[11px] top-full mt-0.5 text-xs font-medium">
+                {errors.name.message}
+              </span>
+            )}
+          </div>
+          {isRoleLoading && (
+            <Spinner additionalClassName="w-8 h-8 mx-auto flex items-center justify-center" />
+          )}
+          {isRoleLoadingSuccessFully && (
+            <div role="presentation" onClick={toggleShow} className="relative">
+              <InputIcon
+                value={roles?.filter((role) => role.id === getValues('role'))[0].name}
+                placeholder="Rôle"
+                additionalClass="py-1 hover:bg-gray-50"
+                onChange={() => {}}
+                additionalInputClass="text-base"
+                icon="search"
+                endIcon={<Icon name="x" size={12} className="text-gray-500" />}
+              />
+              {show && <DropDown items={roles} setValue={getRole} />}
+            </div>
+          )}
         </div>
-      </div>
+        <Button
+          disabled={isPending}
+          title={<div className="flex flex-row gap-2">Modifier{isPending && <Spinner />}</div>}
+          variant="secondary-1"
+        />
+      </form>
     </UpdateModal>
   );
 };

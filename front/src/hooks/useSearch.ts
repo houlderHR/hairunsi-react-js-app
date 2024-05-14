@@ -1,10 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import http from '../utils/http-common';
 
 export enum SearchType {
-  USER = 'user',
-  TYPE = 'type',
-  ROLE = 'role',
+  USER = 'userSearch',
+  TYPE = 'typeSearch',
+  ROLE = 'roleSearch',
 }
 
 const searchUser = <T>(search: string) =>
@@ -30,13 +30,14 @@ const getMutationSearchType = <T>(searchType?: string) => {
   }
 };
 
-const useSearch = <T>(searchType?: string) => {
-  const { data, mutate } = useMutation({
-    mutationKey: [searchType],
-    mutationFn: (search: string) => getMutationSearchType<T>(searchType)(search),
+const useSearch = <T>(searchType: string, searchValue: string) => {
+  const { data, refetch, isFetching } = useQuery({
+    queryKey: [searchType],
+    queryFn: () => getMutationSearchType<T>(searchType)(searchValue),
+    enabled: !!searchValue,
   });
 
-  return { data, mutate };
+  return { data, mutate: refetch, isFetching };
 };
 
 export default useSearch;

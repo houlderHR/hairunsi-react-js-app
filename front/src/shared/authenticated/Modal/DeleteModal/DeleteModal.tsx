@@ -9,6 +9,7 @@ interface DeleteModalProps {
   description: string;
   confirmation: string;
   icon?: string;
+  onDelete: () => void;
 }
 
 const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
@@ -30,6 +31,7 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
     <div className="flex flex-col md:flex-row gap-2">
       <Button title="Annuler" icon="x" className="uppercase" onClick={onClose} />
       <Button
+        onClick={onDelete}
         title="Supprimer"
         icon="trash-1"
         className="uppercase"
