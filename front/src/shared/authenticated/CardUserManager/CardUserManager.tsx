@@ -18,7 +18,7 @@ const CardUserManager: FC<PropsWithChildren<CardUserManagerProps>> = ({
 }) => (
   <div
     className={twMerge(
-      'p-6 border  cursor-default group hover:border-gray-3 w-full bg-white text-gray-1 rounded-xl duration-300',
+      'p-6 border cursor-default group hover:border-gray-3 w-full bg-white text-gray-1 rounded-xl duration-300',
       iconVisible ? 'border-gray-3' : 'border-transparent',
     )}
   >

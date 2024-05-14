@@ -75,7 +75,7 @@ const UserManagerRole = () => {
               openUpdateModal={openUpdateModal(item)}
               openDeleteModal={openDeleteModal(item)}
               title={item.name}
-              maxElement={11}
+              maxElement={10}
               iconVisible={index === 0}
               items={item.permissions}
             />
@@ -88,7 +88,7 @@ const UserManagerRole = () => {
               openUpdateModal={openUpdateModal(item)}
               openDeleteModal={openDeleteModal(item)}
               title={item.name}
-              maxElement={11}
+              maxElement={10}
               iconVisible={index === 0}
               items={item.permissions}
             />

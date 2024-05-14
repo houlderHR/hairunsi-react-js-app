@@ -42,6 +42,9 @@ class RoleService {
     try {
       return await AppDataSource.getRepository(Role).find({
         relations: { permissions: true },
+        order: {
+          created_at: 'ASC',
+        },
       });
     } catch (error) {
       throw new InternalServerErrorException();

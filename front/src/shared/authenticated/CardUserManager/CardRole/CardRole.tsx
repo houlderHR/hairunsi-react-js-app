@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import PermissionDto from '../../../../dto/permission.dto';
 import CardUserManager from '../CardUserManager';
 import CardItemRole from './CardItemRole';
@@ -19,26 +19,53 @@ const CardRole: FC<CardRoleProps> = ({
   openUpdateModal = () => {},
   openDeleteModal = () => {},
   iconVisible = false,
-}) => (
-  <CardUserManager
-    title={title}
-    iconVisible={iconVisible}
-    openUpdateModal={openUpdateModal}
-    openDeleteModal={openDeleteModal}
-  >
-    <div className="flex mt-4 gap-2 flex-wrap justify-start">
-      {items
-        .filter((_, index) => index < maxElement)
-        .map((item) => (
-          <CardItemRole addClass="rounded border-secondary-3 " title={item.name} key={item.id} />
-        ))}
-      {items.length >= maxElement && (
-        <p className="bg-secondary-3 px-8px text-sm rounded text-white h-[25px] hover:bg-gray-3">
-          <span className="m-0 p-0">...</span>
-        </p>
-      )}
-    </div>
-  </CardUserManager>
-);
+}) => {
+  const [isDrop, setIsDrop] = useState(false);
+  return (
+    <CardUserManager
+      title={title}
+      iconVisible={iconVisible}
+      openUpdateModal={openUpdateModal}
+      openDeleteModal={openDeleteModal}
+    >
+      <div className="transition ease-in duration-300 flex mt-4 gap-2 flex-wrap justify-start">
+        {!isDrop
+          ? items
+              .filter((_, index) => index < maxElement)
+              .map((item) => (
+                <CardItemRole
+                  id={item.id}
+                  addClass="rounded border-secondary-3 "
+                  title={item.name}
+                  key={item.id}
+                />
+              ))
+          : items.map((item) => (
+              <CardItemRole
+                id={item.id}
+                addClass="rounded border-secondary-3 "
+                title={item.name}
+                key={item.id}
+              />
+            ))}
+        {items.length >= maxElement && (
+          <button
+            type="button"
+            onClick={() => {
+              setIsDrop((s) => !s);
+            }}
+            className="bg-secondary-3 flex px-8px text-sm rounded transition ease-in duration-300  text-white h-[25px] hover:bg-gray-3"
+          >
+            {isDrop ? (
+              <span className="m-0 pt-[2px]">x</span>
+            ) : (
+              <span className="mt-0 p-0">...</span>
+            )}
+          </button>
+        )}
+      </div>
+    </CardUserManager>
+  );
+};
 
 export default CardRole;
