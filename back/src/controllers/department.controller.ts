@@ -48,7 +48,7 @@ class DepartmentController {
 
       return response.status(StatusCodes.OK).json({ message: 'Departement supprimé avec succés' });
     } catch (error) {
-      return response.status(error.status).json(error);
+      return response.status(error.status ?? StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   }
 

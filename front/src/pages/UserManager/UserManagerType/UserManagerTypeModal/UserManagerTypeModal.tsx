@@ -1,6 +1,8 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
+import http from '../../../../utils/http-common';
 import { DepartmentType } from '../type';
 import CreateTypeModal from './CreateTypeModal';
 import UpdateTypeModal from './UpdateTypeModal';
@@ -16,8 +18,29 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   setShowModal,
   department,
 }) => {
+  const queryClient = useQueryClient();
+  const {
+    mutateAsync: onDeleteDepartment,
+    isPending,
+    isSuccess,
+    isError,
+  } = useMutation({
+    mutationKey: ['deleteDepartment'],
+    mutationFn: () =>
+      http.delete<DepartmentType>(`department/${department?.id}`).then((response) => response.data),
+  });
+
   const onClose = () => {
     setShowModal(ModalShowStateType.CLOSE);
+  };
+  const onDelete = async () => {
+    try {
+      await onDeleteDepartment();
+      await queryClient.invalidateQueries({ queryKey: ['department'] });
+      onClose();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (modalState === ModalShowStateType.CREATE) {
@@ -30,6 +53,7 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   if (modalState === ModalShowStateType.DELETE) {
     return (
       <DeleteModal
+        onDelete={onDelete}
         icon="role"
         description=" Vous êtes sur le point de supprimer ce type d’utilisateur."
         confirmation=" Etes-vous sûr de vouloir supprimer ce type d’utilisateur?"
