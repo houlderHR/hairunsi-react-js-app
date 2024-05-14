@@ -34,7 +34,7 @@ const sortPermissionByName = (data: PermissionDto[]) =>
     return 0;
   });
 
-const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
+const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
   const [show, setShow] = useState(false);
   const [selectPermission, setSelectPermission] = useState(true);
   const { data, error, isLoading } = useGetPermissionQuery();
@@ -88,13 +88,13 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
       setPermissions(sortPermissionByName(result));
       if (!isAlreadyRendered && updateRole) {
         setSelectPermission(true);
-        setPermissionSelected(sortPermissionByName(updateRole.permissions));
+        setPermissionSelected(updateRole.permissions);
         setIsAlreadyRendered(true);
       }
     }
   }, [data, updateRole, isAlreadyRendered]);
 
-  if (error) return <div>{error.message}</div>;
+  if (error) navigate(routes.server_error.path);
   if (isLoading) return <Loading />;
 
   const setValue = (elem: PermissionDto) => {
@@ -118,7 +118,6 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
       return result;
     });
   };
-
   return (
     <CreateModal onClose={onClose} title={updateRole ? 'Modification rôle' : 'Création de rôle'}>
       <form onSubmit={onSubmit} className="w-full">
@@ -134,7 +133,7 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   type="text"
-                  placeholder="Nom du role"
+                  placeholder="Nom du rôle"
                   additionalClass={twMerge(
                     `${errors.role ? '!border-1 !border-red-500' : ''}`,
                     'focus:border-secondary border',
@@ -183,10 +182,10 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
             </div>
           </div>
         </div>
-        <Button type="submit" title={updateRole ? 'Modifier' : 'Créer'} variant="secondary-1" />
+        <Button type="submit" title="Créer" variant="secondary-1" />
       </form>
     </CreateModal>
   );
 };
 
-export default CreateRoleModal;
+export default CreateOrUpdateRoleModal;

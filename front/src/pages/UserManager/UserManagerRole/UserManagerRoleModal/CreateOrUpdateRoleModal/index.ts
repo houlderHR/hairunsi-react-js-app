@@ -1,3 +1,3 @@
-import CreateRoleModal from './CreateRoleModal';
+import CreateOrUpdateRoleModal from './CreateOrUpadateRoleModal';
 
-export default CreateRoleModal;
+export default CreateOrUpdateRoleModal;

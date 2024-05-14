@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { CreateRoleDto } from '../dto/role.dto';
 import http from '../utils/http-common';
 import { QUERY_ROLE_KEY } from '../utils/query.constants';
+import { SearchType } from './useSearch';
 
 const BASE_PATH = '/role';
 
@@ -28,6 +29,7 @@ export const useUpdateRole = (id?: string) => {
       http.put(`${BASE_PATH}/${id}`, data).then((res) => res.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_ROLE_KEY] });
+      queryClient.invalidateQueries({ queryKey: [SearchType.ROLE] });
     },
   });
 };

@@ -1,10 +1,9 @@
 import { FC } from 'react';
 import { RoleResponseDto } from '../../../../dto/role.dto';
-// import UpdateRoleModal from './UpdateRoleModal';
 import { useDeleteRole } from '../../../../hooks/useRole';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
-import CreateRoleModal from './CreateOrUpdateRoleModal';
+import CreateOrUpdateRoleModal from './CreateOrUpdateRoleModal';
 
 interface UserManagerRoleModalProps {
   modalState: ModalShowStateType;
@@ -33,7 +32,7 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
   };
 
   if (modalState === ModalShowStateType.CREATE) {
-    return <CreateRoleModal onClose={onClose} />;
+    return <CreateOrUpdateRoleModal onClose={onClose} />;
   }
   if (modalState === ModalShowStateType.DELETE) {
     return (
@@ -47,7 +46,7 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
     );
   }
   if (role && modalState === ModalShowStateType.UPDATE) {
-    return <CreateRoleModal updateRole={role} onClose={onClose} />;
+    return <CreateOrUpdateRoleModal updateRole={role} onClose={onClose} />;
   }
 
   return null;
