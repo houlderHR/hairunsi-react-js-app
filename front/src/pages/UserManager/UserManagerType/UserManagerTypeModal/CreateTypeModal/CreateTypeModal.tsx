@@ -17,6 +17,7 @@ import Loading from '../../../../../shared/Loading/Loading';
 import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import mapError from '../../../../../utils/mapErrorResponse';
+import { REGEX_ID } from '../../../../../utils/regex';
 import { DepartmentType } from '../../type';
 
 interface CreateModalTypeProps {
@@ -28,10 +29,7 @@ const schema = yup.object({
     .string()
     .required('Le nom du département est requis')
     .min(4, 'Le nom du département doit contenir au moin 4 caractères'),
-  role: yup
-    .string()
-    .required('Vous devez séléctionner un rôle')
-    .matches(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/),
+  role: yup.string().required('Vous devez séléctionner un rôle').matches(REGEX_ID),
 });
 
 const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
