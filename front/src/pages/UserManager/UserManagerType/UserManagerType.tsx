@@ -8,13 +8,13 @@ import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
 import Spinner from '../../../shared/Spinner';
 import http from '../../../utils/http-common';
-import { DepartmentType } from './type';
 import UserManagerTypeModal from './UserManagerTypeModal';
+import DepartmentDto from '../../../dto/department.dto';
 
 const UserManagerType: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
-  const [department, setDepartment] = useState<DepartmentType | undefined>();
-  const [type, setType] = useState<DepartmentType[] | undefined>();
+  const [department, setDepartment] = useState<DepartmentDto | undefined>();
+  const [type, setType] = useState<DepartmentDto[] | undefined>();
   const [searchLoading, setSearchLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -24,20 +24,20 @@ const UserManagerType: FC = () => {
     queryKey: ['department'],
     queryFn: () =>
       http
-        .get<DepartmentType[]>('department', { params: { role: true } })
+        .get<DepartmentDto[]>('department', { params: { role: true } })
         .then((response) => response.data)
         .catch(() => navigate(routes.server_error.path)),
   });
 
-  const pushSearchType = (_department: DepartmentType[] | undefined) => {
+  const pushSearchType = (_department: DepartmentDto[] | undefined) => {
     setType(_department);
   };
 
-  const openUpdateModal = (_department: DepartmentType) => () => {
+  const openUpdateModal = (_department: DepartmentDto) => () => {
     setDepartment(_department);
     setShowModal(ModalShowStateType.UPDATE);
   };
-  const openDeleteModal = (_department: DepartmentType) => () => {
+  const openDeleteModal = (_department: DepartmentDto) => () => {
     setDepartment(_department);
     setShowModal(ModalShowStateType.DELETE);
   };
@@ -60,7 +60,7 @@ const UserManagerType: FC = () => {
         {!type &&
           !searchLoading &&
           !isDepartmentLoading &&
-          departments?.map((_department: DepartmentType) => (
+          departments?.map((_department: DepartmentDto) => (
             <CardType
               openUpdateModal={openUpdateModal(_department)}
               openDeleteModal={openDeleteModal(_department)}
@@ -76,7 +76,7 @@ const UserManagerType: FC = () => {
         {!searchLoading &&
           type &&
           type.length > 0 &&
-          type?.map((_type: DepartmentType) => (
+          type?.map((_type: DepartmentDto) => (
             <CardType
               openUpdateModal={openUpdateModal(_type)}
               openDeleteModal={openDeleteModal(_type)}

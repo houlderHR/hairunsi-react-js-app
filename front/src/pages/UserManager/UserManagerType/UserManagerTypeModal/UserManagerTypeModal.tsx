@@ -2,19 +2,19 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DepartmentDto from '../../../../dto/department.dto';
 import { SearchType } from '../../../../hooks/useSearch';
 import routes from '../../../../routes/paths';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
 import http from '../../../../utils/http-common';
-import { DepartmentType } from '../type';
 import CreateTypeModal from './CreateTypeModal';
 import UpdateTypeModal from './UpdateTypeModal';
 
 interface UserManagerTypeModalProps {
   modalState: ModalShowStateType;
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
-  department?: DepartmentType;
+  department?: DepartmentDto;
 }
 
 const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
@@ -27,7 +27,7 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   const { mutateAsync: onDeleteDepartment } = useMutation({
     mutationKey: ['deleteDepartment', department?.id],
     mutationFn: () =>
-      http.delete<DepartmentType>(`department/${department?.id}`).then((response) => response.data),
+      http.delete<DepartmentDto>(`department/${department?.id}`).then((response) => response.data),
   });
 
   const onClose = () => {

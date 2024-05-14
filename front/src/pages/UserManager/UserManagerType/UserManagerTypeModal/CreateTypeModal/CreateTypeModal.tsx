@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import * as yup from 'yup';
+import DepartmentDto from '../../../../../dto/department.dto';
 import { SearchType } from '../../../../../hooks/useSearch';
 import routes from '../../../../../routes/paths';
 import Button from '../../../../../shared/authenticated/buttons/Button';
@@ -18,7 +19,6 @@ import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import mapError from '../../../../../utils/mapErrorResponse';
 import { REGEX_ID } from '../../../../../utils/regex';
-import { DepartmentType } from '../../type';
 
 interface CreateModalTypeProps {
   onClose: () => void;
@@ -39,7 +39,7 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
   const { mutateAsync: onCreateDepartment, isPending } = useMutation({
     mutationKey: ['createDepartment'],
     mutationFn: (_department: { name: string | undefined; role: string | undefined }) =>
-      http.post<DepartmentType>(`department`, _department).then((response) => response.data),
+      http.post<DepartmentDto>(`department`, _department).then((response) => response.data),
   });
   const {
     control,

@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import * as yup from 'yup';
+import DepartmentDto from '../../../../../dto/department.dto';
 import { SearchType } from '../../../../../hooks/useSearch';
 import routes from '../../../../../routes/paths';
 import Button from '../../../../../shared/authenticated/buttons/Button';
@@ -18,7 +19,6 @@ import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import mapError from '../../../../../utils/mapErrorResponse';
 import { REGEX_ID } from '../../../../../utils/regex';
-import { DepartmentType } from '../../type';
 
 const schema = yup.object({
   name: yup
@@ -30,7 +30,7 @@ const schema = yup.object({
 
 interface UpdateModalTypeProps {
   onClose: () => void;
-  department: DepartmentType;
+  department: DepartmentDto;
 }
 
 const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
@@ -41,7 +41,7 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
     mutationKey: ['department', { department }],
     mutationFn: (_department: { name: string | undefined; role: string | undefined }) =>
       http
-        .put<DepartmentType>(`department/${department?.id}`, _department)
+        .put<DepartmentDto>(`department/${department?.id}`, _department)
         .then((response) => response.data),
   });
   const {
