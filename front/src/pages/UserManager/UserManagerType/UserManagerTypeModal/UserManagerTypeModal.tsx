@@ -36,9 +36,9 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   const onDelete = async () => {
     try {
       await onDeleteDepartment();
+      onClose();
       await queryClient.invalidateQueries({ queryKey: ['department'] });
       await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
-      onClose();
     } catch (error) {
       const errorResponse = error as AxiosError;
       if (errorResponse.status === 404) {

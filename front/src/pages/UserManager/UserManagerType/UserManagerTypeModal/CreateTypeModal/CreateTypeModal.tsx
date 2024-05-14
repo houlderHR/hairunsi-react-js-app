@@ -81,9 +81,9 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
   }) => {
     try {
       await onCreateDepartment({ ..._data });
+      onClose();
       await queryClient.invalidateQueries({ queryKey: ['department'] });
       await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
-      onClose();
     } catch (error) {
       const errorResponse = error as AxiosError<{
         status: number;

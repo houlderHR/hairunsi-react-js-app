@@ -62,9 +62,9 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
   }) => {
     try {
       await onUpdateDepartment({ ..._data });
-      await queryClient.invalidateQueries({ queryKey: ['department'] });
       await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
       onClose();
+      await queryClient.invalidateQueries({ queryKey: ['department'] });
     } catch (error) {
       const errorResponse = error as AxiosError<{
         status: number;
