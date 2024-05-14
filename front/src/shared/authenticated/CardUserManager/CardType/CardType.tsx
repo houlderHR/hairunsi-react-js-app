@@ -9,7 +9,6 @@ interface CardTypeProps {
   openDeleteModal: () => void;
 }
 
-// CardType
 const CardType: FC<CardTypeProps> = ({ department, openUpdateModal, openDeleteModal }) => (
   <CardUserManager
     openDeleteModal={openDeleteModal}
