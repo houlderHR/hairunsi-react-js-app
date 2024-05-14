@@ -13,7 +13,6 @@ import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import Icon from '../../../../../shared/Icon';
 import Input from '../../../../../shared/inputs/Input';
 import InputIcon from '../../../../../shared/inputs/InputIcon';
-import Loading from '../../../../../shared/Loading/Loading';
 import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import mapError from '../../../../../utils/mapErrorResponse';
@@ -138,7 +137,9 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
               </span>
             )}
           </div>
-          {isLoadingRoles && <Loading />}
+          {isLoadingRoles && (
+            <Spinner additionalClassName="w-8 h-8 mx-auto flex items-center justify-center" />
+          )}
           {isRoleGettedSuccessfully && (
             <div role="presentation" onClick={toggleShow} className="relative">
               <InputIcon

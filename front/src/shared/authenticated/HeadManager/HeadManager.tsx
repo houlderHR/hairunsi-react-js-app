@@ -9,6 +9,7 @@ interface HeadManagerProps<T> {
   title: string;
   searchType?: SearchType;
   pushSearch: (s: T[] | undefined) => void;
+  getSearchLoading?: (isLoading: boolean) => void;
 }
 
 const HeadManager = <T,>({
@@ -16,10 +17,11 @@ const HeadManager = <T,>({
   title,
   pushSearch,
   searchType = SearchType.USER,
+  getSearchLoading,
 }: HeadManagerProps<T>) => {
   const [search, setSearch] = useState<string>('');
   const searchValue = useDebounce(search, 300);
-  const { data, mutate } = useSearch<T>(searchType, searchValue);
+  const { data, mutate, isFetching } = useSearch<T>(searchType, searchValue);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -30,7 +32,9 @@ const HeadManager = <T,>({
   }, [mutate]);
 
   useEffect(() => {
-    if (searchValue !== '') loadSearch();
+    if (searchValue !== '') {
+      loadSearch();
+    }
   }, [loadSearch, searchValue]);
 
   useEffect(() => {
@@ -40,6 +44,8 @@ const HeadManager = <T,>({
     }
     pushSearch(data);
   }, [data, pushSearch, searchValue]);
+
+  useEffect(() => getSearchLoading && getSearchLoading(isFetching), [isFetching, getSearchLoading]);
 
   return (
     <div className="flex flex-row gap-x-4">

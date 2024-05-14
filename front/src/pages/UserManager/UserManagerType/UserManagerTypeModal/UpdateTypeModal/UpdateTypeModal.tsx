@@ -83,7 +83,11 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
       }
     }
   };
-  const { data: roles } = useQuery({
+  const {
+    data: roles,
+    isLoading: isRoleLoading,
+    isSuccess: isRoleLoadingSuccessFully,
+  } = useQuery({
     queryKey: ['dropdownRole'],
     queryFn: () =>
       http.get<{ id: string; name: string }[]>('role').then((response) => response.data),
@@ -134,18 +138,23 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
               </span>
             )}
           </div>
-          <div role="presentation" onClick={toggleShow} className="relative">
-            <InputIcon
-              value={roles?.filter((role) => role.id === getValues('role'))[0].name}
-              placeholder="Rôle"
-              additionalClass="py-1 hover:bg-gray-50"
-              onChange={() => {}}
-              additionalInputClass="text-base"
-              icon="search"
-              endIcon={<Icon name="x" size={12} className="text-gray-500" />}
-            />
-            {show && <DropDown items={roles} setValue={getRole} />}
-          </div>
+          {isRoleLoading && (
+            <Spinner additionalClassName="w-8 h-8 mx-auto flex items-center justify-center" />
+          )}
+          {isRoleLoadingSuccessFully && (
+            <div role="presentation" onClick={toggleShow} className="relative">
+              <InputIcon
+                value={roles?.filter((role) => role.id === getValues('role'))[0].name}
+                placeholder="Rôle"
+                additionalClass="py-1 hover:bg-gray-50"
+                onChange={() => {}}
+                additionalInputClass="text-base"
+                icon="search"
+                endIcon={<Icon name="x" size={12} className="text-gray-500" />}
+              />
+              {show && <DropDown items={roles} setValue={getRole} />}
+            </div>
+          )}
         </div>
         <Button
           disabled={isPending}

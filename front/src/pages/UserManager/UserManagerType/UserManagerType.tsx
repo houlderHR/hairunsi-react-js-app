@@ -15,7 +15,10 @@ const UserManagerType: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
   const [department, setDepartment] = useState<DepartmentType | undefined>();
   const [type, setType] = useState<DepartmentType[] | undefined>();
+  const [searchLoading, setSearchLoading] = useState(false);
   const navigate = useNavigate();
+
+  const getSearchLoading = (isLoading: boolean) => setSearchLoading(isLoading);
 
   const { data: departments, isLoading: isDepartmentLoading } = useQuery({
     queryKey: ['department'],
@@ -38,6 +41,7 @@ const UserManagerType: FC = () => {
     setDepartment(_department);
     setShowModal(ModalShowStateType.DELETE);
   };
+
   return (
     <>
       <HeadManager
@@ -45,14 +49,16 @@ const UserManagerType: FC = () => {
         onOpen={() => setShowModal(ModalShowStateType.CREATE)}
         pushSearch={pushSearchType}
         searchType={SearchType.TYPE}
+        getSearchLoading={getSearchLoading}
       />
       <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
-        {isDepartmentLoading && (
+        {(isDepartmentLoading || searchLoading) && (
           <div className="absolute w-full mt-[20rem] h-full flex items-center justify-center top-0 left-0">
             <Loading />
           </div>
         )}
         {!type &&
+          !searchLoading &&
           departments?.map((_department: DepartmentType) => (
             <CardType
               openUpdateModal={openUpdateModal(_department)}
@@ -61,12 +67,13 @@ const UserManagerType: FC = () => {
               key={_department.id}
             />
           ))}
-        {type && type.length === 0 && (
+        {!searchLoading && type && type.length === 0 && (
           <p className="text-center text-gray-500 font-medium absolute mx-auto w-full">
             Aucun type trouvé
           </p>
         )}
-        {type &&
+        {!searchLoading &&
+          type &&
           type.length > 0 &&
           type?.map((_type: DepartmentType) => (
             <CardType
