@@ -17,25 +17,28 @@ const HeadManager = <T,>({
   pushSearch,
   searchType = SearchType.USER,
 }: HeadManagerProps<T>) => {
-  const { data, mutate } = useSearch<T>(searchType);
   const [search, setSearch] = useState<string>('');
   const searchValue = useDebounce(search, 300);
+  const { data, mutate } = useSearch<T>(searchType, searchValue);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
   const loadSearch = useCallback(() => {
-    mutate(searchValue);
-  }, [searchValue, mutate]);
+    mutate();
+  }, [mutate]);
 
   useEffect(() => {
     if (searchValue !== '') loadSearch();
   }, [loadSearch, searchValue]);
 
   useEffect(() => {
-    if (searchValue === '') pushSearch(undefined);
-    else pushSearch(data);
+    if (searchValue === '') {
+      pushSearch(undefined);
+      return;
+    }
+    pushSearch(data);
   }, [data, pushSearch, searchValue]);
 
   return (

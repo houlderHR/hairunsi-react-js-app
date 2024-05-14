@@ -61,14 +61,21 @@ const UserManagerType: FC = () => {
               key={_department.id}
             />
           ))}
-        {type?.map((_type: DepartmentType) => (
-          <CardType
-            openUpdateModal={openUpdateModal(_type)}
-            openDeleteModal={openDeleteModal(_type)}
-            department={_type}
-            key={_type.id}
-          />
-        ))}
+        {type && type.length === 0 && (
+          <p className="text-center text-gray-500 font-medium absolute mx-auto w-full">
+            Aucun type trouvé
+          </p>
+        )}
+        {type &&
+          type.length > 0 &&
+          type?.map((_type: DepartmentType) => (
+            <CardType
+              openUpdateModal={openUpdateModal(_type)}
+              openDeleteModal={openDeleteModal(_type)}
+              department={_type}
+              key={_type.id}
+            />
+          ))}
       </div>
       <UserManagerTypeModal
         department={department}

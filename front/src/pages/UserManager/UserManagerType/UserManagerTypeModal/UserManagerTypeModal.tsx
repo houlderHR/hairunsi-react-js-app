@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
+import { SearchType } from '../../../../hooks/useSearch';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
 import http from '../../../../utils/http-common';
@@ -37,6 +38,7 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
     try {
       await onDeleteDepartment();
       await queryClient.invalidateQueries({ queryKey: ['department'] });
+      await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
       onClose();
     } catch (error) {
       console.log(error);

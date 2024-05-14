@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import * as yup from 'yup';
+import { SearchType } from '../../../../../hooks/useSearch';
 import routes from '../../../../../routes/paths';
 import Button from '../../../../../shared/authenticated/buttons/Button';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
@@ -63,6 +64,7 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
     try {
       await onUpdateDepartment({ ..._data });
       await queryClient.invalidateQueries({ queryKey: ['department'] });
+      await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
       onClose();
     } catch (error) {
       const errorResponse = error as AxiosError<{
