@@ -14,6 +14,7 @@ import Icon from '../../../../../shared/Icon';
 import Input from '../../../../../shared/inputs/Input';
 import InputIcon from '../../../../../shared/inputs/InputIcon';
 import Loading from '../../../../../shared/Loading/Loading';
+import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import mapError from '../../../../../utils/mapErrorResponse';
 import { DepartmentType } from '../../type';
@@ -37,7 +38,7 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { mutateAsync: onCreateDepartment } = useMutation({
+  const { mutateAsync: onCreateDepartment, isPending } = useMutation({
     mutationKey: ['createDepartment'],
     mutationFn: (_department: { name: string | undefined; role: string | undefined }) =>
       http.post<DepartmentType>(`department`, _department).then((response) => response.data),
@@ -70,10 +71,10 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
     setShow((s) => !s);
   };
 
-  const getRole = (id: string, e?: MouseEvent<HTMLElement>) => {
+  const getRole = (department: { id: string; name: string }, e?: MouseEvent<HTMLElement>) => {
     e?.stopPropagation();
     setShow(false);
-    setRoleTypeValue('role', id);
+    setRoleTypeValue('role', department.id);
   };
 
   const createDepartment = async (_data: {
@@ -166,7 +167,11 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
             </div>
           )}
         </div>
-        <Button title="Créer" variant="secondary-1" />
+        <Button
+          disabled={isPending}
+          title={<div className="flex flex-row gap-2">Créer{isPending && <Spinner />}</div>}
+          variant="secondary-1"
+        />
       </form>
     </CreateModal>
   );

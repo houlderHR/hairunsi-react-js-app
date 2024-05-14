@@ -7,7 +7,7 @@ type DropDownType = {
 };
 interface DropDownProps {
   items: DropDownType[];
-  setValue?: (elem: DropDownType) => void;
+  setValue?: (elem: DropDownType, e?: MouseEvent<HTMLElement>) => void;
 }
 
 const DropDown: FC<DropDownProps> = ({ items, setValue }) => (
@@ -18,7 +18,7 @@ const DropDown: FC<DropDownProps> = ({ items, setValue }) => (
           className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md"
           key={item.id}
           role="presentation"
-          onClick={(e: MouseEvent<HTMLElement>) => setValue(item.id, e)}
+          onClick={(e: MouseEvent<HTMLElement>) => setValue(item, e)}
         >
           {item.name}
         </li>

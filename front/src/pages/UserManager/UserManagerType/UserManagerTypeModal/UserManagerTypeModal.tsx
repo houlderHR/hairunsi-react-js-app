@@ -1,6 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SearchType } from '../../../../hooks/useSearch';
+import routes from '../../../../routes/paths';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
 import http from '../../../../utils/http-common';
@@ -20,12 +23,8 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   department,
 }) => {
   const queryClient = useQueryClient();
-  const {
-    mutateAsync: onDeleteDepartment,
-    isPending,
-    isSuccess,
-    isError,
-  } = useMutation({
+  const navigate = useNavigate();
+  const { mutateAsync: onDeleteDepartment } = useMutation({
     mutationKey: ['deleteDepartment', department?.id],
     mutationFn: () =>
       http.delete<DepartmentType>(`department/${department?.id}`).then((response) => response.data),
@@ -41,7 +40,14 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
       await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
       onClose();
     } catch (error) {
-      console.log(error);
+      const errorResponse = error as AxiosError;
+      if (errorResponse.status === 404) {
+        await queryClient.invalidateQueries({ queryKey: ['department'] });
+        onClose();
+      }
+      if (errorResponse.code === 'ERR_NETWORK') {
+        navigate(routes.server_error.path);
+      }
     }
   };
 

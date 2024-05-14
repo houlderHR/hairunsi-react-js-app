@@ -14,6 +14,7 @@ import UpdateModal from '../../../../../shared/authenticated/Modal/UpdateModal';
 import Icon from '../../../../../shared/Icon';
 import Input from '../../../../../shared/inputs/Input';
 import InputIcon from '../../../../../shared/inputs/InputIcon';
+import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import mapError from '../../../../../utils/mapErrorResponse';
 import { DepartmentType } from '../../type';
@@ -38,7 +39,7 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { mutateAsync: onUpdateDepartment } = useMutation({
+  const { mutateAsync: onUpdateDepartment, isPending } = useMutation({
     mutationKey: ['department', { department }],
     mutationFn: (_department: { name: string | undefined; role: string | undefined }) =>
       http
@@ -96,10 +97,10 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
     setShow((s) => !s);
   };
 
-  const getRole = (id: string, e?: MouseEvent<HTMLElement>) => {
+  const getRole = (_department: { id: string; name: string }, e?: MouseEvent<HTMLElement>) => {
     e?.stopPropagation();
     setShow(false);
-    setRoleTypeValue('role', id);
+    setRoleTypeValue('role', _department.id);
   };
 
   const onSubmit = (data: { name: string | undefined; role: string | undefined }) => {
@@ -148,7 +149,11 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
             {show && <DropDown items={roles} setValue={getRole} />}
           </div>
         </div>
-        <Button title="Modifier" variant="secondary-1" />
+        <Button
+          disabled={isPending}
+          title={<div className="flex flex-row gap-2">Modifier{isPending && <Spinner />}</div>}
+          variant="secondary-1"
+        />
       </form>
     </UpdateModal>
   );
