@@ -12,7 +12,7 @@ class UpdateUserDto {
   @MaxLength(255, { message: 'Le prenom ne doit pas dépasser les 255 caractères' })
   lastname: string;
 
-  @IsDateString({}, { message: 'Le format du date est incorrect' })
+  @IsString({ message: 'Le format du date est incorrect' })
   birth_date: Date;
   @IsUUID(undefined, { message: 'Le poste doit etre rensigner et valide' })
   post: UUID;

@@ -65,7 +65,7 @@ class UserService {
       Object.assign(user, {
         firstname: createUserDto.firstname,
         lastname: createUserDto.lastname,
-        birth_date: createUserDto.birth_date,
+        birth_date: new Date(createUserDto.birth_date),
         email: createUserDto.email,
         password: pass || '',
         image: createdImage?.id || '',
@@ -90,7 +90,7 @@ class UserService {
     try {
       return await this.getUserRepository().findOneOrFail({
         where: { uuid },
-        relations: ['post.department.role.permissions'],
+        relations: ['post.department.role.permissions', 'image'],
       });
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
@@ -132,13 +132,12 @@ class UserService {
         newImage = await FileService.update(user.image.id, newFile);
       }
     }
-
     const post = await postService.getPost(updateUserDto.post);
 
     Object.assign(user, {
       firstname: updateUserDto.firstname,
       lastname: updateUserDto.lastname,
-      birth_date: updateUserDto.birth_date,
+      birth_date: new Date(updateUserDto.birth_date),
       image: newImage?.id || user.image,
       email: user.email,
       password: user.password,
@@ -146,12 +145,12 @@ class UserService {
     });
 
     try {
-      return await this.getUserRepository().save(user);
+      const userUpdated = await this.getUserRepository().save(user);
+      return userUpdated;
     } catch (error) {
       if (error.code === '23505') {
         throw new HttpException(StatusCodes.CONFLICT, "L'utilisateur existe déja");
       }
-
       throw new InternalServerErrorException();
     }
   }
@@ -159,7 +158,7 @@ class UserService {
   public async getAllUser(relations?: string[]): Promise<User[]> {
     try {
       return await this.getUserRepository().find({
-        relations: ['post.department.role.permissions'],
+        relations: ['post.department.role.permissions', 'image'],
       });
     } catch (error) {
       throw new InternalServerErrorException();

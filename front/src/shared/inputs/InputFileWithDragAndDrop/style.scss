@@ -16,7 +16,7 @@
       @apply p-5 h-full w-full;
     }
     .restore {
-      @apply text-[#478fff] font-medium cursor-pointer absolute z-50 bottom-1 w-auto h-auto px-1 bg-slate-100/75 border border-slate-50 rounded-md;
+      @apply text-[#478fff] font-medium cursor-pointer absolute z-50 bottom-1 w-full h-full px-1 border hover:bg-gray-600/20 flex flex-col items-center justify-center border-slate-50 rounded-md;
     }
   }
 }

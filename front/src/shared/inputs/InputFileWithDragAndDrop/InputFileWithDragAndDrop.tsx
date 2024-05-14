@@ -1,12 +1,15 @@
 import './style.scss';
 import { ChangeEvent, DragEvent, FC, useRef, useState } from 'react';
+import Icon from '../../Icon';
 
 interface FiLeExport {
   file: File | undefined | null;
   setFile: React.Dispatch<React.SetStateAction<File | undefined | null>>;
+  link?: string | null | undefined;
+  setLink?: React.Dispatch<React.SetStateAction<string | undefined | null>>;
 }
 
-const InputFileWithDragAndDrop: FC<FiLeExport> = ({ file, setFile }) => {
+const InputFileWithDragAndDrop: FC<FiLeExport> = ({ file, setFile, link, setLink }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isOver, setIsOver] = useState(false);
   const [image, setImage] = useState<string>();
@@ -39,7 +42,7 @@ const InputFileWithDragAndDrop: FC<FiLeExport> = ({ file, setFile }) => {
     setImage(url);
   };
 
-  if (!file)
+  if (!link && !file)
     return (
       <div
         className={isOver ? 'uploadtrue' : 'uploadfalse'}
@@ -71,9 +74,19 @@ const InputFileWithDragAndDrop: FC<FiLeExport> = ({ file, setFile }) => {
     );
   return (
     <div className="remove">
-      <img src={image} alt="" className="picture" />
-      <span role="presentation" onClick={() => setFile(null)} className="restore">
-        Restaurer
+      <img src={link || image} alt="" className="picture" />
+      <span
+        role="presentation"
+        onClick={() => {
+          if (setLink) {
+            setFile(null);
+            setLink(null);
+          }
+          setFile(null);
+        }}
+        className="restore group"
+      >
+        <Icon name="pen" className="hidden group-hover:flex" />
       </span>
     </div>
   );

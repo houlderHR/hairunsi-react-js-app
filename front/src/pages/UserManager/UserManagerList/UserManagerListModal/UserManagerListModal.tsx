@@ -9,6 +9,7 @@ interface UserManagerUserModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
   user: ObjDetail | null;
   setUser: React.Dispatch<React.SetStateAction<ObjDetail | null>>;
+  onDelete: () => void;
 }
 
 const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
@@ -16,6 +17,7 @@ const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
   user,
   setUser,
   setShowModal,
+  onDelete,
 }) => {
   const onClose = () => {
     setShowModal(ModalShowStateType.CLOSE);
@@ -30,7 +32,7 @@ const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
         confirmation="Etes-vous sûr de vouloir supprimer cet utilisateur ?"
         onClose={onClose}
         icon="delete-user"
-        onDelete={() => {}}
+        onDelete={onDelete}
       />
     );
 

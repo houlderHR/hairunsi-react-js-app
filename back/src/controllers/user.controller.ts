@@ -10,6 +10,7 @@ class UserController {
   public async create(request, response: Response): Promise<Response> {
     try {
       const createUserDto: CreateUserDto = plainToClass(CreateUserDto, request.body);
+
       const user = await userService.createUser(request.file, createUserDto);
       return response.status(StatusCodes.CREATED).json(user);
     } catch (error) {
@@ -58,7 +59,7 @@ class UserController {
 
       return response.status(StatusCodes.OK).json(user);
     } catch (error) {
-      return response.status(error.status).json(error);
+      return response.status(500).json(error);
     }
   }
 
