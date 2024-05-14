@@ -153,7 +153,7 @@ class AuthService {
 
     const user = await AppDataSource.getRepository(User).findOne({
       where: { email: userDto.email },
-      relations: ['post', 'role', 'image'],
+      relations: ['post', 'image'],
     });
 
     if (user) {

@@ -1,14 +1,16 @@
 import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
+import PermissionDto from '../../../../dto/permission.dto';
 
 interface CardItemRoleProps {
-  title: string;
   icon?: string;
+  id: string;
+  title: string;
   addClass: string;
-  deleteItem?: (elem: string) => void;
+  deleteItem?: (item: PermissionDto) => void;
 }
 
-const CardItemRole: FC<CardItemRoleProps> = ({ title, icon, addClass, deleteItem }) => (
+const CardItemRole: FC<CardItemRoleProps> = ({ id, title, icon, addClass, deleteItem }) => (
   <div
     className={twMerge(
       addClass,
@@ -17,7 +19,11 @@ const CardItemRole: FC<CardItemRoleProps> = ({ title, icon, addClass, deleteItem
   >
     <span>{title}</span>
     {icon && deleteItem && (
-      <div className="h-4 w-4 ml-1" role="presentation" onClick={() => deleteItem(title)}>
+      <div
+        className="h-4 w-4 ml-1"
+        role="presentation"
+        onClick={() => deleteItem({ id, name: title })}
+      >
         <img className="bg-no-repeat bg-contain w-full h-full" src={`/icon/${icon}.svg`} alt="" />
       </div>
     )}

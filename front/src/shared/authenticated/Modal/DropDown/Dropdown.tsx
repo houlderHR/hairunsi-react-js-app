@@ -1,9 +1,13 @@
 import './style.scss';
 import { FC } from 'react';
 
+type DropDownType = {
+  id: string;
+  name: string;
+};
 interface DropDownProps {
-  items: string[];
-  setValue?: (elem: string) => void;
+  items: DropDownType[];
+  setValue?: (elem: DropDownType) => void;
 }
 
 const DropDown: FC<DropDownProps> = ({ items, setValue }) => (
@@ -12,19 +16,19 @@ const DropDown: FC<DropDownProps> = ({ items, setValue }) => (
       setValue ? (
         <li
           className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md"
-          key={item}
+          key={item.id}
           role="presentation"
           onClick={() => setValue(item)}
         >
-          {item}
+          {item.name}
         </li>
       ) : (
         <li
           className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md"
-          key={item}
+          key={item.id}
           role="presentation"
         >
-          {item}
+          {item.name}
         </li>
       ),
     )}

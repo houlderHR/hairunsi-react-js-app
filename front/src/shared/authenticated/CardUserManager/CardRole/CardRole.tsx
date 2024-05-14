@@ -1,10 +1,11 @@
 import { FC } from 'react';
+import PermissionDto from '../../../../dto/permission.dto';
 import CardUserManager from '../CardUserManager';
 import CardItemRole from './CardItemRole';
 
 interface CardRoleProps {
   title: string;
-  items: string[];
+  items: PermissionDto[];
   maxElement: number;
   iconVisible?: boolean;
   openUpdateModal?: () => void;
@@ -29,7 +30,7 @@ const CardRole: FC<CardRoleProps> = ({
       {items
         .filter((_, index) => index < maxElement)
         .map((item) => (
-          <CardItemRole addClass="rounded border-secondary-3 " title={item} key={item} />
+          <CardItemRole addClass="rounded border-secondary-3 " title={item.name} key={item.id} />
         ))}
       {items.length >= maxElement && (
         <p className="bg-secondary-3 px-8px text-sm rounded text-white h-[25px] hover:bg-gray-3">

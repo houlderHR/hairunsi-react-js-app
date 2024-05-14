@@ -4,6 +4,7 @@ import Modal from '..';
 
 interface DeleteModalProps {
   onClose: () => void;
+  onDelete: () => void;
   title?: string;
   description: string;
   confirmation: string;
@@ -16,6 +17,7 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
   confirmation,
   icon,
   onClose,
+  onDelete,
 }) => (
   <Modal onClose={onClose} title={title}>
     <div className="mt-1 flex justify-center">
@@ -33,6 +35,7 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
         className="uppercase"
         iconSize={18}
         variant="danger"
+        onClick={onDelete}
       />
     </div>
   </Modal>

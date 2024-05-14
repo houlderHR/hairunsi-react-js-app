@@ -16,19 +16,19 @@ const IconCard: FC<IconBoxProps> = ({ withOther, openUpdateModal, openDeleteModa
     )}
   >
     <Icon
-      onClick={openDeleteModal}
-      name="trash"
-      className="hover:text-red-400 duration-300"
-      height={15}
-      width={11.67}
-    />
-    <span className="w-px h-4 bg-gray-3" />
-    <Icon
       onClick={openUpdateModal}
       width={11.67}
       className="hover:text-secondary duration-300"
       height={15}
       name="pen"
+    />
+    <span className="w-px h-4 bg-gray-3" />
+    <Icon
+      onClick={openDeleteModal}
+      name="trash"
+      className="hover:text-red-400 duration-300"
+      height={15}
+      width={11.67}
     />
   </div>
 );

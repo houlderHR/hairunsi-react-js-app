@@ -1,27 +1,47 @@
-import { FC, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { RoleResponseDto } from '../../../dto/role.dto';
+import { useGetRoleQuery } from '../../../hooks/useRole';
 import { SearchType } from '../../../hooks/useSearch';
+import routes from '../../../routes/paths';
 import CardRole from '../../../shared/authenticated/CardUserManager/CardRole';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
-import USER_TYPE_LIST, { RoleType, UserObject } from './constants';
+import Loading from '../../../shared/Loading/Loading';
 import UserManagerRoleModal from './UserManagerRoleModal';
 
-const UserManagerRole: FC = () => {
+const UserManagerRole = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
-  const [user, setUser] = useState<UserObject | undefined>();
-  const [roles, setRole] = useState<RoleType[] | undefined>();
-
-  const pushRoleType = (_role: RoleType[] | undefined) => {
-    setRole(_role);
+  const [allRole, setAllRole] = useState<RoleResponseDto[]>();
+  const [role, setRole] = useState<RoleResponseDto>();
+  const { data, error, isLoading } = useGetRoleQuery();
+  const navigate = useNavigate();
+  const pushRoleType = (_role?: RoleResponseDto[]) => {
+    setAllRole(_role);
   };
-  const openUpdateModal = (userData: UserObject) => () => {
+
+  const openUpdateModal = (roleData: RoleResponseDto) => () => {
     setShowModal(ModalShowStateType.UPDATE);
-    setUser(userData);
+    setRole(roleData);
   };
-  const openDeleteModal = () => {
+  const openDeleteModal = (roleData: RoleResponseDto) => () => {
     setShowModal(ModalShowStateType.DELETE);
+    setRole(roleData);
   };
 
+  useEffect(() => {
+    if (data) {
+      setAllRole(data);
+    }
+  }, [data]);
+
+  if (error) return navigate(routes.server_error.path);
+  if (isLoading)
+    return (
+      <div className="h-96 flex justify-center">
+        <Loading />
+      </div>
+    );
   return (
     <>
       <HeadManager
@@ -31,30 +51,32 @@ const UserManagerRole: FC = () => {
         pushSearch={pushRoleType}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
-        {!roles &&
-          USER_TYPE_LIST.map((item, index) => (
+        {allRole &&
+          allRole.map((item: RoleResponseDto, index: number) => (
             <CardRole
               key={item.id}
               openUpdateModal={openUpdateModal(item)}
-              openDeleteModal={openDeleteModal}
-              title={item.role}
-              maxElement={11}
-              iconVisible={index === 0}
-              items={item.module}
-            />
-          ))}
-        {roles &&
-          roles?.map((item, index) => (
-            <CardRole
-              key={item.id}
+              openDeleteModal={openDeleteModal(item)}
               title={item.name}
               maxElement={11}
               iconVisible={index === 0}
-              items={item.permissions.map((p) => p.name)}
+              items={item.permissions}
+            />
+          ))}
+        {!allRole &&
+          data.map((item: RoleResponseDto, index: number) => (
+            <CardRole
+              key={item.id}
+              openUpdateModal={openUpdateModal(item)}
+              openDeleteModal={openDeleteModal(item)}
+              title={item.name}
+              maxElement={11}
+              iconVisible={index === 0}
+              items={item.permissions}
             />
           ))}
       </div>
-      <UserManagerRoleModal user={user} modalState={showModal} setShowModal={setShowModal} />
+      <UserManagerRoleModal role={role} modalState={showModal} setShowModal={setShowModal} />
     </>
   );
 };
