@@ -6,7 +6,7 @@ import routes from '../../../routes/paths';
 import CardType from '../../../shared/authenticated/CardUserManager/CardType';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
-import Loading from '../../../shared/Loading/Loading';
+import Spinner from '../../../shared/Spinner';
 import http from '../../../utils/http-common';
 import { DepartmentType } from './type';
 import UserManagerTypeModal from './UserManagerTypeModal';
@@ -54,7 +54,7 @@ const UserManagerType: FC = () => {
       <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
         {(isDepartmentLoading || searchLoading) && (
           <div className="absolute w-full mt-[20rem] h-full flex items-center justify-center top-0 left-0">
-            <Loading />
+            <Spinner additionalClassName="w-8 h-8" />
           </div>
         )}
         {!type &&

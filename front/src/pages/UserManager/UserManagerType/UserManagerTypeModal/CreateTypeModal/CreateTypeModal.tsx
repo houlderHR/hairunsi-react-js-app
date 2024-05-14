@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import * as yup from 'yup';
+import { SearchType } from '../../../../../hooks/useSearch';
 import routes from '../../../../../routes/paths';
 import Button from '../../../../../shared/authenticated/buttons/Button';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
@@ -81,6 +82,7 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
     try {
       await onCreateDepartment({ ..._data });
       await queryClient.invalidateQueries({ queryKey: ['department'] });
+      await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
       onClose();
     } catch (error) {
       const errorResponse = error as AxiosError<{
