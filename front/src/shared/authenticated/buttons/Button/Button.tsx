@@ -30,11 +30,8 @@ const Button: FC<ButtonProps> = ({
   onClick,
   onSubmit,
   variant,
-<<<<<<< HEAD
   type,
-=======
   disabled,
->>>>>>> c16407d (✨ Remove unused vars)
   iconSize = 14,
 }) => {
   let classNameValue: string = '';
@@ -63,17 +60,11 @@ const Button: FC<ButtonProps> = ({
 
   return (
     <button
-<<<<<<< HEAD
       type={type === 'submit' ? 'submit' : 'button'}
       className={twMerge(className, classNameValue)}
       onClick={onClick}
       onSubmit={onSubmit}
-=======
       disabled={disabled}
-      type="submit"
-      className={twMerge(className, classNameValue)}
-      onClick={onClick}
->>>>>>> c16407d (✨ Remove unused vars)
     >
       {icon && (
         <span className="mt-1">
