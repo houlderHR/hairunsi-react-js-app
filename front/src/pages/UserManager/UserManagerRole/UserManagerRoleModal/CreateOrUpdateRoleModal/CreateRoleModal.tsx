@@ -14,6 +14,7 @@ import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import Input from '../../../../../shared/inputs/Input';
 import InputIcon from '../../../../../shared/inputs/InputIcon';
+import Loading from '../../../../../shared/Loading/Loading';
 
 interface CreateModalRoleProps {
   onClose: () => void;
@@ -35,15 +36,15 @@ const sortPermissionByName = (data: PermissionDto[]) =>
 
 const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
   const [show, setShow] = useState(false);
-  const [selectPermission, setSelectPermission] = useState(false);
+  const [selectPermission, setSelectPermission] = useState(true);
   const { data, error, isLoading } = useGetPermissionQuery();
   const [permissions, setPermissions] = useState<PermissionDto[]>([]);
   const [permissionSelected, setPermissionSelected] = useState<PermissionDto[]>([]);
   const [isAlreadyRendered, setIsAlreadyRendered] = useState(false);
   const navigate = useNavigate();
   const [errorAxios, setErrorAxios] = useState('');
-  const mutation = useCreateRole();
-  const updateMutation = useUpdateRole(updateRole?.id);
+  const createUsermutation = useCreateRole();
+  const updateUserMutation = useUpdateRole(updateRole?.id);
   const {
     control,
     handleSubmit,
@@ -61,9 +62,9 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
           permissions: permissionSelected.map((item) => item.id),
         };
         if (updateRole) {
-          result = await updateMutation.mutateAsync(newRole);
+          result = await updateUserMutation.mutateAsync(newRole);
         } else {
-          result = await mutation.mutateAsync(newRole);
+          result = await createUsermutation.mutateAsync(newRole);
         }
         if (result) onClose();
       }
@@ -94,7 +95,7 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
   }, [data, updateRole, isAlreadyRendered]);
 
   if (error) return <div>{error.message}</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   const setValue = (elem: PermissionDto) => {
     const unselectedPermission = permissions.filter(
@@ -152,7 +153,7 @@ const CreateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole }) => {
           </div>
           <div role="presentation" onClick={() => setShow((s) => !s)} className="relative">
             <InputIcon
-              placeholder="Rôle"
+              placeholder="Rechercher module"
               additionalClass="py-1 hover:bg-gray-50"
               additionalInputClass="text-base"
               icon="search"

@@ -1,10 +1,13 @@
 import './style.scss';
 import { FC } from 'react';
-import PermissionDto from '../../../../dto/permission.dto';
 
+type DropDownType = {
+  id: string;
+  name: string;
+};
 interface DropDownProps {
-  items: PermissionDto[];
-  setValue?: (elem: PermissionDto) => void;
+  items: DropDownType[];
+  setValue?: (elem: DropDownType) => void;
 }
 
 const DropDown: FC<DropDownProps> = ({ items, setValue }) => (
