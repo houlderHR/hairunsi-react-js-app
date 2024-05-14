@@ -1,9 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { FC, MouseEvent, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import * as yup from 'yup';
+import routes from '../../../../../routes/paths';
 import Button from '../../../../../shared/authenticated/buttons/Button';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import UpdateModal from '../../../../../shared/authenticated/Modal/UpdateModal';
@@ -11,13 +14,17 @@ import Icon from '../../../../../shared/Icon';
 import Input from '../../../../../shared/inputs/Input';
 import InputIcon from '../../../../../shared/inputs/InputIcon';
 import http from '../../../../../utils/http-common';
+import mapError from '../../../../../utils/mapErrorResponse';
 import { DepartmentType } from '../../type';
 
 const schema = yup.object({
-  name: yup.string().required().min(4, 'Le nom du département doit contenir au moin 4 caractères'),
+  name: yup
+    .string()
+    .required('Le nom du département est requis')
+    .min(4, 'Le nom du département doit contenir au moin 4 caractères'),
   role: yup
     .string()
-    .required()
+    .required('Vous devez séléctionner un rôle')
     .matches(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/),
 });
 
@@ -28,28 +35,14 @@ interface UpdateModalTypeProps {
 
 const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { mutateAsync: onUpdateDepartment } = useMutation({
     mutationKey: ['department', { department }],
-    mutationFn: (_department: { name: string; role: string }) =>
+    mutationFn: (_department: { name: string | undefined; role: string | undefined }) =>
       http
         .put<DepartmentType>(`department/${department?.id}`, _department)
         .then((response) => response.data),
-  });
-
-  const updateDepartment = async (_data: { name: string; role: string }) => {
-    try {
-      await onUpdateDepartment(_data);
-      await queryClient.invalidateQueries({ queryKey: ['department'] });
-      onClose();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const { data: roles } = useQuery({
-    queryKey: ['dropdownRole'],
-    queryFn: () =>
-      http.get<{ id: string; name: string }[]>('role').then((response) => response.data),
   });
   const {
     control,
@@ -57,9 +50,42 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
     setValue: setRoleTypeValue,
     getValues,
     formState: { errors },
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: { name: department.name, role: department.role.id },
+  });
+
+  const updateDepartment = async (_data: {
+    name: string | undefined;
+    role: string | undefined;
+  }) => {
+    try {
+      await onUpdateDepartment({ ..._data });
+      await queryClient.invalidateQueries({ queryKey: ['department'] });
+      onClose();
+    } catch (error) {
+      const errorResponse = error as AxiosError<{
+        status: number;
+        error: { property: 'name' | 'role'; constraints: Record<string, string> }[];
+      }>;
+      if (errorResponse.response?.status === 422 && errorResponse.response?.data) {
+        mapError<'name' | 'role'>(
+          errorResponse.response?.data?.error,
+          (_property, _type, _message) => {
+            setError(_property, { type: _type, message: _message });
+          },
+        );
+      }
+      if (errorResponse.code === 'ERR_NETWORK') {
+        navigate(routes.server_error.path);
+      }
+    }
+  };
+  const { data: roles } = useQuery({
+    queryKey: ['dropdownRole'],
+    queryFn: () =>
+      http.get<{ id: string; name: string }[]>('role').then((response) => response.data),
   });
 
   const toggleShow = (e: MouseEvent<HTMLDivElement>) => {
@@ -74,7 +100,7 @@ const UpdateTypeModal: FC<UpdateModalTypeProps> = ({ onClose, department }) => {
     setRoleTypeValue('role', id);
   };
 
-  const onSubmit = (data: { name: string; role: string }) => {
+  const onSubmit = (data: { name: string | undefined; role: string | undefined }) => {
     updateDepartment({ ...data });
   };
 

@@ -30,13 +30,13 @@ const HeadManager = <T,>({
   }, [searchValue, mutate]);
 
   useEffect(() => {
-    loadSearch();
-  }, [loadSearch]);
+    if (searchValue !== '') loadSearch();
+  }, [loadSearch, searchValue]);
 
   useEffect(() => {
-    if (search === '') pushSearch(undefined);
+    if (searchValue === '') pushSearch(undefined);
     else pushSearch(data);
-  }, [data, pushSearch, search]);
+  }, [data, pushSearch, searchValue]);
 
   return (
     <div className="flex flex-row gap-x-4">
