@@ -55,24 +55,35 @@ class DepartmentService {
 
   public async getAllDepartment(relations?: string[]): Promise<Department[]> {
     try {
-      return await this.getRepository().find({ relations: relations });
+      return await this.getRepository().find({
+        relations: relations,
+        order: { created_at: { direction: 'DESC' } },
+      });
     } catch (error) {
       throw new InternalServerErrorException();
     }
   }
 
   public async deleteDepartment(id: string): Promise<DeleteResult> {
-    let deleteResult = await this.getRepository().delete({ id });
+    try {
+      let deleteResult = await this.getRepository().delete({ id });
 
-    if (deleteResult.affected > 0) {
-      return deleteResult;
+      if (deleteResult.affected > 0) {
+        return deleteResult;
+      }
+
+      if (deleteResult.affected === 0) {
+        throw new HttpNotFoundException("Le departement à supprimer n'existe pas");
+      }
+    } catch (error) {
+      if (error.status === StatusCodes.NOT_FOUND) throw error;
+      if (error.code === '23503')
+        throw new HttpException(
+          StatusCodes.BAD_REQUEST,
+          'Le département ne peut pas etre supprimé',
+        );
+      throw new InternalServerErrorException();
     }
-
-    if (deleteResult.affected === 0) {
-      throw new HttpNotFoundException("Le departement à supprimer n'existe pas");
-    }
-
-    throw new InternalServerErrorException();
   }
 
   public async updateDepartment(
@@ -111,6 +122,7 @@ class DepartmentService {
           .createQueryBuilder('d')
           .orWhere('LOWER(d.name) like LOWER(:name)', { name: `%${searchDepartmentDto.search}%` })
           .innerJoinAndSelect('d.role', 'r', 'd.role = r.id')
+          .leftJoinAndSelect('d.posts', 'post')
           .orderBy('d.created_at', 'DESC')
           .getMany();
 
