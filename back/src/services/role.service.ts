@@ -123,6 +123,7 @@ class RoleService {
             },
           )
           .leftJoinAndSelect('r.permissions', 'permissions')
+          .leftJoinAndSelect('r.departments', 'departments')
           .orderBy('r.created_at', 'DESC')
           .getMany();
       }
