@@ -47,8 +47,6 @@ class RoleService {
         },
       });
     } catch (error) {
-      console.log('ERROR: ', error);
-
       throw new InternalServerErrorException();
     }
   }
