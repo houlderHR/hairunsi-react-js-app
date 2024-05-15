@@ -48,10 +48,8 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
   const [messagePost, setMessagePost] = useState('');
   const [match, setMatch] = useState<string[]>([]);
   const [file, setFile] = useState<File | null | undefined>();
-  const [link, setLink] = useState<string | null | undefined>(
-    user?.image.path ? user.image.path : '',
-  );
-  const [department, setDepartment] = useState<{ name: string; id: string } | null>(null);
+  const [link, setLink] = useState<string | null | undefined>(user ? user.image?.path : '');
+  const [department, setDepartment] = useState<{ name: string; id: string } | undefined>();
   const [post, setPost] = useState<{ name: string; id: string } | null>(user ? user.post : null);
 
   const navigate = useNavigate();
@@ -95,6 +93,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
     birth_date: Date | undefined;
     email: string | undefined;
   }) => {
+    queryClient.invalidateQueries({ queryKey: ['user_department'] });
     if (!department) setMessageDepartment('Obligatoire * ');
     if (!post) setMessagePost('Obligatoire *');
     if (data.firstname && data.lastname && data.birth_date && data.email && post) {
@@ -107,7 +106,9 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
           formData.append('lastname', data.lastname);
           formData.append('birth_date', new Date(data.birth_date).toDateString());
           formData.append('post', post.id);
+
           userUpdatedOrCreated = await updateUser(formData, user.uuid);
+          queryClient.invalidateQueries({ queryKey: ['user'] });
         } else {
           const formData = new FormData();
           formData.append('firstname', data.firstname);
@@ -119,10 +120,10 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
             formData.append('image', file);
             formData.append('post', post.id);
             userUpdatedOrCreated = await createUser(formData);
+            queryClient.invalidateQueries({ queryKey: ['user'] });
           } else setMatch(["Vérifiez l'image"]);
         }
         if (userUpdatedOrCreated) {
-          queryClient.invalidateQueries({ queryKey: ['user'] });
           onClose();
         }
       } catch (error) {

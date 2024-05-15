@@ -16,6 +16,7 @@ import FileService from '../services/file.service';
 import { File } from '../entities/file.entity';
 import { hashPassword } from '../utils/hash';
 import SearchUserDto from '../dto/user/SearchUserDto';
+import departmentService from './department.service';
 
 class UserService {
   public async createUser(image, createUserDto: CreateUserDto): Promise<User> {
@@ -155,11 +156,15 @@ class UserService {
     }
   }
 
-  public async getAllUser(relations?: string[]): Promise<User[]> {
+  public async getAllUsers(relations?: string[]): Promise<User[]> {
     try {
-      return await this.getUserRepository().find({
+      let users = await this.getUserRepository().find({
         relations: ['post.department.role.permissions', 'image'],
+        order: {
+          created_at: 'DESC',
+        },
       });
+      return users;
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -199,12 +204,35 @@ class UserService {
           .orWhere('LOWER(u.matricule) like LOWER(:matricule)', {
             matricule: `%${searchUserDto.search}%`,
           })
+          .innerJoinAndSelect('u.image', 'image')
           .innerJoinAndSelect('u.post', 'post')
           .innerJoinAndSelect('post.department', 'department')
           .orderBy('u.id', 'DESC')
           .getMany();
 
       return users;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  public async getAllUsersByDepartment(id_department): Promise<User[]> {
+    try {
+      const department = await departmentService.getDepartmentById(id_department);
+      if (department) {
+        let users = await this.getUserRepository()
+          .createQueryBuilder('user')
+          .leftJoinAndSelect('user.post', 'posts')
+          .innerJoinAndSelect('user.image', 'image')
+          .leftJoinAndSelect('posts.department', 'departments')
+          .leftJoinAndSelect('departments.role', 'role')
+          .leftJoinAndSelect('role.permissions', 'permissions')
+          .where('posts.department=:department', { department: department.id })
+          .orderBy({ 'user.created_at': 'DESC' })
+          .getMany();
+
+        return users;
+      }
     } catch (error) {
       throw new InternalServerErrorException();
     }
