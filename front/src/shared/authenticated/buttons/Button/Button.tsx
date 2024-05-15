@@ -30,7 +30,7 @@ const Button: FC<ButtonProps> = ({
   onClick,
   onSubmit,
   variant,
-  type,
+  type = 'submit',
   disabled,
   iconSize = 14,
 }) => {

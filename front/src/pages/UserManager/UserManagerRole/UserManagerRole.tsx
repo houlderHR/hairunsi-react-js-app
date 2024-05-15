@@ -8,6 +8,7 @@ import CardRole from '../../../shared/authenticated/CardUserManager/CardRole';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
 import Loading from '../../../shared/Loading/Loading';
+import Spinner from '../../../shared/Spinner';
 import UserManagerRoleModal from './UserManagerRoleModal';
 
 const UserManagerRole = () => {
@@ -15,10 +16,14 @@ const UserManagerRole = () => {
   const [allRole, setAllRole] = useState<RoleResponseDto[]>();
   const [role, setRole] = useState<RoleResponseDto>();
   const { data, error, isLoading } = useGetRoleQuery();
+  const [searchLoading, setSearchLoading] = useState(false);
+
   const navigate = useNavigate();
   const pushRoleType = (_role?: RoleResponseDto[]) => {
     setAllRole(_role);
   };
+
+  const getSearchLoading = (isLoadingRole: boolean) => setSearchLoading(isLoadingRole);
 
   const openUpdateModal = (roleData: RoleResponseDto) => () => {
     setShowModal(ModalShowStateType.UPDATE);
@@ -49,9 +54,21 @@ const UserManagerRole = () => {
         onOpen={() => setShowModal(ModalShowStateType.CREATE)}
         searchType={SearchType.ROLE}
         pushSearch={pushRoleType}
+        getSearchLoading={getSearchLoading}
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
-        {allRole &&
+      <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
+        {searchLoading && (
+          <div className="absolute w-full mt-[20rem] h-full flex items-center justify-center top-0 left-0">
+            <Spinner additionalClassName="w-8 h-8" />
+          </div>
+        )}
+        {!searchLoading && allRole && allRole.length === 0 && (
+          <p className="text-center text-gray-500 font-medium absolute mx-auto w-full">
+            Aucun rôle trouvé
+          </p>
+        )}
+        {!searchLoading &&
+          allRole &&
           allRole.map((item: RoleResponseDto, index: number) => (
             <CardRole
               key={item.id}
@@ -63,7 +80,8 @@ const UserManagerRole = () => {
               items={item.permissions}
             />
           ))}
-        {!allRole &&
+        {!searchLoading &&
+          !allRole &&
           data.map((item: RoleResponseDto, index: number) => (
             <CardRole
               key={item.id}
