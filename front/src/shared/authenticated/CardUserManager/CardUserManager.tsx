@@ -13,7 +13,7 @@ interface CardUserManagerProps {
 const CardUserManager: FC<PropsWithChildren<CardUserManagerProps>> = ({
   children,
   title,
-  isRemovable,
+  isRemovable = true,
   openUpdateModal,
   openDeleteModal,
   iconVisible = false,

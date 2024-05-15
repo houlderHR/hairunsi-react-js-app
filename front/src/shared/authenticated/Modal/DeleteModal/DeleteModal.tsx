@@ -1,4 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
+import Spinner from '../../../Spinner';
 import Button from '../../buttons/Button';
 import Modal from '..';
 
@@ -8,6 +9,7 @@ interface DeleteModalProps {
   title?: string;
   description: string;
   confirmation: string;
+  isDeleting?: boolean;
   icon?: string;
 }
 
@@ -18,6 +20,7 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
   icon,
   onClose,
   onDelete,
+  isDeleting,
 }) => (
   <Modal onClose={onClose} title={title}>
     <div className="mt-1 flex justify-center">
@@ -31,7 +34,11 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
       <Button title="Annuler" icon="x" className="uppercase" onClick={onClose} />
       <Button
         onClick={onDelete}
-        title="Supprimer"
+        title={
+          <span className="flex flex-row gap-1 items-center justify-center">
+            Supprimer {isDeleting && <Spinner additionalClassName="!text-white fill-red-400" />}
+          </span>
+        }
         icon="trash-1"
         className="uppercase"
         iconSize={18}

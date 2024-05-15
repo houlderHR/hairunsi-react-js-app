@@ -11,9 +11,9 @@ interface IconBoxProps {
 // Icone de trash et edit de chaque Card
 const IconCard: FC<IconBoxProps> = ({
   withOther,
-  isRemovable,
   openUpdateModal,
   openDeleteModal,
+  isRemovable,
 }) => (
   <div
     className={twMerge(
