@@ -11,6 +11,7 @@ import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
 import DropDown from '../../../shared/authenticated/Modal/DropDown';
 import Icon from '../../../shared/Icon';
+import Loading from '../../../shared/Loading/Loading';
 import http from '../../../utils/http-common';
 import ObjDetail from './obj-detail';
 import UserManagerUserModal from './UserManagerListModal/UserManagerListModal';
@@ -25,6 +26,9 @@ const UserManagerList: FC = () => {
   const [userSearch, setUserSearch] = useState<ObjDetail[] | undefined>();
   const [showType, setShowType] = useState(false);
   const [department, setDepartment] = useState<{ name: string; id: string } | undefined>();
+  const [searchLoading, setSearchLoading] = useState(false);
+
+  const getSearchLoading = (isLoadingUser: boolean) => setSearchLoading(isLoadingUser);
 
   const pushSearchUser = (_user: ObjDetail[] | undefined) => {
     setUserSearch(_user);
@@ -82,6 +86,7 @@ const UserManagerList: FC = () => {
             onOpen={() => setShowModal(ModalShowStateType.CREATE)}
             pushSearch={pushSearchUser}
             searchType={SearchType.USER}
+            getSearchLoading={getSearchLoading}
           />
         </div>
         <div
@@ -103,7 +108,7 @@ const UserManagerList: FC = () => {
           )}
         </div>
       </div>
-      <div className="container-user">
+      <div className="container-user relative">
         <div className="container-list">
           <table className="w-full">
             <thead className="container-headdetail">
@@ -118,13 +123,26 @@ const UserManagerList: FC = () => {
               <th className="text action">ACTION</th>
             </thead>
             <tbody>
-              {data.length === 0 &&
-              userSearch?.length === 0 &&
-              userFilterDepartment.data.length === 0 ? (
-                <>Pas d&apos;utilisateur</>
-              ) : (
-                !userSearch &&
+              {searchLoading && (
+                <div className="absolute w-full h-full flex items-center justify-center top-0 left-0">
+                  <div className="h-96 flex justify-center">
+                    <Loading />
+                  </div>
+                </div>
+              )}
+              {!searchLoading && userSearch && userSearch.length === 0 && (
+                <p className="text-center text-gray-500 mt-8 font-medium absolute mx-auto w-full">
+                  Aucun utilisateur trouvé
+                </p>
+              )}
+              {data.length === 0 && !userSearch && userFilterDepartment.data.length === 0 && (
+                <p className="text-center text-gray-500 mt-8 font-medium absolute mx-auto w-full">
+                  Pas d&apos;utilisateur
+                </p>
+              )}
+              {!userSearch &&
                 !department &&
+                !searchLoading &&
                 data.map((user: ObjDetail, index: number) => (
                   <tr className={index % 2 === 0 ? 'pair' : 'impair'} key={user.matricule}>
                     <td className="text matricule">{user.matricule}</td>
@@ -155,13 +173,10 @@ const UserManagerList: FC = () => {
                       </div>{' '}
                     </td>
                   </tr>
-                ))
-              )}
-              {!data && !userSearch && !userFilterDepartment.data ? (
-                <>Pas d&apos;utilisateur</>
-              ) : (
-                userSearch &&
+                ))}
+              {userSearch &&
                 userFilterDepartment.data &&
+                !searchLoading &&
                 data &&
                 userSearch.map((user: ObjDetail, index: number) => (
                   <tr className={index % 2 === 0 ? 'pair' : 'impair'} key={user.matricule}>
@@ -193,13 +208,10 @@ const UserManagerList: FC = () => {
                       </div>{' '}
                     </td>
                   </tr>
-                ))
-              )}
-              {!data && !userSearch && !userFilterDepartment.data ? (
-                <>Pas d&apos;utilisateur</>
-              ) : (
-                !userSearch &&
+                ))}
+              {!userSearch &&
                 userFilterDepartment.data &&
+                !searchLoading &&
                 userFilterDepartment.data.map((user: ObjDetail, index: number) => (
                   <tr className={index % 2 === 0 ? 'pair' : 'impair'} key={user.matricule}>
                     <td className="text matricule">{user.matricule}</td>
@@ -230,8 +242,7 @@ const UserManagerList: FC = () => {
                       </div>{' '}
                     </td>
                   </tr>
-                ))
-              )}
+                ))}
             </tbody>
           </table>
         </div>
