@@ -9,6 +9,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Permission } from './permission.entity';
+import { Department } from './department.entity';
 
 @Entity('roles')
 export class Role {
@@ -20,6 +21,9 @@ export class Role {
     unique: true,
   })
   name: string;
+
+  @OneToMany(() => Department, (department) => department.role)
+  departments: Department[];
 
   @CreateDateColumn({
     name: 'created_at',

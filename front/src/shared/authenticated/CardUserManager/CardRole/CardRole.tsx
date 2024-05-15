@@ -5,6 +5,7 @@ import CardItemRole from './CardItemRole';
 
 interface CardRoleProps {
   title: string;
+  isDefaultRole?: number;
   items: PermissionDto[];
   maxElement: number;
   iconVisible?: boolean;
@@ -15,6 +16,7 @@ interface CardRoleProps {
 const CardRole: FC<CardRoleProps> = ({
   title,
   items,
+  isDefaultRole,
   maxElement,
   openUpdateModal = () => {},
   openDeleteModal = () => {},

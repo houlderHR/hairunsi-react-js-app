@@ -5,6 +5,9 @@ const TYPEORM_ERROR = {
   UUID_INVALID: {
     code: '22P02',
   },
+  VIOLATE_FOREIGN_KEY: {
+    code: '23503',
+  },
 };
 
 export default TYPEORM_ERROR;

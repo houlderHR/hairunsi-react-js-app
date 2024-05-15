@@ -182,7 +182,7 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
             </div>
           </div>
         </div>
-        <Button type="submit" title="Créer" variant="secondary-1" />
+        <Button type="submit" title={updateRole ? 'Modifier' : 'Créer'} variant="secondary-1" />
       </form>
     </CreateModal>
   );

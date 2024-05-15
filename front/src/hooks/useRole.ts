@@ -18,6 +18,7 @@ export const useCreateRole = () => {
     mutationFn: (data: CreateRoleDto) => http.post(`${BASE_PATH}`, data).then((res) => res.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_ROLE_KEY] });
+      queryClient.invalidateQueries({ queryKey: [SearchType.ROLE] });
     },
   });
 };
@@ -40,6 +41,7 @@ export const useDeleteRole = (id?: string) => {
     mutationFn: () => http.delete(`${BASE_PATH}/${id}`).then((res) => res.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_ROLE_KEY] });
+      queryClient.invalidateQueries({ queryKey: [SearchType.ROLE] });
     },
   });
 };
