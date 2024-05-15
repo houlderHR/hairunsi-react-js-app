@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DepartmentDto from '../../../dto/department.dto';
 import { SearchType } from '../../../hooks/useSearch';
 import routes from '../../../routes/paths';
 import CardType from '../../../shared/authenticated/CardUserManager/CardType';
@@ -9,7 +10,6 @@ import { ModalShowStateType } from '../../../shared/authenticated/Modal';
 import Spinner from '../../../shared/Spinner';
 import http from '../../../utils/http-common';
 import UserManagerTypeModal from './UserManagerTypeModal';
-import DepartmentDto from '../../../dto/department.dto';
 
 const UserManagerType: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
