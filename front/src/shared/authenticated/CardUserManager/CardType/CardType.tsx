@@ -5,7 +5,7 @@ import CardUserManager from '../CardUserManager';
 
 interface CardTypeProps {
   department: DepartmentDto;
-  isRemovable: boolean;
+  isRemovable?: boolean;
   openUpdateModal: () => void;
   openDeleteModal: () => void;
 }

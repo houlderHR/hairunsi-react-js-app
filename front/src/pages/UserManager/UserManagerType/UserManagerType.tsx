@@ -24,7 +24,7 @@ const UserManagerType: FC = () => {
     queryKey: ['department'],
     queryFn: () =>
       http
-        .get<DepartmentDto[]>('department', { params: { role: true, posts: true } })
+        .get<DepartmentDto[]>('department', { params: { role: true } })
         .then((response) => response.data)
         .catch(() => navigate(routes.server_error.path)),
   });
