@@ -8,30 +8,37 @@ type DropDownType = {
 interface DropDownProps {
   items: DropDownType[];
   setValue?: (elem: DropDownType, e?: MouseEvent<HTMLElement>) => void;
+  onClickItem?: () => void;
 }
 
-const DropDown: FC<DropDownProps> = ({ items, setValue }) => (
+const DropDown: FC<DropDownProps> = ({ items, setValue, onClickItem }) => (
   <ul className="bg-white border absolute w-full left-0 mt-2 max-h-32 overflow-y-scroll border-gray-50 shadow  rounded px-4 py-1">
-    {items?.map((item) =>
-      setValue ? (
-        <li
-          className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md"
-          key={item.id}
-          role="presentation"
-          onClick={(e: MouseEvent<HTMLElement>) => setValue(item, e)}
-        >
-          {item.name}
-        </li>
-      ) : (
-        <li
-          className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md"
-          key={item.id}
-          role="presentation"
-        >
-          {item.name}
-        </li>
-      ),
-    )}
+    {items.length &&
+      items.map((item) =>
+        setValue ? (
+          <li
+            className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md"
+            key={item.id}
+            role="presentation"
+            onClick={(e: MouseEvent<HTMLElement>) => {
+              setValue(item, e);
+              if (onClickItem) {
+                onClickItem();
+              }
+            }}
+          >
+            {item.name}
+          </li>
+        ) : (
+          <li
+            className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md"
+            key={item.id}
+            role="presentation"
+          >
+            {item.name}
+          </li>
+        ),
+      )}
   </ul>
 );
 export default DropDown;

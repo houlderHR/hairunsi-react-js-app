@@ -11,6 +11,7 @@ interface InputProps {
   onChange?: (...event: []) => void;
   onBlur?: Noop;
   required?: boolean;
+  readonly?: boolean;
 }
 
 const Input: FC<InputProps> = ({
@@ -22,6 +23,7 @@ const Input: FC<InputProps> = ({
   onBlur,
   value = '',
   required,
+  readonly,
 }) => (
   <input
     ref={refs}
@@ -35,6 +37,7 @@ const Input: FC<InputProps> = ({
     onBlur={onBlur}
     required={required}
     value={value}
+    readOnly={readonly}
   />
 );
 

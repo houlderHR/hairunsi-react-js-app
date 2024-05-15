@@ -10,6 +10,7 @@ class UserController {
   public async create(request, response: Response): Promise<Response> {
     try {
       const createUserDto: CreateUserDto = plainToClass(CreateUserDto, request.body);
+
       const user = await userService.createUser(request.file, createUserDto);
       return response.status(StatusCodes.CREATED).json(user);
     } catch (error) {
@@ -20,7 +21,7 @@ class UserController {
   public async get(request: Request, response: Response): Promise<Response> {
     let relations = Object.keys(request.query).map((query) => query);
     try {
-      const users = await userService.getAllUser(relations);
+      const users = await userService.getAllUsers(relations);
 
       return response.status(StatusCodes.OK).json(users);
     } catch (error) {
@@ -58,7 +59,7 @@ class UserController {
 
       return response.status(StatusCodes.OK).json(user);
     } catch (error) {
-      return response.status(error.status).json(error);
+      return response.status(500).json(error);
     }
   }
 
@@ -70,6 +71,20 @@ class UserController {
       return response.status(StatusCodes.OK).json(user);
     } catch (error) {
       return response.status(error.status).json(error);
+    }
+  }
+
+  public async getByDepartment(request: Request, response: Response): Promise<Response> {
+    try {
+      if (request.query.department !== undefined) {
+        if (request.query.department === 'department_all')
+          return response.status(StatusCodes.OK).json(await userService.getAllUsers());
+        const users = await userService.getAllUsersByDepartment(request.query.department);
+        return response.status(StatusCodes.OK).json(users);
+      }
+      return response.status(StatusCodes.OK).json([]);
+    } catch (error) {
+      return response.status(error.status ?? StatusCodes.INTERNAL_SERVER_ERROR).json(error);
     }
   }
 }

@@ -40,7 +40,7 @@ class CreateUserDto {
   )
   password: string;
 
-  @IsDateString({}, { message: 'Le format du date est incorrect' })
+  @IsString({ message: 'Le format du date est incorrect' })
   birth_date: Date;
 
   @IsUUID(undefined, { message: 'Le poste doit etre rensigner et valide' })

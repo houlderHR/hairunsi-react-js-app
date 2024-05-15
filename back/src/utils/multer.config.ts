@@ -18,6 +18,7 @@ export const fileFilter = (req: Request, file: Express.Multer.File, cb: FileName
     case 'image/png':
     case 'image/jpg':
     case 'image/jpeg':
+    case 'image/svg+xml':
       cb(null, true);
       break;
     default:
