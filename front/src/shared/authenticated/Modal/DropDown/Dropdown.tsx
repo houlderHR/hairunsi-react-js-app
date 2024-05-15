@@ -12,7 +12,7 @@ interface DropDownProps {
 }
 
 const DropDown: FC<DropDownProps> = ({ items, setValue, onClickItem }) => (
-  <ul className="bg-white border absolute w-full left-0 mt-2 max-h-32 overflow-y-scroll border-gray-50 shadow  rounded px-4 py-1">
+  <ul className="bg-white border absolute w-full z-20 left-0 mt-2 max-h-32 overflow-y-scroll border-gray-50 shadow  rounded px-4 py-1">
     {items.length &&
       items.map((item) =>
         setValue ? (
