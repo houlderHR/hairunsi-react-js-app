@@ -41,7 +41,10 @@ class RoleService {
   async getAll(): Promise<Role[]> {
     try {
       return await AppDataSource.getRepository(Role).find({
-        relations: { permissions: true },
+        relations: { permissions: true, departments: true },
+        order: {
+          created_at: 'DESC',
+        },
       });
     } catch (error) {
       throw new InternalServerErrorException();
@@ -52,7 +55,7 @@ class RoleService {
     try {
       const result = await AppDataSource.getRepository(Role).findOne({
         where: { id },
-        relations: { permissions: true },
+        relations: { permissions: true, departments: true },
       });
       if (!result) throw new HttpNotFoundException("Le rôle n'existe pas");
       return result;
@@ -93,11 +96,16 @@ class RoleService {
   }
 
   async delete(id: string) {
-    const result = await AppDataSource.getRepository(Role).delete(id);
-    if (result.affected > 0) return result;
-    if (result.affected == 0)
-      throw new HttpNotFoundException("Le fichier à supprimer n'existe pas");
-    throw new InternalServerErrorException();
+    try {
+      const result = await AppDataSource.getRepository(Role).delete(id);
+      if (result.affected > 0) return result;
+      if (result.affected == 0)
+        throw new HttpNotFoundException("Le fichier à supprimer n'existe pas");
+    } catch (error) {
+      if (error.code == TYPEORM_ERROR.VIOLATE_FOREIGN_KEY.code)
+        throw new HttpException(StatusCodes.FORBIDDEN, 'Impossible de supprimer le rôle');
+      throw new InternalServerErrorException();
+    }
   }
 
   public async search(searchRoleDto: SearchRoleDto) {

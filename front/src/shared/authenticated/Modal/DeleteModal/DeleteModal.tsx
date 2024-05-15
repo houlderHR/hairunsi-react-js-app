@@ -9,7 +9,6 @@ interface DeleteModalProps {
   description: string;
   confirmation: string;
   icon?: string;
-  onDelete: () => void;
 }
 
 const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
@@ -37,7 +36,6 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
         className="uppercase"
         iconSize={18}
         variant="danger"
-        onClick={onDelete}
       />
     </div>
   </Modal>

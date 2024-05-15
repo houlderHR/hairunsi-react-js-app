@@ -22,7 +22,7 @@ export class Department {
   })
   name: string;
 
-  @OneToMany(() => Post, (post) => post.id)
+  @OneToMany(() => Post, (post) => post.department)
   posts: Post[];
 
   @ManyToOne(() => Role, { nullable: false })
