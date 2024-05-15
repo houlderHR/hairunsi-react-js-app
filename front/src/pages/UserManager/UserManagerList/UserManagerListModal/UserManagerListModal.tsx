@@ -10,6 +10,7 @@ interface UserManagerUserModalProps {
   user: ObjDetail | null;
   setUser: React.Dispatch<React.SetStateAction<ObjDetail | null>>;
   onDelete: () => void;
+  isDeleting?: boolean;
 }
 
 const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
@@ -18,6 +19,7 @@ const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
   setUser,
   setShowModal,
   onDelete,
+  isDeleting,
 }) => {
   const onClose = () => {
     setShowModal(ModalShowStateType.CLOSE);
@@ -33,6 +35,7 @@ const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
         onClose={onClose}
         icon="delete-user"
         onDelete={onDelete}
+        isDeleting={isDeleting}
       />
     );
 

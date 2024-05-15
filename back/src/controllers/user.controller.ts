@@ -76,8 +76,6 @@ class UserController {
 
   public async getByDepartment(request: Request, response: Response): Promise<Response> {
     try {
-      console.log(request.query.department);
-
       if (request.query.department !== undefined) {
         if (request.query.department === 'department_all')
           return response.status(StatusCodes.OK).json(await userService.getAllUsers());

@@ -16,6 +16,7 @@ import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import Icon from '../../../../../shared/Icon';
 import Input from '../../../../../shared/inputs/Input';
 import InputFileWithDragAndDrop from '../../../../../shared/inputs/InputFileWithDragAndDrop';
+import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import manageErrorMessage from '../../../../../utils/manageError';
 import { REGEX_EMAIL } from '../../../../../utils/regex';
@@ -44,6 +45,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
 
   const [showPoste, setShowPoste] = useState(false);
   const [showType, setShowType] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [messageDepartment, setMessageDepartment] = useState('');
   const [messagePost, setMessagePost] = useState('');
   const [match, setMatch] = useState<string[]>([]);
@@ -55,7 +57,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
   const navigate = useNavigate();
 
   const departmentData = useQuery({
-    queryKey: ['department'],
+    queryKey: ['department_data'],
     queryFn: () => http.get(DEPARTMENT).then((res) => res.data),
   });
   const postData = useQuery({
@@ -93,6 +95,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
     birth_date: Date | undefined;
     email: string | undefined;
   }) => {
+    setIsLoading(true);
     queryClient.invalidateQueries({ queryKey: ['user_department'] });
     if (!department) setMessageDepartment('Obligatoire * ');
     if (!post) setMessagePost('Obligatoire *');
@@ -132,6 +135,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
         setMatch(manageErrorMessage(exceptions));
       }
     }
+    setIsLoading(false);
   };
   return (
     <CreateModal
@@ -300,7 +304,15 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
             </div>
           </div>
         </div>
-        <Button title={user ? 'Modifier' : 'Créer'} variant="secondary-1" />
+        <Button
+          title={
+            <span className="flex flex-row gap-x-1">
+              {user ? 'Modifier' : 'Créer'}
+              {isLoading && <Spinner />}
+            </span>
+          }
+          variant="secondary-1"
+        />
         {match.map((message: string) => (
           <div className="leading-none text-red-500 my-0 ml-0 text-xs font-medium" key={message}>
             {message}

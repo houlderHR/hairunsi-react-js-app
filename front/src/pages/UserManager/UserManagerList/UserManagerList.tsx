@@ -18,6 +18,7 @@ import UserManagerUserModal from './UserManagerListModal/UserManagerListModal';
 const UserManagerList: FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
   const [userToUpdate, setUserToUpdate] = useState<ObjDetail | null>(null);
   const [userToDelete, setUserToDelete] = useState<string | null>(null);
@@ -38,7 +39,7 @@ const UserManagerList: FC = () => {
     queryFn: async () => (await getAllUsersByDepartment(department?.id)).data,
   });
   const departmentDataForOption = useQuery({
-    queryKey: ['department'],
+    queryKey: ['department_data'],
     queryFn: () => http.get(DEPARTMENT).then((res) => res.data),
   });
 
@@ -55,6 +56,7 @@ const UserManagerList: FC = () => {
   };
 
   const deleteUser = async () => {
+    setIsLoading(true);
     try {
       const userDeleted = await deleteUserById(userToDelete);
       if (userDeleted.status === 200) {
@@ -66,6 +68,7 @@ const UserManagerList: FC = () => {
       const exceptions = err as AxiosError;
       if (exceptions.code === 'ERR_NETWORK') navigate(routes.server_error.path);
     }
+    setIsLoading(false);
   };
   if (isPending) return 'Loading...';
 
@@ -115,7 +118,9 @@ const UserManagerList: FC = () => {
               <th className="text action">ACTION</th>
             </thead>
             <tbody>
-              {!data && !userSearch && !userFilterDepartment.data ? (
+              {data.length === 0 &&
+              userSearch?.length === 0 &&
+              userFilterDepartment.data.length === 0 ? (
                 <>Pas d&apos;utilisateur</>
               ) : (
                 !userSearch &&
@@ -251,6 +256,7 @@ const UserManagerList: FC = () => {
         modalState={showModal}
         setShowModal={setShowModal}
         onDelete={deleteUser}
+        isDeleting={isLoading}
       />
     </>
   );

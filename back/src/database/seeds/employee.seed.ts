@@ -86,7 +86,7 @@ export default class employee implements Seeder {
       department.name = 'Anonyme';
       department.role = role;
       await departmentRepository.save(department);
-      logger.info('Role anonymous added successfully one time into the app');
+      logger.info('Department anonymous added successfully one time into the app');
     }
   }
 }
