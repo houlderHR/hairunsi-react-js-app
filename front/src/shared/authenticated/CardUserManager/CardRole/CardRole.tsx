@@ -48,7 +48,7 @@ const CardRole: FC<CardRoleProps> = ({
                 key={item.id}
               />
             ))}
-        {items.length >= maxElement && (
+        {items.length > maxElement && (
           <button
             type="button"
             onClick={() => {

@@ -169,6 +169,7 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
           )}
         </div>
         <Button
+          type="submit"
           disabled={isPending}
           title={<div className="flex flex-row gap-2">Créer{isPending && <Spinner />}</div>}
           variant="secondary-1"
