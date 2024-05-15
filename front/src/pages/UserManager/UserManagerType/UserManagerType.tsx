@@ -62,7 +62,6 @@ const UserManagerType: FC = () => {
           !isDepartmentLoading &&
           departments?.map((_department: DepartmentDto) => (
             <CardType
-              isRemovable={_department.posts.length === 0}
               openUpdateModal={openUpdateModal(_department)}
               openDeleteModal={openDeleteModal(_department)}
               department={_department}
@@ -79,7 +78,6 @@ const UserManagerType: FC = () => {
           type.length > 0 &&
           type?.map((_type: DepartmentDto) => (
             <CardType
-              isRemovable={_type.posts.length === 0}
               openUpdateModal={openUpdateModal(_type)}
               openDeleteModal={openDeleteModal(_type)}
               department={_type}

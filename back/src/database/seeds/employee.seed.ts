@@ -76,5 +76,17 @@ export default class employee implements Seeder {
       });
       logger.info('Employee added successfully one time into the app');
     }
+
+    let departmentRepository = dataSource.getRepository(Department);
+    const _departmentAnonyme = await departmentRepository.findOne({ where: { name: 'Anonyme' } });
+    if (!_departmentAnonyme) {
+      let roleRepository = dataSource.getRepository(Role);
+      const role = await roleRepository.findOne({ where: { name: 'Employé' } });
+      let department = new Department();
+      department.name = 'Anonyme';
+      department.role = role;
+      await departmentRepository.save(department);
+      logger.info('Role anonymous added successfully one time into the app');
+    }
   }
 }

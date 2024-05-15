@@ -1,7 +1,7 @@
 import { ValidationError, validate } from 'class-validator';
 import { AppDataSource } from '../database/data-source';
 import { Department } from '../entities/department.entity';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Not, Repository } from 'typeorm';
 import HttpException from '../exceptions/HttpException';
 import { CreateDepartmentDto } from '../dto/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../dto/department/UpdateDepartmentDto';
@@ -10,6 +10,7 @@ import InternalServerErrorException from '../exceptions/InternalServerErrorExcep
 import { StatusCodes } from 'http-status-codes';
 import roleService from './role.service';
 import SearchDepartmentDto from '../dto/department/SearchDepartmentDto';
+import { Post } from '../entities/post.entity';
 
 class DepartmentService {
   public async createDepartment(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
@@ -56,6 +57,7 @@ class DepartmentService {
   public async getAllDepartment(relations?: string[]): Promise<Department[]> {
     try {
       return await this.getRepository().find({
+        where: { name: Not('Anonyme') },
         relations: relations,
         order: { created_at: { direction: 'DESC' } },
       });
@@ -66,6 +68,19 @@ class DepartmentService {
 
   public async deleteDepartment(id: string): Promise<DeleteResult> {
     try {
+      let department = await this.getRepository().findOne({
+        where: { id },
+        relations: { posts: true, role: true },
+      });
+
+      if (department) {
+        const postAnonymous = await this.getRepository().findOne({ where: { name: 'Anonyme' } });
+        department.posts.map(async (post: Post) => {
+          post.department = postAnonymous;
+          await AppDataSource.getRepository(Post).save(post);
+        });
+      }
+
       let deleteResult = await this.getRepository().delete({ id });
 
       if (deleteResult.affected > 0) {
@@ -120,9 +135,9 @@ class DepartmentService {
       if (searchDepartmentDto.search !== '')
         departments = await this.getRepository()
           .createQueryBuilder('d')
-          .orWhere('LOWER(d.name) like LOWER(:name)', { name: `%${searchDepartmentDto.search}%` })
+          .where('LOWER(d.name) like LOWER(:name)', { name: `%${searchDepartmentDto.search}%` })
+          .andWhere('d.name != :anonyme', { anonyme: 'Anonyme' })
           .innerJoinAndSelect('d.role', 'r', 'd.role = r.id')
-          .leftJoinAndSelect('d.posts', 'post')
           .orderBy('d.created_at', 'DESC')
           .getMany();
 
