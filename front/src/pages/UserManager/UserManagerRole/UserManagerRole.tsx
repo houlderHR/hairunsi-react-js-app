@@ -72,7 +72,11 @@ const UserManagerRole = () => {
           allRole.map((item: RoleResponseDto, index: number) => (
             <CardRole
               key={item.id}
-              isRemovable={index !== 0 && index !== 1 && item.departments.length > 0}
+              isRemovable={
+                index !== allRole.length - 1 &&
+                index !== allRole.length - 2 &&
+                item.departments.length === 0
+              }
               openUpdateModal={openUpdateModal(item)}
               openDeleteModal={openDeleteModal(item)}
               title={item.name}
@@ -85,7 +89,11 @@ const UserManagerRole = () => {
           data.map((item: RoleResponseDto, index: number) => (
             <CardRole
               key={item.id}
-              isRemovable={index !== 0 && index !== 1 && item.departments.length > 0}
+              isRemovable={
+                index !== data.length - 1 &&
+                index !== data.length - 2 &&
+                item.departments.length === 0
+              }
               openUpdateModal={openUpdateModal(item)}
               openDeleteModal={openDeleteModal(item)}
               title={item.name}

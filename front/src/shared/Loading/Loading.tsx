@@ -1,15 +1,18 @@
 import { Player } from '@lottiefiles/react-lottie-player';
+import Lottie from 'lottie-react';
 import { FC } from 'react';
+import loading from './loading-2.json';
 
 const Loading: FC = () => (
   <div className="h-30 w-full flex justify-center items-center">
-    <Player
+    <Lottie animationData={loading} loop />;
+    {/* <Player
       src="/lotties/loading-2.json"
       className="player w-md p-0 m-0"
       style={{ height: '80px', width: '80px' }}
       loop
       autoplay
-    />
+    /> */}
   </div>
 );
 
