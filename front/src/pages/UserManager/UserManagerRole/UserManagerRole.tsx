@@ -8,7 +8,6 @@ import CardRole from '../../../shared/authenticated/CardUserManager/CardRole';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
 import Loading from '../../../shared/Loading/Loading';
-// import Spinner from '../../../shared/Spinner';
 import UserManagerRoleModal from './UserManagerRoleModal';
 
 const UserManagerRole: FC = () => {
@@ -59,7 +58,6 @@ const UserManagerRole: FC = () => {
       <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
         {searchLoading && (
           <div className="absolute w-full mt-[20rem] h-full flex items-center justify-center top-0 left-0">
-            {/* <Spinner additionalClassName="w-8 h-8" /> */}
             <div className="h-96 flex justify-center">
               <Loading />
             </div>
