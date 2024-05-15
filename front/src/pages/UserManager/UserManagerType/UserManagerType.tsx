@@ -72,6 +72,11 @@ const UserManagerType: FC = () => {
               key={_department.id}
             />
           ))}
+        {!type && !searchLoading && isDepartmentSuccessLoading && departments?.length === 0 && (
+          <p className="text-center text-gray-500 font-medium absolute mx-auto w-full">
+            Aucun départment pour le moment
+          </p>
+        )}
         {!searchLoading && type && type.length === 0 && (
           <p className="text-center text-gray-500 font-medium absolute mx-auto w-full">
             Aucun type trouvé
