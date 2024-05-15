@@ -24,7 +24,7 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
 }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { mutateAsync: onDeleteDepartment } = useMutation({
+  const { mutateAsync: onDeleteDepartment, isPending } = useMutation({
     mutationKey: ['deleteDepartment', department?.id],
     mutationFn: () =>
       http.delete<DepartmentDto>(`department/${department?.id}`).then((response) => response.data),
@@ -61,6 +61,7 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   if (modalState === ModalShowStateType.DELETE) {
     return (
       <DeleteModal
+        isDeleting={isPending}
         onDelete={onDelete}
         icon="role"
         description=" Vous êtes sur le point de supprimer ce type d’utilisateur."

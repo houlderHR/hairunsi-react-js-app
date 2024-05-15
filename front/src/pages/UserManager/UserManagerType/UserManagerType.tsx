@@ -20,7 +20,11 @@ const UserManagerType: FC = () => {
 
   const getSearchLoading = (isLoading: boolean) => setSearchLoading(isLoading);
 
-  const { data: departments, isFetching: isDepartmentLoading } = useQuery({
+  const {
+    data: departments,
+    isFetching: isDepartmentLoading,
+    isSuccess: isDepartmentSuccessLoading,
+  } = useQuery({
     queryKey: ['department'],
     queryFn: () =>
       http
@@ -59,7 +63,7 @@ const UserManagerType: FC = () => {
         )}
         {!type &&
           !searchLoading &&
-          !isDepartmentLoading &&
+          isDepartmentSuccessLoading &&
           departments?.map((_department: DepartmentDto) => (
             <CardType
               openUpdateModal={openUpdateModal(_department)}
