@@ -8,8 +8,7 @@ import routes from '../../../../routes/paths';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
 import http from '../../../../utils/http-common';
-import CreateTypeModal from './CreateTypeModal';
-import UpdateTypeModal from './UpdateTypeModal';
+import CreateOrUpdateTypeModal from './CreateOrUpdateTypeModal';
 
 interface UserManagerTypeModalProps {
   modalState: ModalShowStateType;
@@ -52,11 +51,13 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   };
 
   if (modalState === ModalShowStateType.CREATE) {
-    return <CreateTypeModal onClose={onClose} />;
+    return <CreateOrUpdateTypeModal type="createDepartment" onClose={onClose} />;
   }
 
   if (department && modalState === ModalShowStateType.UPDATE) {
-    return <UpdateTypeModal onClose={onClose} department={department} />;
+    return (
+      <CreateOrUpdateTypeModal type="updateDepartment" onClose={onClose} department={department} />
+    );
   }
   if (modalState === ModalShowStateType.DELETE) {
     return (
