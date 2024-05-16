@@ -20,7 +20,7 @@ const UserManager = () => (
 
     <Sidebar />
     <div className="bg-gray-8 w-full h-20 fixed z-40" />
-    <div className="lg:ml-72 sm:ml-52 ml-16 z-0 md:px-14 px-6 h-full pt-6 flex flex-col ">
+    <div className="lg:ml-72 sm:ml-52 ml-16 z-0 md:px-14 px-6 h-full pt-6 pb-6 flex flex-col ">
       <Outlet />
     </div>
   </div>
