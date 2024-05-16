@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { FC, MouseEvent, useState } from 'react';
+import { ChangeEvent, FC, MouseEvent, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
@@ -51,6 +51,7 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
     queryFn: () =>
       http.get<{ id: string; name: string }[]>('role').then((response) => response.data),
   });
+  const [searchRole, setSearchRole] = useState<string | undefined>(undefined);
 
   const toggleShow = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -62,6 +63,7 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
   const getRole = (_department: { id: string; name: string }, e?: MouseEvent<HTMLElement>) => {
     e?.stopPropagation();
     setShow(false);
+    setSearchRole(undefined);
     setRoleTypeValue('role', _department.id);
   };
 
@@ -138,13 +140,13 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
           {isRoleGettedSuccessfully && (
             <div role="presentation" onClick={toggleShow} className="relative">
               <InputIcon
-                value={roles.find((role) => role.id === getValues('role'))?.name}
+                value={searchRole ?? roles.find((role) => role.id === getValues('role'))?.name}
                 placeholder="Rôle"
                 additionalClass={twMerge(
                   errors.role && '!border-red-500 border !border-1 text-red-500',
                   'bg-transparent border rounded border-gray-1 active:border-secondary border pr-10',
                 )}
-                onChange={() => {}}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchRole(e.target.value)}
                 additionalInputClass={twMerge(
                   errors.role && 'placeholder:text-red-500',
                   'text-base',
@@ -157,7 +159,14 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
                   {errors.role.message}
                 </span>
               )}
-              {show && <DropDown items={roles} setValue={getRole} />}
+              {show && (
+                <DropDown
+                  items={roles.filter((role) =>
+                    role.name.toLowerCase().includes((searchRole ?? '').toLowerCase()),
+                  )}
+                  setValue={getRole}
+                />
+              )}
             </div>
           )}
         </div>
