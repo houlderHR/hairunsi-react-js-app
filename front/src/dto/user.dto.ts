@@ -1,4 +1,4 @@
-export default interface ObjDetail {
+export default interface UserDto {
   uuid: string;
   matricule: string;
   firstname: string;
@@ -16,7 +16,10 @@ export default interface ObjDetail {
       name: string;
       role: {
         name: string;
-        permissions: string[];
+        permissions: {
+          name: string;
+          id: string;
+        }[];
       };
     };
   };

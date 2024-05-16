@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ObjDetail from '../../../dto/user.dto';
 import { deleteUserById, getAllUsers, getAllUsersByDepartment } from '../../../hooks/user';
 import { SearchType } from '../../../hooks/useSearch';
 import { DEPARTMENT } from '../../../routes/endpoints';
@@ -13,8 +14,9 @@ import DropDown from '../../../shared/authenticated/Modal/DropDown';
 import Icon from '../../../shared/Icon';
 import Loading from '../../../shared/Loading/Loading';
 import http from '../../../utils/http-common';
-import ObjDetail from './obj-detail';
 import UserManagerUserModal from './UserManagerListModal/UserManagerListModal';
+
+const numberLines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const UserManagerList: FC = () => {
   const navigate = useNavigate();
@@ -27,8 +29,6 @@ const UserManagerList: FC = () => {
   const [showType, setShowType] = useState(false);
   const [department, setDepartment] = useState<{ name: string; id: string } | undefined>();
   const [searchLoading, setSearchLoading] = useState(false);
-
-  const getSearchLoading = (isLoadingUser: boolean) => setSearchLoading(isLoadingUser);
 
   const pushSearchUser = (_user: ObjDetail[] | undefined) => {
     setUserSearch(_user);
@@ -46,6 +46,36 @@ const UserManagerList: FC = () => {
     queryKey: ['department_data'],
     queryFn: () => http.get(DEPARTMENT).then((res) => res.data),
   });
+  // For pagination
+  const [showLines, setShowLines] = useState(false);
+  const [numberUsers, setnumberUsers] = useState<number>(5);
+  const [currentPage, setCurrentpage] = useState(1);
+  const lastIndex = numberUsers * currentPage;
+  const firstIndex = lastIndex - numberUsers;
+  let users = [];
+  if (userSearch && userFilterDepartment.data?.length > 0) {
+    users = userSearch;
+  } else {
+    if (data) users = data;
+    if (userFilterDepartment.data?.length > 0) users = userFilterDepartment.data;
+  }
+
+  const record = users.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(users ? users.length / numberUsers : 0);
+
+  function nextPage() {
+    if (currentPage !== npage) {
+      setCurrentpage(currentPage + 1);
+    }
+  }
+
+  function previousPage() {
+    if (currentPage !== 1) {
+      setCurrentpage(currentPage - 1);
+    }
+  }
+
+  const getSearchLoading = (isLoadingUser: boolean) => setSearchLoading(isLoadingUser);
 
   const updateUser = (user: ObjDetail) => {
     if (setUserToUpdate) {
@@ -74,6 +104,7 @@ const UserManagerList: FC = () => {
     }
     setIsLoading(false);
   };
+
   if (isPending) return 'Loading...';
 
   if (error) navigate(routes.server_error.path);
@@ -110,19 +141,19 @@ const UserManagerList: FC = () => {
       </div>
       <div className="container-user relative">
         <div className="container-list">
-          <table className="w-full">
-            <thead className="container-headdetail">
-              <th className="text matricule">Matricule</th>
-              <th className="text nom">NOM</th>
-              <th className="text prenom">
+          <div className="w-full flex flex-col">
+            <div className="container-headdetail">
+              <div className="text matricule sticky top-0">Matricule</div>
+              <div className="text nom sticky top-0">NOM</div>
+              <div className="text prenom sticky top-0">
                 <div>PRENOM(S)</div>
                 <img className="up-down" src="/icon/up-down.svg" alt="up-down" />
-              </th>
-              <th className="text ddn">DATE DE NAISSANCE</th>
-              <th className="text type">TYPE</th>
-              <th className="text action">ACTION</th>
-            </thead>
-            <tbody>
+              </div>
+              <div className="text ddn sticky top-0">DATE DE NAISSANCE</div>
+              <div className="text type sticky top-0">TYPE</div>
+              <div className="text action sticky top-0">ACTION</div>
+            </div>
+            <div className="max-h-[616px] overflow-y-scroll scroll-smooth">
               {searchLoading && (
                 <div className="absolute w-full h-full flex items-center justify-center top-0 left-0">
                   <div className="h-96 flex justify-center">
@@ -130,134 +161,100 @@ const UserManagerList: FC = () => {
                   </div>
                 </div>
               )}
-              {!searchLoading && userSearch && userSearch.length === 0 && (
+              {userSearch?.length === 0 && (
                 <p className="text-center text-gray-500 mt-8 font-medium absolute mx-auto w-full">
                   Aucun utilisateur trouvé
                 </p>
               )}
-              {data.length === 0 && !userSearch && userFilterDepartment.data.length === 0 && (
-                <p className="text-center text-gray-500 mt-8 font-medium absolute mx-auto w-full">
-                  Pas d&apos;utilisateur
-                </p>
-              )}
-              {!userSearch &&
-                !department &&
-                !searchLoading &&
-                data.map((user: ObjDetail, index: number) => (
-                  <tr className={index % 2 === 0 ? 'pair' : 'impair'} key={user.matricule}>
-                    <td className="text matricule">{user.matricule}</td>
-                    <td className="text nom">{user.firstname.toUpperCase()}</td>
-                    <td className="text prenom">{user.lastname}</td>
-                    <td className="text ddn">{new Date(user.birth_date).toLocaleDateString()}</td>
-                    <td className="text type">{user.post.department.name}</td>
-                    <td className="text action">
-                      <div className="icons">
-                        <div
-                          className="icon-action"
-                          role="presentation"
-                          onClick={() => updateUser(user)}
-                        >
-                          <Icon
-                            name="pen"
-                            className="text-gray-500 hover:text-gray-800"
-                            size={12}
-                          />
-                        </div>
-                        <div
-                          role="presentation"
-                          className="icon-action"
-                          onClick={() => settingUserToDelete(user.uuid)}
-                        >
-                          <Icon name="x" className="text-gray-500 hover:text-red-700" size={12} />
-                        </div>
-                      </div>{' '}
-                    </td>
-                  </tr>
-                ))}
-              {userSearch &&
-                userFilterDepartment.data &&
-                !searchLoading &&
-                data &&
-                userSearch.map((user: ObjDetail, index: number) => (
-                  <tr className={index % 2 === 0 ? 'pair' : 'impair'} key={user.matricule}>
-                    <td className="text matricule">{user.matricule}</td>
-                    <td className="text nom">{user.firstname.toUpperCase()}</td>
-                    <td className="text prenom">{user.lastname}</td>
-                    <td className="text ddn">{new Date(user.birth_date).toLocaleDateString()}</td>
-                    <td className="text type">{user.post.department.name}</td>
-                    <td className="text action">
-                      <div className="icons">
-                        <div
-                          className="icon-action"
-                          role="presentation"
-                          onClick={() => updateUser(user)}
-                        >
-                          <Icon
-                            name="pen"
-                            className="text-gray-500 hover:text-gray-800"
-                            size={12}
-                          />
-                        </div>
-                        <div
-                          role="presentation"
-                          className="icon-action"
-                          onClick={() => settingUserToDelete(user.uuid)}
-                        >
-                          <Icon name="x" className="text-gray-500 hover:text-red-700" size={12} />
-                        </div>
-                      </div>{' '}
-                    </td>
-                  </tr>
-                ))}
-              {!userSearch &&
-                userFilterDepartment.data &&
-                !searchLoading &&
-                userFilterDepartment.data.map((user: ObjDetail, index: number) => (
-                  <tr className={index % 2 === 0 ? 'pair' : 'impair'} key={user.matricule}>
-                    <td className="text matricule">{user.matricule}</td>
-                    <td className="text nom">{user.firstname.toUpperCase()}</td>
-                    <td className="text prenom">{user.lastname}</td>
-                    <td className="text ddn">{new Date(user.birth_date).toLocaleDateString()}</td>
-                    <td className="text type">{user.post.department.name}</td>
-                    <td className="text action">
-                      <div className="icons">
-                        <div
-                          className="icon-action"
-                          role="presentation"
-                          onClick={() => updateUser(user)}
-                        >
-                          <Icon
-                            name="pen"
-                            className="text-gray-500 hover:text-gray-800"
-                            size={12}
-                          />
-                        </div>
-                        <div
-                          role="presentation"
-                          className="icon-action"
-                          onClick={() => settingUserToDelete(user.uuid)}
-                        >
-                          <Icon name="x" className="text-gray-500 hover:text-red-700" size={12} />
-                        </div>
-                      </div>{' '}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+              {userSearch?.length === 0 &&
+                data?.length === 0 &&
+                userFilterDepartment.data.length === 0 && (
+                  <p className="text-center text-gray-500 mt-8 font-medium absolute mx-auto w-full">
+                    Pas d&apos;utilisateur
+                  </p>
+                )}
+              {record.map((user: ObjDetail, index: number) => (
+                <div className={index % 2 === 0 ? 'pair' : 'impair'} key={user.matricule}>
+                  <div className="text matricule">{user.matricule}</div>
+                  <div className="text nom">{user.firstname.toUpperCase()}</div>
+                  <div className="text prenom">{user.lastname}</div>
+                  <div className="text ddn">{new Date(user.birth_date).toLocaleDateString()}</div>
+                  <div className="text type">{user.post.department.name}</div>
+                  <div className="text action">
+                    <div className="icons">
+                      <div
+                        className="icon-action"
+                        role="presentation"
+                        onClick={() => updateUser(user)}
+                      >
+                        <Icon name="pen" className="text-gray-500 hover:text-gray-800" size={12} />
+                      </div>
+                      <div
+                        role="presentation"
+                        className="icon-action"
+                        onClick={() => settingUserToDelete(user.uuid)}
+                      >
+                        <Icon name="x" className="text-gray-500 hover:text-red-700" size={12} />
+                      </div>
+                    </div>{' '}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="container-pagination">
           <div className="content-pagination">
             <div className="line">
               <div>Lignes par page</div>
-              <div className="line-number">
-                <div>12</div>
-                <div className="flex flex-col justify-center items-center">
-                  <img src="/icon/sharp-arrow-drop-down-grey.svg" alt="arrow" />
+              <div className="flex flex-col justify-end">
+                {showLines && (
+                  <ul className="bottom-0 mt-[24px] w-15 bg-white border-1 border-gray-400">
+                    {numberLines.map((n) => (
+                      <li
+                        key={n}
+                        className="flex flex-col items-center cursor-pointer py-2 hover:bg-gray-100 rounded-md "
+                        role="presentation"
+                        onClick={() => {
+                          setnumberUsers(n);
+                          setCurrentpage(1);
+                          setShowLines((s) => !s);
+                        }}
+                      >
+                        {n}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <div
+                  className="line-number"
+                  role="presentation"
+                  onClick={() => setShowLines((s) => !s)}
+                >
+                  <div>{numberUsers || '-'}</div>
+                  <div className="flex flex-col justify-center items-center">
+                    <img src="/icon/sharp-arrow-drop-down-grey.svg" alt="arrow" />
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="page">1-10 de 15</div>
+            <div className="page">
+              <div
+                className="flex flex-col justify-center items-center rotate-90"
+                role="presentation"
+                onClick={previousPage}
+              >
+                <img src="/icon/sharp-arrow-drop-down-grey.svg" alt="arrow" className="w-[18px]" />
+              </div>
+              <div
+                className="flex flex-col justify-center items-center -rotate-90"
+                role="presentation"
+                onClick={nextPage}
+              >
+                <img src="/icon/sharp-arrow-drop-down-grey.svg" alt="arrow" className="w-[18px]" />
+              </div>
+            </div>
+            {/* <div className="page">1-10 de {userSearch?.length || data.length}</div> */}
           </div>
         </div>
       </div>

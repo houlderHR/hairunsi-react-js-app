@@ -7,6 +7,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import * as yup from 'yup';
+import UserDto from '../../../../../dto/user.dto';
 import updateUser, { createUser } from '../../../../../hooks/user';
 import { DEPARTMENT, POST } from '../../../../../routes/endpoints';
 import routes from '../../../../../routes/paths';
@@ -20,11 +21,10 @@ import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import manageErrorMessage from '../../../../../utils/manageError';
 import { REGEX_EMAIL } from '../../../../../utils/regex';
-import ObjDetail from '../../obj-detail';
 
 const PASSWORD_DEFAULT = 'HairunTest@123.';
 interface CreateModalUserProps {
-  user: ObjDetail | null;
+  user: UserDto | null;
   onClose: () => void;
 }
 
@@ -259,7 +259,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                     onClick={() => setShowPoste((s) => !s)}
                   >
                     <div className="libelle">
-                      {messagePost ? (
+                      {!post && messagePost ? (
                         <div className="!text-red-600">{messagePost}</div>
                       ) : (
                         <div>{!post ? 'Post' : post.name}</div>
@@ -277,7 +277,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                   </div>
                   <div className="type" role="presentation" onClick={() => setShowType((s) => !s)}>
                     <div className="libelle">
-                      {messageDepartment ? (
+                      {!department && messageDepartment ? (
                         <div className="!text-red-600">{messageDepartment}</div>
                       ) : (
                         <div>
