@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
@@ -39,8 +39,10 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
   const [selectPermission, setSelectPermission] = useState(true);
   const { data, error, isLoading } = useGetPermissionQuery();
   const [permissions, setPermissions] = useState<PermissionDto[]>([]);
+  const [searchPermissions, setSearchPermissions] = useState<PermissionDto[]>([]);
   const [permissionSelected, setPermissionSelected] = useState<PermissionDto[]>([]);
   const [isAlreadyRendered, setIsAlreadyRendered] = useState(false);
+  const [search, setSearch] = useState<string>('');
   const navigate = useNavigate();
   const [errorAxios, setErrorAxios] = useState('');
   const createUsermutation = useCreateRole();
@@ -50,6 +52,15 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
     handleSubmit,
     formState: { errors },
   } = useForm<{ role: string; permission: string }>();
+
+  const onChangeRoleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    const result = permissions.filter((item) => {
+      const permissionName = item.name.toUpperCase();
+      return permissionName.includes(e.target.value.toUpperCase());
+    });
+    setSearchPermissions(result);
+  };
 
   const onSubmit = handleSubmit(async (value) => {
     if (permissionSelected.length !== 0) setSelectPermission(true);
@@ -101,9 +112,13 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
     const unselectedPermission = permissions.filter(
       (item: PermissionDto) => item.name !== elem.name,
     );
+    const unselectedSearchPermissions = searchPermissions.filter(
+      (item: PermissionDto) => item.name !== elem.name,
+    );
     setSelectPermission(true);
     setPermissionSelected((prevList) => [...prevList, elem]);
     setPermissions(unselectedPermission);
+    setSearchPermissions(unselectedSearchPermissions);
   };
 
   const deleteItem = (elem: PermissionDto) => {
@@ -117,6 +132,7 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
       if (result.length >= 2) return sortPermissionByName(result);
       return result;
     });
+    setSearchPermissions((prevList) => [...prevList, elem]);
   };
   return (
     <CreateModal onClose={onClose} title={updateRole ? 'Modification rôle' : 'Création de rôle'}>
@@ -155,11 +171,16 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
               placeholder="Rechercher module"
               additionalClass="py-1 hover:bg-gray-50"
               additionalInputClass="text-base"
-              value=""
-              onChange={() => {}}
+              onChange={onChangeRoleInput}
+              value={search}
               icon="search"
             />
-            {show && <DropDown items={permissions} setValue={setValue} />}
+            {show && (
+              <DropDown
+                items={search !== '' ? searchPermissions : permissions}
+                setValue={setValue}
+              />
+            )}
           </div>
           <div className="min-h-48">
             {!selectPermission && (
