@@ -25,7 +25,7 @@ interface CreateModalTypeProps {
   department?: DepartmentDto;
 }
 
-const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, department }) => {
+const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, department }) => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -177,4 +177,4 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, department }
   );
 };
 
-export default CreateTypeModal;
+export default CreateOrUpdateTypeModal;
