@@ -51,9 +51,7 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   };
 
   if (modalState === ModalShowStateType.CREATE) {
-    return (
-      <CreateOrUpdateTypeModal type="createDepartment" onClose={onClose} department={department} />
-    );
+    return <CreateOrUpdateTypeModal type="createDepartment" onClose={onClose} />;
   }
 
   if (department && modalState === ModalShowStateType.UPDATE) {

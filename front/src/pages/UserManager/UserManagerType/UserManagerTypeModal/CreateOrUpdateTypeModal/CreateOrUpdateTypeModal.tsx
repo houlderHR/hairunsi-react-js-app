@@ -103,7 +103,7 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, department }
   return (
     <CreateModal
       onClose={onClose}
-      title={type === 'createDepartment' ? 'Création de type' : 'Modifucation de type'}
+      title={type === 'createDepartment' ? 'Création de type' : 'Modification de type'}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex gap-4 flex-col w-full">
