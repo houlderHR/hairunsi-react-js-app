@@ -155,6 +155,8 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
               placeholder="Rechercher module"
               additionalClass="py-1 hover:bg-gray-50"
               additionalInputClass="text-base"
+              value=""
+              onChange={() => {}}
               icon="search"
             />
             {show && <DropDown items={permissions} setValue={setValue} />}

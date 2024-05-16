@@ -48,7 +48,7 @@ const HeadManager = <T,>({
   useEffect(() => getSearchLoading && getSearchLoading(isFetching), [isFetching, getSearchLoading]);
 
   return (
-    <div className="flex flex-row gap-x-4">
+    <div className="flex flex-row gap-x-4 sticky top-32 z-50">
       <Button
         classTitle="hidden md:inline-block"
         onClick={onOpen}

@@ -79,8 +79,8 @@ const UserManagerList: FC = () => {
   if (error) navigate(routes.server_error.path);
   return (
     <>
-      <div className="flex flex-row items-center w-full h-1/4 my-1 gap-x-2">
-        <div className="w-3/4">
+      <div className="flex flex-row items-center w-full h-1/4 my-1 gap-x-2 sticky top-32 z-50">
+        <div className="w-3/4 ">
           <HeadManager
             title="NOUVEL UTILISATEUR"
             onOpen={() => setShowModal(ModalShowStateType.CREATE)}
