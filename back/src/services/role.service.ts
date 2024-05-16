@@ -10,6 +10,8 @@ import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import { StatusCodes } from 'http-status-codes';
 import { Permission } from '../entities/permission.entity';
 import SearchRoleDto from '../dto/role/SearchPermissionDto';
+import { ResponseRoleDto } from '../dto/role/ResponseRoleDto';
+import * as fs from 'fs';
 
 class RoleService {
   async create(newRoleDto: CreateOrUpdateRoleDto): Promise<Role> {
@@ -38,14 +40,28 @@ class RoleService {
     }
   }
 
-  async getAll(): Promise<Role[]> {
+  async getAll(): Promise<ResponseRoleDto[]> {
     try {
-      return await AppDataSource.getRepository(Role).find({
+      const result = await AppDataSource.getRepository(Role).find({
         relations: { permissions: true, departments: true },
         order: {
           created_at: 'DESC',
         },
       });
+      let resultDto: ResponseRoleDto[] = plainToClass(ResponseRoleDto, result);
+      try {
+        const data = fs.readFileSync('seeds-id.json', { encoding: 'utf8' });
+        const seeds = await JSON.parse(data);
+        if (seeds.id) {
+          resultDto = resultDto.map((item) => {
+            item.isSeed = seeds.id.includes(item.id) ? true : false;
+            return item;
+          });
+        }
+      } catch (error) {
+        throw error;
+      }
+      return resultDto;
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -110,6 +126,7 @@ class RoleService {
 
   public async search(searchRoleDto: SearchRoleDto) {
     let roles = [];
+    let resultDto: ResponseRoleDto[] = plainToClass(ResponseRoleDto, roles);
     try {
       if (searchRoleDto.search !== '') {
         roles = await this.getRepository()
@@ -127,8 +144,21 @@ class RoleService {
           .orderBy('r.created_at', 'DESC')
           .getMany();
       }
+      try {
+        resultDto = [...roles];
+        const data = fs.readFileSync('seeds-id.json', { encoding: 'utf8' });
+        const seeds = await JSON.parse(data);
+        if (seeds.id) {
+          resultDto = resultDto.map((item) => {
+            item.isSeed = seeds.id.includes(item.id) ? true : false;
+            return item;
+          });
+        }
+      } catch (error) {
+        throw error;
+      }
 
-      return roles;
+      return resultDto;
     } catch (e) {
       throw new InternalServerErrorException();
     }
