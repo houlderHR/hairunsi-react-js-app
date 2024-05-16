@@ -55,6 +55,7 @@ const UserManagerRole: FC = () => {
         pushSearch={pushRoleType}
         getSearchLoading={getSearchLoading}
       />
+
       <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
         {searchLoading && (
           <div className="absolute w-full mt-[20rem] h-full flex items-center justify-center top-0 left-0">

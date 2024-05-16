@@ -18,6 +18,7 @@ export default {
         'gray-5': '#EAEAEA',
         'gray-6': '#FAFAFA',
         'gray-7': '#DEDEDE',
+        'gray-8': '#F9F9F9',
         'danger-2': '#EF4F4E',
         'white-1': '#F0F0F0',
         'purple-1': '#667799',

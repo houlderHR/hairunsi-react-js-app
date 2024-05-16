@@ -17,7 +17,7 @@ interface ModalProps {
 const Modal: FC<PropsWithChildren<ModalProps>> = ({ children, title, onClose }) => (
   <>
     {createPortal(
-      <div className="fixed z-20 top-0 h-full w-full flex items-center justify-center">
+      <div className="fixed z-50 top-0 h-full w-full flex items-center justify-center">
         <div className="bg-black opacity-[16%] h-full w-full absolute top-0" />
         <div className="bg-white shadow-xl rounded-lg lg:w-1/3 md:w-1/2 w-3/4 py-4 px-[26px] z-30">
           <div className="flex flex-row justify-between items-center mb-12">
