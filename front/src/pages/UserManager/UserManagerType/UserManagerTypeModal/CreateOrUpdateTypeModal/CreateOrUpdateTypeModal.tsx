@@ -1,12 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { FC, MouseEvent, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
-import * as yup from 'yup';
 import DepartmentDto from '../../../../../dto/department.dto';
+import { schema, useFetchDepartment } from '../../../../../hooks/useDepartment';
 import { SearchType } from '../../../../../hooks/useSearch';
 import routes from '../../../../../routes/paths';
 import Button from '../../../../../shared/authenticated/buttons/Button';
@@ -18,29 +18,18 @@ import InputIcon from '../../../../../shared/inputs/InputIcon';
 import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import mapError from '../../../../../utils/mapErrorResponse';
-import { REGEX_ID } from '../../../../../utils/regex';
 
 interface CreateModalTypeProps {
   onClose: () => void;
+  type: 'createDepartment' | 'updateDepartment';
+  department?: DepartmentDto;
 }
 
-const schema = yup.object({
-  name: yup
-    .string()
-    .required('Le nom du département est requis')
-    .min(4, 'Le nom du département doit contenir au moin 4 caractères'),
-  role: yup.string().required('Vous devez séléctionner un rôle').matches(REGEX_ID),
-});
-
-const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
+const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, department }) => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { mutateAsync: onCreateDepartment, isPending } = useMutation({
-    mutationKey: ['createDepartment'],
-    mutationFn: (_department: { name: string | undefined; role: string | undefined }) =>
-      http.post<DepartmentDto>(`department`, _department).then((response) => response.data),
-  });
+  const { mutateAsync: onCreateDepartment, isPending } = useFetchDepartment(type, department);
   const {
     control,
     handleSubmit,
@@ -51,6 +40,7 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
     clearErrors,
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: { name: department?.name ?? '', role: department?.role.id ?? '' },
   });
   const {
     data: roles,
@@ -69,10 +59,10 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
     setShow((s) => !s);
   };
 
-  const getRole = (department: { id: string; name: string }, e?: MouseEvent<HTMLElement>) => {
+  const getRole = (_department: { id: string; name: string }, e?: MouseEvent<HTMLElement>) => {
     e?.stopPropagation();
     setShow(false);
-    setRoleTypeValue('role', department.id);
+    setRoleTypeValue('role', _department.id);
   };
 
   const createDepartment = async (_data: {
@@ -111,7 +101,10 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
   };
 
   return (
-    <CreateModal onClose={onClose} title="Création de type">
+    <CreateModal
+      onClose={onClose}
+      title={type === 'createDepartment' ? 'Création de type' : 'Modifucation de type'}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex gap-4 flex-col w-full">
           <div className="relative">
@@ -171,7 +164,12 @@ const CreateTypeModal: FC<CreateModalTypeProps> = ({ onClose }) => {
         <Button
           type="submit"
           disabled={isPending}
-          title={<div className="flex flex-row gap-2">Créer{isPending && <Spinner />}</div>}
+          title={
+            <div className="flex flex-row gap-2">
+              {type === 'createDepartment' ? 'Créer' : 'Modifier'}
+              {isPending && <Spinner />}
+            </div>
+          }
           variant="secondary-1"
         />
       </form>
