@@ -29,7 +29,7 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { mutateAsync: onCreateDepartment, isPending } = useFetchDepartment(type, department);
+  const { mutateAsync: onMutateDepartment, isPending } = useFetchDepartment(type, department);
   const {
     control,
     handleSubmit,
@@ -70,7 +70,7 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
     role: string | undefined;
   }) => {
     try {
-      await onCreateDepartment({ ..._data });
+      await onMutateDepartment({ ..._data });
       onClose();
       await queryClient.invalidateQueries({ queryKey: ['department'] });
       await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
