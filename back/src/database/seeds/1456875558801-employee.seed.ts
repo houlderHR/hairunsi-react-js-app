@@ -8,19 +8,24 @@ import { Department } from '../../entities/department.entity';
 import { Post } from '../../entities/post.entity';
 import { Role } from '../../entities/role.entity';
 import logger from '../../utils/logger';
+import * as fs from 'fs';
 
-export default class employee implements Seeder {
+export default class employee1456875558801 implements Seeder {
   track = false;
 
   public async run(dataSource: DataSource, factoryManager: SeederFactoryManager): Promise<any> {
     let userRepository = dataSource.getRepository(User);
-    let user: User = await userRepository.findOneBy({ email: 'test@hairun-technology.com' });
+    let user: User = await userRepository.findOneBy({
+      email: 'test-simple-user@hairun-technology.com',
+    });
+
     if (!user) {
       let permissionRepository = dataSource.getRepository(Permission);
       let [permissionUtilisateur, permissionUpdateUser] = [
         await permissionRepository.findOneBy({ name: 'Accès utilisateur' }),
         await permissionRepository.findOneBy({ name: 'Modification utilisateur' }),
       ];
+
       if (!permissionUtilisateur) {
         permissionUtilisateur = await permissionRepository.save({ name: 'Accès utilisateur' });
       }
@@ -37,8 +42,18 @@ export default class employee implements Seeder {
           name: 'Employé',
           permissions: [permissionUtilisateur, permissionUpdateUser],
         });
-      }
+        try {
+          const data = fs.readFileSync('seeds-id.json', { encoding: 'utf8' });
+          const employeeRole = await JSON.parse(data);
 
+          if (employeeRole.id) {
+            await employeeRole.id.push(role.id);
+            fs.writeFileSync('seeds-id.json', JSON.stringify(employeeRole));
+          }
+        } catch (error) {
+          throw error;
+        }
+      }
       const repository = dataSource.getRepository(Department);
       let department = await repository.findOneBy({ name: 'Production' });
       if (!department) {

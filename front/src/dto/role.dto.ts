@@ -4,6 +4,7 @@ import PermissionDto from './permission.dto';
 export interface RoleResponseDto {
   id: string;
   name: string;
+  isSeed?: boolean;
   permissions: PermissionDto[];
   departments: DepartmentDto[];
 }

@@ -8,13 +8,15 @@ import { User } from '../../entities/user.entity';
 import { hashPassword } from '../../utils/hash';
 import { File } from '../../entities/file.entity';
 import logger from '../../utils/logger';
+import * as fs from 'fs';
 
-export default class SuperAdminSeed implements Seeder {
+export default class SuperAdminSeed1456875558800 implements Seeder {
   track = false;
 
   public async run(dataSource: DataSource, factoryManager: SeederFactoryManager): Promise<any> {
     let userRepository = dataSource.getRepository(User);
     let user: User = await userRepository.findOneBy({ email: 'test@hairun-technology.com' });
+
     if (!user) {
       let permissionRepository = dataSource.getRepository(Permission);
       let [
@@ -59,6 +61,16 @@ export default class SuperAdminSeed implements Seeder {
             permissionDeleteUser,
           ],
         });
+        try {
+          fs.writeFileSync(
+            'seeds-id.json',
+            JSON.stringify({
+              id: [role.id],
+            }),
+          );
+        } catch (error) {
+          throw error;
+        }
       }
 
       const repository = dataSource.getRepository(Department);

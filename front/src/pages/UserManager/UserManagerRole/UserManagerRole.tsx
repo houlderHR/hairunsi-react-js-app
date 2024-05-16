@@ -70,14 +70,10 @@ const UserManagerRole: FC = () => {
         )}
         {!searchLoading &&
           allRole &&
-          allRole.map((item: RoleResponseDto, index: number) => (
+          allRole.map((item: RoleResponseDto) => (
             <CardRole
               key={item.id}
-              isRemovable={
-                index !== allRole.length - 1 &&
-                index !== allRole.length - 2 &&
-                item.departments.length === 0
-              }
+              isRemovable={!item.isSeed && item.departments.length === 0}
               openUpdateModal={openUpdateModal(item)}
               openDeleteModal={openDeleteModal(item)}
               title={item.name}
@@ -87,14 +83,10 @@ const UserManagerRole: FC = () => {
           ))}
         {!searchLoading &&
           !allRole &&
-          data.map((item: RoleResponseDto, index: number) => (
+          data.map((item: RoleResponseDto) => (
             <CardRole
               key={item.id}
-              isRemovable={
-                index !== data.length - 1 &&
-                index !== data.length - 2 &&
-                item.departments.length === 0
-              }
+              isRemovable={!item.isSeed && item.departments.length === 0}
               openUpdateModal={openUpdateModal(item)}
               openDeleteModal={openDeleteModal(item)}
               title={item.name}
