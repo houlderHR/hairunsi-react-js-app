@@ -87,9 +87,9 @@ const router = createBrowserRouter([
   {
     path: routes.authentified.path,
     element: (
-      // <ProtectedRoute>
-      <Authenticated />
-      // </ProtectedRoute>
+      <ProtectedRoute>
+        <Authenticated />
+      </ProtectedRoute>
     ),
     children: [
       {
