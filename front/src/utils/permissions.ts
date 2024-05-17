@@ -6,5 +6,4 @@ const PERMISSIONS = {
   viewUsers: 'Accès utilisateur',
   updateUser: 'Modification utilisateur',
 };
-
 export default PERMISSIONS;

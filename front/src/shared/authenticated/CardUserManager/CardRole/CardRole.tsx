@@ -5,6 +5,7 @@ import CardItemRole from './CardItemRole';
 
 interface CardRoleProps {
   title: string;
+  isEditable?: boolean;
   isRemovable?: boolean;
   items: PermissionDto[];
   maxElement: number;
@@ -16,6 +17,7 @@ interface CardRoleProps {
 const CardRole: FC<CardRoleProps> = ({
   title,
   items,
+  isEditable,
   isRemovable,
   maxElement,
   openUpdateModal = () => {},
@@ -26,6 +28,7 @@ const CardRole: FC<CardRoleProps> = ({
   return (
     <CardUserManager
       title={title}
+      isEditable={isEditable}
       isRemovable={isRemovable}
       iconVisible={iconVisible}
       openUpdateModal={openUpdateModal}

@@ -8,18 +8,18 @@ interface HeadManagerProps<T> {
   onOpen: () => void;
   title: string;
   searchType?: SearchType;
+  allowCreation?: boolean;
   pushSearch: (s: T[] | undefined) => void;
   getSearchLoading?: (isLoading: boolean) => void;
-  allowCreation?: boolean;
 }
 
 const HeadManager = <T,>({
   onOpen,
   title,
   pushSearch,
+  allowCreation = true,
   searchType = SearchType.USER,
   getSearchLoading,
-  allowCreation = true,
 }: HeadManagerProps<T>) => {
   const [search, setSearch] = useState<string>('');
   const searchValue = useDebounce(search, 300);
