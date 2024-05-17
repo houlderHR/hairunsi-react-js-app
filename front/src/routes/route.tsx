@@ -115,7 +115,7 @@ const router = createBrowserRouter([
           {
             path: '*',
             element: (
-              <Navigate to={routes.authentified.subpaths.userManager.subpaths.type.path} replace />
+              <Navigate to={routes.authentified.subpaths.userManager.subpaths.user.path} replace />
             ),
           },
         ],
