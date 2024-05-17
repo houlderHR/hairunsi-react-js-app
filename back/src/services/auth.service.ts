@@ -169,7 +169,7 @@ class AuthService {
     try {
       const decodedToken = verify(token, TOKEN_KEY);
       const user = await userService.getUserById(decodedToken.user.uuid);
-      return { authorized: true, user };
+      return { authorized: true, decodedToken: { user } };
     } catch (error) {
       throw new Unauthorized('Expiré');
     }
