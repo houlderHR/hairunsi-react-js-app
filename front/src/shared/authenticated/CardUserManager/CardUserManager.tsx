@@ -6,6 +6,7 @@ interface CardUserManagerProps {
   title: string;
   iconVisible?: boolean;
   isRemovable?: boolean;
+  isEditable?: boolean;
   openUpdateModal: () => void;
   openDeleteModal: () => void;
 }
@@ -14,6 +15,7 @@ const CardUserManager: FC<PropsWithChildren<CardUserManagerProps>> = ({
   children,
   title,
   isRemovable = true,
+  isEditable = true,
   openUpdateModal,
   openDeleteModal,
   iconVisible = false,
@@ -28,6 +30,7 @@ const CardUserManager: FC<PropsWithChildren<CardUserManagerProps>> = ({
       <h3 className="text-secondary truncate font-medium leading-6">{title}</h3>
       <IconCard
         isRemovable={isRemovable}
+        isEditable={isEditable}
         openUpdateModal={openUpdateModal}
         openDeleteModal={openDeleteModal}
         withOther={!iconVisible}

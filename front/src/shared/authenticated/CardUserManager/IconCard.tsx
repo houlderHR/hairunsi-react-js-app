@@ -5,6 +5,7 @@ import Icon from '../../Icon';
 interface IconBoxProps {
   withOther?: boolean;
   isRemovable?: boolean;
+  isEditable?: boolean;
   openUpdateModal: () => void;
   openDeleteModal: () => void;
 }
@@ -14,6 +15,7 @@ const IconCard: FC<IconBoxProps> = ({
   openUpdateModal,
   openDeleteModal,
   isRemovable,
+  isEditable,
 }) => (
   <div
     className={twMerge(
@@ -21,13 +23,15 @@ const IconCard: FC<IconBoxProps> = ({
       withOther ? 'opacity-0' : 'opacity-100',
     )}
   >
-    <Icon
-      onClick={openUpdateModal}
-      width={11.67}
-      className="hover:text-secondary duration-300"
-      height={15}
-      name="pen"
-    />
+    {isEditable && (
+      <Icon
+        onClick={openUpdateModal}
+        width={11.67}
+        className="hover:text-secondary duration-300"
+        height={15}
+        name="pen"
+      />
+    )}
     {isRemovable && (
       <>
         <span className="w-px h-4 bg-gray-3" />

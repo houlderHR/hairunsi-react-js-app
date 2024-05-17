@@ -58,7 +58,7 @@ const UserManagerList: FC = () => {
   const lastIndex = numberUsers * currentPage;
   const firstIndex = lastIndex - numberUsers;
   let users = [];
-  if (userSearch && userFilterDepartment.data?.length > 0) {
+  if (userSearch && userFilterDepartment.data?.length === 0) {
     users = userSearch;
   } else {
     if (data) users = data;

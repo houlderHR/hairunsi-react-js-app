@@ -10,6 +10,7 @@ interface HeadManagerProps<T> {
   searchType?: SearchType;
   pushSearch: (s: T[] | undefined) => void;
   getSearchLoading?: (isLoading: boolean) => void;
+  allowCreation?: boolean;
 }
 
 const HeadManager = <T,>({
@@ -18,6 +19,7 @@ const HeadManager = <T,>({
   pushSearch,
   searchType = SearchType.USER,
   getSearchLoading,
+  allowCreation = true,
 }: HeadManagerProps<T>) => {
   const [search, setSearch] = useState<string>('');
   const searchValue = useDebounce(search, 300);
@@ -49,13 +51,15 @@ const HeadManager = <T,>({
 
   return (
     <div className="flex flex-row gap-x-4 sticky top-32 z-50">
-      <Button
-        classTitle="hidden md:inline-block"
-        onClick={onOpen}
-        icon="add"
-        title={title}
-        variant="secondary"
-      />
+      {allowCreation && (
+        <Button
+          classTitle="hidden md:inline-block"
+          onClick={onOpen}
+          icon="add"
+          title={title}
+          variant="secondary"
+        />
+      )}
       <InputIcon icon="search" onChange={onChange} value={search} placeholder="Search" />
     </div>
   );
