@@ -5,7 +5,7 @@ module.exports = {
   rootDir: './',
   coverageDirectory: '<rootDir>/coverage',
   testPathIgnorePatterns: ['<rootDir>/node_modules', '<rootDir>/build'],
-  testMatch: ['<rootDir>/src/__tests__/*.test.ts'],
+  testMatch: ['<rootDir>/src/__tests__/**/*.test.ts'],
   verbose: true,
   forceExit: false,
 };
