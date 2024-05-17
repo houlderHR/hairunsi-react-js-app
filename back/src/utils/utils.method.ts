@@ -1,6 +1,5 @@
 import { User } from '../entities/user.entity';
 import { TYPE_FILE } from './constants';
-import * as jwt from 'jsonwebtoken';
 
 export const bufferToDataUri = (buffer: Buffer, mimetype: string) => {
   const b64 = Buffer.from(buffer).toString('base64');

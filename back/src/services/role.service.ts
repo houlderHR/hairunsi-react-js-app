@@ -54,7 +54,7 @@ class RoleService {
         const seeds = await JSON.parse(data);
         if (seeds.id) {
           resultDto = resultDto.map((item) => {
-            item.isSeed = seeds.id.includes(item.id) ? true : false;
+            item.isSeed = seeds.id.includes(item.id) ?? false;
             return item;
           });
         }
@@ -150,7 +150,7 @@ class RoleService {
         const seeds = await JSON.parse(data);
         if (seeds.id) {
           resultDto = resultDto.map((item) => {
-            item.isSeed = seeds.id.includes(item.id) ? true : false;
+            item.isSeed = seeds.id.includes(item.id) ?? false;
             return item;
           });
         }
