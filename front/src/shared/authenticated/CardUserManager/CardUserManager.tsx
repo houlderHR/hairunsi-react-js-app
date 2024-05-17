@@ -29,8 +29,8 @@ const CardUserManager: FC<PropsWithChildren<CardUserManagerProps>> = ({
     <div className="flex flex-row justify-between">
       <h3 className="text-secondary truncate font-medium leading-6">{title}</h3>
       <IconCard
-        isRemovable={isRemovable}
         isEditable={isEditable}
+        isRemovable={isRemovable}
         openUpdateModal={openUpdateModal}
         openDeleteModal={openDeleteModal}
         withOther={!iconVisible}

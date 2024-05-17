@@ -34,7 +34,7 @@ const IconCard: FC<IconBoxProps> = ({
     )}
     {isRemovable && (
       <>
-        <span className="w-px h-4 bg-gray-3" />
+        {isEditable && <span className="w-px h-4 bg-gray-3" />}
         <Icon
           onClick={openDeleteModal}
           name="trash"
