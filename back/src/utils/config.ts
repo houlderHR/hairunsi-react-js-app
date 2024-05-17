@@ -11,6 +11,12 @@ let seeds: string, factories: string;
       seeds = 'src/database/seeds/*.seed{.ts,.js}';
       factories = 'src/database/factories/*.factory{.ts,.js}';
       break;
+    case 'dev':
+      entities = 'src/entities/*.entity{.ts,.js}';
+      migrations = 'src/migrations/**/*.ts';
+      seeds = 'src/database/seeds/*.seed{.ts,.js}';
+      factories = 'src/database/factories/*.factory{.ts,.js}';
+      break;
     default:
       entities = 'build/entities/*.entity.js';
       migrations = 'build/migrations/**/*.js';
