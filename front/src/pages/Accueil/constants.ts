@@ -14,7 +14,7 @@ const options: ObjOption[] = [
   {
     src: '/icon/user-setting-icon.svg',
     title: 'Gestion des utilisateurs',
-    path: `${routes.authentified.subpaths.userManager.path}/${routes.authentified.subpaths.userManager.subpaths.type.path}`,
+    path: `${routes.authentified.subpaths.userManager.path}${routes.authentified.subpaths.userManager.subpaths.user.path}`,
   },
   {
     src: '/icon/leave-icon.svg',

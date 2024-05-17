@@ -20,6 +20,11 @@ import InputFileWithDragAndDrop from '../../../../../shared/inputs/InputFileWith
 import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import manageErrorMessage from '../../../../../utils/manageError';
+import {
+  QUERY_USER_DEPARTMENT_FILTER_KEY,
+  QUERY_USER_DEPARTMENT_KEY,
+  QUERY_USER_KEY,
+} from '../../../../../utils/query.constants';
 import { REGEX_EMAIL } from '../../../../../utils/regex';
 
 const PASSWORD_DEFAULT = 'HairunTest@123.';
@@ -57,14 +62,16 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
   const navigate = useNavigate();
 
   const departmentData = useQuery({
-    queryKey: ['department_data'],
-    queryFn: () => http.get(DEPARTMENT).then((res) => res.data),
+    queryKey: [QUERY_USER_DEPARTMENT_FILTER_KEY],
+    queryFn: () => http.get(DEPARTMENT.departmentWithAnonymous).then((res) => res.data),
   });
   const postData = useQuery({
     queryKey: ['post', department],
     queryFn: () =>
       http
-        .get(department ? `${POST}/${DEPARTMENT}/${department.id}` : POST)
+        .get(
+          department ? `${POST}/${DEPARTMENT.departmentWithoutAnonymous}/${department.id}` : POST,
+        )
         .then((res) => res.data),
     enabled: true,
   });
@@ -96,7 +103,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
     email: string | undefined;
   }) => {
     setIsLoading(true);
-    queryClient.invalidateQueries({ queryKey: ['user_department'] });
+    queryClient.invalidateQueries({ queryKey: [QUERY_USER_DEPARTMENT_KEY] });
     if (!department) setMessageDepartment('Obligatoire * ');
     if (!post) setMessagePost('Obligatoire *');
     if (data.firstname && data.lastname && data.birth_date && data.email && post) {
@@ -111,7 +118,6 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
           formData.append('post', post.id);
 
           userUpdatedOrCreated = await updateUser(formData, user.uuid);
-          queryClient.invalidateQueries({ queryKey: ['user'] });
         } else {
           const formData = new FormData();
           formData.append('firstname', data.firstname);
@@ -123,12 +129,13 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
             formData.append('image', file);
             formData.append('post', post.id);
             userUpdatedOrCreated = await createUser(formData);
-            queryClient.invalidateQueries({ queryKey: ['user'] });
           } else setMatch(["Vérifiez l'image"]);
         }
         if (userUpdatedOrCreated) {
           onClose();
         }
+
+        queryClient.invalidateQueries({ queryKey: [QUERY_USER_KEY] });
       } catch (error) {
         const exceptions = error as AxiosError;
         if (exceptions.code === 'ERR_NETWORK') navigate(routes.server_error.path);
@@ -269,10 +276,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                     {postData.isPending && 'Chargement...'}
                     {postData.error && postData.error.message}
                     {showPoste && department && (
-                      <DropDown
-                        items={postData.data || [{ name: 'No data', id: '0' }]}
-                        setValue={setPost}
-                      />
+                      <DropDown items={postData.data} setValue={setPost} />
                     )}
                   </div>
                   <div className="type" role="presentation" onClick={() => setShowType((s) => !s)}>

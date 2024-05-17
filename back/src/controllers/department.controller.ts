@@ -31,6 +31,16 @@ class DepartmentController {
     }
   }
 
+  public async getWithAnonymous(request: Request, response: Response): Promise<Response> {
+    let relations = Object.keys(request.query).map((query) => query);
+    try {
+      const departments = await DepartmentService.getAllDepartmentWithAnonymous(relations);
+      return response.status(StatusCodes.OK).json(departments);
+    } catch (error) {
+      return response.status(error.status).json(error);
+    }
+  }
+
   public async getById(request: Request, response: Response): Promise<Response> {
     let relations = Object.keys(request.query).map((query) => query);
     try {

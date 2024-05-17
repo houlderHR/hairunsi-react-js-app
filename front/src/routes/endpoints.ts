@@ -4,7 +4,10 @@ const UNAUTHENTICATED = {
 };
 
 export const USER = '/user';
-export const DEPARTMENT = '/department';
+export const DEPARTMENT = {
+  departmentWithoutAnonymous: '/department',
+  departmentWithAnonymous: '/department/anonymous',
+};
 export const POST = '/post';
 
 export default UNAUTHENTICATED;

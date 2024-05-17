@@ -14,6 +14,11 @@ import DropDown from '../../../shared/authenticated/Modal/DropDown';
 import Icon from '../../../shared/Icon';
 import Loading from '../../../shared/Loading/Loading';
 import http from '../../../utils/http-common';
+import {
+  QUERY_USER_DEPARTMENT_FILTER_KEY,
+  QUERY_USER_DEPARTMENT_KEY,
+  QUERY_USER_KEY,
+} from '../../../utils/query.constants';
 import UserManagerUserModal from './UserManagerListModal/UserManagerListModal';
 
 const numberLines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -33,18 +38,18 @@ const UserManagerList: FC = () => {
   const pushSearchUser = (_user: ObjDetail[] | undefined) => {
     setUserSearch(_user);
   };
-  queryClient.invalidateQueries({ queryKey: ['user_department'] });
+  queryClient.invalidateQueries({ queryKey: [QUERY_USER_DEPARTMENT_KEY] });
   const { isPending, error, data } = useQuery({
-    queryKey: ['user'],
+    queryKey: [QUERY_USER_KEY],
     queryFn: async () => (await getAllUsers()).data,
   });
   const userFilterDepartment = useQuery({
-    queryKey: ['user_department'],
+    queryKey: [QUERY_USER_DEPARTMENT_KEY],
     queryFn: async () => (await getAllUsersByDepartment(department?.id)).data,
   });
   const departmentDataForOption = useQuery({
-    queryKey: ['department_data'],
-    queryFn: () => http.get(DEPARTMENT).then((res) => res.data),
+    queryKey: [QUERY_USER_DEPARTMENT_FILTER_KEY],
+    queryFn: () => http.get(DEPARTMENT.departmentWithAnonymous).then((res) => res.data),
   });
   // For pagination
   const [showLines, setShowLines] = useState(false);
@@ -94,8 +99,8 @@ const UserManagerList: FC = () => {
     try {
       const userDeleted = await deleteUserById(userToDelete);
       if (userDeleted.status === 200) {
-        queryClient.invalidateQueries({ queryKey: ['user'] });
-        queryClient.invalidateQueries({ queryKey: ['user_department'] });
+        queryClient.invalidateQueries({ queryKey: [QUERY_USER_KEY] });
+        queryClient.invalidateQueries({ queryKey: [QUERY_USER_DEPARTMENT_KEY] });
         setUserToDelete(null);
       }
     } catch (err) {
@@ -125,18 +130,23 @@ const UserManagerList: FC = () => {
           role="presentation"
           onClick={() => setShowType((s) => !s)}
         >
-          <div className="flex flex-row justify-between  items-center w-full h-full px-5 bg-gray-3 rounded-[2px] hover:bg-gray-50;">
-            <div>{!department?.name ? 'Département' : department?.name}</div>
+          <div className="flex flex-row justify-center lg:flex lg:flex-row lg:items-center lg:justify-between items-center w-full h-full px-5 bg-gray-3 rounded-[2px] hover:bg-gray-50;">
+            <div className="hidden lg:flex">
+              {!department?.name ? 'Département' : department?.name}
+            </div>
 
-            <Icon name="sharp-arrow-drop-down" size={10} className="text-gray-500" />
+            <Icon name="sharp-arrow-drop-down" size={10} className="text-gray-500 hidden lg:flex" />
+            <img src="/icon/filter.svg" alt="filter" className="lg:hidden" />
           </div>
-          {showType && (
-            <DropDown
-              items={[...departmentDataForOption.data, { name: 'Tous', id: 'department_all' }]}
-              setValue={setDepartment}
-              onClickItem={() => queryClient.invalidateQueries({ queryKey: ['user_department'] })}
-            />
-          )}
+          <div className="w-[200px] fixed right-0 mr-5 md:mr-auto md:w-full md:flex md:relative">
+            {showType && (
+              <DropDown
+                items={[...departmentDataForOption.data, { name: 'Tous', id: 'department_all' }]}
+                setValue={setDepartment}
+                onClickItem={() => queryClient.invalidateQueries({ queryKey: ['user_department'] })}
+              />
+            )}
+          </div>
         </div>
       </div>
       <div className="container-user relative">
@@ -207,13 +217,13 @@ const UserManagerList: FC = () => {
           <div className="content-pagination">
             <div className="line">
               <div>Lignes par page</div>
-              <div className="flex flex-col justify-end">
+              <div className="flex flex-col justify-end relative ">
                 {showLines && (
-                  <ul className="bottom-0 mt-[24px] w-15 bg-white border-1 border-gray-400">
+                  <ul className="bottom-0 mt-[24px] w-15 border-1 border-gray-400 bg-white z-50">
                     {numberLines.map((n) => (
                       <li
                         key={n}
-                        className="flex flex-col items-center cursor-pointer py-2 hover:bg-gray-100 rounded-md "
+                        className="flex flex-col items-center h-10 cursor-pointer py-2 hover:bg-gray-100 rounded-md "
                         role="presentation"
                         onClick={() => {
                           setnumberUsers(n);
