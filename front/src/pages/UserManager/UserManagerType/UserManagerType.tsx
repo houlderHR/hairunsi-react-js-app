@@ -3,12 +3,15 @@ import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DepartmentDto from '../../../dto/department.dto';
 import { SearchType } from '../../../hooks/useSearch';
+import useUserPermission from '../../../hooks/useUserPermission';
 import routes from '../../../routes/paths';
+import AllowedRoute from '../../../shared/authenticated/AllowedRoute';
 import CardType from '../../../shared/authenticated/CardUserManager/CardType';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
 import Loading from '../../../shared/Loading/Loading';
 import http from '../../../utils/http-common';
+import PERMISSIONS from '../../../utils/permissions';
 import UserManagerTypeModal from './UserManagerTypeModal';
 
 const UserManagerType: FC = () => {
@@ -17,6 +20,7 @@ const UserManagerType: FC = () => {
   const [type, setType] = useState<DepartmentDto[] | undefined>();
   const [searchLoading, setSearchLoading] = useState(false);
   const navigate = useNavigate();
+  const { allowPermission } = useUserPermission();
 
   const getSearchLoading = (isLoading: boolean) => setSearchLoading(isLoading);
 
@@ -47,13 +51,14 @@ const UserManagerType: FC = () => {
   };
 
   return (
-    <>
+    <AllowedRoute isAllowed={allowPermission(PERMISSIONS.viewAll)}>
       <HeadManager
         title="CREER UN NOUVEAU TYPE"
         onOpen={() => setShowModal(ModalShowStateType.CREATE)}
         pushSearch={pushSearchType}
         searchType={SearchType.TYPE}
         getSearchLoading={getSearchLoading}
+        allowCreation={allowPermission(PERMISSIONS.createAll)}
       />
       <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
         {(isDepartmentLoading || searchLoading) && (
@@ -101,7 +106,7 @@ const UserManagerType: FC = () => {
         modalState={showModal}
         setShowModal={setShowModal}
       />
-    </>
+    </AllowedRoute>
   );
 };
 
