@@ -18,6 +18,7 @@ import { sign, verify } from 'jsonwebtoken';
 
 import { checkIfPasswordContainPersonalInformation } from '../utils/utils.method';
 import { TOKEN_KEY } from '../utils/token';
+import userService from './user.service';
 class AuthService {
   async recoveryPassword(email: string) {
     try {
@@ -167,7 +168,8 @@ class AuthService {
   async decodeToken(token: string) {
     try {
       const decodedToken = verify(token, TOKEN_KEY);
-      return { authorized: true, decodedToken };
+      const user = await userService.getUserById(decodedToken.user.uuid);
+      return { authorized: true, decodedToken: { user } };
     } catch (error) {
       throw new Unauthorized('Expiré');
     }

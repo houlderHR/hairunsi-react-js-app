@@ -18,7 +18,6 @@ export default class employee1456875558801 implements Seeder {
     let user: User = await userRepository.findOneBy({
       email: 'test-simple-user@hairun-technology.com',
     });
-
     if (!user) {
       let permissionRepository = dataSource.getRepository(Permission);
       let [permissionUtilisateur, permissionUpdateUser] = [

@@ -1,7 +1,7 @@
 import { FC } from 'react';
+import ObjDetail from '../../../../dto/user.dto';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
-import ObjDetail from '../obj-detail';
 import CreateOrUpdateUserModal from './CreateOrUpdateUserModal';
 
 interface UserManagerUserModalProps {

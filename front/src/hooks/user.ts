@@ -23,7 +23,7 @@ export const deleteUserById = async (id: string | null) => {
 export const getAllUsers = async () => http.get(USER);
 
 export const getAllUsersByDepartment = async (department: string | undefined) => {
-  const users = http.get(`${USER}${DEPARTMENT}`, {
+  const users = http.get(`${USER}${DEPARTMENT.departmentWithAnonymous}`, {
     params: { department },
   });
   return users;

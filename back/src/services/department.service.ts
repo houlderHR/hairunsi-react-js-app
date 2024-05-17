@@ -66,6 +66,17 @@ class DepartmentService {
     }
   }
 
+  public async getAllDepartmentWithAnonymous(relations?: string[]): Promise<Department[]> {
+    try {
+      return await this.getRepository().find({
+        relations: relations,
+        order: { created_at: { direction: 'DESC' } },
+      });
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
   public async deleteDepartment(id: string): Promise<DeleteResult> {
     try {
       let department = await this.getRepository().findOne({
