@@ -11,7 +11,7 @@ let seeds: string, factories: string;
       seeds = 'src/database/seeds/*.seed{.ts,.js}';
       factories = 'src/database/factories/*.factory{.ts,.js}';
       break;
-    case 'dev':
+    case 'test':
       entities = 'src/entities/*.entity{.ts,.js}';
       migrations = 'src/migrations/**/*.ts';
       seeds = 'src/database/seeds/*.seed{.ts,.js}';

@@ -6,7 +6,7 @@
     "build": "rm -rf ./build && tsc && cp ./src/swagger.json ./build && cp ./seeds-id.json ./build && cp ./src/index.html ./build && cp -r ./docs ./build",
     "start": "npm run typeorm migration:run -- -d ./build/database/data-source.js;NODE_ENV=prod nodemon build/index.js",
     "dev": "NODE_ENV=dev npm run migration:run;NODE_ENV=dev nodemon src/index.ts",
-    "test": "docker compose --env-file .env.test -f docker-compose.test.yml up -d && jest",
+    "test": "docker compose down && docker compose --env-file .env.test -f docker-compose.test.yml up -d && jest",
     "test:watch": "npm run test --watch",
     "test:coverage": "jest --coverage",
     "openssl:generate": "openssl req -nodes -new -x509 -keyout server.key -out server.cert",
