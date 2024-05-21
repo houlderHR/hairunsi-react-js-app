@@ -104,7 +104,7 @@ class RoleService {
       return result;
     } catch (error) {
       if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code)
-        throw new HttpException(StatusCodes.CONFLICT, 'Le rôle existe déja');
+        throw new HttpException(StatusCodes.CONFLICT, 'Le rôle existe déjà');
       if (error.status == StatusCodes.UNPROCESSABLE_ENTITY) throw error;
       if (error.status == StatusCodes.NOT_FOUND) throw error;
       throw new InternalServerErrorException();
