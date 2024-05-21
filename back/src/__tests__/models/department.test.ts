@@ -1,22 +1,10 @@
-import { DataSource, QueryFailedError } from 'typeorm';
-require('dotenv').config({ path: '.env.test' });
-import { entities } from '../../utils/config';
+import { QueryFailedError } from 'typeorm';
 import { Department } from '../../entities/department.entity';
 import { Role } from '../../entities/role.entity';
+import testDataSource from '../datasource';
 
 describe('Department ', () => {
   let createdDepartment: Department;
-  const testDataSource = new DataSource({
-    type: 'postgres',
-    database: process.env.DATABASE_NAME,
-    host: process.env.DATABASE_HOST,
-    dropSchema: true,
-    entities: [entities],
-    synchronize: true,
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-    port: +process.env.DATABASE_PORT,
-  });
 
   beforeAll(async () => {
     await testDataSource.initialize();
@@ -27,7 +15,7 @@ describe('Department ', () => {
     await testDataSource.destroy();
   });
 
-  it('should not be created without roles and posts', async () => {
+  it('should not be created without roles', async () => {
     const department = new Department();
     department.name = 'test';
 
@@ -68,6 +56,21 @@ describe('Department ', () => {
       await testDataSource.getRepository(Department).save(department);
       await testDataSource.getRepository(Department).save(department);
       fail();
+    } catch (error) {
+      if (error instanceof QueryFailedError) expect(true).toBe(true);
+    }
+  });
+
+  it('name length should be greater than 4', async () => {
+    let department = new Department();
+    department.name = 'tet';
+
+    try {
+      let role = await testDataSource
+        .getRepository(Role)
+        .findOne({ where: { name: 'Role teste' } });
+      department.role = role;
+      await testDataSource.getRepository(Department).save(department);
     } catch (error) {
       if (error instanceof QueryFailedError) expect(true).toBe(true);
     }
