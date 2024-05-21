@@ -11,6 +11,12 @@ const TYPEORM_ERROR = {
   VIOLATE_MIN_LENGTH: {
     code: '23514',
   },
+  VIOLATE_NOT_NULL_CONSTRAINT: {
+    code: '23502',
+  },
+  VIOLATE_CHECK_CONSTRAINT: {
+    code: '23514',
+  },
 };
 
 export default TYPEORM_ERROR;
