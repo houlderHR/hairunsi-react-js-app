@@ -7,6 +7,15 @@ describe('Role Model tests ', () => {
   let createdRole: Role;
 
   beforeAll(async () => {
+    if (
+      !process.env.DATABASE_HOST ||
+      !process.env.DATABASE_NAME ||
+      !process.env.DATABASE_USERNAME ||
+      !process.env.DATABASE_PASSWORD ||
+      !process.env.DATABASE_PORT
+    ) {
+      throw new Error('Environment variable is not defined');
+    }
     await testDataSource.initialize();
   });
 
@@ -15,74 +24,68 @@ describe('Role Model tests ', () => {
     await testDataSource.destroy();
   });
 
-  it('should not be created without permissions', async () => {
-    const role = new Role();
-    role.name = 'test';
-
-    try {
-      await testDataSource.getRepository(Role).save(role);
-      expect(true).toBe(false);
-    } catch (error) {
-      if (error instanceof QueryFailedError) expect(true).toBe(true);
-    }
-  });
-
-  it('should create one role', async () => {
+  it('should create new role', async () => {
     let permission = new Permission();
-    permission.name = 'Permission test';
     let role = new Role();
-    role.name = 'Role test';
+    permission.name = 'Permission test';
+    role.name = 'New role';
 
     try {
+      permission = await testDataSource.getRepository(Permission).save(permission);
       role = await testDataSource.getRepository(Role).save(role);
       role.permissions = [permission];
       createdRole = await testDataSource.getRepository(Role).save(role);
       expect(createdRole.name).toBe(role.name);
     } catch (error) {
-      fail();
+      expect(true).toBe(false);
     }
   });
 
-  // it('should fail to create duplicate department with same name', async () => {
-  //   let role = new Role();
-  //   role.name = 'Role teste';
-  //   let department = new Department();
-  //   department.name = 'test';
+  it('should fail to create duplicate role with same name', async () => {
+    let permission = new Permission();
+    let role = new Role();
+    let duplicateRole = new Role();
+    permission.name = 'Permission test';
+    role.name = 'duplicate role';
+    duplicateRole.name = 'duplicate role';
 
-  //   try {
-  //     role = await testDataSource.getRepository(Role).save(role);
-  //     department.role = role;
-  //     await testDataSource.getRepository(Department).save(department);
-  //     await testDataSource.getRepository(Department).save(department);
-  //     fail();
-  //   } catch (error) {
-  //     if (error instanceof QueryFailedError) expect(true).toBe(true);
-  //   }
-  // });
+    try {
+      role.permissions = [permission];
+      duplicateRole.permissions = [permission];
+      await testDataSource.getRepository(Role).save(role);
+      await testDataSource.getRepository(Role).save(duplicateRole);
+      expect(true).toBe(false);
+    } catch (error) {
+      expect(error.code).toBe('23505');
+    }
+  });
 
-  // it('name length should be greater than 4', async () => {
-  //   let department = new Department();
-  //   department.name = 'tet';
+  it('should get all roles', async () => {
+    try {
+      let roles = await testDataSource
+        .getRepository(Role)
+        .find({ relations: { permissions: true } });
+      if (createdRole) {
+        expect(roles).toContainEqual(expect.objectContaining(createdRole));
+      }
+    } catch (error) {
+      expect(false).toBe(true);
+    }
+  });
 
-  //   try {
-  //     let role = await testDataSource
-  //       .getRepository(Role)
-  //       .findOne({ where: { name: 'Role teste' } });
-  //     department.role = role;
-  //     await testDataSource.getRepository(Department).save(department);
-  //   } catch (error) {
-  //     if (error instanceof QueryFailedError) expect(true).toBe(true);
-  //   }
-  // });
+  it('should update an existing role', async () => {
+    if (createdRole) {
+      const role = await testDataSource.getRepository(Role).findOne({
+        where: { id: createdRole.id },
+        relations: { permissions: true },
+      });
+      Object.assign(role, {
+        name: 'update role',
+        permissions: createdRole.permissions,
+      });
 
-  // it('should get all department', async () => {
-  //   try {
-  //     let users = await testDataSource
-  //       .getRepository(Department)
-  //       .find({ relations: { role: true } });
-  //     expect(users).toContainEqual(expect.objectContaining(createdDepartment));
-  //   } catch (error) {
-  //     expect(false).toBe(true);
-  //   }
-  // });
+      const updatedRole = await testDataSource.getRepository(Role).save(role);
+      expect(updatedRole.name).toBe('update role');
+    }
+  });
 });
