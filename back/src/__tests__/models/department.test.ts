@@ -11,8 +11,7 @@ describe('Department ', () => {
   });
 
   afterAll(async () => {
-    await testDataSource.dropDatabase();
-    await testDataSource.destroy();
+    testDataSource.destroy();
   });
 
   it('should not be created without roles', async () => {

@@ -8,6 +8,9 @@ const TYPEORM_ERROR = {
   VIOLATE_FOREIGN_KEY: {
     code: '23503',
   },
+  VIOLATE_MIN_LENGTH: {
+    code: '23514',
+  },
 };
 
 export default TYPEORM_ERROR;

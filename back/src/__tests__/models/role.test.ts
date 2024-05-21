@@ -2,6 +2,7 @@ import { QueryFailedError } from 'typeorm';
 import { Role } from '../../entities/role.entity';
 import { Permission } from '../../entities/permission.entity';
 import testDataSource from '../datasource';
+import TYPEORM_ERROR from '../../utils/errorTypeorm';
 
 describe('Role Model tests ', () => {
   let createdRole: Role;
@@ -20,7 +21,6 @@ describe('Role Model tests ', () => {
   });
 
   afterAll(async () => {
-    await testDataSource.dropDatabase();
     await testDataSource.destroy();
   });
 
@@ -41,22 +41,31 @@ describe('Role Model tests ', () => {
     }
   });
 
+  it('should have name length greater than 4', async () => {
+    let role = new Role();
+    role.name = 'nam';
+
+    try {
+      await testDataSource.getRepository(Role).save(role);
+      expect(true).toBe(false);
+    } catch (error) {
+      expect(error.code).toBe(TYPEORM_ERROR.VIOLATE_MIN_LENGTH.code);
+    }
+  });
+
   it('should fail to create duplicate role with same name', async () => {
     let permission = new Permission();
     let role = new Role();
-    let duplicateRole = new Role();
     permission.name = 'Permission test';
     role.name = 'duplicate role';
-    duplicateRole.name = 'duplicate role';
 
     try {
       role.permissions = [permission];
-      duplicateRole.permissions = [permission];
-      await testDataSource.getRepository(Role).save(role);
-      await testDataSource.getRepository(Role).save(duplicateRole);
+      await testDataSource.getRepository(Role).insert(role);
+      await testDataSource.getRepository(Role).insert(role);
       expect(true).toBe(false);
     } catch (error) {
-      expect(error.code).toBe('23505');
+      expect(error.code).toBe(TYPEORM_ERROR.DUPLICATED_FIELD.code);
     }
   });
 
@@ -73,6 +82,14 @@ describe('Role Model tests ', () => {
     }
   });
 
+  it('should get role by id', async () => {
+    const retrievedRole = await testDataSource
+      .getRepository(Role)
+      .findOne({ where: { id: createdRole.id }, relations: { permissions: true } });
+    expect(retrievedRole.name).toBe(createdRole.name);
+    expect(retrievedRole.permissions).toBeDefined();
+  });
+
   it('should update an existing role', async () => {
     if (createdRole) {
       const role = await testDataSource.getRepository(Role).findOne({
@@ -86,6 +103,16 @@ describe('Role Model tests ', () => {
 
       const updatedRole = await testDataSource.getRepository(Role).save(role);
       expect(updatedRole.name).toBe('update role');
+    }
+  });
+
+  it('should delete an existing role', async () => {
+    if (createdRole) {
+      await testDataSource.getRepository(Role).delete(createdRole.id);
+      const deletedUser = await testDataSource
+        .getRepository(Role)
+        .findOne({ where: { id: createdRole.id } });
+      expect(deletedUser).toBeNull();
     }
   });
 });
