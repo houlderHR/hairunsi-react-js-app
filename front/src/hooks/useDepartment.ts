@@ -7,8 +7,8 @@ import { REGEX_ID } from '../utils/regex';
 export const schema = yup.object({
   name: yup
     .string()
-    .required('Le nom du département est requis')
-    .min(4, 'Le nom du département doit contenir au moin 4 caractères'),
+    .required('Le nom du type est requis')
+    .min(4, 'Le nom du type doit contenir au moin 4 caractères'),
   role: yup.string().required('Vous devez séléctionner un rôle').matches(REGEX_ID),
 });
 

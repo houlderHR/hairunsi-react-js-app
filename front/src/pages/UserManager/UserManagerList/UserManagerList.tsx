@@ -143,9 +143,7 @@ const UserManagerList: FC = () => {
           onClick={() => setShowType((s) => !s)}
         >
           <div className="flex flex-row justify-center xl:flex xl:flex-row xl:items-center xl:justify-between items-center w-full h-full px-5 bg-gray-3 rounded-[2px] hover:bg-gray-50;">
-            <div className="hidden xl:flex">
-              {!department?.name ? 'Département' : department?.name}
-            </div>
+            <div className="hidden xl:flex">{!department?.name ? 'Type' : department?.name}</div>
 
             <Icon name="sharp-arrow-drop-down" size={10} className="text-gray-500 hidden xl:flex" />
             <img src="/icon/filter.svg" alt="filter" className="xl:hidden" />
