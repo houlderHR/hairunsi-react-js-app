@@ -90,7 +90,7 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
         );
       }
       if (errorResponse.response?.status === 409) {
-        setError('name', { message: 'Le département existe déja' });
+        setError('name', { message: 'Le type existe déja' });
       }
       if (errorResponse.code === 'ERR_NETWORK') {
         navigate(routes.server_error.path);

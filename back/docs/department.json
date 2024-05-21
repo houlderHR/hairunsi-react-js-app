@@ -132,6 +132,9 @@
         "properties": {
           "name": {
             "type": "string"
+          },
+          "role": {
+            "type": "string"
           }
         },
         "xml": {
@@ -145,6 +148,9 @@
             "type": "uuid"
           },
           "name": {
+            "type": "string"
+          },
+          "role": {
             "type": "string"
           }
         },
