@@ -2,6 +2,7 @@ import { QueryFailedError } from 'typeorm';
 import { Department } from '../../entities/department.entity';
 import { Role } from '../../entities/role.entity';
 import testDataSource from '../datasource';
+import { DriverError } from 'typeorm-extension';
 
 describe('Department ', () => {
   let createdDepartment: Department;
@@ -26,7 +27,9 @@ describe('Department ', () => {
       await testDataSource.getRepository(Department).save(department);
       fail('Department must contain one role');
     } catch (error) {
-      if (error instanceof QueryFailedError) expect(true).toBe(true);
+      if (error instanceof QueryFailedError) {
+        expect(error.driverError.code).toBe('23502');
+      } else fail();
     }
   });
 
@@ -36,11 +39,14 @@ describe('Department ', () => {
 
     try {
       department.role = role;
-      await testDataSource.getRepository(Department).save(department);
-      await testDataSource.getRepository(Department).save(department);
+      await testDataSource.getRepository(Department).insert(department);
+      await testDataSource.getRepository(Department).insert(department);
+      fail();
     } catch (error) {
       if (error instanceof QueryFailedError) {
-        expect(true).toBe(true);
+        expect(error.driverError.code).toBe('23505');
+      } else {
+        fail();
       }
     }
   });
