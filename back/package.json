@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
-    "build": "rm -rf ./build && tsc && cp ./src/swagger.json ./build && cp ./seeds-id.json ./build && cp ./src/index.html ./build && cp -r ./docs ./build",
+    "build": "rm -rf ./build && tsc && cp ./src/swagger.json ./build && cp ./src/index.html ./build && cp -r ./docs ./build",
     "start": "npm run typeorm migration:run -- -d ./build/database/data-source.js;NODE_ENV=prod nodemon build/index.js",
     "dev": "NODE_ENV=dev npm run migration:run;NODE_ENV=dev nodemon src/index.ts",
     "test": "jest",
