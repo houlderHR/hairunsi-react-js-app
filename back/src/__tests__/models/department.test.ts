@@ -2,6 +2,7 @@ import { QueryFailedError } from 'typeorm';
 import { Department } from '../../entities/department.entity';
 import { Role } from '../../entities/role.entity';
 import testDataSource from '../datasource';
+import TYPEORM_ERROR from '../../utils/errorTypeorm';
 
 const checkViolationErrorCode = (error, code: string) => {
   if (error instanceof QueryFailedError) {
@@ -32,7 +33,7 @@ describe('Department ', () => {
       await testDataSource.getRepository(Department).save(department);
       fail('Department must contain one role');
     } catch (error) {
-      checkViolationErrorCode(error, '23502');
+      checkViolationErrorCode(error, TYPEORM_ERROR.VIOLATE_NOT_NULL_CONSTRAINT.code);
     }
   });
 
@@ -46,20 +47,20 @@ describe('Department ', () => {
       await testDataSource.getRepository(Department).insert(department);
       fail();
     } catch (error) {
-      checkViolationErrorCode(error, '23505');
+      checkViolationErrorCode(error, TYPEORM_ERROR.DUPLICATED_FIELD.code);
     }
   });
 
   it('name length should be greater than 4', async () => {
     let department = new Department();
-    department.name = 'et';
+    department.name = 'ed';
 
     try {
       department.role = role;
       await testDataSource.getRepository(Department).save(department);
       fail();
     } catch (error) {
-      checkViolationErrorCode(error, '23514');
+      checkViolationErrorCode(error, TYPEORM_ERROR.VIOLATE_CHECK_CONSTRAINT.code);
     }
   });
 
@@ -71,7 +72,7 @@ describe('Department ', () => {
       department.role = role;
       createdDepartment = await testDataSource.getRepository(Department).save(department);
       expect(createdDepartment).toMatchObject(department);
-    } catch (error) {
+    } catch (_) {
       fail();
     }
   });
@@ -82,7 +83,7 @@ describe('Department ', () => {
         .getRepository(Department)
         .find({ relations: { role: true } });
       expect(departments).toContainEqual(expect.objectContaining(createdDepartment));
-    } catch (error) {
+    } catch (_) {
       fail();
     }
   });
@@ -98,7 +99,7 @@ describe('Department ', () => {
         .getRepository(Department)
         .update(department.id, department);
       expect(updatedDepartment.affected).toEqual(1);
-    } catch (error) {
+    } catch (_) {
       fail('Department not updated');
     }
   });
@@ -108,11 +109,12 @@ describe('Department ', () => {
       let department = await testDataSource
         .getRepository(Department)
         .findOne({ where: { name: 'Department updated successfully' } });
+
       const deletedDepartment = await testDataSource
         .getRepository(Department)
         .delete(department.id);
       expect(deletedDepartment.affected).toEqual(1);
-    } catch (error) {
+    } catch (_) {
       fail('Department not deleted');
     }
   });
