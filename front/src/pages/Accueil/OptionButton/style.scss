@@ -4,7 +4,7 @@
 
 @layer components {
   .button-option-container {
-    @apply flex flex-col justify-center items-center px-11 bg-gray-50 duration-300 hover:bg-white hover:border-[0.5px] hover:shadow-md hover:shadow-[#D7F2FE] hover:border-secondary-2 rounded-xl py-6 relative;
+    @apply flex flex-col justify-center items-center px-11 bg-gray-50 duration-300 hover:bg-white hover:border-[0.5px] hover:shadow-md hover:shadow-[#D7F2FE] hover:border-secondary-2 border-[0.5px] border-transparent rounded-xl py-6 relative;
 
     .button-option-image {
       @apply w-[35.77px] h-[35.78px];
