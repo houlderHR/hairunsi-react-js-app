@@ -5,9 +5,13 @@ import testDataSource from '../datasource';
 
 describe('Department ', () => {
   let createdDepartment: Department;
+  let role: Role;
 
   beforeAll(async () => {
     await testDataSource.initialize();
+    role = new Role();
+    role.name = 'Role teste';
+    await testDataSource.getRepository(Role).save(role);
   });
 
   afterAll(async () => {
@@ -16,73 +20,95 @@ describe('Department ', () => {
 
   it('should not be created without roles', async () => {
     const department = new Department();
-    department.name = 'test';
+    department.name = 'test failed';
 
     try {
       await testDataSource.getRepository(Department).save(department);
-      expect(true).toBe(false);
+      fail('Department must contain one role');
     } catch (error) {
       if (error instanceof QueryFailedError) expect(true).toBe(true);
     }
   });
 
-  it('should create one department', async () => {
-    let role = new Role();
-    role.name = 'Role teste';
+  it('should fail to create with duplicate name', async () => {
     let department = new Department();
-    department.name = 'test';
+    department.name = 'same name';
 
     try {
-      role = await testDataSource.getRepository(Role).save(role);
-      department.role = role;
-      createdDepartment = await testDataSource.getRepository(Department).save(department);
-      expect(role.name).toBe('Role teste');
-      expect(createdDepartment.name).toBe('test');
-    } catch (error) {
-      fail();
-    }
-  });
-
-  it('should fail to create duplicate department with same name', async () => {
-    let role = new Role();
-    role.name = 'Role teste';
-    let department = new Department();
-    department.name = 'test';
-
-    try {
-      role = await testDataSource.getRepository(Role).save(role);
       department.role = role;
       await testDataSource.getRepository(Department).save(department);
       await testDataSource.getRepository(Department).save(department);
-      fail();
     } catch (error) {
-      if (error instanceof QueryFailedError) expect(true).toBe(true);
+      if (error instanceof QueryFailedError) {
+        expect(true).toBe(true);
+      }
     }
   });
 
   it('name length should be greater than 4', async () => {
     let department = new Department();
-    department.name = 'tet';
+    department.name = 'et';
 
     try {
-      let role = await testDataSource
-        .getRepository(Role)
-        .findOne({ where: { name: 'Role teste' } });
       department.role = role;
       await testDataSource.getRepository(Department).save(department);
+      fail();
     } catch (error) {
       if (error instanceof QueryFailedError) expect(true).toBe(true);
     }
   });
 
-  it('should get all department', async () => {
+  it('should be created successfully', async () => {
+    let department = new Department();
+    department.name = 'test';
+
     try {
-      let users = await testDataSource
+      department.role = role;
+      createdDepartment = await testDataSource.getRepository(Department).save(department);
+      expect(createdDepartment).toMatchObject(department);
+    } catch (error) {
+      fail();
+    }
+  });
+
+  it('should get all', async () => {
+    try {
+      let departments = await testDataSource
         .getRepository(Department)
         .find({ relations: { role: true } });
-      expect(users).toContainEqual(expect.objectContaining(createdDepartment));
+      expect(departments).toContainEqual(expect.objectContaining(createdDepartment));
     } catch (error) {
-      expect(false).toBe(true);
+      fail();
+    }
+  });
+
+  it('should be updated', async () => {
+    try {
+      let department = await testDataSource
+        .getRepository(Department)
+        .findOne({ where: { name: 'test' } });
+
+      department.name = 'Department updated successfully';
+      const updatedDepartment = await testDataSource
+        .getRepository(Department)
+        .update(department.id, department);
+      expect(updatedDepartment.affected).toEqual(1);
+    } catch (error) {
+      fail('Department not updated');
+    }
+  });
+
+  it('should be deleted', async () => {
+    try {
+      let department = await testDataSource
+        .getRepository(Department)
+        .findOne({ where: { name: 'Department updated successfully' } });
+      const deletedDepartment = await testDataSource
+        .getRepository(Department)
+        .delete(department.id);
+      expect(deletedDepartment.affected).toEqual(1);
+    } catch (error) {
+      fail('Department not deleted');
     }
   });
 });
