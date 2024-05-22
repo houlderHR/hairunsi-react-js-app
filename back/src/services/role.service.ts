@@ -12,6 +12,8 @@ import { Permission } from '../entities/permission.entity';
 import SearchRoleDto from '../dto/role/SearchPermissionDto';
 import { ResponseRoleDto } from '../dto/role/ResponseRoleDto';
 import * as fs from 'fs';
+import { removeManySpaceAndCapitalize } from '../utils/utils.method';
+import REGEX from '../utils/regex';
 
 class RoleService {
   async create(newRoleDto: CreateOrUpdateRoleDto): Promise<Role> {
@@ -21,22 +23,28 @@ class RoleService {
         property,
         constraints,
       }));
-
-      throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, validationErrors);
+      throw new HttpException(
+        StatusCodes.UNPROCESSABLE_ENTITY,
+        validationErrors[0].constraints.isLength,
+      );
     }
     try {
       const role = new Role();
-      Object.assign(role, {
-        name: newRoleDto.name,
-        permissions: await this.getAllPermissionsByIdList(newRoleDto.permissions),
-      });
-      const saved = await AppDataSource.getRepository(Role).save(role);
-      return saved;
+      const uniformName = removeManySpaceAndCapitalize(newRoleDto.name);
+      if (REGEX.MOT_MIN_2.test(uniformName)) {
+        Object.assign(role, {
+          name: uniformName,
+          permissions: await this.getAllPermissionsByIdList(newRoleDto.permissions),
+        });
+        const saved = await AppDataSource.getRepository(Role).save(role);
+        return saved;
+      } else throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, 'Invalide rôle');
     } catch (error) {
-      if (error.code == TYPEORM_ERROR.DUPLICATED_FIELD.code) {
-        throw new HttpException(StatusCodes.CONFLICT, 'Le rôle existe déja');
-      }
-      throw new InternalServerErrorException();
+      if (error.code === TYPEORM_ERROR.DUPLICATED_FIELD.code) {
+        throw new HttpException(StatusCodes.CONFLICT, 'Le rôle existe déjà');
+      } else if (error.status === StatusCodes.UNPROCESSABLE_ENTITY)
+        throw new HttpException(error.status, error.error);
+      else throw new InternalServerErrorException();
     }
   }
 
@@ -93,7 +101,7 @@ class RoleService {
         throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, validationErrors);
       }
       Object.assign(role, {
-        name: updateRole.name,
+        name: removeManySpaceAndCapitalize(updateRole.name),
         permissions:
           updateRole.permissions.length == 0
             ? role.permissions
