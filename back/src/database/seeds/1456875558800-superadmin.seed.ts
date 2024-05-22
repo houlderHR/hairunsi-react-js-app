@@ -50,10 +50,10 @@ export default class SuperAdminSeed1456875558800 implements Seeder {
       }
 
       let roleRepository = dataSource.getRepository(Role);
-      let role = await roleRepository.findOneBy({ name: 'Super admin' });
+      let role = await roleRepository.findOneBy({ name: 'Super Admin' });
       if (!role) {
         role = await roleRepository.save({
-          name: 'Super admin',
+          name: 'Super Admin',
           permissions: [
             permissionUtilisateur,
             permissionCreateUser,

@@ -83,8 +83,9 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 500 || err.code === 'ERR_NETWORK')
           navigate(routes.server_error.path);
-        if (err.response?.data?.error) setErrorAxios(err.response?.data.error);
-        else setErrorAxios(err.response?.data);
+        if (err.response?.status === 422 || err.response?.status === 409) {
+          setErrorAxios(err.response?.data.error);
+        }
       } else {
         setErrorAxios("Une erreur s'est produite");
       }
@@ -151,7 +152,7 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
                   type="text"
                   placeholder="Nom du rôle"
                   additionalClass={twMerge(
-                    `${errors.role ? '!border-1 !border-red-500' : ''}`,
+                    `${errors.role || errorAxios ? '!border-1 !border-red-500' : ''}`,
                     'focus:border-secondary border',
                   )}
                   onChange={onChange}
@@ -164,6 +165,7 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
               {errors.role && (
                 <p className="text-red-500 text-xs font-medium">{errors.role.message}</p>
               )}
+              {errorAxios && <p className="text-red-500 text-xs font-medium">{errorAxios}</p>}
             </div>
           </div>
           <div role="presentation" onClick={() => setShow((s) => !s)} className="relative">
@@ -188,7 +190,6 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
                 Séléctionner au moins une permission
               </p>
             )}
-            {errorAxios && <p className="text-red-500 text-xs font-medium">{errorAxios}</p>}
             <div className="flex flex-wrap gap-2 ">
               {permissionSelected
                 .filter((item) => item)

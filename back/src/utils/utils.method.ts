@@ -11,6 +11,19 @@ export const removeSpace = (elem: string) => {
   return elem.split(' ').join('');
 };
 
+export const removeManySpaceAndCapitalize = (elem: string) => {
+  let noSpaceElem = elem.trim();
+  let tmp = noSpaceElem
+    .split(' ')
+    .filter((item) => item != '')
+    .map((item) => {
+      let editItem = item.trim().charAt(0).toUpperCase() + item.slice(1).toLowerCase();
+      return editItem;
+    })
+    .join(' ');
+  return tmp;
+};
+
 export const getTypeFile = (mimetype: string) => {
   let result: string = '';
   switch (mimetype) {
