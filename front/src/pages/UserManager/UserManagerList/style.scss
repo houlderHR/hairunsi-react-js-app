@@ -7,7 +7,7 @@
     @apply w-full h-[72vh] flex flex-col justify-between bg-[#ffffff] py-2;
 
     .container-list {
-      @apply bg-slate-500 w-full my-[20px] rounded-[12px];
+      @apply bg-transparent w-full my-[20px] rounded-[12px];
       .container-headdetail {
         @apply bg-primary flex flex-row w-full h-[56px] rounded-tl-[12px] rounded-tr-[12px];
 

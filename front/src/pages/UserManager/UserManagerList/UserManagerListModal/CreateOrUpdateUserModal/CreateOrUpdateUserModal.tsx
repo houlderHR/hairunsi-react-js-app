@@ -263,7 +263,8 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                   />
                   <img src="/icon/date.svg" alt="date" />
                 </div>
-                {user && allowPermission(PERMISSIONS.updateAll) && (
+                {((user && allowPermission(PERMISSIONS.updateAll)) ||
+                  allowPermission(PERMISSIONS.createAll)) && (
                   <div className="poste-type">
                     <div
                       className="poste"
@@ -290,7 +291,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                       onClick={() => setShowType((s) => !s)}
                     >
                       <div className="libelle">
-                        {!department && messageDepartment ? (
+                        {!department && !user?.post.department.name && messageDepartment ? (
                           <div className="!text-red-600">{messageDepartment}</div>
                         ) : (
                           <div>

@@ -33,10 +33,7 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
     <div className="flex flex-col md:flex-row gap-2">
       <Button title="Annuler" icon="x" className="uppercase" onClick={onClose} />
       <Button
-        onClick={() => {
-          onDelete();
-          onClose();
-        }}
+        onClick={onDelete}
         title={
           <span className="flex flex-row gap-1 items-center justify-center">
             Supprimer {isDeleting && <Spinner additionalClassName="!text-white fill-red-400" />}
