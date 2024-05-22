@@ -47,3 +47,10 @@ export const checkIfPasswordContainPersonalInformation = (
     password.toLowerCase().trim().replace(/\s/g, '').includes(keyTest[key].toLowerCase()),
   );
 };
+
+export const capitalizeLetter = (letter: string): string => {
+  const splittedLetter = letter.split(' ');
+  return splittedLetter
+    .map((letter) => letter[0].toUpperCase() + letter.substring(1).toLowerCase())
+    .join(' ');
+};
