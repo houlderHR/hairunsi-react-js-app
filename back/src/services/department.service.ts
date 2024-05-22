@@ -1,7 +1,7 @@
 import { ValidationError, validate } from 'class-validator';
 import { AppDataSource } from '../database/data-source';
 import { Department } from '../entities/department.entity';
-import { DeleteResult, Not, Repository } from 'typeorm';
+import { DeleteResult, Not, QueryFailedError, Repository } from 'typeorm';
 import HttpException from '../exceptions/HttpException';
 import { CreateDepartmentDto } from '../dto/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../dto/department/UpdateDepartmentDto';
@@ -136,6 +136,10 @@ class DepartmentService {
       });
       return await this.getRepository().save(department);
     } catch (error) {
+      if (error.code === '23505') {
+        throw new HttpException(StatusCodes.CONFLICT, 'Le département existe déja');
+      }
+
       throw new InternalServerErrorException();
     }
   }

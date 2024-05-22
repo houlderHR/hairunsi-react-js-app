@@ -34,13 +34,13 @@ const HeadManager = <T,>({
   }, [mutate]);
 
   useEffect(() => {
-    if (searchValue !== '') {
+    if (searchValue.trim().length > 0) {
       loadSearch();
     }
   }, [loadSearch, searchValue]);
 
   useEffect(() => {
-    if (searchValue === '') {
+    if (searchValue.trim().length === 0) {
       pushSearch(undefined);
       return;
     }
