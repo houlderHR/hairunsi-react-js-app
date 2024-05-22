@@ -93,7 +93,7 @@ const ForgotPassword: FC = () => {
                 />
               )}
             />
-            <div className="absolute top-full mt-1">
+            <div className="absolute top-full mt-1 mb-2">
               {errors.email && (
                 <p className="text-red-500 text-xs font-medium">{errors.email.message}</p>
               )}
