@@ -115,6 +115,7 @@ const UserManagerList: FC = () => {
       if (exceptions.code === 'ERR_NETWORK') navigate(routes.server_error.path);
     }
     setIsLoading(false);
+    setShowModal(ModalShowStateType.CLOSE);
   };
 
   const allowUserToUpdate = (id: string) =>
