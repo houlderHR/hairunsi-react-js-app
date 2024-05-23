@@ -36,10 +36,10 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
         onClick={onDelete}
         title={
           <span className="flex flex-row gap-1 items-center justify-center">
-            Supprimer {isDeleting && <Spinner additionalClassName="!text-white fill-red-400" />}
+            {isDeleting ? <Spinner additionalClassName="!text-white fill-red-400" /> : 'Supprimer'}
           </span>
         }
-        icon="trash-1"
+        icon={!isDeleting ? 'trash-1' : ''}
         className="uppercase"
         iconSize={18}
         variant="danger"

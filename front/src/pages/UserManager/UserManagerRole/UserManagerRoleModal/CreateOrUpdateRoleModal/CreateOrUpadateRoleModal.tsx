@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -15,6 +16,8 @@ import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import Input from '../../../../../shared/inputs/Input';
 import InputIcon from '../../../../../shared/inputs/InputIcon';
 import Loading from '../../../../../shared/Loading/Loading';
+import Spinner from '../../../../../shared/Spinner';
+import schemaCreateRole from '../../../../../utils/yup.schema';
 
 interface CreateModalRoleProps {
   onClose: () => void;
@@ -44,14 +47,18 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
   const [isAlreadyRendered, setIsAlreadyRendered] = useState(false);
   const [search, setSearch] = useState<string>('');
   const navigate = useNavigate();
-  const [errorAxios, setErrorAxios] = useState('');
-  const createUsermutation = useCreateRole();
-  const updateUserMutation = useUpdateRole(updateRole?.id);
+  const [errorAxios, setErrorAxios] = useState<string[]>([]);
+  const { mutateAsync: createUsermutation, isPending: isPendingCreate } = useCreateRole();
+  const { mutateAsync: updateUserMutation, isPending: isPendingUpdate } = useUpdateRole(
+    updateRole?.id,
+  );
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<{ role: string; permission: string }>();
+  } = useForm({
+    resolver: yupResolver(schemaCreateRole),
+  });
 
   const onChangeRoleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -73,9 +80,9 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
           permissions: permissionSelected.map((item) => item.id),
         };
         if (updateRole) {
-          result = await updateUserMutation.mutateAsync(newRole);
+          result = await updateUserMutation(newRole);
         } else {
-          result = await createUsermutation.mutateAsync(newRole);
+          result = await createUsermutation(newRole);
         }
         if (result) onClose();
       }
@@ -87,7 +94,7 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
           setErrorAxios(err.response?.data.error);
         }
       } else {
-        setErrorAxios("Une erreur s'est produite");
+        setErrorAxios(["Une erreur s'est produite"]);
       }
     }
   });
@@ -144,15 +151,12 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
               name="role"
               control={control}
               defaultValue={updateRole ? updateRole.name : ''}
-              rules={{
-                required: { value: true, message: 'Remplir le champ' },
-              }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   type="text"
                   placeholder="Nom du rôle"
                   additionalClass={twMerge(
-                    `${errors.role || errorAxios ? '!border-1 !border-red-500' : ''}`,
+                    `${errors.role || errorAxios.length > 0 ? '!border-1 !border-red-500' : ''}`,
                     'focus:border-secondary border',
                   )}
                   onChange={onChange}
@@ -165,7 +169,12 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
               {errors.role && (
                 <p className="text-red-500 text-xs font-medium">{errors.role.message}</p>
               )}
-              {errorAxios && <p className="text-red-500 text-xs font-medium">{errorAxios}</p>}
+              {errorAxios &&
+                errorAxios.map((item) => (
+                  <p className="text-red-500 text-xs font-medium" key={item}>
+                    {item}
+                  </p>
+                ))}
             </div>
           </div>
           <div role="presentation" onClick={() => setShow((s) => !s)} className="relative">
@@ -206,7 +215,22 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
             </div>
           </div>
         </div>
-        <Button type="submit" title={updateRole ? 'Modifier' : 'Créer'} variant="secondary-1" />
+        <Button
+          type="submit"
+          disabled={isPendingCreate || isPendingUpdate}
+          title={
+            <>
+              {!isPendingCreate && !isPendingUpdate && updateRole && 'Modifier'}
+              {!isPendingCreate && !isPendingUpdate && !updateRole && 'Créer'}
+              {(isPendingCreate || isPendingUpdate) && (
+                <div className="flex flex-row justify-center">
+                  <Spinner />
+                </div>
+              )}
+            </>
+          }
+          variant="secondary-1"
+        />
       </form>
     </CreateModal>
   );
