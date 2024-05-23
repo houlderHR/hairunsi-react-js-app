@@ -1,6 +1,9 @@
+import { AxiosError } from 'axios';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useDebounce from '../../../hooks/useDebounce';
 import useSearch, { SearchType } from '../../../hooks/useSearch';
+import routes from '../../../routes/paths';
 import InputIcon from '../../inputs/InputIcon';
 import Button from '../buttons/Button';
 
@@ -23,7 +26,9 @@ const HeadManager = <T,>({
 }: HeadManagerProps<T>) => {
   const [search, setSearch] = useState<string>('');
   const searchValue = useDebounce(search, 300);
-  const { data, mutate, isFetching } = useSearch<T>(searchType, searchValue);
+  const { data, refetch: mutate, isFetching, error } = useSearch<T>(searchType, searchValue);
+  const axiosError = error as AxiosError;
+  const navigate = useNavigate();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -40,11 +45,19 @@ const HeadManager = <T,>({
   }, [loadSearch, searchValue]);
 
   useEffect(() => {
+    if (axiosError?.code === 'ERR_NETWORK') {
+      navigate(routes.server_error.path);
+    }
+  }, [axiosError?.code, error, navigate]);
+
+  useEffect(() => {
     if (searchValue.trim().length === 0) {
       pushSearch(undefined);
       return;
     }
-    pushSearch(data);
+    if (data) {
+      pushSearch(data);
+    }
   }, [data, pushSearch, searchValue]);
 
   useEffect(() => getSearchLoading && getSearchLoading(isFetching), [isFetching, getSearchLoading]);

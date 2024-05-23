@@ -26,14 +26,11 @@ const getMutationSearchType = <T>(searchType?: string) => {
   }
 };
 
-const useSearch = <T>(searchType: string, searchValue: string) => {
-  const { data, refetch, isFetching } = useQuery({
+const useSearch = <T>(searchType: string, searchValue: string) =>
+  useQuery({
     queryKey: [searchType],
     queryFn: () => getMutationSearchType<T>(searchType)(searchValue.trim()),
     enabled: !!searchValue.trim(),
   });
-
-  return { data, mutate: refetch, isFetching };
-};
 
 export default useSearch;
