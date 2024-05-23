@@ -20,7 +20,7 @@ const schema = yup.object({
   password: yup
     .string()
     .min(8, 'doit contenir au moin 8 caractères')
-    .required()
+    .required(' est requis')
     .matches(/^(?=.*[A-Z])/, '  doit contenir au moin une lettre majuscule')
     .matches(/^(?=.*[0-9])/, '  doit contenir au moin un nombre')
     .matches(/^(?=.*[!@#$%^&§_*])/, '  doit contenir au moin une caractère spéciale'),
