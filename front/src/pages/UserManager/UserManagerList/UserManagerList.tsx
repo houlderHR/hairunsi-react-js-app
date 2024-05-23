@@ -70,7 +70,7 @@ const UserManagerList: FC = () => {
   let users = [];
   if (userSearch) {
     users = userSearch;
-  } else if (userFilterDepartment.data && department) users = userFilterDepartment.data;
+  } else if (userFilterDepartment?.data && department) users = userFilterDepartment?.data;
   else if (data) users = data;
   const record = users.slice(firstIndex, lastIndex);
   const npage = Math.ceil(users ? users.length / numberUsers : 0);
@@ -183,13 +183,17 @@ const UserManagerList: FC = () => {
                 </div>
               )}
               {(userSearch?.length === 0 ||
-                (userFilterDepartment.data.length === 0 && department && !userSearch)) && (
+                (userFilterDepartment.data &&
+                  userFilterDepartment.data.length === 0 &&
+                  department &&
+                  !userSearch)) && (
                 <p className="text-center text-gray-500 mt-8 font-medium absolute mx-auto w-full">
                   Aucun utilisateur trouvé
                 </p>
               )}
               {userSearch?.length === 0 &&
                 data?.length === 0 &&
+                userFilterDepartment.data &&
                 userFilterDepartment.data.length === 0 && (
                   <p className="text-center text-gray-500 mt-8 font-medium absolute mx-auto w-full">
                     Pas d&apos;utilisateur
@@ -217,15 +221,16 @@ const UserManagerList: FC = () => {
                           />
                         </div>
                       )}
-                      {allowPermission(PERMISSIONS.removeAll) && (
-                        <div
-                          role="presentation"
-                          className="icon-action"
-                          onClick={() => settingUserToDelete(user.uuid)}
-                        >
-                          <Icon name="x" className="text-gray-500 hover:text-red-700" size={12} />
-                        </div>
-                      )}
+                      {allowPermission(PERMISSIONS.removeAll) &&
+                        user.uuid !== userContext?.uuid && (
+                          <div
+                            role="presentation"
+                            className="icon-action"
+                            onClick={() => settingUserToDelete(user.uuid)}
+                          >
+                            <Icon name="x" className="text-gray-500 hover:text-red-700" size={12} />
+                          </div>
+                        )}
                     </div>{' '}
                   </div>
                 </div>
