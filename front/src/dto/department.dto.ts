@@ -4,7 +4,12 @@ export default interface DepartmentDto {
   role: Role;
 }
 
-interface Role {
+export interface CreateOrUpdateDepartmentDto {
+  name: string;
+  role: string;
+}
+
+export interface Role {
   id: string;
   name: string;
 }

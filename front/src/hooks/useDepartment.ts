@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import * as yup from 'yup';
-import DepartmentDto from '../dto/department.dto';
+import DepartmentDto, { CreateOrUpdateDepartmentDto } from '../dto/department.dto';
 import { endpoint } from '../routes/endpoints';
 import http from '../utils/http-common';
 import { REGEX_ID } from '../utils/regex';
@@ -14,15 +14,12 @@ export const schema = yup.object({
   role: yup.string().required('Vous devez séléctionner un rôle').matches(REGEX_ID),
 });
 
-const createDepartment = (_department: { name: string | undefined; role: string | undefined }) =>
+const createDepartment = (_department: CreateOrUpdateDepartmentDto) =>
   http
     .post<DepartmentDto>(endpoint.department.create, _department)
     .then((response) => response.data);
 
-const updateDepartment = (
-  _department: { name: string | undefined; role: string | undefined },
-  department?: DepartmentDto,
-) =>
+const updateDepartment = (_department: CreateOrUpdateDepartmentDto, department?: DepartmentDto) =>
   http
     .put<DepartmentDto>(`${endpoint.department.update}/${department?.id}`, _department)
     .then((response) => response.data);
@@ -44,6 +41,6 @@ export const useFetchDepartment = (
 ) =>
   useMutation({
     mutationKey: [type],
-    mutationFn: (_department: { name: string | undefined; role: string | undefined }) =>
+    mutationFn: (_department: CreateOrUpdateDepartmentDto) =>
       getActionDepartment(type)(_department, department),
   });
