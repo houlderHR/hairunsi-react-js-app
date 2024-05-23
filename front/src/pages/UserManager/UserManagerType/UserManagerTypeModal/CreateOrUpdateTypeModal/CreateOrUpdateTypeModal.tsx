@@ -21,6 +21,7 @@ import InputIcon from '../../../../../shared/inputs/InputIcon';
 import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import mapError from '../../../../../utils/mapErrorResponse';
+import { QUERY_TOKEN_AUTH_KEY } from '../../../../../utils/query.constants';
 
 interface CreateModalTypeProps {
   onClose: () => void;
@@ -75,6 +76,7 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
       await onMutateDepartment({ ..._data });
       onClose();
       await queryClient.invalidateQueries({ queryKey: ['department'] });
+      await queryClient.invalidateQueries({ queryKey: [QUERY_TOKEN_AUTH_KEY] });
       await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
     } catch (error) {
       const errorResponse = error as AxiosError<{
