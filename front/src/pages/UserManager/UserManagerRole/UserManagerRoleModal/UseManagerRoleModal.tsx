@@ -1,6 +1,8 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { RoleResponseDto } from '../../../../dto/role.dto';
 import { useDeleteRole } from '../../../../hooks/useRole';
+import routes from '../../../../routes/paths';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
 import CreateOrUpdateRoleModal from './CreateOrUpdateRoleModal';
@@ -17,13 +19,14 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
   role,
 }) => {
   const mutation = useDeleteRole(role?.id);
+  const navigate = useNavigate();
 
   const onDelete = async () => {
     try {
       await mutation.mutateAsync();
       setShowModal(ModalShowStateType.CLOSE);
     } catch (error) {
-      console.log(error);
+      navigate(routes.server_error.path);
     }
   };
 
