@@ -23,28 +23,24 @@ class RoleService {
         property,
         constraints,
       }));
-      throw new HttpException(
-        StatusCodes.UNPROCESSABLE_ENTITY,
-        validationErrors[0].constraints.isLength,
-      );
+      let uniformError = validationErrors.map((item) => {
+        return item.property === 'name' ? item.constraints.isLength : item.constraints.isUuid;
+      });
+      throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, uniformError);
     }
     try {
       const role = new Role();
       const uniformName = removeManySpaceAndCapitalize(newRoleDto.name);
-      if (REGEX.MOT_MIN_2.test(uniformName)) {
-        Object.assign(role, {
-          name: uniformName,
-          permissions: await this.getAllPermissionsByIdList(newRoleDto.permissions),
-        });
-        const saved = await AppDataSource.getRepository(Role).save(role);
-        return saved;
-      } else throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, 'Invalide rôle');
+      Object.assign(role, {
+        name: uniformName,
+        permissions: await this.getAllPermissionsByIdList(newRoleDto.permissions),
+      });
+      const saved = await AppDataSource.getRepository(Role).save(role);
+      return saved;
     } catch (error) {
       if (error.code === TYPEORM_ERROR.DUPLICATED_FIELD.code) {
         throw new HttpException(StatusCodes.CONFLICT, 'Le rôle existe déjà');
-      } else if (error.status === StatusCodes.UNPROCESSABLE_ENTITY)
-        throw new HttpException(error.status, error.error);
-      else throw new InternalServerErrorException();
+      } else throw new InternalServerErrorException();
     }
   }
 

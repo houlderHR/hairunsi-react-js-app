@@ -18,12 +18,12 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
   setShowModal,
   role,
 }) => {
-  const mutation = useDeleteRole(role?.id);
+  const { mutateAsync: mutationDelete, isPending } = useDeleteRole(role?.id);
   const navigate = useNavigate();
 
   const onDelete = async () => {
     try {
-      await mutation.mutateAsync();
+      await mutationDelete();
       setShowModal(ModalShowStateType.CLOSE);
     } catch (error) {
       navigate(routes.server_error.path);
@@ -44,6 +44,7 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
         description=" Vous êtes sur le point de supprimer ce rôle d’utilisateur."
         confirmation=" Etes-vous sûr de vouloir supprimer ce rôle d’utilisateur?"
         onClose={onClose}
+        isDeleting={isPending}
         onDelete={onDelete}
       />
     );
