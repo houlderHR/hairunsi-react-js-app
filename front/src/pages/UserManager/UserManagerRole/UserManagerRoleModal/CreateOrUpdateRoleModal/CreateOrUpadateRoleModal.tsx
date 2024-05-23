@@ -88,10 +88,19 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        if (err.response?.status === 500 || err.code === 'ERR_NETWORK')
-          navigate(routes.server_error.path);
-        if (err.response?.status === 422 || err.response?.status === 409) {
-          setErrorAxios(err.response?.data.error);
+        switch (err.response?.status) {
+          case 500:
+            navigate(routes.server_error.path);
+            break;
+          case 422:
+            setErrorAxios(err.response?.data.error);
+            break;
+          case 409:
+            setErrorAxios([err.response?.data.error]);
+            break;
+          default:
+            navigate(routes.server_error.path);
+            break;
         }
       } else {
         setErrorAxios(["Une erreur s'est produite"]);
