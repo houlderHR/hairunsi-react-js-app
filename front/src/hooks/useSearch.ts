@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { endpoint } from '../routes/endpoints';
 import http from '../utils/http-common';
 
 export enum SearchType {
@@ -7,26 +8,21 @@ export enum SearchType {
   ROLE = 'roleSearch',
 }
 
-const searchUser = <T>(search: string) =>
-  http.get<T[]>('/user/search', { params: { search } }).then((response) => response.data);
-const searchRole = <T>(search: string) =>
-  http.get<T[]>('/role/search', { params: { search } }).then((response) => response.data);
-const searchDepartment = <T>(search: string) =>
-  http.get<T[]>('/department/search', { params: { search } }).then((response) => response.data);
+const search =
+  <T>(path: string) =>
+  (_search: string) =>
+    http.get<T[]>(path, { params: { search: _search } }).then((response) => response.data);
 
 const getMutationSearchType = <T>(searchType?: string) => {
   switch (searchType) {
     case SearchType.USER:
-      return searchUser<T>;
-      break;
+      return search<T>(endpoint.user.search);
     case SearchType.ROLE:
-      return searchRole<T>;
-      break;
+      return search<T>(endpoint.role.search);
     case SearchType.TYPE:
-      return searchDepartment<T>;
-      break;
+      return search<T>(endpoint.department.search);
     default:
-      return searchUser;
+      return search<T>(endpoint.department.search);
   }
 };
 
