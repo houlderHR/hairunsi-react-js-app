@@ -67,7 +67,7 @@ const Button: FC<ButtonProps> = ({
       disabled={disabled}
     >
       {icon && (
-        <span className="mt-1">
+        <span>
           <Icon name={icon} size={iconSize} />
         </span>
       )}
