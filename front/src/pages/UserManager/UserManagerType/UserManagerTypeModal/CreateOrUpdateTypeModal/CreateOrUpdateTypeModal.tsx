@@ -5,7 +5,10 @@ import { ChangeEvent, FC, MouseEvent, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
-import DepartmentDto from '../../../../../dto/department.dto';
+import DepartmentDto, {
+  CreateOrUpdateDepartmentDto,
+  Role,
+} from '../../../../../dto/department.dto';
 import { schema, useFetchDepartment } from '../../../../../hooks/useDepartment';
 import { SearchType } from '../../../../../hooks/useSearch';
 import routes from '../../../../../routes/paths';
@@ -18,6 +21,7 @@ import InputIcon from '../../../../../shared/inputs/InputIcon';
 import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
 import mapError from '../../../../../utils/mapErrorResponse';
+import { QUERY_TOKEN_AUTH_KEY } from '../../../../../utils/query.constants';
 
 interface CreateModalTypeProps {
   onClose: () => void;
@@ -60,21 +64,19 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
     setShow((s) => !s);
   };
 
-  const getRole = (_department: { id: string; name: string }, e?: MouseEvent<HTMLElement>) => {
+  const getRole = (_role: Role, e?: MouseEvent<HTMLElement>) => {
     e?.stopPropagation();
     setShow(false);
     setSearchRole(undefined);
-    setRoleTypeValue('role', _department.id);
+    setRoleTypeValue('role', _role.id);
   };
 
-  const createDepartment = async (_data: {
-    name: string | undefined;
-    role: string | undefined;
-  }) => {
+  const createOrUpdateDepartment = async (_data: CreateOrUpdateDepartmentDto) => {
     try {
       await onMutateDepartment({ ..._data });
       onClose();
       await queryClient.invalidateQueries({ queryKey: ['department'] });
+      await queryClient.invalidateQueries({ queryKey: [QUERY_TOKEN_AUTH_KEY] });
       await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
     } catch (error) {
       const errorResponse = error as AxiosError<{
@@ -98,16 +100,12 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
     }
   };
 
-  const onSubmit = (data: { name: string | undefined; role: string | undefined }) => {
-    createDepartment({ ...data });
-  };
-
   return (
     <CreateModal
       onClose={onClose}
       title={type === 'createDepartment' ? 'Création de type' : 'Modification type'}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(createOrUpdateDepartment)}>
         <div className="flex gap-4 flex-col w-full">
           <div className="relative">
             <Controller
