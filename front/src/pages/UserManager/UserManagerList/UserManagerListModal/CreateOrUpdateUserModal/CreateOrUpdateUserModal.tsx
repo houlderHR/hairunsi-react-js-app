@@ -274,65 +274,63 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                   />
                   <img src="/icon/date.svg" alt="date" />
                 </div>
-                {(user || allowPermission(PERMISSIONS.createAll)) && (
+                <div
+                  className={`poste-type ${
+                    !allowPermission(PERMISSIONS.updateAll) ? 'cursor-not-allowed' : ''
+                  }`}
+                >
                   <div
-                    className={`poste-type ${
-                      !allowPermission(PERMISSIONS.updateAll) ? 'cursor-not-allowed' : ''
-                    }`}
+                    className="poste"
+                    role="presentation"
+                    onClick={() => {
+                      if (allowPermission(PERMISSIONS.updateAll)) setShowPoste((s) => !s);
+                    }}
                   >
-                    <div
-                      className="poste"
-                      role="presentation"
-                      onClick={() => {
-                        if (allowPermission(PERMISSIONS.updateAll)) setShowPoste((s) => !s);
-                      }}
-                    >
-                      <div className="libelle">
-                        {!post && messagePost ? (
-                          <div className="!text-red-600">{messagePost}</div>
-                        ) : (
-                          <div>{!post ? 'Post' : post.name}</div>
-                        )}
-                        <Icon name="search" size={15} className="text-gray-500" />
-                      </div>
-                      {postData.isPending && 'Chargement...'}
-                      {postData.error && postData.error.message}
-                      {showPoste && department && (
-                        <DropDown items={postData.data} setValue={setPost} />
+                    <div className="libelle">
+                      {!post && messagePost ? (
+                        <div className="!text-red-600">{messagePost}</div>
+                      ) : (
+                        <div>{!post ? 'Post' : post.name}</div>
                       )}
+                      <Icon name="search" size={15} className="text-gray-500" />
                     </div>
-                    <div
-                      className="type"
-                      role="presentation"
-                      onClick={() => {
-                        if (allowPermission(PERMISSIONS.updateAll)) setShowType((s) => !s);
-                      }}
-                    >
-                      <div className="libelle">
-                        {!department && !user?.post.department.name && messageDepartment ? (
-                          <div className="!text-red-600">{messageDepartment}</div>
-                        ) : (
-                          <div>
-                            {!department?.name && !user?.post.department.name
-                              ? 'Département'
-                              : department?.name || user?.post.department.name}
-                          </div>
-                        )}
-
-                        <Icon name="sharp-arrow-drop-down" size={10} className="text-gray-500" />
-                      </div>
-                      {departmentData.isPending && 'Chargement...'}
-                      {departmentData.error && departmentData.error.message}
-                      {showType && (
-                        <DropDown
-                          items={departmentData.data || [{ name: 'No data', id: '0' }]}
-                          setValue={setDepartment}
-                          onClickItem={() => setPost(null)}
-                        />
-                      )}
-                    </div>
+                    {postData.isPending && 'Chargement...'}
+                    {postData.error && postData.error.message}
+                    {showPoste && department && (
+                      <DropDown items={postData.data} setValue={setPost} />
+                    )}
                   </div>
-                )}
+                  <div
+                    className="type"
+                    role="presentation"
+                    onClick={() => {
+                      if (allowPermission(PERMISSIONS.updateAll)) setShowType((s) => !s);
+                    }}
+                  >
+                    <div className="libelle">
+                      {!department && !user?.post.department.name && messageDepartment ? (
+                        <div className="!text-red-600">{messageDepartment}</div>
+                      ) : (
+                        <div>
+                          {!department?.name && !user?.post.department.name
+                            ? 'Département'
+                            : department?.name || user?.post.department.name}
+                        </div>
+                      )}
+
+                      <Icon name="sharp-arrow-drop-down" size={10} className="text-gray-500" />
+                    </div>
+                    {departmentData.isPending && 'Chargement...'}
+                    {departmentData.error && departmentData.error.message}
+                    {showType && (
+                      <DropDown
+                        items={departmentData.data || [{ name: 'No data', id: '0' }]}
+                        setValue={setDepartment}
+                        onClickItem={() => setPost(null)}
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
