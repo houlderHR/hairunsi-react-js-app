@@ -1,5 +1,6 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import Icon from '../../../Icon';
+import UserContext from '../../userContext';
 import Dropdown from '../DropDown';
 
 interface IUserStatusBar {
@@ -8,7 +9,7 @@ interface IUserStatusBar {
 
 const UserStatusBar: FC<IUserStatusBar> = ({ logout }) => {
   const [show, setShow] = useState(false);
-
+  const currentUser = useContext(UserContext);
   return (
     <div
       role="presentation"
@@ -18,15 +19,16 @@ const UserStatusBar: FC<IUserStatusBar> = ({ logout }) => {
       <span className="w-px h-full hidden sm:inline-block mr-4 bg-gray-50 opacity-30" />
       <div className="flex relative flex-row items-center gap-x-4">
         <img
-          src="/images/profile.png"
+          src={currentUser?.image.path}
           className="w-8 h-8 rounded-full border-white border"
           alt=""
         />
         <div className=" hidden sm:flex flex-col">
           <h2 className="text-base font-medium truncate leading-4">
-            Darlene <span className="uppercase">Robertson</span>
+            {currentUser?.lastname}{' '}
+            <span className="uppercase">{currentUser?.firstname.toUpperCase()}</span>
           </h2>
-          <p className="text-[10px] leading-3 font-normal">Web Designer</p>
+          <p className="text-[10px] leading-3 font-normal">{currentUser?.post.name}</p>
         </div>
         <Icon width={10} height={5} name="sharp-arrow-drop-down" />
         {show && (

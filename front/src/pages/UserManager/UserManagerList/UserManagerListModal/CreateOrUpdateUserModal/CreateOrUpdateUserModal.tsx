@@ -2,7 +2,7 @@ import './index.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
@@ -15,6 +15,7 @@ import routes from '../../../../../routes/paths';
 import Button from '../../../../../shared/authenticated/buttons/Button';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
+import UserContext from '../../../../../shared/authenticated/userContext';
 import Icon from '../../../../../shared/Icon';
 import Input from '../../../../../shared/inputs/Input';
 import InputFileWithDragAndDrop from '../../../../../shared/inputs/InputFileWithDragAndDrop';
@@ -65,6 +66,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
 
   const navigate = useNavigate();
 
+  const currentUser = useContext(UserContext);
   const departmentData = useQuery({
     queryKey: [QUERY_USER_DEPARTMENT_FILTER_KEY],
     queryFn: () => http.get(DEPARTMENT.departmentWithAnonymous).then((res) => res.data),
@@ -137,6 +139,9 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
         }
         if (userUpdatedOrCreated) {
           onClose();
+          if (userUpdatedOrCreated.data.uuid === currentUser?.uuid) {
+            window.location.reload();
+          }
         }
 
         queryClient.invalidateQueries({ queryKey: [QUERY_USER_KEY] });
@@ -269,58 +274,63 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                   />
                   <img src="/icon/date.svg" alt="date" />
                 </div>
-                {((user && allowPermission(PERMISSIONS.updateAll)) ||
-                  allowPermission(PERMISSIONS.createAll)) && (
-                  <div className="poste-type">
-                    <div
-                      className="poste"
-                      role="presentation"
-                      onClick={() => setShowPoste((s) => !s)}
-                    >
-                      <div className="libelle">
-                        {!post && messagePost ? (
-                          <div className="!text-red-600">{messagePost}</div>
-                        ) : (
-                          <div>{!post ? 'Post' : post.name}</div>
-                        )}
-                        <Icon name="search" size={15} className="text-gray-500" />
-                      </div>
-                      {postData.isPending && 'Chargement...'}
-                      {postData.error && postData.error.message}
-                      {showPoste && department && (
-                        <DropDown items={postData.data} setValue={setPost} />
+                <div
+                  className={`poste-type ${
+                    !allowPermission(PERMISSIONS.updateAll) ? 'cursor-not-allowed' : ''
+                  }`}
+                >
+                  <div
+                    className="poste"
+                    role="presentation"
+                    onClick={() => {
+                      if (allowPermission(PERMISSIONS.updateAll)) setShowPoste((s) => !s);
+                    }}
+                  >
+                    <div className="libelle">
+                      {!post && messagePost ? (
+                        <div className="!text-red-600">{messagePost}</div>
+                      ) : (
+                        <div>{!post ? 'Post' : post.name}</div>
                       )}
+                      <Icon name="search" size={15} className="text-gray-500" />
                     </div>
-                    <div
-                      className="type"
-                      role="presentation"
-                      onClick={() => setShowType((s) => !s)}
-                    >
-                      <div className="libelle">
-                        {!department && !user?.post.department.name && messageDepartment ? (
-                          <div className="!text-red-600">{messageDepartment}</div>
-                        ) : (
-                          <div>
-                            {!department?.name && !user?.post.department.name
-                              ? 'Département'
-                              : department?.name || user?.post.department.name}
-                          </div>
-                        )}
-
-                        <Icon name="sharp-arrow-drop-down" size={10} className="text-gray-500" />
-                      </div>
-                      {departmentData.isPending && 'Chargement...'}
-                      {departmentData.error && departmentData.error.message}
-                      {showType && (
-                        <DropDown
-                          items={departmentData.data || [{ name: 'No data', id: '0' }]}
-                          setValue={setDepartment}
-                          onClickItem={() => setPost(null)}
-                        />
-                      )}
-                    </div>
+                    {postData.isPending && 'Chargement...'}
+                    {postData.error && postData.error.message}
+                    {showPoste && department && (
+                      <DropDown items={postData.data} setValue={setPost} />
+                    )}
                   </div>
-                )}
+                  <div
+                    className="type"
+                    role="presentation"
+                    onClick={() => {
+                      if (allowPermission(PERMISSIONS.updateAll)) setShowType((s) => !s);
+                    }}
+                  >
+                    <div className="libelle">
+                      {!department && !user?.post.department.name && messageDepartment ? (
+                        <div className="!text-red-600">{messageDepartment}</div>
+                      ) : (
+                        <div>
+                          {!department?.name && !user?.post.department.name
+                            ? 'Département'
+                            : department?.name || user?.post.department.name}
+                        </div>
+                      )}
+
+                      <Icon name="sharp-arrow-drop-down" size={10} className="text-gray-500" />
+                    </div>
+                    {departmentData.isPending && 'Chargement...'}
+                    {departmentData.error && departmentData.error.message}
+                    {showType && (
+                      <DropDown
+                        items={departmentData.data || [{ name: 'No data', id: '0' }]}
+                        setValue={setDepartment}
+                        onClickItem={() => setPost(null)}
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
