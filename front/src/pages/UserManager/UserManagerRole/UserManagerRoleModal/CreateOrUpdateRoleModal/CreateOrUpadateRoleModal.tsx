@@ -61,7 +61,6 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
     });
     setSearchPermissions(result);
   };
-  const checker = (arr: string[], target: string[]) => target.every((v) => arr.includes(v));
 
   const onSubmit = handleSubmit(async (value) => {
     if (permissionSelected.length !== 0) setSelectPermission(true);
@@ -75,15 +74,6 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
         };
         if (updateRole) {
           result = await updateUserMutation.mutateAsync(newRole);
-          if (result) {
-            const idPermission = updateRole.permissions.map((item) => item.id);
-            if (
-              newRole.permissions.length !== updateRole.permissions.length ||
-              (!checker(newRole.permissions, idPermission) &&
-                newRole.permissions.length === updateRole.permissions.length)
-            )
-              window.location.reload();
-          }
         } else {
           result = await createUsermutation.mutateAsync(newRole);
         }
