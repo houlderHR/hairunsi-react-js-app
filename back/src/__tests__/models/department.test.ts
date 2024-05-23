@@ -5,9 +5,7 @@ import testDataSource from '../datasource';
 import TYPEORM_ERROR from '../../utils/errorTypeorm';
 
 const checkViolationErrorCode = (error, code: string) => {
-  if (error instanceof QueryFailedError) {
-    expect(error.driverError.code).toBe(code);
-  } else fail();
+  expect(error.driverError.code).toBe(code);
 };
 
 describe('Department ', () => {
