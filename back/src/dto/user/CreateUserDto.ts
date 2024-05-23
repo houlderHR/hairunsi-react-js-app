@@ -1,24 +1,26 @@
-import {
-  IsDateString,
-  IsString,
-  IsStrongPassword,
-  IsUUID,
-  Matches,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsString, IsStrongPassword, IsUUID, Matches, MaxLength, MinLength } from 'class-validator';
 import { UUID } from 'crypto';
 import REGEX from '../../utils/regex';
+import { Transform } from 'class-transformer';
 
 class CreateUserDto {
   @IsString({ message: 'Le nom doit etre renseigné' })
   @MinLength(1, { message: 'Le nom doit comporter au moin une caractère' })
   @MaxLength(255, { message: 'Le nom ne doit pas dépasser les 255 caractères' })
+  @Transform(({ value }) => value.trim().replace(/\s+/g, ' ').toUpperCase())
   firstname: string;
 
   @IsString({ message: 'Le prenom doit etre renseigné' })
   @MinLength(1, { message: 'Le prenom doit comporter au moin une caractère' })
   @MaxLength(255, { message: 'Le prenom ne doit pas dépasser les 255 caractères' })
+  @Transform(({ value }) =>
+    value
+      .trim()
+      .replace(/\s+/g, ' ')
+      .split(' ')
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' '),
+  )
   lastname: string;
 
   @IsString({ message: "L'adresse email doit etre renseignée" })

@@ -1,7 +1,7 @@
 import './style.scss';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ObjDetail from '../../../dto/user.dto';
 import { deleteUserById, getAllUsers, getAllUsersByDepartment } from '../../../hooks/user';
@@ -41,21 +41,25 @@ const UserManagerList: FC = () => {
   const [showType, setShowType] = useState(false);
   const [department, setDepartment] = useState<{ name: string; id: string } | undefined>();
   const [searchLoading, setSearchLoading] = useState(false);
+  const [stateFilter, setStateFilter] = useState<boolean>(false);
+  const filter = useRef<'matricule' | 'firstname' | 'lastname' | 'birth_date'>('matricule');
 
   const { allowPermission } = useUserPermission();
 
   const pushSearchUser = (_user: ObjDetail[] | undefined) => {
     setUserSearch(_user);
   };
-  queryClient.invalidateQueries({ queryKey: [QUERY_USER_DEPARTMENT_KEY] });
-  const { isPending, error, data } = useQuery({
+
+  const { isPending, error, data } = useQuery<ObjDetail[]>({
     queryKey: [QUERY_USER_KEY],
     queryFn: async () => (await getAllUsers()).data,
   });
+
   const userFilterDepartment = useQuery({
     queryKey: [QUERY_USER_DEPARTMENT_KEY],
     queryFn: async () => (await getAllUsersByDepartment(department?.id)).data,
   });
+
   const departmentDataForOption = useQuery({
     queryKey: [QUERY_USER_DEPARTMENT_FILTER_KEY],
     queryFn: () => http.get(DEPARTMENT.departmentWithAnonymous).then((res) => res.data),
@@ -67,12 +71,17 @@ const UserManagerList: FC = () => {
   const [currentPage, setCurrentpage] = useState(1);
   const lastIndex = numberUsers * currentPage;
   const firstIndex = lastIndex - numberUsers;
-  let users = [];
+  let users: ObjDetail[] = [];
   if (userSearch) {
     users = userSearch;
   } else if (userFilterDepartment?.data && department) users = userFilterDepartment?.data;
-  else if (data) users = data;
-  const record = users.slice(firstIndex, lastIndex);
+  else if (data && !userSearch && userFilterDepartment.data) users = data;
+  const record: ObjDetail[] = users
+    .sort((user1, user2) => {
+      if (stateFilter) return user1[filter.current].localeCompare(user2[filter.current]);
+      return user2[filter.current].localeCompare(user1[filter.current]);
+    })
+    .slice(firstIndex, lastIndex);
   const npage = Math.ceil(users ? users.length / numberUsers : 0);
 
   function nextPage() {
@@ -89,7 +98,12 @@ const UserManagerList: FC = () => {
 
   const getSearchLoading = (isLoadingUser: boolean) => setSearchLoading(isLoadingUser);
 
-  const updateUser = (user: ObjDetail) => {
+  const changeFilter = (f?: 'matricule' | 'firstname' | 'lastname' | 'birth_date') => {
+    if (f) {
+      filter.current = f;
+    }
+  };
+  const openModalUpdate = (user: ObjDetail) => {
     if (setUserToUpdate) {
       setShowModal(ModalShowStateType.UPDATE);
       setUserToUpdate(user);
@@ -164,14 +178,61 @@ const UserManagerList: FC = () => {
         <div className="container-list">
           <div className="w-full flex flex-col">
             <div className="container-headdetail">
-              <div className="text matricule sticky top-0">Matricule</div>
-              <div className="text nom sticky top-0">NOM</div>
+              <div className="text matricule sticky top-0">
+                <div>Matricule</div>
+                <img
+                  className="up-down"
+                  src="/icon/up-down.svg"
+                  alt="up-down"
+                  role="presentation"
+                  onClick={() => {
+                    setStateFilter((s) => !s);
+                    changeFilter('matricule');
+                  }}
+                />
+              </div>
+              <div className="text nom sticky top-0">
+                <div>NOM</div>
+                <img
+                  className="up-down"
+                  src="/icon/up-down.svg"
+                  alt="up-down"
+                  role="presentation"
+                  onClick={() => {
+                    setStateFilter((s) => !s);
+                    changeFilter('firstname');
+                  }}
+                />
+              </div>
               <div className="text prenom sticky top-0">
                 <div>PRENOM(S)</div>
-                <img className="up-down" src="/icon/up-down.svg" alt="up-down" />
+                <img
+                  className="up-down"
+                  src="/icon/up-down.svg"
+                  alt="up-down"
+                  role="presentation"
+                  onClick={() => {
+                    setStateFilter((s) => !s);
+                    changeFilter('lastname');
+                  }}
+                />
               </div>
-              <div className="text ddn sticky top-0">DATE DE NAISSANCE</div>
-              <div className="text type sticky top-0">TYPE</div>
+              <div className="text ddn sticky top-0">
+                <div>DATE DE NAISSANCE</div>
+                <img
+                  className="up-down"
+                  src="/icon/up-down.svg"
+                  alt="up-down"
+                  role="presentation"
+                  onClick={() => {
+                    setStateFilter((s) => !s);
+                    changeFilter('birth_date');
+                  }}
+                />
+              </div>
+              <div className="text type sticky top-0">
+                <div>TYPE</div>
+              </div>
               <div className="text action sticky top-0">ACTION</div>
             </div>
             <div className="max-h-[616px] overflow-y-scroll scroll-smooth">
@@ -212,7 +273,7 @@ const UserManagerList: FC = () => {
                         <div
                           className="icon-action"
                           role="presentation"
-                          onClick={() => updateUser(user)}
+                          onClick={() => openModalUpdate(user)}
                         >
                           <Icon
                             name="pen"

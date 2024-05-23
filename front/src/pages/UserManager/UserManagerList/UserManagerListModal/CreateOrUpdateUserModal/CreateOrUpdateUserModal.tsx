@@ -9,6 +9,7 @@ import { twMerge } from 'tailwind-merge';
 import * as yup from 'yup';
 import UserDto from '../../../../../dto/user.dto';
 import updateUser, { createUser } from '../../../../../hooks/user';
+import { SearchType } from '../../../../../hooks/useSearch';
 import useUserPermission from '../../../../../hooks/useUserPermission';
 import { DEPARTMENT, POST } from '../../../../../routes/endpoints';
 import routes from '../../../../../routes/paths';
@@ -110,9 +111,18 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
   }) => {
     setIsLoading(true);
     queryClient.invalidateQueries({ queryKey: [QUERY_USER_DEPARTMENT_KEY] });
+
     if (!department) setMessageDepartment('Obligatoire * ');
     if (!post) setMessagePost('Obligatoire *');
-    if (data.firstname && data.lastname && data.birth_date && data.email && post) {
+    if (
+      data.firstname &&
+      data.firstname?.trim().length > 0 &&
+      data.lastname &&
+      data.lastname?.trim().length > 0 &&
+      data.birth_date &&
+      data.email &&
+      post
+    ) {
       try {
         let userUpdatedOrCreated;
         if (user) {
@@ -122,14 +132,13 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
           formData.append('lastname', data.lastname);
           formData.append('birth_date', new Date(data.birth_date).toDateString());
           formData.append('post', allowPermission(PERMISSIONS.updateAll) ? post.id : user.post.id);
-
           userUpdatedOrCreated = await updateUser(formData, user.uuid);
         } else {
           const formData = new FormData();
           formData.append('firstname', data.firstname);
           formData.append('lastname', data.lastname);
           formData.append('birth_date', new Date(data.birth_date).toDateString());
-          formData.append('email', data.email);
+          formData.append('email', data.email.trim());
           formData.append('password', PASSWORD_DEFAULT);
           if (file) {
             formData.append('image', file);
@@ -143,16 +152,18 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
             window.location.reload();
           }
         }
-
-        queryClient.invalidateQueries({ queryKey: [QUERY_USER_KEY] });
+        await queryClient.invalidateQueries({ queryKey: [QUERY_USER_KEY] });
+        await queryClient.invalidateQueries({ queryKey: [QUERY_USER_DEPARTMENT_KEY] });
+        await queryClient.invalidateQueries({ queryKey: [SearchType.USER] });
       } catch (error) {
         const exceptions = error as AxiosError;
         if (exceptions.code === 'ERR_NETWORK') navigate(routes.server_error.path);
         setMatch(manageErrorMessage(exceptions));
       }
-    }
+    } else match.push('Vérifier les champs');
     setIsLoading(false);
   };
+
   return (
     <CreateModal
       onClose={onClose}
@@ -179,7 +190,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                     name="firstname"
                     render={({ field: { ref, onChange, onBlur, value } }) => (
                       <Input
-                        value={value}
+                        value={value.startsWith(' ') ? value.trimStart() : value}
                         additionalClass="h-1/3"
                         type="text"
                         placeholder="Nom"
@@ -196,7 +207,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                     name="lastname"
                     render={({ field: { ref, onChange, onBlur, value } }) => (
                       <Input
-                        value={value}
+                        value={value.startsWith(' ') ? value.trimStart() : value}
                         type="text"
                         placeholder="Prénom"
                         additionalClass="h-1/3"
@@ -215,7 +226,9 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                       <Input
                         placeholder="Adresse e-mail"
                         additionalClass={
-                          (watch('email')?.match(REGEX_EMAIL) && value?.length > 0) ||
+                          (watch('email')?.match(REGEX_EMAIL) &&
+                            value?.length > 0 &&
+                            watch('email').trim().length > 0) ||
                           !watch('email')
                             ? twMerge('h-1/3', user ? 'bg-gray-500/20' : '')
                             : twMerge(
