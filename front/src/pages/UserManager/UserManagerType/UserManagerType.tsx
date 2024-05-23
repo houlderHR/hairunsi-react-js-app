@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import DepartmentDto from '../../../dto/department.dto';
 import { SearchType } from '../../../hooks/useSearch';
 import useUserPermission from '../../../hooks/useUserPermission';
+import { endpoint } from '../../../routes/endpoints';
 import routes from '../../../routes/paths';
 import AllowedRoute from '../../../shared/authenticated/AllowedRoute';
 import CardType from '../../../shared/authenticated/CardUserManager/CardType';
@@ -32,7 +33,7 @@ const UserManagerType: FC = () => {
     queryKey: ['department'],
     queryFn: () =>
       http
-        .get<DepartmentDto[]>('department', { params: { role: true } })
+        .get<DepartmentDto[]>(endpoint.department.get, { params: { role: true } })
         .then((response) => response.data)
         .catch(() => navigate(routes.server_error.path)),
   });

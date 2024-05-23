@@ -16,4 +16,20 @@ export const DEPARTMENT = {
 };
 export const POST = '/post';
 
+export const endpoint = {
+  department: {
+    get: 'department',
+    create: 'department',
+    delete: 'department',
+    update: 'department',
+    search: '/department/search',
+  },
+  role: {
+    search: '/role/search',
+  },
+  user: {
+    search: '/user/search',
+  },
+};
+
 export default UNAUTHENTICATED;

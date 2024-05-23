@@ -4,6 +4,7 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DepartmentDto from '../../../../dto/department.dto';
 import { SearchType } from '../../../../hooks/useSearch';
+import { endpoint } from '../../../../routes/endpoints';
 import routes from '../../../../routes/paths';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
@@ -26,7 +27,9 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
   const { mutateAsync: onDeleteDepartment, isPending } = useMutation({
     mutationKey: ['deleteDepartment', department?.id],
     mutationFn: () =>
-      http.delete<DepartmentDto>(`department/${department?.id}`).then((response) => response.data),
+      http
+        .delete<DepartmentDto>(`${endpoint.department.delete}/${department?.id}`)
+        .then((response) => response.data),
   });
 
   const onClose = () => {
