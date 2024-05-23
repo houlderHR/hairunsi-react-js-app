@@ -274,7 +274,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                   />
                   <img src="/icon/date.svg" alt="date" />
                 </div>
-                {user && (
+                {(user || allowPermission(PERMISSIONS.createAll)) && (
                   <div
                     className={`poste-type ${
                       !allowPermission(PERMISSIONS.updateAll) ? 'cursor-not-allowed' : ''
