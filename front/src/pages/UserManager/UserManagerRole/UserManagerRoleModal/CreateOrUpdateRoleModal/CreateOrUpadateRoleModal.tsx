@@ -64,7 +64,11 @@ const CreateOrUpdateRoleModal: FC<CreateModalRoleProps> = ({ onClose, updateRole
     setSearch(e.target.value);
     const result = permissions.filter((item) => {
       const permissionName = item.name.toUpperCase();
-      return permissionName.includes(e.target.value.toUpperCase());
+      const valueRemovedSpace = e.target.value
+        .split(' ')
+        .filter((_item) => _item !== '')
+        .join(' ');
+      return permissionName.includes(valueRemovedSpace.toUpperCase());
     });
     setSearchPermissions(result);
   };
