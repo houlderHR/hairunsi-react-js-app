@@ -31,7 +31,12 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
       <h3 className="text-gray-1 text-base">{confirmation}</h3>
     </div>
     <div className="flex flex-col md:flex-row gap-2">
-      <Button title="Annuler" icon="x" className="uppercase" onClick={onClose} />
+      <Button
+        title="Annuler"
+        icon="x"
+        className="uppercase text-black-1 !border-gray-9 text-sm font-medium"
+        onClick={onClose}
+      />
       <Button
         onClick={onDelete}
         title={
@@ -40,7 +45,7 @@ const DeleteModal: FC<PropsWithChildren<DeleteModalProps>> = ({
           </span>
         }
         icon={!isDeleting ? 'trash-1' : ''}
-        className="uppercase"
+        className="uppercase text-sm font-medium"
         iconSize={18}
         variant="danger"
       />

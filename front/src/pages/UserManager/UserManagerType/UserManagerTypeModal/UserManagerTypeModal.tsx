@@ -9,6 +9,7 @@ import routes from '../../../../routes/paths';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
 import http from '../../../../utils/http-common';
+import { QUERY_TOKEN_AUTH_KEY } from '../../../../utils/query.constants';
 import CreateOrUpdateTypeModal from './CreateOrUpdateTypeModal';
 
 interface UserManagerTypeModalProps {
@@ -39,6 +40,7 @@ const UserManagerTypeModal: FC<UserManagerTypeModalProps> = ({
     try {
       await onDeleteDepartment();
       onClose();
+      await queryClient.invalidateQueries({ queryKey: [QUERY_TOKEN_AUTH_KEY] });
       await queryClient.invalidateQueries({ queryKey: ['department'] });
       await queryClient.invalidateQueries({ queryKey: [SearchType.TYPE] });
     } catch (error) {
