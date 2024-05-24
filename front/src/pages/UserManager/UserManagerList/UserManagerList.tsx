@@ -25,6 +25,12 @@ import {
 } from '../../../utils/query.constants';
 import UserManagerUserModal from './UserManagerListModal/UserManagerListModal';
 
+enum Fields {
+  matricule = 'matricule',
+  firstname = 'firstname',
+  lastname = 'lastname',
+  birth_date = 'birth_date',
+}
 const numberLines = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const UserManagerList: FC = () => {
@@ -98,7 +104,7 @@ const UserManagerList: FC = () => {
 
   const getSearchLoading = (isLoadingUser: boolean) => setSearchLoading(isLoadingUser);
 
-  const changeFilter = (f?: 'matricule' | 'firstname' | 'lastname' | 'birth_date') => {
+  const changeFilter = (f?: Fields) => {
     if (f) {
       filter.current = f;
     }
@@ -180,55 +186,103 @@ const UserManagerList: FC = () => {
             <div className="container-headdetail">
               <div className="text matricule sticky top-0">
                 <div>Matricule</div>
-                <img
-                  className="up-down"
-                  src="/icon/up-down.svg"
-                  alt="up-down"
-                  role="presentation"
-                  onClick={() => {
-                    setStateFilter((s) => !s);
-                    changeFilter('matricule');
-                  }}
-                />
+                <div className="flex flex-col justify-center items-center up-down ">
+                  <img
+                    src="/icon/arrow-up.svg"
+                    alt="arrow"
+                    className="w-[8px]"
+                    role="presentation"
+                    onClick={() => {
+                      setStateFilter(true);
+                      changeFilter(Fields.matricule);
+                    }}
+                  />
+                  <img
+                    src="/icon/arrow-up.svg"
+                    alt="arrow"
+                    className="w-[8px] rotate-180"
+                    role="presentation"
+                    onClick={() => {
+                      setStateFilter(false);
+                      changeFilter(Fields.matricule);
+                    }}
+                  />
+                </div>
               </div>
               <div className="text nom sticky top-0">
                 <div>NOM</div>
-                <img
-                  className="up-down"
-                  src="/icon/up-down.svg"
-                  alt="up-down"
-                  role="presentation"
-                  onClick={() => {
-                    setStateFilter((s) => !s);
-                    changeFilter('firstname');
-                  }}
-                />
+                <div className="flex flex-col justify-center items-center up-down ">
+                  <img
+                    src="/icon/arrow-up.svg"
+                    alt="arrow"
+                    className="w-[8px]"
+                    role="presentation"
+                    onClick={() => {
+                      setStateFilter(true);
+                      changeFilter(Fields.firstname);
+                    }}
+                  />
+                  <img
+                    src="/icon/arrow-up.svg"
+                    alt="arrow"
+                    className="w-[8px] rotate-180"
+                    role="presentation"
+                    onClick={() => {
+                      setStateFilter(false);
+                      changeFilter(Fields.firstname);
+                    }}
+                  />
+                </div>
               </div>
               <div className="text prenom sticky top-0">
                 <div>PRENOM(S)</div>
-                <img
-                  className="up-down"
-                  src="/icon/up-down.svg"
-                  alt="up-down"
-                  role="presentation"
-                  onClick={() => {
-                    setStateFilter((s) => !s);
-                    changeFilter('lastname');
-                  }}
-                />
+                <div className="flex flex-col justify-center items-center up-down ">
+                  <img
+                    src="/icon/arrow-up.svg"
+                    alt="arrow"
+                    className="w-[8px]"
+                    role="presentation"
+                    onClick={() => {
+                      setStateFilter(true);
+                      changeFilter(Fields.lastname);
+                    }}
+                  />
+                  <img
+                    src="/icon/arrow-up.svg"
+                    alt="arrow"
+                    className="w-[8px] rotate-180"
+                    role="presentation"
+                    onClick={() => {
+                      setStateFilter(false);
+                      changeFilter(Fields.lastname);
+                    }}
+                  />
+                </div>
               </div>
               <div className="text ddn sticky top-0">
                 <div>DATE DE NAISSANCE</div>
-                <img
-                  className="up-down"
-                  src="/icon/up-down.svg"
-                  alt="up-down"
-                  role="presentation"
-                  onClick={() => {
-                    setStateFilter((s) => !s);
-                    changeFilter('birth_date');
-                  }}
-                />
+                <div className="flex flex-col justify-center items-center up-down ">
+                  <img
+                    src="/icon/arrow-up.svg"
+                    alt="arrow"
+                    className="w-[8px]"
+                    role="presentation"
+                    onClick={() => {
+                      setStateFilter(true);
+                      changeFilter(Fields.birth_date);
+                    }}
+                  />
+                  <img
+                    src="/icon/arrow-up.svg"
+                    alt="arrow"
+                    className="w-[8px] rotate-180"
+                    role="presentation"
+                    onClick={() => {
+                      setStateFilter(false);
+                      changeFilter(Fields.birth_date);
+                    }}
+                  />
+                </div>
               </div>
               <div className="text type sticky top-0">
                 <div>TYPE</div>
