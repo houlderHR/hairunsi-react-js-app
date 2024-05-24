@@ -50,10 +50,9 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
     data: roles,
     isLoading: isLoadingRoles,
     isSuccess: isRoleGettedSuccessfully,
-  } = useQuery({
+  } = useQuery<Role[], AxiosError>({
     queryKey: ['dropdownRole'],
-    queryFn: () =>
-      http.get<{ id: string; name: string }[]>('role').then((response) => response.data),
+    queryFn: () => http.get<Role[]>('role').then((response) => response.data),
   });
   const [searchRole, setSearchRole] = useState<string | undefined>(undefined);
 
