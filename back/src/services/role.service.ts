@@ -124,6 +124,7 @@ class RoleService {
     } catch (error) {
       if (error.code == TYPEORM_ERROR.VIOLATE_FOREIGN_KEY.code)
         throw new HttpException(StatusCodes.FORBIDDEN, 'Impossible de supprimer le rôle');
+      if (error.status === StatusCodes.NOT_FOUND) throw error;
       throw new InternalServerErrorException();
     }
   }
