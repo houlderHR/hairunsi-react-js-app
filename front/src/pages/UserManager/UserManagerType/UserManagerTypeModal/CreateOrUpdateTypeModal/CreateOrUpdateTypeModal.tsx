@@ -107,7 +107,13 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
       <form onSubmit={handleSubmit(createOrUpdateDepartment)}>
         <div className="flex gap-4 flex-col w-full">
           <div className="relative">
-            <InputController name="name" control={control} isError={errors.name !== undefined} />
+            <InputController
+              placeholder="Nom du type"
+              name="name"
+              control={control}
+              isError={errors.name !== undefined}
+              type="text"
+            />
             {errors.name && (
               <span className="text-red-500 absolute left-1 leading-[11px] top-full mt-0.5 text-xs font-medium">
                 {errors.name.message}
