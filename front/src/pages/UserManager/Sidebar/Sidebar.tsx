@@ -8,7 +8,7 @@ const Sidebar: FC = () => {
   const { allowPermission } = useUserPermission();
 
   return (
-    <div className="lg:w-72 sm:w-52 w-16 bg-white border border-white-1 left-0 h-full fixed z-50">
+    <div className="lg:w-72 sm:w-52 w-16 bg-white border border-white-1 left-0 h-full fixed z-[55]">
       {allowPermission(PERMISSIONS.viewAll) && (
         <SidebarLink
           url={routes.authentified.subpaths.userManager.subpaths.role.path}

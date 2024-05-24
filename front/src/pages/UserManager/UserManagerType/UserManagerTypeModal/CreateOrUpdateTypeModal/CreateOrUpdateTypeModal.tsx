@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ChangeEvent, FC, MouseEvent, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import DepartmentDto, {
@@ -16,7 +16,7 @@ import Button from '../../../../../shared/authenticated/buttons/Button';
 import CreateModal from '../../../../../shared/authenticated/Modal/CreateModal';
 import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
 import Icon from '../../../../../shared/Icon';
-import Input from '../../../../../shared/inputs/Input';
+import InputController from '../../../../../shared/inputs/InputController';
 import InputIcon from '../../../../../shared/inputs/InputIcon';
 import Spinner from '../../../../../shared/Spinner';
 import http from '../../../../../utils/http-common';
@@ -50,10 +50,9 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
     data: roles,
     isLoading: isLoadingRoles,
     isSuccess: isRoleGettedSuccessfully,
-  } = useQuery({
+  } = useQuery<Role[], AxiosError>({
     queryKey: ['dropdownRole'],
-    queryFn: () =>
-      http.get<{ id: string; name: string }[]>('role').then((response) => response.data),
+    queryFn: () => http.get<Role[]>('role').then((response) => response.data),
   });
   const [searchRole, setSearchRole] = useState<string | undefined>(undefined);
 
@@ -108,23 +107,12 @@ const CreateOrUpdateTypeModal: FC<CreateModalTypeProps> = ({ onClose, type, depa
       <form onSubmit={handleSubmit(createOrUpdateDepartment)}>
         <div className="flex gap-4 flex-col w-full">
           <div className="relative">
-            <Controller
+            <InputController
+              placeholder="Nom du type"
               name="name"
               control={control}
-              render={({ field: { onChange, onBlur, ref, value } }) => (
-                <Input
-                  value={value}
-                  type="text"
-                  placeholder="Nom du type"
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  refs={ref}
-                  additionalClass={twMerge(
-                    errors.name && '!border-red-500 border !border-1 text-red-500',
-                    'bg-transparent border rounded border-gray-1 active:border-secondary border pr-10',
-                  )}
-                />
-              )}
+              isError={errors.name !== undefined}
+              type="text"
             />
             {errors.name && (
               <span className="text-red-500 absolute left-1 leading-[11px] top-full mt-0.5 text-xs font-medium">
