@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { endpoint } from '../routes/endpoints';
 import http from '../utils/http-common';
 
@@ -27,7 +28,7 @@ const getMutationSearchType = <T>(searchType?: string) => {
 };
 
 const useSearch = <T>(searchType: string, searchValue: string) =>
-  useQuery({
+  useQuery<T[], AxiosError>({
     queryKey: [searchType],
     queryFn: () => getMutationSearchType<T>(searchType)(searchValue.trim()),
     enabled: !!searchValue.trim(),
