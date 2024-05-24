@@ -92,8 +92,7 @@ const UserManagerType: FC = () => {
         )}
         {!searchLoading &&
           type &&
-          type.length > 0 &&
-          type?.map((_type: DepartmentDto) => (
+          type.map((_type: DepartmentDto) => (
             <CardType
               openUpdateModal={openUpdateModal(_type)}
               openDeleteModal={openDeleteModal(_type)}
