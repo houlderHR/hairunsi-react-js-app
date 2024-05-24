@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RoleResponseDto } from '../../../../dto/role.dto';
@@ -26,7 +27,11 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
       await mutationDelete();
       setShowModal(ModalShowStateType.CLOSE);
     } catch (error) {
-      navigate(routes.server_error.path);
+      const errorResponse = error as AxiosError;
+      setShowModal(ModalShowStateType.CLOSE);
+      if (errorResponse.code === 'ERR_NETWORK') {
+        navigate(routes.server_error.path);
+      }
     }
   };
 
