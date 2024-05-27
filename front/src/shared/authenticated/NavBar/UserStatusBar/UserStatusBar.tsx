@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import Icon from '../../../Icon';
 import UserContext from '../../userContext';
 import Dropdown from '../DropDown';
@@ -10,6 +10,14 @@ interface IUserStatusBar {
 const UserStatusBar: FC<IUserStatusBar> = ({ logout }) => {
   const [show, setShow] = useState(false);
   const currentUser = useContext(UserContext);
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = currentUser?.image.path || '';
+    img.onload = () => setIsValid(true);
+    img.onerror = () => setIsValid(false);
+  }, [currentUser?.image.path]);
   return (
     <div
       role="presentation"
@@ -19,9 +27,10 @@ const UserStatusBar: FC<IUserStatusBar> = ({ logout }) => {
       <span className="w-px h-full hidden sm:inline-block mr-4 bg-gray-50 opacity-30" />
       <div className="flex relative flex-row items-center gap-x-4">
         <img
-          src={currentUser?.image.path}
-          className="w-8 h-8 rounded-full border-white border"
+          src={isValid ? currentUser?.image.path : '/images/logo/logo-hairun-no-text.png'}
+          className={`w-8 h-8 ${isValid ? 'rounded-full border-white border' : ''} `}
           alt=""
+          id="user-profile"
         />
         <div className=" hidden sm:flex flex-col">
           <h2 className="text-base font-medium truncate leading-4">
