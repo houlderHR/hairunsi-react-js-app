@@ -83,13 +83,6 @@
         @apply mx-auto flex flex-col justify-center items-center xl:w-[9.92%] md:w-[5%] w-[15%] px-1.5 lg:flex lg:flex-col lg:justify-center lg:items-center sm:flex sm:flex-col sm:justify-center sm:items-center;
       }
 
-      .pair {
-        @apply bg-[#f7f7ff] flex flex-row w-full h-[56px];
-      }
-      .impair {
-        @apply bg-[#ffffff] flex flex-row w-full h-[56px];
-      }
-
       .icons {
         @apply flex flex-row pt-2 justify-center items-center lg:space-x-3 md:space-x-1 bg-transparent;
         .icon-action {
