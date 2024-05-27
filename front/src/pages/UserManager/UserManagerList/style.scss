@@ -84,9 +84,9 @@
       }
 
       .icons {
-        @apply flex flex-row pt-2 justify-center items-center lg:space-x-3 md:space-x-1 bg-transparent;
+        @apply flex flex-row gap-4 justify-center items-center bg-transparent;
         .icon-action {
-          @apply w-[20px] h-[20px] bg-transparent px-1 hover:cursor-pointer;
+          @apply bg-transparent hover:cursor-pointer;
         }
       }
     }
