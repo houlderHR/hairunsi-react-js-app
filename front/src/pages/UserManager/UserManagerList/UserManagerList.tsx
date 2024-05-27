@@ -156,12 +156,14 @@ const UserManagerList: FC = () => {
       setSendPasswordToUser(undefined);
     } catch (_error) {
       setSearchLoading(false);
-      setShowMailModal('error');
 
       const errorResponse = _error as AxiosError;
 
       if (errorResponse.code === 'ERR_NETWORK') {
         navigate(routes.server_error.path);
+      }
+      if (errorResponse.status === 400) {
+        setShowMailModal('error');
       }
       setSendPasswordToUser(undefined);
     }
