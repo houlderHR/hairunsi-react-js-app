@@ -8,9 +8,10 @@ type DropDownType = {
 interface DropDownProps {
   items: DropDownType[];
   setValue?: (elem: DropDownType, e?: MouseEvent<HTMLElement>) => void;
+  onClickItem?: () => void;
 }
 
-const DropDown: FC<DropDownProps> = ({ items, setValue }) => (
+const DropDown: FC<DropDownProps> = ({ items, setValue, onClickItem }) => (
   <ul className="bg-white border absolute w-full z-20 left-0 mt-2 max-h-32 overflow-y-scroll border-gray-50 shadow  rounded px-4 py-1">
     {items && items.length > 0 ? (
       items.map((item) =>
@@ -21,6 +22,9 @@ const DropDown: FC<DropDownProps> = ({ items, setValue }) => (
             role="presentation"
             onClick={(e: MouseEvent<HTMLElement>) => {
               setValue(item, e);
+              if (onClickItem) {
+                onClickItem();
+              }
             }}
           >
             {item.name}
