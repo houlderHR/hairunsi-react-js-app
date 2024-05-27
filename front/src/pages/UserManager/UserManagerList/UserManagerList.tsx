@@ -11,11 +11,12 @@ import { DEPARTMENT } from '../../../routes/endpoints';
 import routes from '../../../routes/paths';
 import AllowedRoute from '../../../shared/authenticated/AllowedRoute';
 import HeadManager from '../../../shared/authenticated/HeadManager';
-import { ModalShowStateType } from '../../../shared/authenticated/Modal';
+import Modal, { ModalShowStateType } from '../../../shared/authenticated/Modal';
 import DropDown from '../../../shared/authenticated/Modal/DropDown';
 import UserContext from '../../../shared/authenticated/userContext';
 import Icon from '../../../shared/Icon';
 import Loading from '../../../shared/Loading/Loading';
+import Spinner from '../../../shared/Spinner';
 import http from '../../../utils/http-common';
 import PERMISSIONS from '../../../utils/permissions';
 import {
@@ -49,6 +50,11 @@ const UserManagerList: FC = () => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [stateFilter, setStateFilter] = useState<boolean>(false);
   const filter = useRef<'matricule' | 'firstname' | 'lastname' | 'birth_date'>('matricule');
+  const [sendPasswordMailLoading, setSendPasswordMailLoading] = useState<boolean>(false);
+  const [sendPasswordToUser, setSendPasswordToUser] = useState<
+    { name: string; email: string } | undefined
+  >();
+  const [showMailModal, setShowMailModal] = useState<'success' | 'error' | 'close'>('close');
 
   const { allowPermission } = useUserPermission();
 
@@ -138,6 +144,29 @@ const UserManagerList: FC = () => {
     }
     setIsLoading(false);
     setShowModal(ModalShowStateType.CLOSE);
+  };
+
+  const resendUserPasswordMail = async (_data: { name: string; email: string }) => {
+    setSendPasswordToUser(_data);
+    try {
+      setSendPasswordMailLoading(true);
+      await http.get('/auth/resend-password', { params: _data });
+      setShowMailModal('success');
+      setSearchLoading(false);
+      setSendPasswordMailLoading(false);
+    } catch (_error) {
+      setSearchLoading(false);
+
+      const errorResponse = _error as AxiosError;
+
+      if (errorResponse.code === 'ERR_NETWORK') {
+        navigate(routes.server_error.path);
+      }
+      if (errorResponse.status === 400) {
+        setShowMailModal('error');
+      }
+      setSendPasswordToUser(undefined);
+    }
   };
 
   const allowUserToUpdate = (id: string) =>
@@ -350,6 +379,34 @@ const UserManagerList: FC = () => {
                             <Icon name="x" className="text-gray-500 hover:text-red-700" size={12} />
                           </div>
                         )}
+                      {allowPermission(PERMISSIONS.createAll) &&
+                        user.email !== userContext?.email && (
+                          <>
+                            {sendPasswordMailLoading &&
+                              sendPasswordToUser?.email === user.email && (
+                                <Spinner additionalClassName="h-[12px] w-[12px]" />
+                              )}
+                            {(!sendPasswordMailLoading ||
+                              sendPasswordToUser?.email !== user.email) && (
+                              <div
+                                role="presentation"
+                                className="icon-action ml-auto"
+                                onClick={() =>
+                                  resendUserPasswordMail({
+                                    name: user.firstname,
+                                    email: user.email,
+                                  })
+                                }
+                              >
+                                <Icon
+                                  name="resend"
+                                  className="text-gray-500 hover:text-red-700"
+                                  size={12}
+                                />
+                              </div>
+                            )}
+                          </>
+                        )}
                     </div>{' '}
                   </div>
                 </div>
@@ -420,6 +477,27 @@ const UserManagerList: FC = () => {
         onDelete={deleteUser}
         isDeleting={isLoading}
       />
+      {showMailModal === 'success' && (
+        <Modal title="Evoi du mot de passe avec succés" onClose={() => setShowMailModal('close')}>
+          <div className="flex items-center justify-center mb-8">
+            <Icon name="success" className="text-green-500 h-10 w-10" />
+          </div>
+          <p className="text-center text-gray-1">
+            Veillez informer l&apos;utilisateur <strong>{sendPasswordToUser?.name}</strong>{' '}
+            q&apos;un mot de passe lui a été envoyé
+          </p>
+        </Modal>
+      )}
+      {showMailModal === 'error' && (
+        <Modal title="Evoi du mot de passe avec succés" onClose={() => setShowMailModal('close')}>
+          <div className="flex items-center justify-center mb-8">
+            <Icon name="success" className="text-green-500 h-10 w-10" />
+          </div>
+          <p className="text-center text-red-400 text-medium">
+            Une erreur s&apos;est produit lors de l&apos;envoi du mot de passe
+          </p>
+        </Modal>
+      )}
     </AllowedRoute>
   );
 };
