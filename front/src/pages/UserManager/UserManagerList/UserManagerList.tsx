@@ -11,7 +11,7 @@ import { DEPARTMENT } from '../../../routes/endpoints';
 import routes from '../../../routes/paths';
 import AllowedRoute from '../../../shared/authenticated/AllowedRoute';
 import HeadManager from '../../../shared/authenticated/HeadManager';
-import { ModalShowStateType } from '../../../shared/authenticated/Modal';
+import Modal, { ModalShowStateType } from '../../../shared/authenticated/Modal';
 import DropDown from '../../../shared/authenticated/Modal/DropDown';
 import UserContext from '../../../shared/authenticated/userContext';
 import Icon from '../../../shared/Icon';
@@ -54,6 +54,7 @@ const UserManagerList: FC = () => {
   const [sendPasswordToUser, setSendPasswordToUser] = useState<
     { name: string; email: string } | undefined
   >();
+  const [showMailModal, setShowMailModal] = useState<'success' | 'error' | 'close'>('close');
 
   const { allowPermission } = useUserPermission();
 
@@ -150,10 +151,12 @@ const UserManagerList: FC = () => {
     try {
       setSendPasswordMailLoading(true);
       await http.get('/auth/send-password', { params: _data });
+      setShowMailModal('success');
       setSearchLoading(false);
       setSendPasswordToUser(undefined);
     } catch (_error) {
       setSearchLoading(false);
+      setShowMailModal('error');
 
       const errorResponse = _error as AxiosError;
 
@@ -469,6 +472,16 @@ const UserManagerList: FC = () => {
         onDelete={deleteUser}
         isDeleting={isLoading}
       />
+      {showMailModal === 'success' && (
+        <Modal onClose={() => setShowMailModal('close')}>
+          <p>Mail envoyer avec succes</p>
+        </Modal>
+      )}
+      {showMailModal === 'error' && (
+        <Modal onClose={() => setShowMailModal('close')}>
+          <p>Une erreur s&apos;est produit lors de l&apos;envoi du mot de passe</p>
+        </Modal>
+      )}
     </AllowedRoute>
   );
 };
