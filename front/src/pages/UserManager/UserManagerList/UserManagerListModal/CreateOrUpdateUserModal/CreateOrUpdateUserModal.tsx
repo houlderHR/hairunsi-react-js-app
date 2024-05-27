@@ -57,7 +57,6 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
   const [showPoste, setShowPoste] = useState(false);
   const [showType, setShowType] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [messageDepartment, setMessageDepartment] = useState('');
   const [messagePost, setMessagePost] = useState('');
   const [match, setMatch] = useState<string[]>([]);
   const [file, setFile] = useState<File | null | undefined>();
@@ -313,16 +312,11 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                     }}
                   >
                     <div className="libelle">
-                      {!department && !user?.post.department.name && messageDepartment ? (
-                        <div className="!text-red-600">{messageDepartment}</div>
-                      ) : (
-                        <div>
-                          {!department?.name && !user?.post.department.name
-                            ? 'Département'
-                            : department?.name || user?.post.department.name}
-                        </div>
-                      )}
-
+                      <div>
+                        {!department?.name && !user?.post.department.name
+                          ? 'Département'
+                          : department?.name || user?.post.department.name}
+                      </div>
                       <Icon name="sharp-arrow-drop-down" size={10} className="text-gray-500" />
                     </div>
                     {departmentData.isPending && 'Chargement...'}
