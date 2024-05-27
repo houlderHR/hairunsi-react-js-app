@@ -3,7 +3,6 @@ import authService from '../services/auth.service';
 import { StatusCodes } from 'http-status-codes';
 import ResetPasswordDto from '../dto/auth/ResetPasswordDto';
 import { plainToClass } from 'class-transformer';
-import { log } from 'console';
 class AuthController {
   async recoveryPassword(req: Request, res: Response) {
     try {
