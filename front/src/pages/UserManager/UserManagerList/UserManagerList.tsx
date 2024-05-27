@@ -314,8 +314,11 @@ const UserManagerList: FC = () => {
                     Pas d&apos;utilisateur
                   </p>
                 )}
-              {record.map((user: ObjDetail, index: number) => (
-                <div className={index % 2 === 0 ? 'pair' : 'impair'} key={user.matricule}>
+              {record.map((user: ObjDetail) => (
+                <div
+                  className="odd:bg-white even:bg-[#f7f7ff] flex flex-row w-full h-[56px] py-[20px]"
+                  key={user.matricule}
+                >
                   <div className="text matricule">{user.matricule}</div>
                   <div className="text nom">{user.firstname.toUpperCase()}</div>
                   <div className="text prenom">{user.lastname}</div>
