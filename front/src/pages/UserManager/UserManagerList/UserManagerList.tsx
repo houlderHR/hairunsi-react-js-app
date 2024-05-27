@@ -80,8 +80,10 @@ const UserManagerList: FC = () => {
   let users: ObjDetail[] = [];
   if (userSearch) {
     users = userSearch;
-  } else if (userFilterDepartment?.data && department) users = userFilterDepartment?.data;
-  else if (data && !userSearch && userFilterDepartment.data) users = data;
+  } else if (userFilterDepartment?.data && department) {
+    users = userFilterDepartment?.data;
+    queryClient.invalidateQueries({ queryKey: [QUERY_USER_DEPARTMENT_KEY] });
+  } else if (data && !userSearch && userFilterDepartment.data) users = data;
   const record: ObjDetail[] = users
     .sort((user1, user2) => {
       if (stateFilter) return user1[filter.current].localeCompare(user2[filter.current]);
@@ -174,7 +176,6 @@ const UserManagerList: FC = () => {
               <DropDown
                 items={[...departmentDataForOption.data, { name: 'Tous', id: 'department_all' }]}
                 setValue={setDepartment}
-                onClickItem={() => queryClient.invalidateQueries({ queryKey: ['user_department'] })}
               />
             )}
           </div>
