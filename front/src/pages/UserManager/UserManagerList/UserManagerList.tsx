@@ -153,7 +153,7 @@ const UserManagerList: FC = () => {
       await http.get('/auth/resend-password', { params: _data });
       setShowMailModal('success');
       setSearchLoading(false);
-      setSendPasswordToUser(undefined);
+      setSendPasswordMailLoading(false);
     } catch (_error) {
       setSearchLoading(false);
 
@@ -392,7 +392,10 @@ const UserManagerList: FC = () => {
                                 role="presentation"
                                 className="icon-action ml-auto"
                                 onClick={() =>
-                                  resendUserPasswordMail({ name: user.email, email: user.email })
+                                  resendUserPasswordMail({
+                                    name: user.firstname,
+                                    email: user.email,
+                                  })
                                 }
                               >
                                 <Icon
@@ -480,7 +483,8 @@ const UserManagerList: FC = () => {
             <Icon name="success" className="text-green-500 h-10 w-10" />
           </div>
           <p className="text-center text-gray-1">
-            Veillez informer l&apos;utilisateur q&apos;un mot de passe lui a été envoyé
+            Veillez informer l&apos;utilisateur <strong>{sendPasswordToUser?.name}</strong>{' '}
+            q&apos;un mot de passe lui a été envoyé
           </p>
         </Modal>
       )}
