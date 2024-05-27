@@ -3,6 +3,7 @@ import authService from '../services/auth.service';
 import { StatusCodes } from 'http-status-codes';
 import ResetPasswordDto from '../dto/auth/ResetPasswordDto';
 import { plainToClass } from 'class-transformer';
+import { log } from 'console';
 class AuthController {
   async recoveryPassword(req: Request, res: Response) {
     try {
@@ -15,8 +16,11 @@ class AuthController {
 
   async sendNotificationPassword(req: Request, res: Response) {
     try {
-      const { username, password, email } = req.params;
-      const result = await authService.sendNotificationPassword(username, password, email);
+      const { username, email } = req.query;
+      const result = await authService.sendNotificationPassword(
+        email as string,
+        username as string,
+      );
       return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.status).json(error);

@@ -47,12 +47,19 @@ class AuthService {
     }
   }
 
-  async sendNotificationPassword(email: string, password: string, username: string) {
+  async sendNotificationPassword(email: string, username: string) {
     try {
       const mailer = await Mailer.getInstance();
-      const path = 'templates/reset-password/notification-password.hbs';
+      const path = 'templates/notification-password/notification-password.hbs';
       const resetPwLink = `${process.env.FRONT_END_BASE_ROUTE}forgot-password`;
-      return await mailer.sendMail('Mot de passe', username, email, password, path, resetPwLink);
+      return await mailer.sendMail(
+        'Mot de passe',
+        username,
+        email,
+        'HairunTest@123.',
+        path,
+        resetPwLink,
+      );
     } catch (error) {
       throw new HttpException(StatusCodes.BAD_REQUEST, "Impossible d'envoyer le mail");
     }

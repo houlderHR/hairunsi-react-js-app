@@ -80,11 +80,7 @@ class UserService {
     try {
       const result = await this.getUserRepository().save(user);
       if (result) {
-        await authService.sendNotificationPassword(
-          result.email,
-          'HairunTest@123.',
-          result.lastname,
-        );
+        await authService.sendNotificationPassword(result.email, result.lastname);
         return result;
       }
     } catch (error) {
