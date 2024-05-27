@@ -150,7 +150,7 @@ const UserManagerList: FC = () => {
     setSendPasswordToUser(_data);
     try {
       setSendPasswordMailLoading(true);
-      await http.get('/auth/send-password', { params: _data });
+      await http.get('/auth/resend-password', { params: _data });
       setShowMailModal('success');
       setSearchLoading(false);
       setSendPasswordToUser(undefined);
@@ -475,13 +475,23 @@ const UserManagerList: FC = () => {
         isDeleting={isLoading}
       />
       {showMailModal === 'success' && (
-        <Modal onClose={() => setShowMailModal('close')}>
-          <p>Mail envoyer avec succes</p>
+        <Modal title="Evoi du mot de passe avec succés" onClose={() => setShowMailModal('close')}>
+          <div className="flex items-center justify-center mb-8">
+            <Icon name="success" className="text-green-500 h-10 w-10" />
+          </div>
+          <p className="text-center text-gray-1">
+            Veillez informer l&apos;utilisateur q&apos;un mot de passe lui a été envoyé
+          </p>
         </Modal>
       )}
       {showMailModal === 'error' && (
-        <Modal onClose={() => setShowMailModal('close')}>
-          <p>Une erreur s&apos;est produit lors de l&apos;envoi du mot de passe</p>
+        <Modal title="Evoi du mot de passe avec succés" onClose={() => setShowMailModal('close')}>
+          <div className="flex items-center justify-center mb-8">
+            <Icon name="success" className="text-green-500 h-10 w-10" />
+          </div>
+          <p className="text-center text-red-400 text-medium">
+            Une erreur s&apos;est produit lors de l&apos;envoi du mot de passe
+          </p>
         </Modal>
       )}
     </AllowedRoute>
