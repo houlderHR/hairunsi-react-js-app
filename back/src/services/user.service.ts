@@ -17,6 +17,7 @@ import { File } from '../entities/file.entity';
 import { hashPassword } from '../utils/hash';
 import SearchUserDto from '../dto/user/SearchUserDto';
 import departmentService from './department.service';
+import authService from '../services/auth.service';
 
 class UserService {
   public async createUser(image, createUserDto: CreateUserDto): Promise<User> {
@@ -77,7 +78,11 @@ class UserService {
     }
 
     try {
-      return await this.getUserRepository().save(user);
+      const result = await this.getUserRepository().save(user);
+      if (result) {
+        await authService.sendNotificationPassword(result.email, result.lastname);
+        return result;
+      }
     } catch (error) {
       if (error.code === '23505') {
         throw new HttpException(StatusCodes.CONFLICT, "L'utilisateur existe déja");

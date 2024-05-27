@@ -90,19 +90,25 @@ class Mailer {
       throw error;
     }
   }
-
-  getTemplate(username: string, link: string) {
+  getTemplate(username: string, context: string, path: string, resetPwLink?: string) {
     const emailContent = {
       username: username,
-      link: link,
+      context: context,
+      resetPwLink: resetPwLink,
     };
-    const emailTemplateSource = fs.readFileSync('templates/reset-password/email.hbs', 'utf8');
+    const emailTemplateSource = fs.readFileSync(path, 'utf8');
     const template = handlebars.compile(emailTemplateSource);
     return template(emailContent);
   }
-
-  async sendMail(subject: string, username: string, recipient: string, link: string) {
-    const htmlToSend = this.getTemplate(username, link);
+  async sendMail(
+    subject: string,
+    username: string,
+    recipient: string,
+    context: string,
+    path: string,
+    resetPwLink: string,
+  ) {
+    const htmlToSend = this.getTemplate(username, context, path, resetPwLink);
     var mailOptions = {
       from: `HairunTechnology <${process.env.MAIL_USER}>`,
       to: recipient,
