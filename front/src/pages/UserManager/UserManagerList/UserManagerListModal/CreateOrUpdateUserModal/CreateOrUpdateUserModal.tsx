@@ -74,12 +74,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
   });
   const postData = useQuery({
     queryKey: ['post', department],
-    queryFn: () =>
-      http
-        .get(
-          department ? `${POST}/${DEPARTMENT.departmentWithoutAnonymous}/${department.id}` : POST,
-        )
-        .then((res) => res.data),
+    queryFn: () => http.get(department ? `${POST}` : POST).then((res) => res.data),
     enabled: true,
   });
 
@@ -112,7 +107,6 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
     setIsLoading(true);
     queryClient.invalidateQueries({ queryKey: [QUERY_USER_DEPARTMENT_KEY] });
 
-    if (!department) setMessageDepartment('Obligatoire * ');
     if (!post) setMessagePost('Obligatoire *');
     if (
       data.firstname &&
@@ -309,9 +303,7 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                     </div>
                     {postData.isPending && 'Chargement...'}
                     {postData.error && postData.error.message}
-                    {showPoste && department && (
-                      <DropDown items={postData.data} setValue={setPost} />
-                    )}
+                    {showPoste && <DropDown items={postData.data} setValue={setPost} />}
                   </div>
                   <div
                     className="type"
@@ -334,12 +326,10 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                       <Icon name="sharp-arrow-drop-down" size={10} className="text-gray-500" />
                     </div>
                     {departmentData.isPending && 'Chargement...'}
-                    {departmentData.error && departmentData.error.message}
                     {showType && (
                       <DropDown
                         items={departmentData.data || [{ name: 'No data', id: '0' }]}
                         setValue={setDepartment}
-                        onClickItem={() => setPost(null)}
                       />
                     )}
                   </div>
