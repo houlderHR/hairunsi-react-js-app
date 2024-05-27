@@ -52,7 +52,7 @@ const UserManagerList: FC = () => {
   const filter = useRef<'matricule' | 'firstname' | 'lastname' | 'birth_date'>('matricule');
   const [sendPasswordMailLoading, setSendPasswordMailLoading] = useState<boolean>(false);
   const [sendPasswordToUser, setSendPasswordToUser] = useState<
-    { name: string; email: string } | undefined
+    { username: string; email: string } | undefined
   >();
   const [showMailModal, setShowMailModal] = useState<'success' | 'error' | 'close'>('close');
 
@@ -146,7 +146,7 @@ const UserManagerList: FC = () => {
     setShowModal(ModalShowStateType.CLOSE);
   };
 
-  const resendUserPasswordMail = async (_data: { name: string; email: string }) => {
+  const resendUserPasswordMail = async (_data: { username: string; email: string }) => {
     setSendPasswordToUser(_data);
     try {
       setSendPasswordMailLoading(true);
@@ -393,7 +393,7 @@ const UserManagerList: FC = () => {
                                 className="icon-action ml-auto"
                                 onClick={() =>
                                   resendUserPasswordMail({
-                                    name: user.firstname,
+                                    username: user.firstname,
                                     email: user.email,
                                   })
                                 }
@@ -483,7 +483,7 @@ const UserManagerList: FC = () => {
             <Icon name="success" className="text-green-500 h-10 w-10" />
           </div>
           <p className="text-center text-gray-1">
-            Veillez informer l&apos;utilisateur <strong>{sendPasswordToUser?.name}</strong>{' '}
+            Veillez informer l&apos;utilisateur <strong>{sendPasswordToUser?.username}</strong>{' '}
             q&apos;un mot de passe lui a été envoyé
           </p>
         </Modal>
