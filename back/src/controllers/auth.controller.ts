@@ -13,6 +13,16 @@ class AuthController {
     }
   }
 
+  async sendNotificationPassword(req: Request, res: Response) {
+    try {
+      const { username, password, email } = req.params;
+      const result = await authService.sendNotificationPassword(username, password, email);
+      return res.status(StatusCodes.OK).json(result);
+    } catch (error) {
+      return res.status(error.status).json(error);
+    }
+  }
+
   public async verifyTokenForRecoveryPwd(req: Request, res: Response) {
     try {
       const result = await authService.verifyTokenForRecoveryPwd(

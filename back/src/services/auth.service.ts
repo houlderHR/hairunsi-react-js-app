@@ -29,11 +29,13 @@ class AuthService {
       try {
         const link = await this.generateForgotPasswordLink(result);
         const mailer = await Mailer.getInstance();
+        const path = 'templates/reset-password/reset-password.hbs';
         return await mailer.sendMail(
           'Récupération de mot de passe',
           result.lastname,
           result.email,
           link,
+          path,
         );
       } catch (error) {
         throw new HttpException(StatusCodes.BAD_REQUEST, "Impossible d'envoyer le mail");
@@ -42,6 +44,17 @@ class AuthService {
       if (error.status == StatusCodes.NOT_FOUND || error.status == StatusCodes.BAD_REQUEST)
         throw error;
       throw new InternalServerErrorException();
+    }
+  }
+
+  async sendNotificationPassword(email: string, password: string, username: string) {
+    try {
+      const mailer = await Mailer.getInstance();
+      const path = 'templates/reset-password/notification-password.hbs';
+      const resetPwLink = `${process.env.FRONT_END_BASE_ROUTE}forgot-password`;
+      return await mailer.sendMail('Mot de passe', username, email, password, path, resetPwLink);
+    } catch (error) {
+      throw new HttpException(StatusCodes.BAD_REQUEST, "Impossible d'envoyer le mail");
     }
   }
 
