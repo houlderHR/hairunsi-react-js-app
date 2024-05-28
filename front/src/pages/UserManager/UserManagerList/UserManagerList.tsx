@@ -400,7 +400,7 @@ const UserManagerList: FC = () => {
                               >
                                 <Icon
                                   name="resend"
-                                  className="text-gray-500 hover:text-red-700"
+                                  className="text-gray-500 hover:text-blue-500"
                                   size={12}
                                 />
                               </div>
