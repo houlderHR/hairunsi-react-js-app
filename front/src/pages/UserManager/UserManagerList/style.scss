@@ -84,7 +84,7 @@
       }
 
       .icons {
-        @apply flex flex-row gap-4 justify-center items-center bg-transparent;
+        @apply flex flex-row gap-1 sm:gap-2 md:gap-4 justify-center items-center bg-transparent;
         .icon-action {
           @apply bg-transparent hover:cursor-pointer;
         }
