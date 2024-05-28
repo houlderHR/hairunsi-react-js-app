@@ -15,10 +15,6 @@
           "type": "date",
           "required": "true"
         },
-        "role": {
-          "type": "string",
-          "required": "true"
-        },
         "post": {
           "type": "string",
           "required": "true"
@@ -63,12 +59,6 @@
         "required": "true"
       },
       {
-        "name": "role",
-        "in": "formData",
-        "type": "string",
-        "required": "true"
-      },
-      {
         "name": "post",
         "in": "formData",
         "type": "string",
@@ -100,9 +90,6 @@
         "birth_date": {
           "type": "string",
           "format": "date"
-        },
-        "role": {
-          "type": "object"
         },
         "post": {
           "$ref": "./post.json#/definitions/Post/PostResponseOk"
@@ -218,7 +205,7 @@
             "description": "utilisateur supprimé avec succés"
           },
           "404": {
-            "description": "utilisateur poste n'a été trouvé pour etre supprimé"
+            "description": "utilisateur n'a été trouvé pour etre supprimé"
           }
         }
       },

@@ -10,7 +10,7 @@ const Navbar: FC = () => {
     navigate('/');
   };
   return (
-    <div className="bg-primary z-10 fixed top-0 pl-5 text-white flex justify-between items-center h-14 w-full">
+    <div className="bg-primary z-[55] fixed top-0 pl-5 text-white flex justify-between items-center h-14 w-full">
       <div className="flex items-center">
         <span className="inline-block sm:hidden">
           <Icon name="x" size={18.3} />

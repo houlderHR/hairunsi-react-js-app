@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import RoleService from '../services/role.service';
 import { StatusCodes } from 'http-status-codes';
+import SearchRoleDto from '../dto/role/SearchPermissionDto';
+import { plainToClass } from 'class-transformer';
+import roleService from '../services/role.service';
 
 class RoleController {
   async create(req: Request, res: Response) {
@@ -48,6 +51,18 @@ class RoleController {
       return res.status(StatusCodes.OK).json(result);
     } catch (error) {
       return res.status(error.status).json(error);
+    }
+  }
+
+  public async search(request: Request, response: Response) {
+    try {
+      const searchRoleDto: SearchRoleDto = plainToClass(SearchRoleDto, request.query);
+
+      let permissions = await roleService.search(searchRoleDto);
+
+      return response.status(StatusCodes.OK).json(permissions);
+    } catch (error) {
+      return response.status(error.status).json(error);
     }
   }
 }

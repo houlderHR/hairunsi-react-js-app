@@ -46,7 +46,18 @@ class PostService {
   async getAllPosts(relations?: string[]): Promise<Post[]> {
     try {
       const posts = await AppDataSource.getRepository(Post).find({
-        relations: relations,
+        relations: ['department'],
+      });
+      return posts;
+    } catch (error) {
+      throw new HttpNotFoundException('Aucun poste existant');
+    }
+  }
+
+  async getAllPostsByDepartment(department: string, relations?: string[]): Promise<Post[]> {
+    try {
+      const posts = await AppDataSource.getRepository(Post).find({
+        where: { department: { id: department } },
       });
       return posts;
     } catch (error) {

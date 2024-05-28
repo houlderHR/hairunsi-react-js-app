@@ -1,7 +1,7 @@
 import { FC } from 'react';
+import ObjDetail from '../../../../dto/user.dto';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
-import ObjDetail from '../obj-detail';
 import CreateOrUpdateUserModal from './CreateOrUpdateUserModal';
 
 interface UserManagerUserModalProps {
@@ -9,6 +9,8 @@ interface UserManagerUserModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
   user: ObjDetail | null;
   setUser: React.Dispatch<React.SetStateAction<ObjDetail | null>>;
+  onDelete: () => void;
+  isDeleting?: boolean;
 }
 
 const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
@@ -16,6 +18,8 @@ const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
   user,
   setUser,
   setShowModal,
+  onDelete,
+  isDeleting,
 }) => {
   const onClose = () => {
     setShowModal(ModalShowStateType.CLOSE);
@@ -30,6 +34,8 @@ const UserManagerUserModal: FC<UserManagerUserModalProps> = ({
         confirmation="Etes-vous sûr de vouloir supprimer cet utilisateur ?"
         onClose={onClose}
         icon="delete-user"
+        onDelete={onDelete}
+        isDeleting={isDeleting}
       />
     );
 

@@ -4,6 +4,7 @@ import DepartmentService from '../services/department.service';
 import { CreateDepartmentDto } from '../dto/department/CreateDepartmentDto';
 import { UpdateDepartmentDto } from '../dto/department/UpdateDepartmentDto';
 import { StatusCodes } from 'http-status-codes';
+import SearchDepartmentDto from '../dto/department/SearchDepartmentDto';
 
 class DepartmentController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -21,14 +22,29 @@ class DepartmentController {
   }
 
   public async get(request: Request, response: Response): Promise<Response> {
-    const departments = await DepartmentService.getAllDepartment();
+    let relations = Object.keys(request.query).map((query) => query);
+    try {
+      const departments = await DepartmentService.getAllDepartment(relations);
+      return response.status(StatusCodes.OK).json(departments);
+    } catch (error) {
+      return response.status(error.status).json(error);
+    }
+  }
 
-    return response.status(StatusCodes.OK).json(departments);
+  public async getWithAnonymous(request: Request, response: Response): Promise<Response> {
+    let relations = Object.keys(request.query).map((query) => query);
+    try {
+      const departments = await DepartmentService.getAllDepartmentWithAnonymous(relations);
+      return response.status(StatusCodes.OK).json(departments);
+    } catch (error) {
+      return response.status(error.status).json(error);
+    }
   }
 
   public async getById(request: Request, response: Response): Promise<Response> {
+    let relations = Object.keys(request.query).map((query) => query);
     try {
-      const department = await DepartmentService.getDepartmentById(request.params.id);
+      const department = await DepartmentService.getDepartmentById(request.params.id, relations);
 
       return response.status(StatusCodes.OK).json(department);
     } catch (error) {
@@ -41,6 +57,20 @@ class DepartmentController {
       await DepartmentService.deleteDepartment(request.params.id);
 
       return response.status(StatusCodes.OK).json({ message: 'Departement supprimé avec succés' });
+    } catch (error) {
+      return response.status(error.status ?? StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    }
+  }
+
+  public async search(request: Request, response: Response): Promise<Response> {
+    try {
+      const searchDepartmentDto: SearchDepartmentDto = plainToClass(
+        SearchDepartmentDto,
+        request.query,
+      );
+      const departments = await DepartmentService.search(searchDepartmentDto);
+
+      return response.status(StatusCodes.OK).json(departments);
     } catch (error) {
       return response.status(error.status).json(error);
     }

@@ -1,27 +1,46 @@
+import { AxiosError } from 'axios';
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { RoleResponseDto } from '../../../../dto/role.dto';
+import { useDeleteRole } from '../../../../hooks/useRole';
+import routes from '../../../../routes/paths';
 import { ModalShowStateType } from '../../../../shared/authenticated/Modal';
 import DeleteModal from '../../../../shared/authenticated/Modal/DeleteModal';
-import { UserObject } from '../constants';
-import CreateRoleModal from './CreateRoleModal';
-import UpdateRoleModal from './UpdateRoleModal';
+import CreateOrUpdateRoleModal from './CreateOrUpdateRoleModal';
 
 interface UserManagerRoleModalProps {
   modalState: ModalShowStateType;
   setShowModal: React.Dispatch<React.SetStateAction<ModalShowStateType>>;
-  user?: UserObject;
+  role?: RoleResponseDto;
 }
 
 const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
   modalState,
   setShowModal,
-  user,
+  role,
 }) => {
+  const { mutateAsync: mutationDelete, isPending } = useDeleteRole(role?.id);
+  const navigate = useNavigate();
+
+  const onDelete = async () => {
+    try {
+      await mutationDelete();
+      setShowModal(ModalShowStateType.CLOSE);
+    } catch (error) {
+      const errorResponse = error as AxiosError;
+      setShowModal(ModalShowStateType.CLOSE);
+      if (errorResponse.code === 'ERR_NETWORK') {
+        navigate(routes.server_error.path);
+      }
+    }
+  };
+
   const onClose = () => {
     setShowModal(ModalShowStateType.CLOSE);
   };
 
   if (modalState === ModalShowStateType.CREATE) {
-    return <CreateRoleModal onClose={onClose} />;
+    return <CreateOrUpdateRoleModal onClose={onClose} />;
   }
   if (modalState === ModalShowStateType.DELETE) {
     return (
@@ -30,11 +49,13 @@ const UserManagerRoleModal: FC<UserManagerRoleModalProps> = ({
         description=" Vous êtes sur le point de supprimer ce rôle d’utilisateur."
         confirmation=" Etes-vous sûr de vouloir supprimer ce rôle d’utilisateur?"
         onClose={onClose}
+        isDeleting={isPending}
+        onDelete={onDelete}
       />
     );
   }
-  if (user && modalState === ModalShowStateType.UPDATE) {
-    return <UpdateRoleModal user={user} onClose={onClose} />;
+  if (role && modalState === ModalShowStateType.UPDATE) {
+    return <CreateOrUpdateRoleModal updateRole={role} onClose={onClose} />;
   }
 
   return null;

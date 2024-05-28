@@ -4,8 +4,11 @@ node_modules/
 build/
 tmp/
 temp/
+coverage/
 *.cert
 *.key
 
 .env
 .env.production
+.env.test
+seeds-id.json

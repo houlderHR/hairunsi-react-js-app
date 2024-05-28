@@ -1,42 +1,117 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { RoleResponseDto } from '../../../dto/role.dto';
+import { useGetRoleQuery } from '../../../hooks/useRole';
+import { SearchType } from '../../../hooks/useSearch';
+import useUserPermission from '../../../hooks/useUserPermission';
+import routes from '../../../routes/paths';
+import AllowedRoute from '../../../shared/authenticated/AllowedRoute';
 import CardRole from '../../../shared/authenticated/CardUserManager/CardRole';
 import HeadManager from '../../../shared/authenticated/HeadManager';
 import { ModalShowStateType } from '../../../shared/authenticated/Modal';
-import USER_TYPE_LIST, { UserObject } from './constants';
+import Loading from '../../../shared/Loading/Loading';
+import PERMISSIONS from '../../../utils/permissions';
 import UserManagerRoleModal from './UserManagerRoleModal';
 
 const UserManagerRole: FC = () => {
   const [showModal, setShowModal] = useState<ModalShowStateType>(ModalShowStateType.CLOSE);
-  const [user, setUser] = useState<UserObject | undefined>();
-  const openUpdateModal = (userData: UserObject) => () => {
-    setShowModal(ModalShowStateType.UPDATE);
-    setUser(userData);
-  };
-  const openDeleteModal = () => {
-    setShowModal(ModalShowStateType.DELETE);
+  const [allRole, setAllRole] = useState<RoleResponseDto[]>();
+  const [role, setRole] = useState<RoleResponseDto>();
+  const { data, error, isLoading } = useGetRoleQuery();
+  const [searchLoading, setSearchLoading] = useState(false);
+  const userPermission = useUserPermission();
+  const navigate = useNavigate();
+  const pushRoleType = (_role?: RoleResponseDto[]) => {
+    setAllRole(_role);
   };
 
+  const getSearchLoading = (isLoadingRole: boolean) => setSearchLoading(isLoadingRole);
+
+  const openUpdateModal = (roleData: RoleResponseDto) => () => {
+    setShowModal(ModalShowStateType.UPDATE);
+    setRole(roleData);
+  };
+  const openDeleteModal = (roleData: RoleResponseDto) => () => {
+    setShowModal(ModalShowStateType.DELETE);
+    setRole(roleData);
+  };
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setAllRole(data);
+    }
+  }, [data, isLoading]);
+
+  if (error) navigate(routes.server_error.path);
+  if (isLoading)
+    return (
+      <div className="h-96 flex justify-center">
+        <Loading />
+      </div>
+    );
   return (
-    <>
+    <AllowedRoute isAllowed={userPermission.allowPermission(PERMISSIONS.viewAll)}>
       <HeadManager
         title="CREER UN NOUVEAU ROLE"
         onOpen={() => setShowModal(ModalShowStateType.CREATE)}
+        searchType={SearchType.ROLE}
+        pushSearch={pushRoleType}
+        getSearchLoading={getSearchLoading}
+        allowCreation={userPermission.allowPermission(PERMISSIONS.createAll)}
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
-        {USER_TYPE_LIST.map((item, index) => (
-          <CardRole
-            key={item.id}
-            openUpdateModal={openUpdateModal(item)}
-            openDeleteModal={openDeleteModal}
-            title={item.role}
-            maxElement={11}
-            iconVisible={index === 0}
-            items={item.module}
-          />
-        ))}
+
+      <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-2 w-full mt-8">
+        {searchLoading && (
+          <div className="absolute w-full mt-[20rem] h-full flex items-center justify-center top-0 left-0">
+            <div className="h-96 flex justify-center">
+              <Loading />
+            </div>
+          </div>
+        )}
+        {!searchLoading && allRole && allRole.length === 0 && (
+          <p className="text-center text-gray-500 font-medium absolute mx-auto w-full">
+            Aucun rôle trouvé
+          </p>
+        )}
+        {!searchLoading &&
+          allRole &&
+          allRole.map((item: RoleResponseDto) => (
+            <CardRole
+              key={item.id}
+              isRemovable={
+                !item.isSeed &&
+                item.departments.length === 0 &&
+                userPermission.allowPermission(PERMISSIONS.removeAll)
+              }
+              isEditable={userPermission.allowPermission(PERMISSIONS.updateAll)}
+              openUpdateModal={openUpdateModal(item)}
+              openDeleteModal={openDeleteModal(item)}
+              title={item.name}
+              maxElement={10}
+              items={item.permissions}
+            />
+          ))}
+        {!searchLoading &&
+          !allRole &&
+          data.map((item: RoleResponseDto) => (
+            <CardRole
+              key={item.id}
+              isRemovable={
+                !item.isSeed &&
+                item.departments.length === 0 &&
+                userPermission.allowPermission(PERMISSIONS.removeAll)
+              }
+              isEditable={userPermission.allowPermission(PERMISSIONS.updateAll)}
+              openUpdateModal={openUpdateModal(item)}
+              openDeleteModal={openDeleteModal(item)}
+              title={item.name}
+              maxElement={10}
+              items={item.permissions}
+            />
+          ))}
       </div>
-      <UserManagerRoleModal user={user} modalState={showModal} setShowModal={setShowModal} />
-    </>
+      <UserManagerRoleModal role={role} modalState={showModal} setShowModal={setShowModal} />
+    </AllowedRoute>
   );
 };
 

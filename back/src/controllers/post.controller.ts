@@ -25,6 +25,17 @@ class PostController {
     }
   }
 
+  async getAllByDepartment(req: Request, res: Response) {
+    let relations = Object.keys(req.query).map((query) => query);
+    const id = req.params.id;
+
+    try {
+      const posts: Post[] = await PostService.getAllPostsByDepartment(id, relations);
+      return res.status(StatusCodes.OK).json(posts);
+    } catch (error) {
+      return res.status(error.status).json(error);
+    }
+  }
   async getOne(req: Request, res: Response) {
     let relations = Object.keys(req.query).map((query) => query);
 

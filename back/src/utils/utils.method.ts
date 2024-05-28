@@ -1,6 +1,5 @@
 import { User } from '../entities/user.entity';
 import { TYPE_FILE } from './constants';
-import * as jwt from 'jsonwebtoken';
 
 export const bufferToDataUri = (buffer: Buffer, mimetype: string) => {
   const b64 = Buffer.from(buffer).toString('base64');
@@ -10,6 +9,19 @@ export const bufferToDataUri = (buffer: Buffer, mimetype: string) => {
 
 export const removeSpace = (elem: string) => {
   return elem.split(' ').join('');
+};
+
+export const removeManySpaceAndCapitalize = (elem: string) => {
+  let noSpaceElem = elem.trim();
+  let tmp = noSpaceElem
+    .split(' ')
+    .filter((item) => item != '')
+    .map((item) => {
+      let editItem = item.trim().charAt(0).toUpperCase() + item.slice(1).toLowerCase();
+      return editItem;
+    })
+    .join(' ');
+  return tmp;
 };
 
 export const getTypeFile = (mimetype: string) => {
@@ -34,4 +46,11 @@ export const checkIfPasswordContainPersonalInformation = (
   return Object.keys(keyTest).some((key) =>
     password.toLowerCase().trim().replace(/\s/g, '').includes(keyTest[key].toLowerCase()),
   );
+};
+
+export const capitalizeLetter = (letter: string): string => {
+  const splittedLetter = letter.split(' ');
+  return splittedLetter
+    .map((letter) => letter[0].toUpperCase() + letter.substring(1).toLowerCase())
+    .join(' ');
 };

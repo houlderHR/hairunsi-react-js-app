@@ -66,12 +66,6 @@ export class User {
   })
   post: Post;
 
-  @ManyToOne(() => Role, { nullable: false })
-  @JoinColumn({
-    name: 'id_role',
-  })
-  role: Role;
-
   @CreateDateColumn()
   created_at: Date;
 

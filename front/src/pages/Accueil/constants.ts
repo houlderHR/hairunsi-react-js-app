@@ -7,17 +7,17 @@ interface ObjOption {
 }
 const options: ObjOption[] = [
   {
-    src: '/icon/rocket-icon.svg',
+    src: 'rocket-icon',
     title: 'Projets',
     path: routes.authentified.subpaths.project.path,
   },
   {
-    src: '/icon/user-setting-icon.svg',
+    src: 'user-setting-icon',
     title: 'Gestion des utilisateurs',
-    path: `${routes.authentified.subpaths.userManager.path}/${routes.authentified.subpaths.userManager.subpaths.type.path}`,
+    path: `${routes.authentified.subpaths.userManager.path}${routes.authentified.subpaths.userManager.subpaths.user.path}`,
   },
   {
-    src: '/icon/leave-icon.svg',
+    src: 'leave-icon',
     title: 'Congé',
     path: routes.authentified.subpaths.leaveDay.path,
   },

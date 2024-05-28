@@ -33,7 +33,10 @@
         @apply w-full space-x-1 h-auto flex flex-row justify-center mt-2 items-center;
 
         .poste {
-          @apply w-1/2 relative my-1;
+          @apply w-1/2 relative h-[57px];
+          .libelle {
+            @apply flex flex-row justify-between items-center w-full h-full px-5 bg-gray-3 rounded-[2px] hover:bg-gray-50;
+          }
         }
         .type {
           @apply w-1/2 relative h-[57px];

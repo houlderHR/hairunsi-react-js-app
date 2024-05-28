@@ -1,4 +1,4 @@
-import { DeleteResult, EntityNotFoundError, Repository } from 'typeorm';
+import { DeleteResult, EntityNotFoundError, Like, Repository } from 'typeorm';
 import { AppDataSource } from '../database/data-source';
 import CreateUserDto from '../dto/user/CreateUserDto';
 import { User } from '../entities/user.entity';
@@ -9,13 +9,15 @@ import HttpNotFoundException from '../exceptions/HttpNotFoundException';
 import UpdateUserDto from '../dto/user/UpdateUserDto';
 import { StatusCodes } from 'http-status-codes';
 import postService from './post.service';
-import roleService from './role.service';
 import { v2 as cloudinary } from 'cloudinary';
 import { bufferToDataUri, getTypeFile } from '../utils/utils.method';
 import { CreateOrUpdateFileDto } from '../dto/file/createOrUpdateFileDto';
 import FileService from '../services/file.service';
 import { File } from '../entities/file.entity';
 import { hashPassword } from '../utils/hash';
+import SearchUserDto from '../dto/user/SearchUserDto';
+import departmentService from './department.service';
+import authService from '../services/auth.service';
 
 class UserService {
   public async createUser(image, createUserDto: CreateUserDto): Promise<User> {
@@ -58,7 +60,6 @@ class UserService {
     }
 
     const post = await postService.getPost(createUserDto.post);
-    const role = await roleService.getOne(createUserDto.role);
 
     const user = new User();
     try {
@@ -66,19 +67,22 @@ class UserService {
       Object.assign(user, {
         firstname: createUserDto.firstname,
         lastname: createUserDto.lastname,
-        birth_date: createUserDto.birth_date,
+        birth_date: new Date(createUserDto.birth_date),
         email: createUserDto.email,
         password: pass || '',
         image: createdImage?.id || '',
         post: post,
-        role: role,
       });
     } catch (error) {
       throw new InternalServerErrorException();
     }
 
     try {
-      return await this.getUserRepository().save(user);
+      const result = await this.getUserRepository().save(user);
+      if (result) {
+        await authService.sendNotificationPassword(result.email, result.lastname);
+        return result;
+      }
     } catch (error) {
       if (error.code === '23505') {
         throw new HttpException(StatusCodes.CONFLICT, "L'utilisateur existe déja");
@@ -92,7 +96,7 @@ class UserService {
     try {
       return await this.getUserRepository().findOneOrFail({
         where: { uuid },
-        relations: relations,
+        relations: ['post.department.role.permissions', 'image'],
       });
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
@@ -134,35 +138,38 @@ class UserService {
         newImage = await FileService.update(user.image.id, newFile);
       }
     }
-
     const post = await postService.getPost(updateUserDto.post);
-    const role = await roleService.getOne(updateUserDto.role);
 
     Object.assign(user, {
       firstname: updateUserDto.firstname,
       lastname: updateUserDto.lastname,
-      birth_date: updateUserDto.birth_date,
+      birth_date: new Date(updateUserDto.birth_date),
       image: newImage?.id || user.image,
       email: user.email,
       password: user.password,
       post: post,
-      role: role,
     });
 
     try {
-      return await this.getUserRepository().save(user);
+      const userUpdated = await this.getUserRepository().save(user);
+      return userUpdated;
     } catch (error) {
       if (error.code === '23505') {
         throw new HttpException(StatusCodes.CONFLICT, "L'utilisateur existe déja");
       }
-
       throw new InternalServerErrorException();
     }
   }
 
-  public async getAllUser(relations?: string[]): Promise<User[]> {
+  public async getAllUsers(relations?: string[]): Promise<User[]> {
     try {
-      return await this.getUserRepository().find({ relations: relations });
+      let users = await this.getUserRepository().find({
+        relations: ['post.department.role.permissions', 'image'],
+        order: {
+          created_at: 'DESC',
+        },
+      });
+      return users;
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -187,10 +194,59 @@ class UserService {
     throw new InternalServerErrorException();
   }
 
+  public async searchUser(searchUserDto: SearchUserDto): Promise<User[]> {
+    let users = [];
+    try {
+      if (searchUserDto.search !== '')
+        users = await this.getUserRepository()
+          .createQueryBuilder('u')
+          .orWhere('LOWER(u.lastname) like LOWER(:lastname)', {
+            lastname: `%${searchUserDto.search}%`,
+          })
+          .orWhere('LOWER(u.firstname) like LOWER(:firstname)', {
+            firstname: `%${searchUserDto.search}%`,
+          })
+          .orWhere('LOWER(u.matricule) like LOWER(:matricule)', {
+            matricule: `%${searchUserDto.search}%`,
+          })
+          .innerJoinAndSelect('u.image', 'image')
+          .innerJoinAndSelect('u.post', 'post')
+          .innerJoinAndSelect('post.department', 'department')
+          .orderBy('u.id', 'DESC')
+          .getMany();
+
+      return users;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  public async getAllUsersByDepartment(id_department): Promise<User[]> {
+    try {
+      const department = await departmentService.getDepartmentById(id_department);
+      if (department) {
+        let users = await this.getUserRepository()
+          .createQueryBuilder('user')
+          .leftJoinAndSelect('user.post', 'posts')
+          .innerJoinAndSelect('user.image', 'image')
+          .leftJoinAndSelect('posts.department', 'departments')
+          .leftJoinAndSelect('departments.role', 'role')
+          .leftJoinAndSelect('role.permissions', 'permissions')
+          .where('posts.department=:department', { department: department.id })
+          .orderBy({ 'user.created_at': 'DESC' })
+          .getMany();
+
+        return users;
+      }
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
   public async checkIfUserWithThisEmailAlreadyExists(email: string) {
     const user = await AppDataSource.getRepository(User).findOne({
       where: { email: email },
-      relations: ['post', 'role', 'image'],
+      relations: ['post', 'image'],
     });
     return user;
   }

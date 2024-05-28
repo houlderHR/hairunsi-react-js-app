@@ -18,6 +18,7 @@ import { sign, verify } from 'jsonwebtoken';
 
 import { checkIfPasswordContainPersonalInformation } from '../utils/utils.method';
 import { TOKEN_KEY } from '../utils/token';
+import userService from './user.service';
 class AuthService {
   async recoveryPassword(email: string) {
     try {
@@ -28,11 +29,13 @@ class AuthService {
       try {
         const link = await this.generateForgotPasswordLink(result);
         const mailer = await Mailer.getInstance();
+        const path = 'templates/reset-password/reset-password.hbs';
         return await mailer.sendMail(
           'Récupération de mot de passe',
           result.lastname,
           result.email,
           link,
+          path,
         );
       } catch (error) {
         throw new HttpException(StatusCodes.BAD_REQUEST, "Impossible d'envoyer le mail");
@@ -41,6 +44,24 @@ class AuthService {
       if (error.status == StatusCodes.NOT_FOUND || error.status == StatusCodes.BAD_REQUEST)
         throw error;
       throw new InternalServerErrorException();
+    }
+  }
+
+  async sendNotificationPassword(email: string, username: string) {
+    try {
+      const mailer = await Mailer.getInstance();
+      const path = 'templates/notification-password/notification-password.hbs';
+      const resetPwLink = `${process.env.FRONT_END_BASE_ROUTE}forgot-password`;
+      return await mailer.sendMail(
+        'Mot de passe',
+        username,
+        email,
+        'HairunTest@123.',
+        path,
+        resetPwLink,
+      );
+    } catch (error) {
+      throw new HttpException(StatusCodes.BAD_REQUEST, "Impossible d'envoyer le mail");
     }
   }
 
@@ -153,7 +174,7 @@ class AuthService {
 
     const user = await AppDataSource.getRepository(User).findOne({
       where: { email: userDto.email },
-      relations: ['post', 'role', 'image'],
+      relations: ['post.department.role.permissions', 'image'],
     });
 
     if (user) {
@@ -167,7 +188,8 @@ class AuthService {
   async decodeToken(token: string) {
     try {
       const decodedToken = verify(token, TOKEN_KEY);
-      return { authorized: true, decodedToken };
+      const user = await userService.getUserById(decodedToken.user.uuid);
+      return { authorized: true, decodedToken: { user } };
     } catch (error) {
       throw new Unauthorized('Expiré');
     }

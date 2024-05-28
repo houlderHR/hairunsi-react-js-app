@@ -5,8 +5,11 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Post } from './post.entity';
+import { Role } from './role.entity';
 
 @Entity('departments')
 export class Department {
@@ -19,8 +22,14 @@ export class Department {
   })
   name: string;
 
-  @OneToMany(() => Post, (post) => post.id)
+  @OneToMany(() => Post, (post) => post.department)
   posts: Post[];
+
+  @ManyToOne(() => Role, { nullable: false })
+  @JoinColumn({
+    name: 'id_role',
+  })
+  role: Role;
 
   @CreateDateColumn()
   created_at: Date;

@@ -45,6 +45,7 @@ const routes = {
     },
   },
   server_error: { path: '/server-error' },
+  not_found: { path: '/not_found' },
 };
 
 export default routes;

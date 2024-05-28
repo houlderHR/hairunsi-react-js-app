@@ -1,6 +1,7 @@
 import './style.scss';
-import { Player } from '@lottiefiles/react-lottie-player';
+import Lottie from 'lottie-react';
 import { Link } from 'react-router-dom';
+import NotFound from '../../assets/lotties/404-not-found.json';
 import routes from '../../routes/paths';
 import Icon from '../Icon';
 
@@ -9,13 +10,7 @@ const PageNotFound = () => (
     <div className="content">
       <img src="/images/logo/logo-hairun-large.png" alt="Logo" className="w-[300px]" />
       <div className="h-full w-full flex justify-center items-center">
-        <Player
-          src="/lotties/404-not-found.json"
-          className="player w-full p-0 m-0"
-          style={{ maxHeight: '500px', maxWidth: '500px' }}
-          loop
-          autoplay
-        />
+        <Lottie animationData={NotFound} style={{ maxHeight: '500px', maxWidth: '500px' }} loop />
       </div>
     </div>
     <div className="button">
