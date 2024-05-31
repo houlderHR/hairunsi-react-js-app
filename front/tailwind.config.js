@@ -20,8 +20,10 @@ export default {
         'gray-7': '#DEDEDE',
         'gray-8': '#F9F9F9',
         'gray-9': '#D7D7D7',
+        'gray-10': '#B0B0B0',
         'danger-2': '#EF4F4E',
         'white-1': '#F0F0F0',
+        'white-2': '#F1F1F1',
         'purple-1': '#667799',
       },
       fontFamily: {
