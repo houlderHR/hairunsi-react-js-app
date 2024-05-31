@@ -33,7 +33,7 @@ const TableRow = <T,>({
       ))}
 
       {action && (
-        <td className="pl-4 py-4   w-full text-base leading-6 grow text-black-1 truncate ">
+        <td className="py-4 text-base leading-6 grow flex items-center justify-center gap-2 text-black-1 truncate ">
           {action}
         </td>
       )}

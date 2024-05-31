@@ -33,7 +33,7 @@ const Daily = () => (
     </div>
     <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-t-xl border border-white-1">
       <Table headers={DailyHeading}>
-        {[0, 1, 2, 3, 4, 5].map((value) => (
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
           <TableRow
             property={DailyHeading}
             values={DailyData}
