@@ -1,6 +1,6 @@
 import ProjectDailyReportLayout from '../../../shared/authenticated/ProjectDailyReportLayout';
 import Table from '../../../shared/authenticated/Table';
-import TableItems from '../../../shared/authenticated/Table/TableItem';
+import TableRow from '../../../shared/authenticated/Table/TableRow';
 import Icon from '../../../shared/Icon';
 import InputDate from '../../../shared/inputs/InputDate';
 import InputIcon from '../../../shared/inputs/InputIcon';
@@ -34,7 +34,16 @@ const Daily = () => (
     <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-t-xl border border-white-1">
       <Table headers={DailyHeading}>
         {[0, 1, 2, 3, 4, 5].map((value) => (
-          <TableItems property={DailyHeading} values={DailyData} key={value} />
+          <TableRow
+            property={DailyHeading}
+            values={DailyData}
+            key={value}
+            action={
+              <span className="text-gray-1">
+                <Icon name="forward" size={11} />
+              </span>
+            }
+          />
         ))}
       </Table>
     </div>

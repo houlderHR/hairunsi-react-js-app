@@ -6,26 +6,25 @@ type TableProps = {
 };
 
 const Table: FC<PropsWithChildren<TableProps>> = ({ headers, children }) => (
-  <div className="bg-white w-full">
-    <div
-      className={twMerge(
-        'rounded-t-xl text-base bg-primary grid grid-flow-col text-white font-medium uppercase',
-        `grid-cols-${headers.length}`,
-      )}
-    >
-      {headers.map((content) => (
-        <div
-          className={twMerge(
-            'border-r py-4 pl-4 border-l-gray-100 ',
-            `${content.width ? `col-span-${content.width}` : 'col-span-1'}`,
-          )}
-        >
-          {content.name}
-        </div>
-      ))}
-    </div>
-    {children}
-  </div>
+  <table className="bg-white w-full table-fixed">
+    <thead className="rounded-t-md p-4">
+      <tr className="bg-primary text-white rounded-t-md">
+        {headers.map((content, index) => (
+          <th
+            colSpan={content.width ? +content.width : 1}
+            className={twMerge(
+              'border-r py-4 pl-4 border-l-gray-100 text-start uppercase text-base font-medium',
+              `${index === 0 ? 'rounded-tl-md' : ''}`,
+              `${index === headers.length - 1 ? 'rounded-tr-md whitespace-nowrap' : ''}`,
+            )}
+          >
+            {content.name}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>{children}</tbody>
+  </table>
 );
 
 export default Table;

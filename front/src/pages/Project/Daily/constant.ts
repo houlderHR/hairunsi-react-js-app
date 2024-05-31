@@ -15,7 +15,7 @@ export const DailyHeading: DailyHeaderType[] = [
   },
   {
     name: 'Objectif',
-    width: '2',
+    width: '3',
     associated: 'objectif',
   },
   {
@@ -40,5 +40,4 @@ export const DailyData: Record<string, string | number> = {
     'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
   membre: 4,
   timeout: '3,5 J/H',
-  action: '',
 };
