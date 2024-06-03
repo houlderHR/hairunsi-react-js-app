@@ -1,14 +1,17 @@
 import { FC } from 'react';
 import Header from './Header';
 import SideSearch from './SideSearch';
+import Details from './Details';
 
 const MainInfo: FC = () => (
-  <div className="pt-[150px] px-7 pb-10 flex h-full w-full text-black-200">
-    <div className="w-full mr-[520px]">
+  <div className="fixed top-32 bottom-0 left-0 right-0 w-full px-7 pb-10 pt-5 flex gap-x-7 overflow-auto">
+    <div className="flex flex-col gap-y-7">
       <Header image="/images/logo/panda.png" />
-      <div />
+      <Details/>
     </div>
-    <SideSearch />
+    <div className="flex-none h-full hidden xl:block">
+      <SideSearch />
+    </div>
   </div>
 );
 

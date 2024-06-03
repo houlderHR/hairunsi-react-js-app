@@ -2,7 +2,7 @@ import { FC } from 'react';
 import InputIcon from '../../../../shared/inputs/InputIcon';
 
 const SideSearch: FC = () => (
-  <div className="h-full lg:w-[492px] fixed right-7 bg-white border border-white-1 rounded-xl text-black-200">
+  <div className="h-full lg:w-[492px] bg-white border border-white-1 rounded-xl text-black-200">
     <InputIcon
       icon="search"
       iconColor="text-gray-10"
