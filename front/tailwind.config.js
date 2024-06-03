@@ -11,6 +11,7 @@ export default {
         'secondary-light': '#F7F7FF',
         'black-1': '#272727',
         'blue-3': '#3E60C1',
+        'blue-4': '#3B88FF',
         'gray-1': '#808080',
         'gray-2': '#DDDDDD',
         'gray-3': '#EEEEEE',
