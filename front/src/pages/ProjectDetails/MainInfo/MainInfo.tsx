@@ -4,8 +4,8 @@ import SideSearch from './SideSearch';
 import Details from './Details';
 
 const MainInfo: FC = () => (
-  <div className="fixed top-32 bottom-0 left-0 right-0 w-full px-7 pb-10 pt-5 flex gap-x-7 overflow-auto">
-    <div className="flex flex-col gap-y-7">
+  <div className="mt-[46px] xl:mt-0 xl:fixed xl:top-32 xl:bottom-0 xl:left-0 xl:right-0 w-full px-7 pb-10 pt-5 flex gap-x-7">
+    <div className="flex flex-col h-full !relative gap-y-7">
       <Header image="/images/logo/panda.png" />
       <Details/>
     </div>
