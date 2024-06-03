@@ -2,17 +2,17 @@ import { twMerge } from 'tailwind-merge';
 
 type TableRowProps<T extends Record<string, string | number>> = {
   values: T;
-  property: { name: string; associated: string; width?: string }[];
+  properties: { name: string; associated: string; width?: string }[];
   action?: JSX.Element;
 };
 
 const TableRow = <T,>({
   values,
-  property,
+  properties,
   action,
 }: TableRowProps<T extends Record<string, string | number> ? T : never>) => {
   const getPropertyWidth = (content: string) => {
-    const result = property.filter((p) => p.associated === content && p.width);
+    const result = properties.filter((p) => p.associated === content && p.width);
     if (result.length > 0) {
       return result[0].width ? +result[0].width : 1;
     }
@@ -33,7 +33,7 @@ const TableRow = <T,>({
       ))}
 
       {action && (
-        <td className="py-4 text-base leading-6 grow flex items-center justify-center gap-2 text-black-1 truncate ">
+        <td className="py-4 text-base leading-6 grow flex items-center justify-center gap-2 text-black-1 h-full truncate ">
           {action}
         </td>
       )}

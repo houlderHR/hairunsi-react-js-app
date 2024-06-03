@@ -1,23 +1,25 @@
 import { FC } from 'react';
-import { twMerge } from 'tailwind-merge';
-import Icon from '../../Icon';
-import InputIcon from '../InputIcon';
+import Datepicker, { DateValueType } from 'react-tailwindcss-datepicker';
 
 type InputDateProps = {
-  additionalInputClass?: string;
-  additionalClass?: string;
+  date: DateValueType;
+  onChange: (value: DateValueType, e?: HTMLInputElement | null | undefined) => void;
 };
 
-const InputDate: FC<InputDateProps> = ({ additionalInputClass, additionalClass }) => (
-  <InputIcon
-    additionalInputClass={twMerge('py-5 placeholder:text-gray-1', additionalInputClass)}
-    additionalClass={twMerge(
-      'text-gray-1 !focus:bg-gray-3 !hover:bg-gray-3 !bg-white border border-gray-9 text-base text-gray-1 ',
-      additionalClass,
-    )}
-    endIcon={<Icon name="calendar" />}
-    placeholder={new Date().toLocaleDateString('en-US')}
-  />
+const InputDate: FC<InputDateProps> = ({ date, onChange }) => (
+  <div className="border border-gray-9 w-full rounded hover:border-secondary-2 cursor-pointer">
+    <Datepicker
+      useRange={false}
+      displayFormat="DD MMM YYYY"
+      asSingle
+      inputClassName="py-4 text-xs focus:outline-none cursor-pointer pl-4 w-full"
+      onChange={onChange}
+      value={date}
+      primaryColor="blue"
+      i18n="fr-FR"
+      showShortcuts={false}
+    />
+  </div>
 );
 
 export default InputDate;

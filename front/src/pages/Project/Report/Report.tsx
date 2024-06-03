@@ -4,24 +4,14 @@ import ProjectDailyReportLayout from '../../../shared/authenticated/ProjectDaily
 import AddContent from '../../../shared/authenticated/ProjectDailyReportLayout/SidebarDailyReport/AddContent';
 import Table from '../../../shared/authenticated/Table';
 import TableRow from '../../../shared/authenticated/Table/TableRow';
-import Icon from '../../../shared/Icon';
 import InputIcon from '../../../shared/inputs/InputIcon';
 import { DailyData, DailyHeading } from './constant';
-import DetailModal from './DetailModal';
 
-const Daily = () => {
+const Report = () => {
   const [value, setValue] = useState<DateValueType>({
     startDate: new Date(),
     endDate: new Date(),
   });
-  const [dailyDetail, setDailyDetail] = useState<Record<string, string | number>>();
-  const [showDetail, setShowDetail] = useState(false);
-
-  const openDetail = (_dailyDetail: Record<string, string | number>) => () => {
-    setDailyDetail(_dailyDetail);
-    setShowDetail(true);
-  };
-
   const handleValueChange = (newValue: DateValueType) => {
     if (typeof newValue?.startDate === 'string' && typeof newValue?.endDate === 'string') {
       setValue(newValue);
@@ -29,7 +19,7 @@ const Daily = () => {
   };
   return (
     <ProjectDailyReportLayout
-      title="Objectif quotidien"
+      title="Votre compte rendu"
       sidebarAdditionalComponent={
         <AddContent
           additionalItemContainerClass="lg:flex-row flex-col gap-y-2"
@@ -82,16 +72,7 @@ const Daily = () => {
       <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-xl border min-h-[calc(100vh-200px)] border-white-1 flex flex-col">
         <Table headers={DailyHeading}>
           {DailyData.map((_value) => (
-            <TableRow
-              properties={DailyHeading}
-              values={_value}
-              key={_value.id}
-              action={
-                <span className="text-gray-1 hover:text-secondary-2 cursor-pointer flex items-center justify-center h-full w-full">
-                  <Icon name="forward" onClick={openDetail(_value)} size={11} />
-                </span>
-              }
-            />
+            <TableRow properties={DailyHeading} values={_value} key={_value.id} />
           ))}
         </Table>
         <div className="flex flex-row justify-end items-center lg:gap-x-14 gap-x-1 text-xs md:text-base font-medium text-gray-1 mt-auto py-5">
@@ -108,9 +89,8 @@ const Daily = () => {
           <div>1-10 de 15</div>
         </div>
       </div>
-      {showDetail && <DetailModal dailyDetail={dailyDetail} onClose={() => setShowDetail(false)} />}
     </ProjectDailyReportLayout>
   );
 };
 
-export default Daily;
+export default Report;

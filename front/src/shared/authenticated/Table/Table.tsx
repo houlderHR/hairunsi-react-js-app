@@ -9,15 +9,14 @@ const Table: FC<PropsWithChildren<TableProps>> = ({ headers, children }) => (
   <table className="bg-white w-full table-fixed">
     <thead className="rounded-t-md p-4">
       <tr className="bg-primary text-white rounded-t-md">
-        {headers.map((content, index) => (
+        {headers.map((content) => (
           <th
             colSpan={content.width ? +content.width : 1}
             className={twMerge(
-              'border-r py-4 pl-4 border-l-gray-100 text-start uppercase text-base font-medium',
-              `${index === 0 ? 'rounded-tl-md' : ''}`,
-              `${index === headers.length - 1 ? 'rounded-tr-md whitespace-nowrap' : ''}`,
+              'border-r py-4 pl-4 border-l-gray-100 text-start uppercase text-base font-medium first:rounded-tl-md last:rounded-tr-md truncate',
               `${content.associated === 'action' && content.name === '' ? 'w-[5%]' : ''}`,
             )}
+            key={content.name}
           >
             {content.name}
           </th>
