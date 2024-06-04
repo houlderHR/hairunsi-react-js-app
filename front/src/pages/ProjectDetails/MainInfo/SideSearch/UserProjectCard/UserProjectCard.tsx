@@ -13,7 +13,7 @@ type CollaboratorCardProps = {
   additionalClass?: string;
 };
 
-const CollaboratorCard: FC<CollaboratorCardProps> = ({
+const UserProjectCard: FC<CollaboratorCardProps> = ({
   showCheckbox = false,
   showDetails = false,
   user,
@@ -111,7 +111,7 @@ const CollaboratorCard: FC<CollaboratorCardProps> = ({
               ) : (
                 <>
                   <span>{user.contrat.startContrat}</span>
-                  <Icon name="right-fleche" height={12} width={16} />
+                  <Icon name="right-fleche" className="text-secondary-3" height={12} width={16} />
                   <span>{user.contrat.endContrat}</span>
                 </>
               )}
@@ -133,7 +133,7 @@ const CollaboratorCard: FC<CollaboratorCardProps> = ({
           <div
             role="presentation"
             onClick={selectMenu}
-            className="absolute w-7 h-7 flex justify-center items-center top-4 right-4 cursor-pointer hover:bg-secondary-3 rounded-full"
+            className="absolute w-7 h-7 flex justify-center items-center top-4 right-4 cursor-pointer hover:bg-secondary-5 rounded-full"
           >
             <Icon
               name={user?.fonction.isResponsable ? '3points' : 'x'}
@@ -143,7 +143,7 @@ const CollaboratorCard: FC<CollaboratorCardProps> = ({
           </div>
           {showOption && user?.fonction.isResponsable && (
             <div className="absolute z-10 w-auto rounded right-5 top-9">
-              <OptionMenuDropdown additionalClass="!px-0 !overflow-auto top-42" />
+              <OptionMenuDropdown additionalClass="!px-0 !overflow-auto top-42 !text-gray-1" />
             </div>
           )}
         </>
@@ -152,4 +152,4 @@ const CollaboratorCard: FC<CollaboratorCardProps> = ({
   );
 };
 
-export default CollaboratorCard;
+export default UserProjectCard;

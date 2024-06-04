@@ -21,7 +21,7 @@ const DropDownUser: FC<DropDownProps> = ({
   <ul
     className={twMerge(
       additionalClassBlock,
-      'bg-white border absolute w-full z-20 left-0 mt-2 max-h-62 overflow-y-scroll border-gray-50 shadow  rounded px-4 py-1',
+      'bg-white border absolute w-full z-20 left-0 mt-2 max-h-72 overflow-y-scroll border-gray-50 shadow  rounded px-4 py-1',
     )}
   >
     {items && items.length > 0 ? (
