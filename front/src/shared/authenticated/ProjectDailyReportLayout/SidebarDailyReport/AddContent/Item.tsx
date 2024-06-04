@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import Icon from '../../../../Icon';
 import InputIcon from '../../../../inputs/InputIcon';
 import DropDown from '../../Dropdown';
+import { DataDelay, DataUser } from './constant';
 
 type ItemProp = {
   onDelete: () => void;
@@ -29,16 +30,9 @@ const Item: FC<ItemProp> = ({ onDelete, additionalClass }) => {
         />
         {showCollaborator && (
           <DropDown>
-            {[
-              { id: '1', name: 'John Doe', email: 'JohnDoe@mail.com' },
-              { id: '2', name: 'John Doe 2', email: 'JohnDoe2@hairun-technology.com' },
-              { id: '3', name: 'John Doe 3', email: 'JohnDoe3@hairun-technology.com' },
-              { id: '4', name: 'John Doe 4', email: 'JohnDoe4@hairun-technology.com' },
-              { id: '5', name: 'John Doe 5', email: 'JohnDoe5@hairun-technology.com' },
-              { id: '6', name: 'John Doe 6', email: 'JohnDoe6@hairun-technology.com' },
-            ].map((item) => (
+            {DataUser.map((item) => (
               <li
-                className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md flex flex-col"
+                className="xl:px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md flex flex-col truncate"
                 key={item.id}
                 role="presentation"
                 onClick={() => setColaborator(item)}
@@ -62,16 +56,9 @@ const Item: FC<ItemProp> = ({ onDelete, additionalClass }) => {
         />
         {showDelay && (
           <DropDown>
-            {[
-              { id: '1', name: '0,25 J/H' },
-              { id: '2', name: '0,5 J/H' },
-              { id: '3', name: '0,75 J/H' },
-              { id: '4', name: '1 J/H' },
-              { id: '5', name: '1,25 J/H' },
-              { id: '6', name: '1,5 J/H' },
-            ].map((_delay) => (
+            {DataDelay.map((_delay) => (
               <li
-                className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md"
+                className="xl:px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md"
                 key={_delay.id}
                 role="presentation"
                 onClick={() => setDelay(_delay)}
@@ -83,7 +70,11 @@ const Item: FC<ItemProp> = ({ onDelete, additionalClass }) => {
         )}
       </div>
       <span>
-        <Icon onClick={onDelete} className="hover:text-red-500 font-medium stroke-2" name="x" />
+        <Icon
+          onClick={onDelete}
+          className="hover:text-red-500 font-medium stroke-2 text-gray-1 cursor-pointer duration-150"
+          name="x"
+        />
       </span>
     </div>
   );
