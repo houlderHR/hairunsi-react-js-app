@@ -260,11 +260,15 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                           user ? new Date(user.birth_date).toLocaleDateString() : 'jj/mm/yyyy'
                         }
                         min="1950-01-01"
-                        max={`${new Date().getFullYear()}-${
+                        max={`$${new Date().getFullYear()}-${
                           new Date().getMonth() + 1 < 10
                             ? `0${new Date().getMonth() + 1}`
                             : new Date().getMonth() + 1
-                        }-${new Date().getDate()}`}
+                        }-${
+                          new Date().getDate() < 10
+                            ? `0${new Date().getDate()}`
+                            : new Date().getDate()
+                        }`}
                         className="input"
                         onFocus={(e) => {
                           e.target.type = 'date';

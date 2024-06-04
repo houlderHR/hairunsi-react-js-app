@@ -1,27 +1,13 @@
 import './style.scss';
+import { FC } from 'react';
+import IProject from '../IProject';
 import Card from './Card';
-import projects from './constants';
 
-const List = () => (
+const List: FC<{ projects: IProject[] }> = ({ projects }) => (
   <div className="list">
-    {projects.map(
-      (project: {
-        name: string;
-        image: string;
-        type: string;
-        created_at: Date;
-        description: string;
-        responsible: {
-          name: string;
-          image: string;
-          post: {
-            name: string;
-          };
-        };
-      }) => (
-        <Card project={project} />
-      ),
-    )}
+    {projects.map((project: IProject) => (
+      <Card project={project} key={project.id} />
+    ))}
   </div>
 );
 

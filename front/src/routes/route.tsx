@@ -124,6 +124,10 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: routes.authentified.subpaths.project.path,
+        element: <Project />,
+      },
+      {
         path: `${routes.authentified.subpaths.project.path}${routes.authentified.subpaths.project.subpaths.id.path}`,
         element: <ProjectDetails />,
         children: [
