@@ -1,46 +1,56 @@
-type DailyHeaderType = { name: string; associated: string; width?: string };
+import { HeaderType } from '../../../shared/authenticated/Table/Table';
 
-export const DailyHeading: DailyHeaderType[] = [
+type DailyDataType = {
+  matricule: string;
+  name: string;
+  date: string;
+  objectif: string;
+  membre: number;
+  timeout: string;
+};
+
+export const DailyHeading: HeaderType<DailyDataType>[] = [
   {
     name: 'matricule',
-    associated: 'matricule',
+    associated: (data) => data.matricule,
   },
   {
     name: 'Responsable',
-    associated: 'name',
+    associated: (data) => data.name,
   },
   {
     name: 'Date',
-    associated: 'date',
+    associated: (data) => data.date,
   },
   {
     name: 'Objectif',
     width: '3',
-    associated: 'objectif',
+    associated: (data) => data.objectif,
   },
   {
     name: 'Membre',
-    associated: 'membre',
+    associated: (data) => data.membre.toString(),
   },
   {
     name: 'Temp écoulé',
-    associated: 'timeout',
+    associated: (data) => data.timeout,
   },
   {
     name: '',
-    associated: 'action',
+    associated: () => '',
+    className: 'w-[5%]',
   },
 ];
 
-export const DailyData: Record<string, string | number>[] = [
+export const DailyData: DailyDataType[] = [
   {
     matricule: 'm001',
     name: 'Tsiory',
-    date: '08/02/2005',
     objectif:
       'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
     membre: 4,
     timeout: '3,5 J/H',
+    date: '08/02/2005',
   },
   {
     matricule: 'm002',

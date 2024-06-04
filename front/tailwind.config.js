@@ -34,6 +34,7 @@ export default {
         'white-1': '#F0F0F0',
         'white-2': '#F1F1F1',
         'purple-1': '#667799',
+        'success-2': '#30C8AC',
       },
       fontFamily: {
         ubuntu: ['Ubuntu', 'sans-serif'],

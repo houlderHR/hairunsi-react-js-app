@@ -1,81 +1,101 @@
-type DailyHeaderType = { name: string; associated: string; width?: string };
+import { HeaderType } from '../../../shared/authenticated/Table/Table';
 
-export const DailyHeading: DailyHeaderType[] = [
+export type ReportType = {
+  matricule: string;
+  description: string;
+  date: string;
+  timeout: string;
+  state: string;
+};
+
+const checkStatusColor = (data: ReportType) => {
+  switch (data.state) {
+    case 'Blocked':
+      return 'text-red-500';
+    case 'En cours':
+      return 'text-secondary-2';
+    case 'Terminé':
+      return 'text-success-2';
+    case 'Retard':
+      return 'text-orange-500';
+    default:
+      return '';
+  }
+};
+
+export const ReportHeading: HeaderType<ReportType>[] = [
   {
-    name: 'matricule',
-    associated: 'matricule',
-  },
-  {
-    name: 'Responsable',
-    associated: 'name',
+    name: 'description',
+    associated: (data) => data.description,
+    width: '6',
   },
   {
     name: 'Date',
-    associated: 'date',
-  },
-  {
-    name: 'Objectif',
-    width: '3',
-    associated: 'objectif',
-  },
-  {
-    name: 'Membre',
-    associated: 'membre',
+    associated: (data) => data.date,
   },
   {
     name: 'Temp écoulé',
-    associated: 'timeout',
+    associated: (data) => data.timeout,
+  },
+  {
+    name: 'Status',
+    associated: (data) => data.state,
+    colClassName: (data) => checkStatusColor(data),
   },
   {
     name: '',
-    associated: 'action',
+    associated: () => '',
+    className: 'w-[5%]',
   },
 ];
 
-export const DailyData: Record<string, string | number>[] = [
+export const ReportData: ReportType[] = [
   {
     matricule: 'm001',
-    name: 'Tsiory',
+    description:
+      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue 1',
     date: '08/02/2005',
-    objectif:
-      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
-    membre: 4,
     timeout: '3,5 J/H',
+    state: 'Blocked',
   },
   {
     matricule: 'm002',
-    name: 'Tsiory',
+    description:
+      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue 2',
     date: '08/02/2005',
-    objectif:
-      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
-    membre: 4,
     timeout: '3,5 J/H',
+    state: 'En cours',
   },
   {
     matricule: 'm003',
-    name: 'Tsiory',
+    description:
+      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue 3',
     date: '08/02/2005',
-    objectif:
-      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
-    membre: 4,
     timeout: '3,5 J/H',
+    state: 'Terminé',
   },
   {
     matricule: 'm004',
-    name: 'Tsiory',
+    description:
+      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue 4',
     date: '08/02/2005',
-    objectif:
-      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
-    membre: 4,
     timeout: '3,5 J/H',
+    state: 'Terminé',
   },
   {
     matricule: 'm005',
-    name: 'Tsiory',
+    description:
+      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue 5',
     date: '08/02/2005',
-    objectif:
-      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
-    membre: 4,
     timeout: '3,5 J/H',
+    state: 'Blocked',
+  },
+  {
+    matricule: 'm006',
+    description:
+      'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue 6',
+    date: '08/02/2005',
+    timeout: '3,5 J/H',
+    state: 'Retard',
   },
 ];

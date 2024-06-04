@@ -29,13 +29,14 @@ const Daily = () => {
   };
   return (
     <ProjectDailyReportLayout
+      buttonName="CREER"
       title="Objectif quotidien"
+      textAreaPlaceholder="Objéctifs de la journée"
       sidebarAdditionalComponent={
         <AddContent
           additionalItemContainerClass="lg:flex-row flex-col gap-y-2"
           additionalClass="lg:flex-row flex-col gap-y-2"
           title="Ajouter un collaborateur"
-          itemContainerClassName="max-h-[50vh] overflow-y-auto pb-4"
         />
       }
     >
@@ -84,8 +85,8 @@ const Daily = () => {
           {DailyData.map((_value) => (
             <TableRow
               properties={DailyHeading}
-              values={_value}
-              key={_value.id}
+              data={_value}
+              key={_value.matricule}
               action={
                 <span className="text-gray-1 hover:text-secondary-2 cursor-pointer flex items-center justify-center h-full w-full">
                   <Icon name="forward" onClick={openDetail(_value)} size={11} />
@@ -97,9 +98,14 @@ const Daily = () => {
         <div className="flex flex-row justify-end items-center lg:gap-x-14 gap-x-1 text-xs md:text-base font-medium text-gray-1 mt-auto py-5">
           <div className="flex flex-row gap-x-5">
             <div>Ligne par page</div>
-            <select className="bg-transparent" value={10}>
+            <select className="bg-transparent" onChange={() => {}} value={10}>
               {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_value) => (
-                <option className="bg-gray-50 border-none" value={_value} key={_value}>
+                <option
+                  className="bg-gray-50 border-none"
+                  onChange={() => {}}
+                  value={_value}
+                  key={_value}
+                >
                   {_value}
                 </option>
               ))}

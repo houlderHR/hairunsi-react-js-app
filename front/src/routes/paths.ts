@@ -14,6 +14,9 @@ const routes = {
               report: { path: 'report' },
             },
           },
+          report: {
+            path: '/report',
+          },
         },
       },
       leaveDay: { path: '/leave-day' },

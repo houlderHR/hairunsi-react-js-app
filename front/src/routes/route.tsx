@@ -10,6 +10,7 @@ import Project from '../pages/Project';
 import Daily from '../pages/Project/Daily';
 import ProjectDetails from '../pages/Project/ProjectDetails';
 import MainInfo from '../pages/Project/ProjectDetails/MainInfo';
+import Report from '../pages/Project/Report';
 import RedirectEmail from '../pages/RedirectEmail';
 import ResetPassword from '../pages/ResetPassword';
 import ResetPasswordSuccess from '../pages/ResetPassworSuccess';
@@ -147,6 +148,10 @@ const router = createBrowserRouter([
           {
             path: routes.authentified.subpaths.project.subpaths.id.subpaths.daily.path,
             element: <Daily />,
+          },
+          {
+            path: routes.authentified.subpaths.project.subpaths.id.subpaths.report.path,
+            element: <Report />,
           },
         ],
       },

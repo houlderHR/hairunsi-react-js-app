@@ -13,6 +13,7 @@ const TextArea: FC<TextAreaProps> = ({ placeholder, classNames }) => (
       classNames,
     )}
     placeholder={placeholder}
+    onChange={() => {}}
   />
 );
 

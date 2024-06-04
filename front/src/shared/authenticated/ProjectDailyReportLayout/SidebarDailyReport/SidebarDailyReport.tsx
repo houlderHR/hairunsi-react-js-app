@@ -7,9 +7,16 @@ import TextArea from '../../input/TextArea';
 interface SidebarDailyReportProps {
   title: string;
   additionalComponent: JSX.Element;
+  textAreaPlaceholder: string;
+  buttonName: string;
 }
 
-const SidebarDailyReport: FC<SidebarDailyReportProps> = ({ title, additionalComponent }) => {
+const SidebarDailyReport: FC<SidebarDailyReportProps> = ({
+  title,
+  additionalComponent,
+  textAreaPlaceholder,
+  buttonName,
+}) => {
   const [date, setDate] = useState<DateValueType>({
     startDate: new Date(),
     endDate: new Date(),
@@ -20,11 +27,11 @@ const SidebarDailyReport: FC<SidebarDailyReportProps> = ({ title, additionalComp
       <h1 className="text-primary font-medium text-base leading-6 mb-7">{title}</h1>
       <InputDate date={date} onChange={(value) => setDate(value)} />
       <div className="mt-4">
-        <TextArea classNames="lg:text-base text-xs" placeholder="Objéctifs de la journée" />
+        <TextArea classNames="lg:text-base text-xs" placeholder={textAreaPlaceholder} />
       </div>
       {additionalComponent}
       <div className="mt-auto">
-        <Button title="CREER" type="submit" variant="primary" />
+        <Button title={buttonName} type="submit" variant="primary" />
       </div>
     </div>
   );
