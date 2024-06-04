@@ -31,11 +31,11 @@ const AddContent: FC<AddContentProps> = ({
       <button
         type="button"
         onClick={addContent}
-        className="rounded-lg w-full group border border-dashed border-spacing-14 mt-6 border-gray-9 text-gray-1 hover:text-secondary-2 hover:border-secondary-2 hover:border-solid hover:rounded-sm duration-150"
+        className="rounded-lg w-full group border cursor-pointer border-dashed border-spacing-14 mt-6 border-gray-9 text-gray-1 hover:text-secondary-2 hover:border-secondary-2 hover:border-solid duration-150"
       >
         <h3
           className={twMerge(
-            'cursor-default text-base  flex items-center justify-center gap-x-3 py-5 text-center',
+            'text-base  flex items-center justify-center gap-x-3 py-5 text-center',
             additionalClass,
           )}
         >
@@ -45,7 +45,12 @@ const AddContent: FC<AddContentProps> = ({
           {title}
         </h3>
       </button>
-      <div className={twMerge('mt-8 flex flex-col gap-y-4', itemContainerClassName)}>
+      <div
+        className={twMerge(
+          'mt-8 flex flex-col gap-y-4 min-h-[40vh] max-h-[40vh] overflow-y-auto',
+          itemContainerClassName,
+        )}
+      >
         {itemFields.map((item) => (
           <Item
             additionalClass={additionalItemContainerClass}

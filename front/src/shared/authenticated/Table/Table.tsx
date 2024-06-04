@@ -8,6 +8,8 @@ export type HeaderType<T> = {
   width?: string;
   className?: string;
   colClassName?: (data: T) => string;
+  sort?: boolean;
+  sortCallback?: (direction: 'UP' | 'DOWN') => void;
 };
 
 type TableProps<T> = {
@@ -29,10 +31,22 @@ const Table = <T,>({ headers, children }: PropsWithChildren<TableProps<T>>) => (
           >
             <div className="flex flex-row items-center justify-between">
               {header.name}
-              <div className="flex flex-col">
-                <Icon className="text-white" size={8} name="sharp-arrow-drop-up" />
-                <Icon className="text-white" size={8} name="sharp-arrow-drop-down" />
-              </div>
+              {header.sort && (
+                <div className="flex flex-col">
+                  <Icon
+                    onClick={() => header.sortCallback && header.sortCallback('UP')}
+                    className="text-white"
+                    size={8}
+                    name="sharp-arrow-drop-up"
+                  />
+                  <Icon
+                    onClick={() => header.sortCallback && header.sortCallback('DOWN')}
+                    className="text-white"
+                    size={8}
+                    name="sharp-arrow-drop-down"
+                  />
+                </div>
+              )}
             </div>
           </th>
         ))}

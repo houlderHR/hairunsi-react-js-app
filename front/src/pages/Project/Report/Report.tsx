@@ -8,20 +8,22 @@ import TableRow from '../../../shared/authenticated/Table/TableRow';
 import Icon from '../../../shared/Icon';
 import InputIcon from '../../../shared/inputs/InputIcon';
 import AdditionalSidebarReport from './AdditionalSidebarReport';
-import { ReportData, ReportHeading, ReportType } from './constant';
-import ReportDetailModal from './ReportDetailModal/ReportDetailModal';
+import { DataFilterStatus, ReportData, ReportHeading, ReportType } from './constant';
+import ReportDetailModal from './ReportDetailModal';
 
 const Report = () => {
   const { state: filterShowStatus, toggle: toggleFilterStatus } = useToggle();
-  const [reportDetail, setReportDetail] = useState<ReportType>();
   const { state: showReportDetail, toggle: toggleReportDetailModal } = useToggle();
-  const [value, setValue] = useState<DateValueType>({
+  const [reportDetail, setReportDetail] = useState<ReportType>();
+  const [dateFilter, setDateFilter] = useState<DateValueType>({
     startDate: new Date(),
     endDate: new Date(),
   });
-  const handleValueChange = (newValue: DateValueType) => {
-    if (typeof newValue?.startDate === 'string' && typeof newValue?.endDate === 'string') {
-      setValue(newValue);
+  const [filterStatus, setFilterStatus] = useState<{ id: string; name: string }>();
+
+  const handleValueChangeDateFilter = (newDate: DateValueType) => {
+    if (typeof newDate?.startDate === 'string' && typeof newDate?.endDate === 'string') {
+      setDateFilter(newDate);
     }
   };
 
@@ -47,21 +49,13 @@ const Report = () => {
             <div className="relative w-full" role="presentation" onClick={toggleFilterStatus}>
               <InputIcon
                 placeholder="Statut"
+                value={filterStatus?.name === 'Tout' ? undefined : filterStatus?.name}
                 endIcon={<Icon name="sharp-arrow-drop-down" />}
                 additionalClass="bg-gray-3 border-gray-secondary border text-[18px]"
                 additionalInputClass="py-4"
                 onChange={() => {}}
               />
-              {filterShowStatus && (
-                <DropDown
-                  items={[
-                    { id: '1', name: 'blocked' },
-                    { id: '2', name: 'En cours' },
-                    { id: '3', name: 'Retard' },
-                    { id: '4', name: 'Terminé' },
-                  ]}
-                />
-              )}
+              {filterShowStatus && <DropDown items={DataFilterStatus} setValue={setFilterStatus} />}
             </div>
             <div className="border border-gray-1 w-full px-1 lg:px-4 rounded hover:border-secondary-2 cursor-pointer z-[60]">
               <Datepicker
@@ -78,8 +72,8 @@ const Report = () => {
                 useRange
                 inputClassName="py-4 text-xs focus:outline-none cursor-pointer disabled w-full"
                 separator="-"
-                onChange={handleValueChange}
-                value={value}
+                onChange={handleValueChangeDateFilter}
+                value={dateFilter}
                 primaryColor="blue"
                 showFooter
                 showShortcuts={false}

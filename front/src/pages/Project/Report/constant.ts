@@ -27,11 +27,14 @@ export const ReportHeading: HeaderType<ReportType>[] = [
   {
     name: 'description',
     associated: (data) => data.description,
-    width: '6',
+    className: 'lg:w-1/2 w-1/3',
+    sort: true,
   },
   {
     name: 'Date',
     associated: (data) => data.date,
+    sort: true,
+    className: 'max-lg:hidden',
   },
   {
     name: 'Temp écoulé',
@@ -98,4 +101,12 @@ export const ReportData: ReportType[] = [
     timeout: '3,5 J/H',
     state: 'Retard',
   },
+];
+
+export const DataFilterStatus = [
+  { id: '1', name: 'Bloqué' },
+  { id: '2', name: 'En cours' },
+  { id: '3', name: 'Retard' },
+  { id: '4', name: 'Terminé' },
+  { id: '0', name: 'Tout' },
 ];

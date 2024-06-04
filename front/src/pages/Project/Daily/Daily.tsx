@@ -1,21 +1,30 @@
 import { useState } from 'react';
 import Datepicker, { DateValueType } from 'react-tailwindcss-datepicker';
+import useToggle from '../../../hooks/useToggle';
 import ProjectDailyReportLayout from '../../../shared/authenticated/ProjectDailyReportLayout';
+import DropDown from '../../../shared/authenticated/ProjectDailyReportLayout/Dropdown';
 import AddContent from '../../../shared/authenticated/ProjectDailyReportLayout/SidebarDailyReport/AddContent';
 import Table from '../../../shared/authenticated/Table';
 import TableRow from '../../../shared/authenticated/Table/TableRow';
 import Icon from '../../../shared/Icon';
 import InputIcon from '../../../shared/inputs/InputIcon';
-import { DailyData, DailyHeading } from './constant';
+import { DailyData, DailyHeading, filterNameData } from './constant';
 import DetailModal from './DetailModal';
 
 const Daily = () => {
-  const [value, setValue] = useState<DateValueType>({
+  const [dateFilter, setDateFilter] = useState<DateValueType>({
     startDate: new Date(),
     endDate: new Date(),
   });
+  const [nameFilter, setNameFilter] = useState<{
+    id: string;
+    name: string;
+    email: string;
+    avatar: string;
+  }>();
   const [dailyDetail, setDailyDetail] = useState<Record<string, string | number>>();
   const [showDetail, setShowDetail] = useState(false);
+  const { state: showFilterName, toggle: toggleShowFilterName } = useToggle();
 
   const openDetail = (_dailyDetail: Record<string, string | number>) => () => {
     setDailyDetail(_dailyDetail);
@@ -24,9 +33,10 @@ const Daily = () => {
 
   const handleValueChange = (newValue: DateValueType) => {
     if (typeof newValue?.startDate === 'string' && typeof newValue?.endDate === 'string') {
-      setValue(newValue);
+      setDateFilter(newValue);
     }
   };
+
   return (
     <ProjectDailyReportLayout
       buttonName="CREER"
@@ -42,13 +52,38 @@ const Daily = () => {
     >
       <div className="w-full bg-white px-2 md:px-6 py-4">
         <div className="flex flex-col gap-y-4 md:flex-row gap-x-4 w-full sm:w-10/12 xl:w-7/12 ml-auto bg-white">
-          <InputIcon
-            placeholder="Nom"
-            icon="search"
-            additionalClass="bg-gray-3 border-gray-secondary border"
-            additionalInputClass="py-4"
-            onChange={() => {}}
-          />
+          <div className="relative w-full" role="presentation" onClick={toggleShowFilterName}>
+            <InputIcon
+              placeholder="Nom"
+              value={nameFilter?.name}
+              icon="search"
+              additionalClass="bg-gray-3 border-gray-secondary border"
+              additionalInputClass="py-4"
+              onChange={() => {}}
+            />
+            {showFilterName && (
+              <DropDown classNames="max-h-48">
+                {filterNameData.map((item) => (
+                  <li
+                    className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md flex gap-x-4 flex-row"
+                    key={item.id}
+                    role="presentation"
+                    onClick={() => setNameFilter(item)}
+                  >
+                    <img
+                      className="w-10 h-10 rounded-full"
+                      src={`/images/${item.avatar}`}
+                      alt={item.avatar}
+                    />
+                    <div className="flex flex-col">
+                      {item.name}
+                      <span className="text-secondary-2 text-xs">{item.email}</span>
+                    </div>
+                  </li>
+                ))}
+              </DropDown>
+            )}
+          </div>
           <div className="border border-gray-1 w-full px-1 lg:px-4 rounded hover:border-secondary-2 cursor-pointer z-[60]">
             <Datepicker
               displayFormat="DD MMM YYYY"
@@ -65,7 +100,7 @@ const Daily = () => {
               inputClassName="py-4 text-xs focus:outline-none cursor-pointer disabled w-full"
               separator="-"
               onChange={handleValueChange}
-              value={value}
+              value={dateFilter}
               primaryColor="blue"
               showFooter
               showShortcuts={false}
@@ -88,7 +123,7 @@ const Daily = () => {
               data={_value}
               key={_value.matricule}
               action={
-                <span className="text-gray-1 hover:text-secondary-2 cursor-pointer flex items-center justify-center h-full w-full">
+                <span className="text-gray-1 hover:text-secondary-2 cursor-pointer flex items-center justify-center h-full w-full mt-2">
                   <Icon name="forward" onClick={openDetail(_value)} size={11} />
                 </span>
               }

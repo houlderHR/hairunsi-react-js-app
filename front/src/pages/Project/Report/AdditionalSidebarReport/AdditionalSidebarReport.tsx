@@ -8,7 +8,7 @@ const AdditionalSidebarReport = () => {
   const { state: showState, toggle: toggleState } = useToggle();
 
   return (
-    <div className="flex flex-row gap-x-12">
+    <div className="flex lg:flex-row flex-col gap-y-4 gap-x-12">
       <div className="relative" role="presentation" onClick={toggleTimeout}>
         <InputIcon
           onChange={() => {}}

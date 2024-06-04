@@ -29,18 +29,18 @@ const ReportDetailModal: FC<ReportModalProps> = ({ onClose, reportDetail }) => (
     <table>
       <tbody className="text-gray-1 text-xl">
         <tr>
-          <td className="uppercase text-secondary ml-8 pb-7"># id</td>
-          <td className="pb-7">{reportDetail?.matricule}</td>
+          <td className="uppercase text-secondary ml-8 pb-7 leading-5"># id</td>
+          <td className="pb-7 uppercase">{reportDetail?.matricule}</td>
         </tr>
         <tr>
-          <td className="text-secondary flex flex-row items-center  pb-7">
+          <td className="text-secondary flex flex-row items-center leading-5 pb-7">
             <Icon name="calendar" />
             &nbsp;Date
           </td>
           <td className="pb-7">{reportDetail?.date}</td>
         </tr>
         <tr>
-          <td className="text-secondary flex flex-row items-center pb-7">
+          <td className="text-secondary flex flex-row items-center leading-5 pb-7">
             <Icon name="circle" />
             &nbsp;Statut
           </td>
@@ -54,14 +54,14 @@ const ReportDetailModal: FC<ReportModalProps> = ({ onClose, reportDetail }) => (
           </td>
         </tr>
         <tr>
-          <td className="text-secondary flex flex-row items-center  pb-7">
+          <td className="text-secondary flex flex-row items-center leading-5 pb-7">
             <Icon name="timeout" />
             &nbsp;Temps écoulé
           </td>
           <td className="pb-7">{reportDetail?.timeout}</td>
         </tr>
         <tr>
-          <td className="text-secondary flex items-center mr-12  pb-7">
+          <td className="text-secondary flex items-center mr-12 leading-5 pb-7">
             <Icon name="description" />
             &nbsp;Description
           </td>

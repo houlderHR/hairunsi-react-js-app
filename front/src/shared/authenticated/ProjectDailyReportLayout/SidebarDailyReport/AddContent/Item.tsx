@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Icon from '../../../../Icon';
 import InputIcon from '../../../../inputs/InputIcon';
-import DropDown from './Dropdown';
+import DropDown from '../../Dropdown';
 
 type ItemProp = {
   onDelete: () => void;
@@ -55,7 +55,7 @@ const Item: FC<ItemProp> = ({ onDelete, additionalClass }) => {
           onChange={() => {}}
           additionalClass="hover:bg-gray-100"
           additionalInputClass="py-5"
-          placeholder=""
+          placeholder="Temp écoulé"
           value={delay?.name ?? ''}
           endIcon={<Icon className="text-gray-1" name="sharp-arrow-drop-down" />}
           type="text"

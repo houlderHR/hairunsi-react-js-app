@@ -89,3 +89,37 @@ export const DailyData: DailyDataType[] = [
     timeout: '3,5 J/H',
   },
 ];
+
+export const filterNameData = [
+  { id: '1', name: 'John Doe', email: 'JohnDoe@mail.com', avatar: 'profile.png' },
+  {
+    id: '2',
+    name: 'John Doe 2',
+    email: 'JohnDoe2@hairun-technology.com',
+    avatar: 'profile.png',
+  },
+  {
+    id: '3',
+    name: 'John Doe 3',
+    email: 'JohnDoe3@hairun-technology.com',
+    avatar: 'profile.png',
+  },
+  {
+    id: '4',
+    name: 'John Doe 4',
+    email: 'JohnDoe4@hairun-technology.com',
+    avatar: 'profile.png',
+  },
+  {
+    id: '5',
+    name: 'John Doe 5',
+    email: 'JohnDoe5@hairun-technology.com',
+    avatar: 'profile.png',
+  },
+  {
+    id: '6',
+    name: 'John Doe 6',
+    email: 'JohnDoe6@hairun-technology.com',
+    avatar: 'profile.png',
+  },
+];
