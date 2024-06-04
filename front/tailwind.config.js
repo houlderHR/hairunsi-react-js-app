@@ -8,6 +8,8 @@ export default {
         secondary: '#2B335B',
         'secondary-2': '#3E60C1',
         'secondary-3': '#CAC8FF',
+        'secondary-4': '#CAA8FF',
+        'secondary-5': '#c6c4ff96',
         'secondary-light': '#F7F7FF',
         'black-1': '#272727',
         'blue-3': '#3E60C1',
