@@ -139,14 +139,6 @@ const router = createBrowserRouter([
           },
           {
             path: routes.authentified.subpaths.project.subpaths.id.subpaths.daily.path,
-            element: <MainInfo />,
-          },
-          {
-            path: routes.authentified.subpaths.project.subpaths.id.subpaths.report.path,
-            element: <MainInfo />,
-          },
-          {
-            path: routes.authentified.subpaths.project.subpaths.id.subpaths.daily.path,
             element: <Daily />,
           },
           {

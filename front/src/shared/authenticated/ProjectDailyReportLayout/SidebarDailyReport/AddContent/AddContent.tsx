@@ -47,7 +47,7 @@ const AddContent: FC<AddContentProps> = ({
       </button>
       <div
         className={twMerge(
-          'mt-8 flex flex-col gap-y-4 min-h-[40vh] max-h-[40vh] overflow-y-auto',
+          'mt-8 flex flex-col gap-y-4 min-h-[35vh] max-h-[35vh] overflow-y-auto',
           itemContainerClassName,
         )}
       >

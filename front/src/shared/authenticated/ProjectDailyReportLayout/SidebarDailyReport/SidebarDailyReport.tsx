@@ -31,7 +31,7 @@ const SidebarDailyReport: FC<SidebarDailyReportProps> = ({
   return (
     <div
       className={twMerge(
-        'lg:w-[460px] sm:w-52 translate-x-0 bg-white border border-white-1 left-0 h-full fixed top-0 pt-16 z-[56] border-b border-gray-white-1 pb-6 px-6 duration-200 flex flex-col',
+        'lg:w-[460px] sm:w-52 translate-x-0 bg-white border border-white-1 left-0 h-full fixed top-0 pt-36 z-[39] border-b border-gray-white-1 pb-6 px-6 duration-200 flex flex-col',
         showSidebar ? 'w-full translate-x-0' : 'max-sm:-translate-x-full',
       )}
     >

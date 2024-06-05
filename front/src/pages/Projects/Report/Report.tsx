@@ -53,7 +53,7 @@ const Report = () => {
               <Icon
                 name="add"
                 size={42}
-                className="max-sm:flex hidden"
+                className="max-sm:flex hidden cursor-pointer"
                 onClick={toggleShowSidebar}
               />
             )}
@@ -68,7 +68,7 @@ const Report = () => {
               />
               {filterShowStatus && <DropDown items={DataFilterStatus} setValue={setFilterStatus} />}
             </div>
-            <div className="border border-gray-1 w-full px-1 lg:px-4 rounded hover:border-secondary-2 cursor-pointer z-[55]">
+            <div className="border border-gray-1 w-full px-1 lg:px-4 rounded hover:border-secondary-2 cursor-pointer z-[36]">
               <Datepicker
                 displayFormat="DD MMM YYYY"
                 placeholder={`${new Date(Date.now()).toLocaleDateString('fr-FR', {
@@ -99,7 +99,7 @@ const Report = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-xl border min-h-[calc(100vh-275px)] lg:min-h-[calc(100vh-200px)] border-white-1 flex flex-col">
+        <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-xl border min-h-[calc(100vh-285px)] lg:min-h-[calc(100vh-265px)] border-white-1 flex flex-col">
           <Table headers={ReportHeading}>
             {ReportData.map((_value) => (
               <TableRow

@@ -62,7 +62,12 @@ const Daily = () => {
       <div className="w-full bg-white px-2 md:px-6 py-4">
         <div className="flex gap-y-4 flex-row gap-x-4 w-full sm:w-10/12 xl:w-7/12 ml-auto bg-white">
           {!showSidebar && (
-            <Icon name="add" size={42} className="max-sm:flex hidden" onClick={toggleShowSidebar} />
+            <Icon
+              name="add"
+              size={42}
+              className="max-sm:flex hidden cursor-pointer"
+              onClick={toggleShowSidebar}
+            />
           )}
           <div className="relative w-full" role="presentation" onClick={toggleShowFilterName}>
             <InputIcon
@@ -135,7 +140,7 @@ const Daily = () => {
           </div>
         </div>
       </div>
-      <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-xl border min-h-[calc(100vh-275px)] lg:min-h-[calc(100vh-200px)] border-white-1 flex flex-col">
+      <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-xl border min-h-[calc(100vh-285px)] lg:min-h-[calc(100vh-265px)] border-white-1 flex flex-col">
         <Table classNames="" headers={DailyHeading}>
           {DailyData.map((_value) => (
             <TableRow
