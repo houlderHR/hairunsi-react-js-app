@@ -1,16 +1,21 @@
 import { FC } from 'react';
 import Modal from '../../../../shared/authenticated/Modal';
 import Icon from '../../../../shared/Icon';
+import { DailyDataType } from '../constant';
 
 type DetailModalProps = {
   onClose: () => void;
-  dailyDetail?: Record<string, string | number>;
+  dailyDetail?: DailyDataType;
 };
 
 const DetailModal: FC<DetailModalProps> = ({ onClose, dailyDetail }) => (
-  <Modal title="Détail Daily" onClose={onClose}>
+  <Modal
+    title="Détail Daily"
+    onClose={onClose}
+    classNames="2xl:w-1/3 xl:w-2/4 lg:w-2/4 md:w-3/4 sm:w-10/12 w-11/12 py-4 px-[26px]"
+  >
     <table>
-      <tbody className="text-gray-1 text-xl">
+      <tbody className="text-gray-1 xl:text-xl sm:text-base text-xs">
         <tr>
           <td className="uppercase text-secondary ml-8 pb-7"># id</td>
           <td className="pb-7">{dailyDetail?.matricule}</td>
@@ -43,9 +48,15 @@ const DetailModal: FC<DetailModalProps> = ({ onClose, dailyDetail }) => (
           </td>
           <td className="pb-7">
             <ul>
-              <li>M215 Diane Russel</li>
-              <li>M216 Jacon Russel</li>
-              <li>M217 Firmino Russel</li>
+              {dailyDetail?.membre.map((member) => (
+                <li key={member.matricule}>
+                  <span className="uppercase">{member.matricule}</span>
+                  <span className="text-[40px] mx-2 text-gray-9">.</span>
+                  {member.name}&nbsp;
+                  <span className="text-[40px] mx-2 text-gray-9">.</span>
+                  {member.timeout}
+                </li>
+              ))}
             </ul>
           </td>
         </tr>

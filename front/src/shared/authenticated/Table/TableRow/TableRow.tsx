@@ -17,11 +17,11 @@ const TableRow = <T,>({ data, properties, action }: TableRowProps<T>) => (
           <td
             colSpan={property.width ? +property.width : 1}
             className={twMerge(
-              'pl-4 py-4 w-full text-base leading-6 grow text-black-1 truncate',
+              'pl-4 py-4 w-full text-sm lg:text-base leading-6 grow text-black-1 truncate',
               property.colClassName && property.colClassName(data),
               property.className,
             )}
-            key={property.associated(data)}
+            key={property.associated(data).toString()}
           >
             {property.associated(data)}
           </td>

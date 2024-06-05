@@ -1,11 +1,15 @@
 import { HeaderType } from '../../../shared/authenticated/Table/Table';
 
-type DailyDataType = {
+export type DailyDataType = {
   matricule: string;
   name: string;
   date: string;
   objectif: string;
-  membre: number;
+  membre: {
+    matricule: string;
+    name: string;
+    timeout: string;
+  }[];
   timeout: string;
 };
 
@@ -13,14 +17,17 @@ export const DailyHeading: HeaderType<DailyDataType>[] = [
   {
     name: 'matricule',
     associated: (data) => data.matricule,
+    className: 'uppercase',
   },
   {
     name: 'Responsable',
     associated: (data) => data.name,
+    className: 'max-lg:hidden',
   },
   {
     name: 'Date',
     associated: (data) => data.date,
+    className: 'max-lg:hidden',
   },
   {
     name: 'Objectif',
@@ -29,7 +36,8 @@ export const DailyHeading: HeaderType<DailyDataType>[] = [
   },
   {
     name: 'Membre',
-    associated: (data) => data.membre.toString(),
+    associated: (data) => data.membre.length.toString(),
+    className: 'max-lg:hidden',
   },
   {
     name: 'Temp écoulé',
@@ -48,7 +56,24 @@ export const DailyData: DailyDataType[] = [
     name: 'Tsiory',
     objectif:
       'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
-    membre: 4,
+    membre: [
+      {
+        matricule: 'm001',
+        name: 'Membre 1',
+        timeout: '3.5J/H',
+      },
+
+      {
+        matricule: 'm007',
+        name: 'Membre 1',
+        timeout: '3.5J/H',
+      },
+      {
+        matricule: 'm009',
+        name: 'Membre 1',
+        timeout: '3.5J/H',
+      },
+    ],
     timeout: '3,5 J/H',
     date: '08/02/2005',
   },
@@ -58,7 +83,18 @@ export const DailyData: DailyDataType[] = [
     date: '08/02/2005',
     objectif:
       'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
-    membre: 4,
+    membre: [
+      {
+        matricule: 'm002',
+        name: 'Membre 1',
+        timeout: '3.5J/H',
+      },
+      {
+        matricule: 'm007',
+        name: 'Membre 7',
+        timeout: '3.5J/H',
+      },
+    ],
     timeout: '3,5 J/H',
   },
   {
@@ -67,7 +103,23 @@ export const DailyData: DailyDataType[] = [
     date: '08/02/2005',
     objectif:
       'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
-    membre: 4,
+    membre: [
+      {
+        matricule: 'm005',
+        name: 'Membre 1',
+        timeout: '3.5J/H',
+      },
+      {
+        matricule: 'm008',
+        name: 'Membre 1',
+        timeout: '3.5J/H',
+      },
+      {
+        matricule: 'm009',
+        name: 'Membre 1',
+        timeout: '3.5J/H',
+      },
+    ],
     timeout: '3,5 J/H',
   },
   {
@@ -76,7 +128,13 @@ export const DailyData: DailyDataType[] = [
     date: '08/02/2005',
     objectif:
       'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
-    membre: 4,
+    membre: [
+      {
+        matricule: 'm007',
+        name: 'Membre 1',
+        timeout: '3.5J/H',
+      },
+    ],
     timeout: '3,5 J/H',
   },
   {
@@ -85,7 +143,13 @@ export const DailyData: DailyDataType[] = [
     date: '08/02/2005',
     objectif:
       'Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue,Un petit objectif trè longue',
-    membre: 4,
+    membre: [
+      {
+        matricule: 'm009',
+        name: 'Membre 1',
+        timeout: '3.5J/H',
+      },
+    ],
     timeout: '3,5 J/H',
   },
 ];
@@ -106,7 +170,7 @@ export const filterNameData = [
   },
   {
     id: '4',
-    name: 'John Doe 4',
+    name: 'Capitain Doe 4',
     email: 'JohnDoe4@hairun-technology.com',
     avatar: 'profile.png',
   },
@@ -118,7 +182,7 @@ export const filterNameData = [
   },
   {
     id: '6',
-    name: 'John Doe 6',
+    name: 'Lenon Doe 6',
     email: 'JohnDoe6@hairun-technology.com',
     avatar: 'profile.png',
   },

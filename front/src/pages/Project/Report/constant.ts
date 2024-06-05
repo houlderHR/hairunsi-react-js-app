@@ -27,7 +27,7 @@ export const ReportHeading: HeaderType<ReportType>[] = [
   {
     name: 'description',
     associated: (data) => data.description,
-    className: 'lg:w-1/2 w-1/3',
+    className: 'md:w-1/2 w-5/12',
     sort: true,
   },
   {

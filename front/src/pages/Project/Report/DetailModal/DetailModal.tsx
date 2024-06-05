@@ -24,10 +24,14 @@ const checkStatusColor = (status: string) => {
   }
 };
 
-const ReportDetailModal: FC<ReportModalProps> = ({ onClose, reportDetail }) => (
-  <Modal title="Détail Compte rendu" onClose={onClose}>
+const DetailModal: FC<ReportModalProps> = ({ onClose, reportDetail }) => (
+  <Modal
+    title="Détail Compte rendu"
+    onClose={onClose}
+    classNames="2xl:w-1/3 xl:w-2/4 lg:w-2/4 md:w-3/4 sm:w-10/12 w-11/12 py-4 px-[26px]"
+  >
     <table>
-      <tbody className="text-gray-1 text-xl">
+      <tbody className="text-gray-1 sm:text-base text-xs">
         <tr>
           <td className="uppercase text-secondary ml-8 pb-7 leading-5"># id</td>
           <td className="pb-7 uppercase">{reportDetail?.matricule}</td>
@@ -72,4 +76,4 @@ const ReportDetailModal: FC<ReportModalProps> = ({ onClose, reportDetail }) => (
   </Modal>
 );
 
-export default ReportDetailModal;
+export default DetailModal;

@@ -8,7 +8,7 @@ import Table from '../../../shared/authenticated/Table';
 import TableRow from '../../../shared/authenticated/Table/TableRow';
 import Icon from '../../../shared/Icon';
 import InputIcon from '../../../shared/inputs/InputIcon';
-import { DailyData, DailyHeading, filterNameData } from './constant';
+import { DailyData, DailyDataType, DailyHeading, filterNameData } from './constant';
 import DetailModal from './DetailModal';
 
 const Daily = () => {
@@ -22,11 +22,17 @@ const Daily = () => {
     email: string;
     avatar: string;
   }>();
-  const [dailyDetail, setDailyDetail] = useState<Record<string, string | number>>();
+  const [searchName, setSearchName] = useState<string>();
+  const [dailyDetail, setDailyDetail] = useState<DailyDataType>();
   const [showDetail, setShowDetail] = useState(false);
   const { state: showFilterName, toggle: toggleShowFilterName } = useToggle();
 
-  const openDetail = (_dailyDetail: Record<string, string | number>) => () => {
+  const selectFilterName = (name: { id: string; name: string; email: string; avatar: string }) => {
+    setSearchName(undefined);
+    setNameFilter(name);
+  };
+
+  const openDetail = (_dailyDetail: DailyDataType) => () => {
     setDailyDetail(_dailyDetail);
     setShowDetail(true);
   };
@@ -55,32 +61,40 @@ const Daily = () => {
           <div className="relative w-full" role="presentation" onClick={toggleShowFilterName}>
             <InputIcon
               placeholder="Nom"
-              value={nameFilter?.name}
+              value={searchName ?? nameFilter?.name}
               icon="search"
               additionalClass="bg-gray-3 border-gray-secondary border"
               additionalInputClass="py-4"
-              onChange={() => {}}
+              onChange={(e) => {
+                setSearchName(e.target.value);
+              }}
             />
             {showFilterName && (
               <DropDown classNames="max-h-48">
-                {filterNameData.map((item) => (
-                  <li
-                    className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md flex gap-x-4 flex-row"
-                    key={item.id}
-                    role="presentation"
-                    onClick={() => setNameFilter(item)}
-                  >
-                    <img
-                      className="w-10 h-10 rounded-full"
-                      src={`/images/${item.avatar}`}
-                      alt={item.avatar}
-                    />
-                    <div className="flex flex-col">
-                      {item.name}
-                      <span className="text-secondary-2 text-xs">{item.email}</span>
-                    </div>
-                  </li>
-                ))}
+                {filterNameData
+                  .filter(
+                    (user) =>
+                      user.name.toLowerCase().includes(searchName?.trim().toLowerCase() ?? '') ||
+                      user.email.toLowerCase().includes(searchName?.trim().toLowerCase() ?? ''),
+                  )
+                  .map((item) => (
+                    <li
+                      className="px-8 cursor-pointer py-2 hover:bg-gray-50 rounded-md flex gap-x-4 flex-row"
+                      key={item.id}
+                      role="presentation"
+                      onClick={() => selectFilterName(item)}
+                    >
+                      <img
+                        className="w-10 h-10 rounded-full"
+                        src={`/images/${item.avatar}`}
+                        alt={item.avatar}
+                      />
+                      <div className="flex flex-col">
+                        {item.name}
+                        <span className="text-secondary-2 text-xs">{item.email}</span>
+                      </div>
+                    </li>
+                  ))}
               </DropDown>
             )}
           </div>
@@ -116,16 +130,18 @@ const Daily = () => {
         </div>
       </div>
       <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-xl border min-h-[calc(100vh-200px)] border-white-1 flex flex-col">
-        <Table headers={DailyHeading}>
+        <Table classNames="" headers={DailyHeading}>
           {DailyData.map((_value) => (
             <TableRow
               properties={DailyHeading}
               data={_value}
               key={_value.matricule}
               action={
-                <span className="text-gray-1 hover:text-secondary-2 cursor-pointer flex items-center justify-center h-full w-full mt-2">
-                  <Icon name="forward" onClick={openDetail(_value)} size={11} />
-                </span>
+                <Icon
+                  name="forward"
+                  onClick={openDetail(_value)}
+                  className="text-gray-1 cursor-pointer hover:text-secondary-2 duration-150 xl:w-3 xl:h-3 lg:w-2.5 lg:h-2.5 w-2 h-2 mt-2"
+                />
               }
             />
           ))}

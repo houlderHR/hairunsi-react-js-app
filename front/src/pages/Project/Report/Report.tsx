@@ -9,7 +9,7 @@ import Icon from '../../../shared/Icon';
 import InputIcon from '../../../shared/inputs/InputIcon';
 import AdditionalSidebarReport from './AdditionalSidebarReport';
 import { DataFilterStatus, ReportData, ReportHeading, ReportType } from './constant';
-import ReportDetailModal from './ReportDetailModal';
+import DetailModal from './DetailModal';
 
 const Report = () => {
   const { state: filterShowStatus, toggle: toggleFilterStatus } = useToggle();
@@ -45,7 +45,7 @@ const Report = () => {
         }
       >
         <div className="w-full bg-white px-2 md:px-6 py-4">
-          <div className="flex flex-col gap-y-4 md:flex-row gap-x-4 w-full sm:w-10/12 xl:w-7/12 ml-auto bg-white">
+          <div className="flex flex-col gap-y-4 sm:flex-row gap-x-4 w-full sm:w-10/12 xl:w-7/12 ml-auto bg-white">
             <div className="relative w-full" role="presentation" onClick={toggleFilterStatus}>
               <InputIcon
                 placeholder="Statut"
@@ -88,7 +88,7 @@ const Report = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-xl border min-h-[calc(100vh-200px)] border-white-1 flex flex-col">
+        <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-xl border min-h-[calc(100vh-275px)] lg:min-h-[calc(100vh-200px)] border-white-1 flex flex-col">
           <Table headers={ReportHeading}>
             {ReportData.map((_value) => (
               <TableRow
@@ -98,8 +98,7 @@ const Report = () => {
                 action={
                   <Icon
                     name="forward"
-                    className="text-gray-1 cursor-pointer hover:text-secondary-2 duration-150"
-                    size={12}
+                    className="text-gray-1 cursor-pointer hover:text-secondary-2 duration-150 xl:w-3 xl:h-3 lg:w-2.5 lg:h-2.5 w-2 h-2 mt-2"
                     onClick={openReportDetail(_value)}
                   />
                 }
@@ -127,7 +126,7 @@ const Report = () => {
         </div>
       </ProjectDailyReportLayout>
       {showReportDetail && (
-        <ReportDetailModal reportDetail={reportDetail} onClose={toggleReportDetailModal} />
+        <DetailModal reportDetail={reportDetail} onClose={toggleReportDetailModal} />
       )}
     </>
   );

@@ -15,7 +15,7 @@ const ProjectDailyReportLayout: FC<PropsWithChildren<ProjectDailyAccountLayoutPr
   textAreaPlaceholder,
   sidebarAdditionalComponent,
 }) => (
-  <div className="h-full w-full pt-14">
+  <div className="h-full w-full pt-14 overflow-x-hidden">
     <SidebarDailyReport
       buttonName={buttonName}
       textAreaPlaceholder={textAreaPlaceholder}
