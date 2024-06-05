@@ -51,15 +51,13 @@ const Create: FC<ICreate> = ({ onClose }) => {
     defaultValues: {
       name: '',
       description: '',
-      client: '',
     },
   });
 
   const handleClick: SubmitHandler<{
     name: string;
     description: string;
-    client: string;
-  }> = (data: { name: string; description: string; client: string }) => {
+  }> = (data: { name: string; description: string }) => {
     (document.getElementsByName('project') as NodeListOf<HTMLInputElement>)?.forEach((element) => {
       if (element.checked) {
         typeProject.current = element.value;
@@ -70,7 +68,7 @@ const Create: FC<ICreate> = ({ onClose }) => {
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('description', data.description);
-      formData.append('client', data.client);
+      formData.append('client', searcClient ?? clientFound?.name);
       formData.append('image', file);
       formData.append('type', typeProject.current);
     }

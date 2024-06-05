@@ -15,7 +15,7 @@ const Document = () => {
   };
 
   return (
-    <div className="pt-[100px] w-full min-h-full flex flex-col justify-center items-center">
+    <div className="w-full min-h-full flex flex-col justify-center items-center">
       <div className="w-full p-10  flex flex-col gap-y-7">
         <div className="w-full h-[76px] border-[1px] border-dashed border-[#bdbdbd] rounded-xl">
           <InputFileWithDragAndDrop
