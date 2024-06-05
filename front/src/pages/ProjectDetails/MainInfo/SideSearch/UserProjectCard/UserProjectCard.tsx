@@ -44,7 +44,7 @@ const UserProjectCard: FC<CollaboratorCardProps> = ({
     <div
       className={twMerge(
         additionalClass,
-        'border border-white-1 flex gap-x-28 rounded-xl py-2 px-3 relative',
+        'border border-white-1 hover:border-gray-2 flex gap-x-28 rounded-xl py-2 px-3 relative',
       )}
     >
       <div>
