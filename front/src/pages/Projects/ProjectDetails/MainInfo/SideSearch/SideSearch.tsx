@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
-import CardItemRole from '../../../../shared/authenticated/CardUserManager/CardRole/CardItemRole';
-import Icon from '../../../../shared/Icon';
-import InputIcon from '../../../../shared/inputs/InputIcon';
-import { mockUserCollaborator, mockUserResponsable } from './constant';
+import CardItemRole from '../../../../../shared/authenticated/CardUserManager/CardRole/CardItemRole';
+import Icon from '../../../../../shared/Icon';
+import InputIcon from '../../../../../shared/inputs/InputIcon';
+import { mockUserCollaborator, mockUserResponsable, UserProjectType } from './constant';
 import DropDownUser from './DropDownUser';
 import UserProjectCard from './UserProjectCard';
 
@@ -15,12 +15,14 @@ const SideSearch: FC = () => {
   const [showBlocAddUser, setShowBlocAddUser] = useState(false);
   const [showDropDownSearch, setShowDropDownSearch] = useState(false);
   const addAllUserSelected = () => {
-    setShowBlocAddUser(!showDropDownSearch);
+    setShowBlocAddUser(false);
   };
   const selectUserOnDropdown = () => {
-    console.log('showBlocAddUser: ', showBlocAddUser);
-
     setShowBlocAddUser(true);
+  };
+
+  const setValue = (user: UserProjectType) => {
+    setUserSelected([user]);
   };
 
   return (
@@ -32,6 +34,7 @@ const SideSearch: FC = () => {
       >
         <InputIcon
           icon="search"
+          onChange={() => {}}
           iconColor="text-gray-10"
           additionalInputClass="placeholder:text-gray-1"
           additionalClass="rounded-t-xl !rounded-b-none h-[56px] bg-white-2 sticky top-0 right-0 z-[500]"
@@ -39,7 +42,11 @@ const SideSearch: FC = () => {
         />
         {showDropDownSearch && (
           <div className="absolute right-3 left-3 z-50">
-            <DropDownUser onClickItem={selectUserOnDropdown} items={userResponsable} />
+            <DropDownUser
+              setValue={setValue}
+              onClickItem={selectUserOnDropdown}
+              items={userResponsable}
+            />
           </div>
         )}
       </div>
@@ -50,6 +57,7 @@ const SideSearch: FC = () => {
               <div className="pt-2 pb-6 px-5  flex flex-wrap gap-2">
                 {userSelected.map((userItem) => (
                   <CardItemRole
+                    key={userItem.id}
                     id={userItem.id}
                     addClass="!rounded-lg border-gray-4 !py-px"
                     icon="x-1"
@@ -93,7 +101,7 @@ const SideSearch: FC = () => {
 
                       <div className="space-y-2 pb-4">
                         {userResponsable.map((user) => (
-                          <UserProjectCard showCheckbox showDetails user={user} />
+                          <UserProjectCard key={user.id} showCheckbox showDetails user={user} />
                         ))}
                       </div>
                     </div>
@@ -104,7 +112,12 @@ const SideSearch: FC = () => {
                       </h2>
                       <div className="space-y-2">
                         {userCollaborator.map((user) => (
-                          <UserProjectCard showCheckbox={false} showDetails user={user} />
+                          <UserProjectCard
+                            key={user.id}
+                            showCheckbox={false}
+                            showDetails
+                            user={user}
+                          />
                         ))}
                       </div>
                     </div>

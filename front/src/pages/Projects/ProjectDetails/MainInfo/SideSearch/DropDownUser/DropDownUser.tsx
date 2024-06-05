@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from 'react';
+import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { UserProjectType } from '../constant';
 import UserProjectCard from '../UserProjectCard';
@@ -7,7 +7,7 @@ interface DropDownProps {
   items: UserProjectType[];
   additionalClassItem?: string;
   additionalClassBlock?: string;
-  setValue?: (elem: UserProjectType, e?: MouseEvent<HTMLElement>) => void;
+  setValue?: (elem: UserProjectType) => void;
   onClickItem?: () => void;
 }
 
@@ -34,14 +34,15 @@ const DropDownUser: FC<DropDownProps> = ({
             )}
             key={item.id}
             role="presentation"
-            onClick={(e: MouseEvent<HTMLElement>) => {
-              setValue(item, e);
+            onClick={() => {
+              setValue(item);
               if (onClickItem) {
                 onClickItem();
               }
             }}
           >
             <UserProjectCard
+              key={item.id}
               additionalClass="!border-none !py-1"
               user={item}
               showCheckbox={false}
@@ -57,6 +58,7 @@ const DropDownUser: FC<DropDownProps> = ({
             role="presentation"
           >
             <UserProjectCard
+              key={item.id}
               additionalClass="!border-none !py-1"
               user={item}
               showCheckbox={false}

@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import routes from '../../../../routes/paths';
-import Icon from '../../../../shared/Icon';
+import routes from '../../../../../routes/paths';
+import Icon from '../../../../../shared/Icon';
 
 const menu = {
   active: 'border-b-2 border-secondary-2 text-secondary',

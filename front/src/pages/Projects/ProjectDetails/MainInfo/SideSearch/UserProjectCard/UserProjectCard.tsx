@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
-import Icon from '../../../../../shared/Icon';
+import DropDown from '../../../../../../shared/authenticated/Modal/DropDown';
+import Icon from '../../../../../../shared/Icon';
 import InputCheckbox from '../../InputCheckbox';
 import { PostProject, UserProjectType } from '../constant';
 import OptionMenuDropdown from './OptionMenuDropdown/OptionMenuDropdown';
