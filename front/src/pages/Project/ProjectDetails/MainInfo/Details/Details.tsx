@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Contacts from './Contacts';
 import Document from './Document';
 import Environment from './Environment';
 import TabLink from './Link';
@@ -10,7 +11,10 @@ const Details: FC = () => {
       title: 'Documents',
       content: <Document />,
     },
-    { title: 'Contacts', content: <div className="h-full bg-yellow-200">fd</div> },
+    {
+      title: 'Contacts',
+      content: <Contacts />,
+    },
     { title: 'Liens', content: <TabLink /> },
     { title: 'Environnements', content: <Environment /> },
     { title: 'Contrats', content: <div className="h-[2000px] bg-yellow-200">fd</div> },
