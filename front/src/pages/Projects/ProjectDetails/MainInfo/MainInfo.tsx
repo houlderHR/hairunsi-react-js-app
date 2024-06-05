@@ -13,6 +13,7 @@ const MainInfo: FC = () => {
     description:
       'Ante ipsum erat quam sed aliquam sed vestibulum. Massa eget in at amet gravida. Cursu amet maecenas tortor rhoncus vitae duis. Massa quam malesuada iaculis fringilla.',
   };
+  const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -25,12 +26,19 @@ const MainInfo: FC = () => {
       </div>
       <div className="flex-none h-full block">
         <button
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
           type="button"
           onClick={toggleMenu}
-          className="p-2 absolute !z-[5000] top-0 left-0 bg-blue-500 text-white rounded "
+          className="p-3 absolute !z-[5000] top-6 right-1 bg-secondary  lg:hidden block shadow-md text-white rounded-full "
         >
-          {isOpen ? <Icon name="search" /> : <Icon name="x" />}
+          {isOpen ? <Icon name="x" /> : <Icon name="search" />}
         </button>
+        {isHovered && (
+          <div className="absolute z-[999] lg:hidden text-xs right-12 top-0 mt-2 p-2 bg-gray-800 text-white rounded-lg shadow-lg">
+            Ajouter collaborateurs
+          </div>
+        )}
         <SideSearch isOpen={isOpen} />
       </div>
     </div>

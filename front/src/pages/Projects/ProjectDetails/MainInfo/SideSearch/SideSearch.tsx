@@ -133,31 +133,6 @@ const SideSearch: FC<{ isOpen: boolean }> = ({ isOpen }) => {
         </div>
       </div>
     </div>
-    // </div>
-    // <div>
-    //   <button
-    //     type="button"
-    //     onClick={toggleMenu}
-    //     className="p-2 absolute left-0 bg-blue-500 text-white rounded"
-    //   >
-    //     {isOpen ? 'Close Menu' : 'Open Menu'}
-    //   </button>
-
-    //   <div
-    // //     className={`fixed z-[1000] top-30 right-0 h-full w-64 bg-gray-800 text-white transform ${
-    //       isOpen ? 'translate-x-0' : 'translate-x-full'
-    //     } transition-transform duration-300 ease-in-out`}
-    //   >
-    //     <div className="p-4">
-    //       <ul>
-    //         <li className="mt-4">Home</li>
-    //         <li className="mt-4">About</li>
-    //         <li className="mt-4">Services</li>
-    //         <li className="mt-4">Contact</li>
-    //       </ul>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

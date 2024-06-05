@@ -1,12 +1,7 @@
 import { FC, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import routes from '../../../../../routes/paths';
 import Icon from '../../../../../shared/Icon';
-
-const menu = {
-  active: 'border-b-2 border-secondary-2 text-secondary',
-  inactive: '!border-none !text-gray-4',
-};
+import MenuItem from './MenuItem';
 
 const Menu: FC<{ id: string }> = ({ id }) => {
   const [isDropdown, setIsDropdown] = useState(false);
@@ -24,60 +19,45 @@ const Menu: FC<{ id: string }> = ({ id }) => {
       </div>
       {isDropdown && (
         <ul className="absolute  transition shadow-bottom bg-white w-full  px-4 border-b-1 pb-5 flex lg:hidden flex-col text-gray-4 text-xs font-bold leading-[18px] list-none">
-          <NavLink
-            onClick={onclikedMenu}
-            to={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.main_info.path}`}
-            className={({ isActive }) =>
-              isActive
-                ? `${menu.active}  px-2 py-2 !border-none text-secondary hover:bg-white-1`
-                : `${menu.inactive} hover:bg-white-1 px-2 py-2`
-            }
-          >
-            <li className=" w-full">INFORMATIONS GENERALES</li>
-          </NavLink>
-          <NavLink
-            onClick={onclikedMenu}
-            to={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.daily.path}`}
-            className={({ isActive }) =>
-              isActive
-                ? `${menu.active} hover:bg-white-1 px-2 py-2 !border-b-none !border-none text-secondary`
-                : `${menu.inactive} hover:bg-white-1 px-2 py-2`
-            }
-          >
-            <li className="cursor-pointer">DAILY</li>
-          </NavLink>
-          <NavLink
-            onClick={onclikedMenu}
-            to={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.report.path}`}
-            className={({ isActive }) =>
-              isActive
-                ? `${menu.active} hover:bg-white-1 px-2 py-2 !border-b-none !border-none text-secondary`
-                : `${menu.inactive} hover:bg-white-1 px-2 py-2`
-            }
-          >
-            <li className="cursor-pointer">COMPTE RENDU</li>
-          </NavLink>
+          <MenuItem
+            url={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.main_info.path}`}
+            name="INFORMATIONS GENERALES"
+            additionalClassActive="px-2 py-2 !border-none text-secondary hover:bg-white-1"
+            additionalClassInactive="hover:bg-white-1 px-2 py-2"
+            onclikedMenu={onclikedMenu}
+          />
+          <MenuItem
+            url={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.daily.path}`}
+            name="DAILY"
+            additionalClassActive="px-2 py-2 !border-none text-secondary hover:bg-white-1"
+            additionalClassInactive="hover:bg-white-1 px-2 py-2"
+            onclikedMenu={onclikedMenu}
+          />
+          <MenuItem
+            url={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.report.path}`}
+            name="COMPTE RENDU"
+            additionalClassActive="px-2 py-2 !border-none text-secondary hover:bg-white-1"
+            additionalClassInactive="hover:bg-white-1 px-2 py-2"
+            onclikedMenu={onclikedMenu}
+          />
         </ul>
       )}
       <ul className="hidden lg:block lg:relative lg:flex lg:gap-x-7 text-gray-4 text-xs font-bold leading-[18px] list-none">
-        <NavLink
-          to={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.main_info.path}`}
-          className={({ isActive }) => (isActive ? menu.active : menu.inactive)}
-        >
-          <li>INFORMATIONS GENERALES</li>
-        </NavLink>
-        <NavLink
-          to={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.daily.path}`}
-          className={({ isActive }) => (isActive ? menu.active : menu.inactive)}
-        >
-          <li className="cursor-pointer">DAILY</li>
-        </NavLink>
-        <NavLink
-          to={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.report.path}`}
-          className={({ isActive }) => (isActive ? menu.active : menu.inactive)}
-        >
-          <li className="cursor-pointer">COMPTE RENDU</li>
-        </NavLink>
+        <MenuItem
+          url={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.main_info.path}`}
+          name="INFORMATIONS GENERALES"
+          onclikedMenu={onclikedMenu}
+        />
+        <MenuItem
+          url={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.daily.path}`}
+          name="DAILY"
+          onclikedMenu={onclikedMenu}
+        />
+        <MenuItem
+          url={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.report.path}`}
+          name="COMPTE RENDU"
+          onclikedMenu={onclikedMenu}
+        />
       </ul>
     </nav>
   );
