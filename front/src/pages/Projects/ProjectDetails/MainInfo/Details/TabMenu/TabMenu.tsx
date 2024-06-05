@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import TabItem from './TabItem';
 
 type TabsType = {
   title: string;
@@ -8,26 +9,31 @@ type TabsType = {
 const TabMenu: FC<{ tabs: TabsType[] }> = ({ tabs }) => {
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleTabClick = (index: number) => {
+  const onClick = (index: number) => {
     setActiveTab(index);
   };
 
   return (
-    <div className="p-4 h-full z-20 relative w-full">
+    <div className=" p-2 xl:p-4 h-full z-20 relative w-full">
       <div className="absolute z-40 rounded-t-xl top-0 right-0 !bg-white w-full !h-20" />
-      <div className="fixed z-50 p-1 z-50 space-x-4 bg-gray-8 rounded-xl">
-        {tabs.map((tab, index) => (
-          <button
-            type="button"
-            key={tab.title}
-            onClick={() => handleTabClick(index)}
-            className={`px-4 py-3 rounded-xl focus:outline-none ${
-              activeTab === index ? 'bg-white text-secondary-2' : 'text-gray-1'
-            }`}
-          >
-            {tab.title}
-          </button>
-        ))}
+      <div className="fixed z-50 p-1 z-50 lg:space-x-[2px] xl:space-x-4 bg-gray-8 rounded-xl">
+        <TabItem
+          id={0}
+          name="Documents"
+          activeTab={activeTab}
+          icon="folder-solid"
+          onClick={onClick}
+        />
+        <TabItem id={1} name="Contacts" activeTab={activeTab} icon="user" onClick={onClick} />
+        <TabItem id={2} name="Liens" activeTab={activeTab} icon="link-solid" onClick={onClick} />
+        <TabItem
+          id={3}
+          name="Environnements"
+          activeTab={activeTab}
+          icon="tools"
+          onClick={onClick}
+        />
+        <TabItem id={4} name="Contrats" activeTab={activeTab} icon="pen" onClick={onClick} />
       </div>
       <div className=" absolute z-32 top-2 right-0 h-full w-full rounded-xl overflow-auto">
         <div className="h-full pt-[72px] ">{tabs[activeTab].content}</div>

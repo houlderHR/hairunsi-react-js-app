@@ -4,7 +4,7 @@ import NavBarProject from './NavbarProject';
 
 const ProjectDetails: FC = () => (
   <div className="min-h-screen text-black h-full bg-gray-8">
-    <NavBarProject id=":id" image="/images/logo/panda.png" />
+    <NavBarProject id=":id" image="/images/logo/panda.png" name="Gen - General Enterprise" />
     <div className="h-full">
       <Outlet />
     </div>

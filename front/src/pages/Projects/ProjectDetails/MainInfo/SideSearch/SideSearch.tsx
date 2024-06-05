@@ -6,7 +6,7 @@ import { mockUserCollaborator, mockUserResponsable, UserProjectType } from './co
 import DropDownUser from './DropDownUser';
 import UserProjectCard from './UserProjectCard';
 
-const SideSearch: FC = () => {
+const SideSearch: FC<{ isOpen: boolean }> = ({ isOpen }) => {
   const [userResponsable, setUserResponsable] = useState(mockUserResponsable);
   const [userCollaborator, setUserCollaborator] = useState(mockUserCollaborator);
 
@@ -26,7 +26,11 @@ const SideSearch: FC = () => {
   };
 
   return (
-    <div className="h-full w-full relative lg:w-[492px] bg-white border border-white-1 rounded-xl">
+    <div
+      className={`absolute bottom-0 z-[500] top-4 h-full w-full right-0 lg:!top-0 lg:translate-x-0 transform lg:relative lg:w-[400px] xl:w-[492px] bg-white border border-white-1 rounded-xl ${
+        isOpen ? 'translate-x-0' : 'translate-x-full'
+      } transition-transform duration-300 ease-in-out`}
+    >
       <div
         className="!bg-white rounded-xl"
         role="presentation"
@@ -129,6 +133,31 @@ const SideSearch: FC = () => {
         </div>
       </div>
     </div>
+    // </div>
+    // <div>
+    //   <button
+    //     type="button"
+    //     onClick={toggleMenu}
+    //     className="p-2 absolute left-0 bg-blue-500 text-white rounded"
+    //   >
+    //     {isOpen ? 'Close Menu' : 'Open Menu'}
+    //   </button>
+
+    //   <div
+    // //     className={`fixed z-[1000] top-30 right-0 h-full w-64 bg-gray-800 text-white transform ${
+    //       isOpen ? 'translate-x-0' : 'translate-x-full'
+    //     } transition-transform duration-300 ease-in-out`}
+    //   >
+    //     <div className="p-4">
+    //       <ul>
+    //         <li className="mt-4">Home</li>
+    //         <li className="mt-4">About</li>
+    //         <li className="mt-4">Services</li>
+    //         <li className="mt-4">Contact</li>
+    //       </ul>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

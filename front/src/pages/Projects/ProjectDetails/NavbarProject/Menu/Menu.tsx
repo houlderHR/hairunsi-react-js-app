@@ -14,16 +14,16 @@ const Menu: FC<{ id: string }> = ({ id }) => {
     setIsDropdown(!isDropdown);
   };
   return (
-    <nav className="md:pl-[116px] transition ease-in-out duration-500">
+    <nav className="lg:pl-[116px] transition ease-in-out duration-500">
       <div
         role="presentation"
-        className="absolute z-[1000] hover:cursor-pointer right-2 top-3 md:hidden"
+        className="absolute z-[1000] hover:cursor-pointer right-2 top-3 lg:hidden"
         onClick={onclikedMenu}
       >
-        <Icon name="bars-solid" size={20} />
+        {isDropdown ? <Icon name="x" size={20} /> : <Icon name="bars-solid" size={20} />}
       </div>
       {isDropdown && (
-        <ul className="absolute  transition shadow-bottom bg-white w-full  px-4 border-b-1 pb-5 flex md:hidden flex-col text-gray-4 text-xs font-bold leading-[18px] list-none">
+        <ul className="absolute  transition shadow-bottom bg-white w-full  px-4 border-b-1 pb-5 flex lg:hidden flex-col text-gray-4 text-xs font-bold leading-[18px] list-none">
           <NavLink
             onClick={onclikedMenu}
             to={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.main_info.path}`}
@@ -59,7 +59,7 @@ const Menu: FC<{ id: string }> = ({ id }) => {
           </NavLink>
         </ul>
       )}
-      <ul className="hidden md:block md:relative md:flex md:gap-x-7 text-gray-4 text-xs font-bold leading-[18px] list-none">
+      <ul className="hidden lg:block lg:relative lg:flex lg:gap-x-7 text-gray-4 text-xs font-bold leading-[18px] list-none">
         <NavLink
           to={`${routes.authentified.subpaths.project.path}/${id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.main_info.path}`}
           className={({ isActive }) => (isActive ? menu.active : menu.inactive)}

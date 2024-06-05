@@ -3,8 +3,8 @@ import Icon from '../../../../../shared/Icon';
 import ProjectType from '../constant';
 
 const Header: FC<{ project: ProjectType }> = ({ project }) => (
-  <div className="bg-white px-[72px] py-3 flex flex-wrap rounded-xl border border-white-1 w-full">
-    <div className="flex gap-8 items-center w-full lg:w-1/3 py-[23px]">
+  <div className="bg-white px-5 lg:px-[28px] xl:px-[72px] py-1 lg:py-3 flex flex-wrap rounded-xl border border-white-1 w-full">
+    <div className="flex gap-2 lg:gap-8 items-center w-full lg:w-1/3 py-[10px] lg:py-[23px]">
       <div className="h-20 w-20">
         <img className="object-contain" src={project.image} alt="" />
       </div>
