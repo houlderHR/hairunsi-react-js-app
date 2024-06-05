@@ -36,7 +36,7 @@ const TabMenu: FC<{ tabs: TabsType[] }> = ({ tabs }) => {
         <TabItem id={4} name="Contrats" activeTab={activeTab} icon="pen" onClick={onClick} />
       </div>
       <div className=" absolute z-32 top-2 right-0 h-full w-full rounded-xl overflow-auto">
-        <div className="h-full pt-[72px] ">{tabs[activeTab].content}</div>
+        <div className="h-full pt-[108px] px-4">{tabs[activeTab].content}</div>
       </div>
     </div>
   );
