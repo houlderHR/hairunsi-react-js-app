@@ -11,9 +11,9 @@
   }
 
   .remove {
-    @apply w-full h-full flex flex-col items-center bg-transparent relative;
+    @apply w-full h-full items-center bg-transparent relative;
     .picture {
-      @apply p-5 h-full w-full;
+      @apply p-5 h-full w-auto;
     }
     .restore {
       @apply text-[#478fff] font-medium cursor-pointer absolute z-50 bottom-1 w-full h-full px-1 border hover:bg-gray-600/20 flex flex-col items-center justify-center border-slate-50 rounded-md;

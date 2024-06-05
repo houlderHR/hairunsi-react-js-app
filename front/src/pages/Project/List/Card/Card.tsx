@@ -32,7 +32,7 @@ const Card: FC<ICard> = ({ project, key }) => {
 
   return (
     <Link
-      to={`${routes.authentified.subpaths.project.path}${routes.authentified.subpaths.project.subpaths.contact.path}`}
+      to={`${routes.authentified.subpaths.project.path}${routes.authentified.subpaths.project.subpaths.document.path}`}
       key={key}
     >
       <div className="w-[380px] h-auto bg-white border-[#F0F0F0] hover:border-[#3E60C1] hover:cursor-pointer border-[1px] rounded-xl flex flex-col py-5 px-6 gap-y-5">

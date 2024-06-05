@@ -12,7 +12,7 @@ interface IFilter {
 }
 
 const Filter: FC<IFilter> = ({ onClose }) => {
-  const [typeValueChange, setTypeValueChage] = useState(false);
+  const [typeValueChange, setTypeValueChange] = useState(false);
   const [showClients, setShowClients] = useState(false);
   const [searcClient, setSearchClient] = useState<string>();
   const [clientFound, setClientFound] = useState<{ name: string; id: string }>({
@@ -67,7 +67,7 @@ const Filter: FC<IFilter> = ({ onClose }) => {
               Type
             </div>
             <div className="col-span-8 2xl:col-span-6">
-              <TypesProjectIncludingAll setValueType={() => setTypeValueChage((s) => !s)} />
+              <TypesProjectIncludingAll setValueType={() => setTypeValueChange((s) => !s)} />
             </div>
           </div>
           <div className="grid grid-cols-8 items-center justify-center">

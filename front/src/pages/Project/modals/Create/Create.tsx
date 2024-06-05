@@ -3,8 +3,11 @@ import { FC, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Modal from '../../../../shared/authenticated/Modal';
+import DropDown from '../../../../shared/authenticated/Modal/DropDown';
 import Input from '../../../../shared/inputs/Input';
 import InputFileWithDragAndDrop from '../../../../shared/inputs/InputFileWithDragAndDrop';
+import InputIcon from '../../../../shared/inputs/InputIcon';
+import { CLIENTS } from '../../constants';
 import TypesProjectExcludingAll from '../TypesProjectIncludingAll/TypesProjectExcludingtAll';
 
 interface ICreate {
@@ -21,8 +24,27 @@ const form = yup
   .required();
 
 const Create: FC<ICreate> = ({ onClose }) => {
+  const [typeValueChange, setTypeValueChange] = useState(false);
+  const [showClients, setShowClients] = useState(false);
+  const [searcClient, setSearchClient] = useState<string>();
+  const [clientFound, setClientFound] = useState<{ name: string; id: string }>({
+    name: '',
+    id: '',
+  });
+  const [clients, setClients] = useState<{ name: string; id: string }[] | undefined>();
   const [file, setFile] = useState<File | null | undefined>();
   const typeProject = useRef<string | null>();
+
+  const getClient = (client: { name: string; id: string }) => {
+    setSearchClient(undefined);
+    setClientFound(client);
+  };
+
+  const changeClientValueForSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cl = CLIENTS.filter((c) => c.name.toUpperCase().includes(e.target.value.toUpperCase()));
+    setClients(cl.length > 0 ? cl : []);
+    setSearchClient(e.target.value);
+  };
 
   const { handleSubmit, control, watch } = useForm({
     resolver: yupResolver(form),
@@ -99,52 +121,46 @@ const Create: FC<ICreate> = ({ onClose }) => {
                 />
               )}
             />
-            <Controller
-              control={control}
-              name="client"
-              render={({ field: { ref, onChange, onBlur, value } }) => (
-                <Input
-                  value={value.startsWith(' ') ? value.trimStart() : value}
-                  type="text"
-                  placeholder="Client"
-                  additionalClass="!h-[56px]"
-                  refs={ref}
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  required
-                />
+            {!typeValueChange &&
+              !(document.getElementById('Interne') as HTMLInputElement)?.checked && (
+                <div className="w-full flex flex-col ">
+                  <div
+                    role="presentation"
+                    className="flex flex-col justify-center relative"
+                    onClick={() => setShowClients((s) => !s)}
+                  >
+                    <InputIcon
+                      icon="search"
+                      placeholder="Client"
+                      additionalClass="border"
+                      value={searcClient ?? clientFound?.name}
+                      onChange={(e) => changeClientValueForSearch(e)}
+                    />
+                    <div className="absolute w-full">
+                      {showClients && <DropDown items={clients || CLIENTS} setValue={getClient} />}
+                    </div>
+                  </div>
+                </div>
               )}
-            />
           </div>
         </div>
         <div className="flex flex-row">
           <div className="w-1/3" />
           <div className="w-2/3 flex flex-row justify-start items-center text-gray-1 mb-1 gap-8">
-            <TypesProjectExcludingAll />
+            <TypesProjectExcludingAll setValueType={() => setTypeValueChange((s) => !s)} />
           </div>
         </div>
         <div className="flex flex-col relative 2xl:mb-20 mb-10">
           <button
             type="submit"
             className={
-              !watch('name') || !watch('description') || !watch('client')
+              !watch('name') || !watch('description')
                 ? 'mt-1 px-2 py-3 text-sm border text-white text-[14px] rounded-md bg-[#DEDEDE] !cursor-not-allowed'
                 : 'mt-1 px-2 py-3 text-sm border text-white text-[14px] rounded-md bg-primary'
             }
           >
             Créer
           </button>
-          {/* <div className="absolute top-full mt-1 flex flex-col justify-start items-start text-start">
-                {!errors.email &&
-                  match.map((message: string) => (
-                    <div
-                      className="leading-none text-red-500 my-0 ml-0 text-xs font-medium"
-                      key={message}
-                    >
-                      {message}
-                    </div>
-                  ))}
-              </div> */}
         </div>
       </form>
     </Modal>
