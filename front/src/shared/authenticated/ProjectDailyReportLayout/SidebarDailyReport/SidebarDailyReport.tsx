@@ -1,5 +1,7 @@
 import { FC, useState } from 'react';
 import { DateValueType } from 'react-tailwindcss-datepicker';
+import { twMerge } from 'tailwind-merge';
+import Icon from '../../../Icon';
 import InputDate from '../../../inputs/InputDate';
 import Button from '../../buttons/Button';
 import TextArea from '../../input/TextArea';
@@ -9,6 +11,8 @@ interface SidebarDailyReportProps {
   additionalComponent: JSX.Element;
   textAreaPlaceholder: string;
   buttonName: string;
+  showSidebar?: boolean;
+  closeSidebar: () => void;
 }
 
 const SidebarDailyReport: FC<SidebarDailyReportProps> = ({
@@ -16,6 +20,8 @@ const SidebarDailyReport: FC<SidebarDailyReportProps> = ({
   additionalComponent,
   textAreaPlaceholder,
   buttonName,
+  showSidebar,
+  closeSidebar,
 }) => {
   const [date, setDate] = useState<DateValueType>({
     startDate: new Date(),
@@ -23,8 +29,16 @@ const SidebarDailyReport: FC<SidebarDailyReportProps> = ({
   });
 
   return (
-    <div className="lg:w-[460px] w-52 bg-white border border-white-1 left-0 h-full fixed top-0 pt-16 z-[54] border-b border-gray-white-1 pb-6 px-6 flex flex-col">
-      <h1 className="text-primary font-medium text-base leading-6 mb-7">{title}</h1>
+    <div
+      className={twMerge(
+        'lg:w-[460px] sm:w-52 translate-x-0 bg-white border border-white-1 left-0 h-full fixed top-0 pt-16 z-[56] border-b border-gray-white-1 pb-6 px-6 duration-200 flex flex-col',
+        showSidebar ? 'w-full translate-x-0' : 'max-sm:-translate-x-full',
+      )}
+    >
+      <h1 className="text-primary font-medium text-base leading-6 mb-7 flex flex-row justify-between items-center">
+        {title}
+        <Icon name="x" onClick={closeSidebar} className="sm:hidden cursor-pointer" />
+      </h1>
       <InputDate date={date} onChange={(value) => setDate(value)} />
       <div className="mt-4">
         <TextArea classNames="lg:text-base text-xs" placeholder={textAreaPlaceholder} />
