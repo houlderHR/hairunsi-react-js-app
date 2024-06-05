@@ -50,7 +50,7 @@ const SideSearch: FC = () => {
         )}
       </div>
       <div className="flex flex-col h-full !rounded-xl !relative">
-        {userSelected.length > 0 && (
+        {/* {userSelected.length > 0 && (
           <div className="relative bg-white z-40">
             <div className="border relative pb-6">
               <div className="pt-2 pb-6 px-5  flex flex-wrap gap-2">
@@ -70,7 +70,7 @@ const SideSearch: FC = () => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
         <div className="relative -mt-2 h-full ">
           <div className="absolute -top-12 bg-white !z-20 pb-5 bottom-0 right-0 h-full w-full rounded-xl overflow-auto">
             <div
