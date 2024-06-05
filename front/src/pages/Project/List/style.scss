@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@layer components {
+  .list {
+    @apply relative grid grid-cols-1 md:grid md:grid-cols-2 content-start justify-items-center lg:grid lg:grid-cols-3 2xl:grid 2xl:grid-cols-4 justify-center gap-4 w-full h-[880px];
+    .card {
+      @apply w-[380px] h-[216px];
+    }
+  }
+}

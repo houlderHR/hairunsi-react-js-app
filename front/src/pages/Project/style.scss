@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@layer components {
+  .container-project {
+    @apply flex flex-col justify-start;
+    .content {
+      @apply flex flex-col gap-y-8 w-full xl:w-[1568px] mt-10 pt-6;
+      .filter {
+        @apply w-full h-1/4 bg-red-500;
+      }
+    }
+  }
+}

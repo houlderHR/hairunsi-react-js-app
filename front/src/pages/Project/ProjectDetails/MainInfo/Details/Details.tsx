@@ -1,12 +1,17 @@
 import { FC } from 'react';
+import Document from '../../../Document';
+import Environment from '../../../Environment';
 import TabMenu from './TabMenu';
 
 const Details: FC = () => {
   const tabs = [
-    { title: 'Documents', content: <div className="h-[2000px] bg-white">fd</div> },
+    {
+      title: 'Documents',
+      content: <Document />,
+    },
     { title: 'Contacts', content: <div className="h-full bg-yellow-200">fd</div> },
     { title: 'Liens', content: <div className="h-[2000px] bg-green-200">fd</div> },
-    { title: 'Environnements', content: <div className="h-[2000px] bg-blue-200">fd</div> },
+    { title: 'Environnements', content: <Environment /> },
     { title: 'Contrats', content: <div className="h-[2000px] bg-yellow-200">fd</div> },
   ];
 

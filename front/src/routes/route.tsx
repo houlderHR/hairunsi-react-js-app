@@ -6,8 +6,9 @@ import ErrorResetPassword from '../pages/ErrorResetPassword';
 import ForgotPassword from '../pages/ForgotPassword';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
-import ProjectDetails from '../pages/Projects/ProjectDetails';
-import MainInfo from '../pages/Projects/ProjectDetails/MainInfo';
+import Project from '../pages/Project';
+import ProjectDetails from '../pages/Project/ProjectDetails';
+import MainInfo from '../pages/Project/ProjectDetails/MainInfo';
 import RedirectEmail from '../pages/RedirectEmail';
 import ResetPassword from '../pages/ResetPassword';
 import ResetPasswordSuccess from '../pages/ResetPassworSuccess';
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: routes.authentified.subpaths.project.path,
+        element: <Project />,
+      },
+      {
         path: `${routes.authentified.subpaths.project.path}${routes.authentified.subpaths.project.subpaths.id.path}`,
         element: <ProjectDetails />,
         children: [
@@ -140,6 +145,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      { path: routes.authentified.subpaths.project.path, element: <Project /> },
     ],
   },
   {

@@ -7,9 +7,18 @@ interface FiLeExport {
   setFile: React.Dispatch<React.SetStateAction<File | undefined | null>>;
   link?: string | null | undefined;
   setLink?: React.Dispatch<React.SetStateAction<string | undefined | null>>;
+  actionForFile?: string;
+  typeFile?: string;
 }
 
-const InputFileWithDragAndDrop: FC<FiLeExport> = ({ file, setFile, link, setLink }) => {
+const InputFileWithDragAndDrop: FC<FiLeExport> = ({
+  file,
+  setFile,
+  link,
+  setLink,
+  actionForFile = 'Déposer ou',
+  typeFile = "l'image",
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isOver, setIsOver] = useState(false);
   const [image, setImage] = useState<string>();
@@ -54,13 +63,13 @@ const InputFileWithDragAndDrop: FC<FiLeExport> = ({ file, setFile, link, setLink
         <input
           type="file"
           id="file"
-          accept="image/*"
+          accept=".jpg, .png"
           hidden
           onChange={setFileValue}
           ref={inputRef}
         />
         <div>
-          Déposer ou&nbsp;
+          {actionForFile}&nbsp;
           <span
             role="presentation"
             onClick={() => inputRef.current?.click()}
@@ -68,13 +77,30 @@ const InputFileWithDragAndDrop: FC<FiLeExport> = ({ file, setFile, link, setLink
           >
             Uploader
           </span>
-          &nbsp; l’image
+          &nbsp; {typeFile}
         </div>
       </div>
     );
-  return (
-    <div className="remove">
+  return file?.type.includes('image') || link ? (
+    <div className="remove flex flex-col">
       <img src={link || image} alt="" className="picture" />
+      <span
+        role="presentation"
+        onClick={() => {
+          if (setLink) {
+            setFile(null);
+            setLink(null);
+          }
+          setFile(null);
+        }}
+        className="restore group"
+      >
+        <Icon name="pen" className="hidden group-hover:flex" />
+      </span>
+    </div>
+  ) : (
+    <div className="flex flex-row remove">
+      <div className="p-5 h-full text-center w-full text-gray-1 font-medium">{file?.name}</div>
       <span
         role="presentation"
         onClick={() => {
