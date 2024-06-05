@@ -129,7 +129,7 @@ const Daily = () => {
           </div>
         </div>
       </div>
-      <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-xl border min-h-[calc(100vh-200px)] border-white-1 flex flex-col">
+      <div className="bg-white px-4 pt-5 mt-6 mx-4 rounded-xl border min-h-[calc(100vh-275px)] lg:min-h-[calc(100vh-200px)] border-white-1 flex flex-col">
         <Table classNames="" headers={DailyHeading}>
           {DailyData.map((_value) => (
             <TableRow

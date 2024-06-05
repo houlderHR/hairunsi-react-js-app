@@ -17,34 +17,37 @@ const DetailModal: FC<DetailModalProps> = ({ onClose, dailyDetail }) => (
     <table>
       <tbody className="text-gray-1 xl:text-xl sm:text-base text-xs">
         <tr>
-          <td className="uppercase text-secondary ml-8 pb-7"># id</td>
+          <td className="uppercase text-secondary items-center pb-7 flex flex-row justify-start gap-2">
+            <Icon name="#" width={18} height={16} />
+            id
+          </td>
           <td className="pb-7">{dailyDetail?.matricule}</td>
         </tr>
         <tr>
-          <td className="text-secondary flex flex-row items-center pb-7">
+          <td className="text-secondary flex flex-row items-center pb-7 gap-2">
             <Icon name="calendar" />
-            &nbsp;Date
+            Date
           </td>
           <td className="pb-7">{dailyDetail?.date}</td>
         </tr>
         <tr>
-          <td className="text-secondary flex flex-row items-center  pb-7">
+          <td className="text-secondary flex flex-row items-center  pb-7 gap-2">
             <Icon name="description" />
-            &nbsp;Description
+            Description
           </td>
           <td className="pb-7">{dailyDetail?.objectif}</td>
         </tr>
         <tr>
-          <td className="text-secondary flex items-center mr-12  pb-7">
+          <td className="text-secondary flex items-center mr-12  pb-7 gap-2">
             <Icon name="responsable" />
-            &nbsp;Responsable
+            Responsable
           </td>
           <td className="pb-7">M214 {dailyDetail?.name}</td>
         </tr>
         <tr>
-          <td className="text-secondary flex items-center  pb-7">
+          <td className="text-secondary flex items-center  pb-7 gap-2">
             <Icon name="membre" />
-            &nbsp;Membres
+            Membres
           </td>
           <td className="pb-7">
             <ul>

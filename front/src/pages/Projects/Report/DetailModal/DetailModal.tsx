@@ -33,20 +33,23 @@ const DetailModal: FC<ReportModalProps> = ({ onClose, reportDetail }) => (
     <table>
       <tbody className="text-gray-1 sm:text-base text-xs">
         <tr>
-          <td className="uppercase text-secondary ml-8 pb-7 leading-5"># id</td>
-          <td className="pb-7 uppercase">{reportDetail?.matricule}</td>
-        </tr>
-        <tr>
-          <td className="text-secondary flex flex-row items-center leading-5 pb-7">
-            <Icon name="calendar" />
-            &nbsp;Date
+          <td className="uppercase text-secondary lg:pb-7 pb-4 leading-5 flex flex-row justify-start gap-2 items-center">
+            <Icon name="#" width={18} height={16} />
+            id
           </td>
-          <td className="pb-7">{reportDetail?.date}</td>
+          <td className="lg:pb-7 pb-4 uppercase leading-5 ">{reportDetail?.matricule}</td>
         </tr>
         <tr>
-          <td className="text-secondary flex flex-row items-center leading-5 pb-7">
+          <td className="text-secondary flex flex-row items-center leading-5 lg:pb-7 pb-4 gap-2">
+            <Icon name="calendar" />
+            Date
+          </td>
+          <td className="lg:pb-7 pb-4 leading-5 ">{reportDetail?.date}</td>
+        </tr>
+        <tr>
+          <td className="text-secondary flex flex-row items-center leading-5 pb-7 gap-2">
             <Icon name="circle" />
-            &nbsp;Statut
+            Statut
           </td>
           <td
             className={twMerge(
@@ -58,18 +61,18 @@ const DetailModal: FC<ReportModalProps> = ({ onClose, reportDetail }) => (
           </td>
         </tr>
         <tr>
-          <td className="text-secondary flex flex-row items-center leading-5 pb-7">
+          <td className="text-secondary flex flex-row items-center leading-5 lg:pb-7 pb-4 gap-2">
             <Icon name="timeout" />
-            &nbsp;Temps écoulé
+            Temps écoulé
           </td>
-          <td className="pb-7">{reportDetail?.timeout}</td>
+          <td className="lg:pb-7 pb-4 leading-5 ">{reportDetail?.timeout}</td>
         </tr>
         <tr>
-          <td className="text-secondary flex items-center mr-12 leading-5 pb-7">
+          <td className="text-secondary flex items-center mr-12 leading-5 lg:pb-7 pb-4 gap-2">
             <Icon name="description" />
-            &nbsp;Description
+            Description
           </td>
-          <td className="pb-7">{reportDetail?.description}</td>
+          <td className="lg:pb-7 pb-4 leading-5 ">{reportDetail?.description}</td>
         </tr>
       </tbody>
     </table>

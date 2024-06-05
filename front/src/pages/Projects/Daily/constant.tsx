@@ -31,7 +31,7 @@ export const DailyHeading: HeaderType<DailyDataType>[] = [
   },
   {
     name: 'Objectif',
-    width: '3',
+    className: 'xl:w-5/12',
     associated: (data) => data.objectif,
   },
   {
