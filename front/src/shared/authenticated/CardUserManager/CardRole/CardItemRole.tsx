@@ -6,7 +6,7 @@ interface CardItemRoleProps {
   icon?: string;
   id: string;
   title: string;
-  addClass: string;
+  addClass?: string;
   deleteItem?: (item: PermissionDto) => void;
 }
 
@@ -14,7 +14,7 @@ const CardItemRole: FC<CardItemRoleProps> = ({ id, title, icon, addClass, delete
   <div
     className={twMerge(
       addClass,
-      'flex justify-items-center border text-black-1 text-nowrap text-10px py-4px px-8px',
+      'flex justify-items-center border text-black-1 text-nowrap text-10px py-1 px-2',
     )}
   >
     <span>{title}</span>

@@ -6,6 +6,8 @@ import ErrorResetPassword from '../pages/ErrorResetPassword';
 import ForgotPassword from '../pages/ForgotPassword';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
+import ProjectDetails from '../pages/Projects/ProjectDetails';
+import MainInfo from '../pages/Projects/ProjectDetails/MainInfo';
 import RedirectEmail from '../pages/RedirectEmail';
 import ResetPassword from '../pages/ResetPassword';
 import ResetPasswordSuccess from '../pages/ResetPassworSuccess';
@@ -117,6 +119,24 @@ const router = createBrowserRouter([
             element: (
               <Navigate to={routes.authentified.subpaths.userManager.subpaths.user.path} replace />
             ),
+          },
+        ],
+      },
+      {
+        path: `${routes.authentified.subpaths.project.path}${routes.authentified.subpaths.project.subpaths.id.path}`,
+        element: <ProjectDetails />,
+        children: [
+          {
+            path: routes.authentified.subpaths.project.subpaths.id.subpaths.main_info.path,
+            element: <MainInfo />,
+          },
+          {
+            path: routes.authentified.subpaths.project.subpaths.id.subpaths.daily.path,
+            element: <MainInfo />,
+          },
+          {
+            path: routes.authentified.subpaths.project.subpaths.id.subpaths.report.path,
+            element: <MainInfo />,
           },
         ],
       },

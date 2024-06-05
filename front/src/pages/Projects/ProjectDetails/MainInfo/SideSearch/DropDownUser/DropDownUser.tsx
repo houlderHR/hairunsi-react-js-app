@@ -1,20 +1,17 @@
-import './style.scss';
-import { FC, MouseEvent } from 'react';
+import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { UserProjectType } from '../constant';
+import UserProjectCard from '../UserProjectCard';
 
-type DropDownType = {
-  id: string;
-  name: string;
-};
 interface DropDownProps {
-  items: DropDownType[];
+  items: UserProjectType[];
   additionalClassItem?: string;
   additionalClassBlock?: string;
-  setValue?: (elem: DropDownType, e?: MouseEvent<HTMLElement>) => void;
+  setValue?: (elem: UserProjectType) => void;
   onClickItem?: () => void;
 }
 
-const DropDown: FC<DropDownProps> = ({
+const DropDownUser: FC<DropDownProps> = ({
   items,
   setValue,
   onClickItem,
@@ -24,7 +21,7 @@ const DropDown: FC<DropDownProps> = ({
   <ul
     className={twMerge(
       additionalClassBlock,
-      'bg-white border absolute w-full z-20 left-0 mt-2 max-h-32 overflow-y-scroll border-gray-50 shadow  rounded px-4 py-1',
+      'bg-white border absolute w-full z-20 left-0 mt-2 max-h-72 overflow-y-scroll border-gray-50 shadow  rounded px-4 py-1',
     )}
   >
     {items && items.length > 0 ? (
@@ -37,14 +34,19 @@ const DropDown: FC<DropDownProps> = ({
             )}
             key={item.id}
             role="presentation"
-            onClick={(e: MouseEvent<HTMLElement>) => {
-              setValue(item, e);
+            onClick={() => {
+              setValue(item);
               if (onClickItem) {
                 onClickItem();
               }
             }}
           >
-            <span className="">{item.name}</span>
+            <UserProjectCard
+              key={item.id}
+              additionalClass="!border-none !py-1"
+              user={item}
+              showCheckbox={false}
+            />
           </li>
         ) : (
           <li
@@ -55,7 +57,12 @@ const DropDown: FC<DropDownProps> = ({
             key={item.id}
             role="presentation"
           >
-            {item.name}
+            <UserProjectCard
+              key={item.id}
+              additionalClass="!border-none !py-1"
+              user={item}
+              showCheckbox={false}
+            />
           </li>
         ),
       )
@@ -64,4 +71,4 @@ const DropDown: FC<DropDownProps> = ({
     )}
   </ul>
 );
-export default DropDown;
+export default DropDownUser;
