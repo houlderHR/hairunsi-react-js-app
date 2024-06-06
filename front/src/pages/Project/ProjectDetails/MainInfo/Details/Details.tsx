@@ -1,11 +1,14 @@
 import { FC } from 'react';
 import Contacts from './Contacts';
+import { mockContacts } from './Contacts/constant';
 import Document from './Document';
 import Environment from './Environment';
 import TabLink from './Link';
 import TabMenu from './TabMenu';
 
 const Details: FC = () => {
+  const items = mockContacts;
+
   const tabs = [
     {
       title: 'Documents',
@@ -13,7 +16,7 @@ const Details: FC = () => {
     },
     {
       title: 'Contacts',
-      content: <Contacts />,
+      content: <Contacts items={items} />,
     },
     { title: 'Liens', content: <TabLink /> },
     { title: 'Environnements', content: <Environment /> },
@@ -21,7 +24,7 @@ const Details: FC = () => {
   ];
 
   return (
-    <div className="bg-white rounded-xl mb-2 border border-white-1 relative w-full h-full">
+    <div className="bg-white rounded-xl pb-2 mb-2 border border-white-1 relative w-full h-full">
       <TabMenu tabs={tabs} />
     </div>
   );
