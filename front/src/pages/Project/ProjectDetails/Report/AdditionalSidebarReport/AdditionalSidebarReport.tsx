@@ -1,7 +1,7 @@
-import useToggle from '../../../../hooks/useToggle';
-import DropDown from '../../../../shared/authenticated/Modal/DropDown';
-import Icon from '../../../../shared/Icon';
-import InputIcon from '../../../../shared/inputs/InputIcon';
+import useToggle from '../../../../../hooks/useToggle';
+import DropDown from '../../../../../shared/authenticated/Modal/DropDown';
+import Icon from '../../../../../shared/Icon';
+import InputIcon from '../../../../../shared/inputs/InputIcon';
 
 const AdditionalSidebarReport = () => {
   const { state: showTimeout, toggle: toggleTimeout } = useToggle();

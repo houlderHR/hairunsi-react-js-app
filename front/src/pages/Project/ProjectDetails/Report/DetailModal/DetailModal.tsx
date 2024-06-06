@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import Modal from '../../../../shared/authenticated/Modal';
-import Icon from '../../../../shared/Icon';
+import Modal from '../../../../../shared/authenticated/Modal';
+import Icon from '../../../../../shared/Icon';
 import { ReportType } from '../constant';
 
 type ReportModalProps = {

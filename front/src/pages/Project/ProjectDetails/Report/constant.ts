@@ -1,4 +1,4 @@
-import { HeaderType } from '../../../shared/authenticated/Table/Table';
+import { HeaderType } from '../../../../shared/authenticated/Table/Table';
 
 export type ReportType = {
   matricule: string;

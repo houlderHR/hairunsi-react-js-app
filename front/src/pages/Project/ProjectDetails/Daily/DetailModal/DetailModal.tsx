@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import Modal from '../../../../shared/authenticated/Modal';
-import Icon from '../../../../shared/Icon';
+import Modal from '../../../../../shared/authenticated/Modal';
+import Icon from '../../../../../shared/Icon';
 import { DailyDataType } from '../constant';
 
 type DetailModalProps = {
