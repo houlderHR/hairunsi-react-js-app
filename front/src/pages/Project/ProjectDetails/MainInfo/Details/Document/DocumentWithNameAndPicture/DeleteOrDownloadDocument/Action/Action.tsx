@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import Icon from '../../../../../../shared/Icon';
+import Icon from '../../../../../../../../../shared/Icon';
 
 interface IAction {
   item: string;
