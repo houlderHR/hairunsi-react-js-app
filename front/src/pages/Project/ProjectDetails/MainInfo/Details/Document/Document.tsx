@@ -25,7 +25,7 @@ const Document = () => {
             typeFile="votre document"
           />
         </div>
-        <div className="w-full space-y-4 max-h-[360px] overflow-y-scroll scroll-smooth">
+        <div className="w-full space-y-4 max-h-[340px] overflow-y-scroll scroll-smooth">
           {DOCUMENTS.length > 0 ? (
             DOCUMENTS.map((document: { name: string; size: number }, key: number) => (
               <DocumentWithNameAndPicture
@@ -33,6 +33,7 @@ const Document = () => {
                 size={document.size}
                 index={`${document.name}${document.size}${key}`}
                 actions={[() => deleteDocument(document), () => {}]}
+                key={document.size + key.toString()}
               />
             ))
           ) : (

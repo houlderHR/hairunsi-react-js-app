@@ -21,6 +21,7 @@ import Icon from '../../../../../shared/Icon';
 import Input from '../../../../../shared/inputs/Input';
 import InputFileWithDragAndDrop from '../../../../../shared/inputs/InputFileWithDragAndDrop';
 import Spinner from '../../../../../shared/Spinner';
+import { formatDateToYYYYMMDD } from '../../../../../utils/formatDate';
 import http from '../../../../../utils/http-common';
 import manageErrorMessage from '../../../../../utils/manageError';
 import PERMISSIONS from '../../../../../utils/permissions';
@@ -259,16 +260,8 @@ const CreateOrUpdateUserModal: FC<CreateModalUserProps> = ({ user, onClose }) =>
                         placeholder={
                           user ? new Date(user.birth_date).toLocaleDateString() : 'jj/mm/yyyy'
                         }
-                        min="1950-01-01"
-                        max={`$${new Date().getFullYear()}-${
-                          new Date().getMonth() + 1 < 10
-                            ? `0${new Date().getMonth() + 1}`
-                            : new Date().getMonth() + 1
-                        }-${
-                          new Date().getDate() < 10
-                            ? `0${new Date().getDate()}`
-                            : new Date().getDate()
-                        }`}
+                        min={formatDateToYYYYMMDD(new Date('1950-01-01'))}
+                        max={formatDateToYYYYMMDD(new Date())}
                         className="input"
                         onFocus={(e) => {
                           e.target.type = 'date';
