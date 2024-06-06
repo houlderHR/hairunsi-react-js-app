@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import DeleteModal from '../../../shared/authenticated/Modal/DeleteModal';
-import InputFileWithDragAndDrop from '../../../shared/inputs/InputFileWithDragAndDrop';
+import DeleteModal from '../../../../../../shared/authenticated/Modal/DeleteModal';
+import InputFileWithDragAndDrop from '../../../../../../shared/inputs/InputFileWithDragAndDrop';
 import DOCUMENTS from './constant';
 import DocumentWithNameAndPicture from './DocumentWithNameAndPicture/DocumentWithNameAndPicture';
 

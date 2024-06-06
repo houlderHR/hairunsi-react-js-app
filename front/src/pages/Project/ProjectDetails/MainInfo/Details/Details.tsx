@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import Document from '../../../Document';
-import Environment from '../../../Environment';
+import Document from './Document';
+import Environment from './Environment';
 import TabMenu from './TabMenu';
 
 const Details: FC = () => {

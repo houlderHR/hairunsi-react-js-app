@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Icon from '../../../shared/Icon';
-import Input from '../../../shared/inputs/Input';
+import Icon from '../../../../../../shared/Icon';
+import Input from '../../../../../../shared/inputs/Input';
 import List from './EnvironmentList';
 
 const Environment = () => {
