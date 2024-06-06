@@ -5,8 +5,12 @@ import Card from './Card';
 
 const List: FC<{ projects: IProject[] }> = ({ projects }) => (
   <div className="list">
-    {projects.map((project: IProject) => (
-      <Card project={project} key={project.id} />
+    {projects.map((project: IProject, index: number) => (
+      <Card
+        project={project}
+        index={project.id + index.toString()}
+        key={project.id + index.toString()}
+      />
     ))}
   </div>
 );

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Icon from '../../../../../../shared/Icon';
 import Input from '../../../../../../shared/inputs/Input';
-import List from './EnvironmentList';
+import EnvironmentList from './EnvironmentList';
 
 const Environment = () => {
   const [showForm, setShowForm] = useState(false);
@@ -35,8 +35,8 @@ const Environment = () => {
             </div>
           </div>
         )}
-        <div className="w-full space-y-4 max-h-[360px] flex flex-col overflow-y-scroll scroll-smooth">
-          <List />
+        <div className="w-full space-y-4 max-h-[340px] flex flex-col overflow-y-scroll scroll-smooth">
+          <EnvironmentList />
         </div>
       </div>
     </div>
