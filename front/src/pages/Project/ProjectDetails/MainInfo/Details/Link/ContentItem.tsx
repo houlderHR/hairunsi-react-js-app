@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Icon from '../../../shared/Icon';
+import Icon from '../../../../../../shared/Icon';
 
 type ContentItemProps = {
   item: { label: string; value: string };

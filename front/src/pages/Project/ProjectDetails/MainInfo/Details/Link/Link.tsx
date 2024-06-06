@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import useToggle from '../../../../../../hooks/useToggle';
-import DashedButton from '../../../../../../shared/authenticated/buttons/DashedButton';
 import DeleteModal from '../../../../../../shared/authenticated/Modal/DeleteModal';
 import Icon from '../../../../../../shared/Icon';
 import { DataItemLink, DataItemSketch } from './constant';
@@ -30,8 +29,25 @@ const Link = () => {
 
   return (
     <>
-      <div className="pt-14 pb-8 px-16 w-full bg-white z-10">
-        {!newLink && <DashedButton onClick={toggleNewLink} title="Ajouter un lien" />}
+      <div className="pb-8 px-16 w-full bg-white z-10">
+        {!newLink && (
+          <button
+            onClick={toggleNewLink}
+            type="button"
+            className="rounded-lg w-full group border cursor-pointer border-dashed border-spacing-14 mt-6 border-gray-9 text-gray-1 hover:text-secondary-2 hover:border-secondary-2 hover:border-solid duration-150"
+          >
+            <h3
+              className={twMerge(
+                'text-base  flex items-center justify-center gap-x-3 py-5 text-center',
+              )}
+            >
+              <span className="group-hover:bg-secondary-2 group-hover:text-white border rounded p-0.5">
+                <Icon name="add" size={12} />
+              </span>
+              Ajouter un lien
+            </h3>
+          </button>
+        )}
         {newLink && <InputItem onClose={toggleNewLink} onEdit={() => {}} />}
         <div className="mt-10 flex flex-col items-center justify-center text-secondary-2 gap-y-[14px] mb-6">
           <div className="flex flex-row items-center justify-center gap-x-3 text-base font-medium">
