@@ -6,7 +6,7 @@ import List from './EnvironmentList';
 const Environment = () => {
   const [showForm, setShowForm] = useState(false);
   return (
-    <div className="w-full min-h-full flex flex-col justify-center items-center">
+    <div className="w-full min-h-full flex flex-col">
       <div className="w-full p-10 flex flex-col gap-y-7">
         {!showForm ? (
           <div
@@ -35,7 +35,7 @@ const Environment = () => {
             </div>
           </div>
         )}
-        <div className="w-full space-y-4 max-h-[340px] flex flex-col overflow-y-scroll scroll-smooth">
+        <div className="w-full space-y-4 max-h-[360px] flex flex-col overflow-y-scroll scroll-smooth">
           <List />
         </div>
       </div>

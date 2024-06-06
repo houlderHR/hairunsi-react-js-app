@@ -15,7 +15,7 @@ const Document = () => {
   };
 
   return (
-    <div className="w-full min-h-full flex flex-col justify-center items-center">
+    <div className="w-full min-h-full flex flex-col ">
       <div className="w-full p-10  flex flex-col gap-y-7">
         <div className="w-full h-[76px] border-[1px] border-dashed border-[#bdbdbd] rounded-xl">
           <InputFileWithDragAndDrop
@@ -25,7 +25,7 @@ const Document = () => {
             typeFile="votre document"
           />
         </div>
-        <div className="w-full space-y-4 max-h-[340px] overflow-y-scroll scroll-smooth">
+        <div className="w-full space-y-4 max-h-[360px] overflow-y-scroll scroll-smooth">
           {DOCUMENTS.length > 0 ? (
             DOCUMENTS.map((document: { name: string; size: number }, key: number) => (
               <DocumentWithNameAndPicture
