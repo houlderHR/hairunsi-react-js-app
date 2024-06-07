@@ -31,7 +31,11 @@ const Environment = () => {
                 size={24}
                 onClick={() => setShowForm(false)}
               />
-              <Icon name="x" className="text-[#808080] hover:text-green-500" size={24} />
+              <Icon
+                name="x"
+                className="text-[#808080] hover:text-green-500  !font-light"
+                size={24}
+              />
             </div>
           </div>
         )}

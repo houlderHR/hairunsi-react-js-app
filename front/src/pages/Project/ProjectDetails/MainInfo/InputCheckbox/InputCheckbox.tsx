@@ -4,11 +4,13 @@ import { ChangeEvent, FC } from 'react';
 type CheboxType = {
   idCheckbox?: string;
   isChecked?: boolean;
+  label?: string;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-const InputCheckbox: FC<CheboxType> = ({ idCheckbox, isChecked = false, handleChange }) => (
-  <label htmlFor={idCheckbox} className="cursor-pointer">
+const InputCheckbox: FC<CheboxType> = ({ idCheckbox, isChecked = false, handleChange, label }) => (
+  <label htmlFor={idCheckbox} className="cursor-pointer flex gap-x-3 justify-center items-center">
+    {label && <span className="text-xs">{label}</span>}
     <input
       id={idCheckbox}
       defaultChecked={isChecked}

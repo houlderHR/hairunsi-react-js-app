@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FC, useRef, useState } from 'react';
+import { ChangeEvent, FC, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import Modal from '../../../../shared/authenticated/Modal';
@@ -8,9 +8,12 @@ import Input from '../../../../shared/inputs/Input';
 import InputFileWithDragAndDrop from '../../../../shared/inputs/InputFileWithDragAndDrop';
 import InputIcon from '../../../../shared/inputs/InputIcon';
 import { CLIENTS } from '../../constants';
+import IProject from '../../IProject';
+import InputCheckbox from '../../ProjectDetails/MainInfo/InputCheckbox';
 import TypesProjectExcludingAll from '../TypesProjectIncludingAll/TypesProjectExcludingtAll';
 
 interface ICreate {
+  updateValue?: IProject;
   onClose: () => void;
 }
 
@@ -23,7 +26,8 @@ const form = yup
   })
   .required();
 
-const Create: FC<ICreate> = ({ onClose }) => {
+const CreateOrUpdateProject: FC<ICreate> = ({ onClose, updateValue }) => {
+  const [isChecked, setIsChecked] = useState(false);
   const [typeValueChange, setTypeValueChange] = useState(false);
   const [showClients, setShowClients] = useState(false);
   const [searcClient, setSearchClient] = useState<string>();
@@ -53,6 +57,9 @@ const Create: FC<ICreate> = ({ onClose }) => {
       description: '',
     },
   });
+  const handleCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.currentTarget.checked);
+  };
 
   const handleClick: SubmitHandler<{
     name: string;
@@ -74,7 +81,10 @@ const Create: FC<ICreate> = ({ onClose }) => {
     }
   };
   return (
-    <Modal title="Créer un projet" onClose={onClose}>
+    <Modal
+      title={updateValue ? 'Editer les informations générales' : 'Créer un projet'}
+      onClose={onClose}
+    >
       <form className="flex flex-col justify-center space-y-4" onSubmit={handleSubmit(handleClick)}>
         <div className="flex flex-row justify-evenly items-stretch space-x-3">
           <div
@@ -89,6 +99,7 @@ const Create: FC<ICreate> = ({ onClose }) => {
           <div className="flex flex-col justify-between items-center w-2/3 space-y-1">
             <Controller
               control={control}
+              defaultValue={updateValue ? updateValue.name : ''}
               name="name"
               render={({ field: { ref, onChange, onBlur, value } }) => (
                 <Input
@@ -106,6 +117,7 @@ const Create: FC<ICreate> = ({ onClose }) => {
             <Controller
               control={control}
               name="description"
+              defaultValue={updateValue ? updateValue.description : ''}
               render={({ field: { ref, onChange, onBlur, value } }) => (
                 <Input
                   value={value.startsWith(' ') ? value.trimStart() : value}
@@ -143,9 +155,21 @@ const Create: FC<ICreate> = ({ onClose }) => {
           </div>
         </div>
         <div className="flex flex-row">
-          <div className="w-1/3" />
-          <div className="w-2/3 flex flex-row justify-start items-center text-gray-1 mb-1 gap-8">
+          {!updateValue && <div className="w-1/3" />}
+          <div
+            className={`${
+              updateValue && 'w-full'
+            } w-1/3 flex flex-row justify-start items-center text-gray-1 mb-1 gap-x-8`}
+          >
             <TypesProjectExcludingAll setValueType={() => setTypeValueChange((s) => !s)} />
+            {updateValue && (
+              <InputCheckbox
+                label="Système de ticketing"
+                isChecked={isChecked}
+                handleChange={handleCheckbox}
+                idCheckbox="checked"
+              />
+            )}
           </div>
         </div>
         <div className="flex flex-col relative 2xl:mb-20 mb-10">
@@ -157,7 +181,7 @@ const Create: FC<ICreate> = ({ onClose }) => {
                 : 'mt-1 px-2 py-3 text-sm border text-white text-[14px] rounded-md bg-primary'
             }
           >
-            Créer
+            {updateValue ? 'Enregistrer' : 'Créer'}
           </button>
         </div>
       </form>
@@ -165,4 +189,4 @@ const Create: FC<ICreate> = ({ onClose }) => {
   );
 };
 
-export default Create;
+export default CreateOrUpdateProject;
