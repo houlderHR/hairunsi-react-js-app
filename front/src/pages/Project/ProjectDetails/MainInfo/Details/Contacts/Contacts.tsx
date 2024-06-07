@@ -12,7 +12,7 @@ const Contacts: FC<ContactsProps> = ({ items }) => (
     <AddContact />
     <div className="pt-7 mb-5">
       {items.map((item) => (
-        <ItemContact label={item.client.contact.Label} contact={item.client.contact.value} />
+        <ItemContact item={item} />
       ))}
     </div>
   </div>

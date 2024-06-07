@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import Icon from '../../../../../../../shared/Icon';
-import Input from '../../../../../../../shared/inputs/Input';
-import InputIcon from '../../../../../../../shared/inputs/InputIcon';
+import InputAddContact from './InputAddContact';
 
 const AddContact: FC = () => {
   const [isCliked, setIsClicked] = useState(false);
@@ -23,34 +22,7 @@ const AddContact: FC = () => {
           <span>Ajouter un contact</span>
         </div>
       ) : (
-        <div className="flex gap-x-4 text-gray-1">
-          <InputIcon
-            icon="search"
-            onChange={() => {}}
-            iconColor="text-gray-10"
-            additionalInputClass="placeholder:text-gray-1"
-            additionalClass="rounded-md h-[56px] bg-white-2 sticky top-0 right-0 z-[500]"
-            placeholder="Rechercher client"
-          />
-          <Input type="text" placeholder="Libellé" />
-          <Input type="text" placeholder="Contact" />
-          <div className="flex gap-x-4 items-center">
-            <div
-              role="presentation"
-              className="h-6 w-6 flex justify-center items-center hover:text-secondary cursor-pointer"
-              onClick={handleClick}
-            >
-              <Icon name="x" />
-            </div>
-            <div
-              role="presentation"
-              className="h-6 w-6 flex justify-center items-center hover:text-secondary cursor-pointer"
-              onClick={handleClick}
-            >
-              <Icon name="right" />
-            </div>
-          </div>
-        </div>
+       <InputAddContact onCancel={handleClick}/>
       )}
     </div>
   );
