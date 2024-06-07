@@ -12,8 +12,8 @@ const Action: FC<IAction> = ({ item, additionalClassname, onClick }) => (
   <Icon
     name={item}
     className={twMerge('text-[#bdbdbd]', additionalClassname || '')}
-    height={24}
-    width={24}
+    height={18}
+    width={14}
     onClick={onClick || (() => {})}
   />
 );
