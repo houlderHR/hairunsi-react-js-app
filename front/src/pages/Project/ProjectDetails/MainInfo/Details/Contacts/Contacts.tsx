@@ -1,20 +1,20 @@
 import { FC } from 'react';
 import AddContact from './AddContact';
-import ContactsType from './constant';
-import ItemContact from './ItemContact';
+import { mockClients } from './constant';
+import ListContact from './ListContact';
 
-type ContactsProps = {
-  items: ContactsType[];
-};
+const Contacts: FC = () => {
+  const clients = mockClients;
 
-const Contacts: FC<ContactsProps> = ({ items }) => (
-  <div className="mb-2 relative px-[64px] pt-[36px] w-full h-full overflow-y-auto">
-    <AddContact />
-    <div className="pt-7 mb-5">
-      {items.map((item) => (
-        <ItemContact item={item} />
-      ))}
+  return (
+    <div className="mb-2 relative px-[64px] pt-[30px] w-full h-full">
+      <AddContact />
+      <div className="pt-7 mb-5 pb-10">
+        {clients.map((client) => (
+          <ListContact client={client} />
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 export default Contacts;

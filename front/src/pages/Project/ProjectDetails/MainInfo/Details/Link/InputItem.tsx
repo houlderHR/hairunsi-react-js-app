@@ -33,7 +33,7 @@ const InputItem: FC<InputItemProps> = ({ onClose, onEdit, item, inputContainerCl
           className="hover:text-red-500 cursor-pointer duration-150"
         />
         <Icon
-          name="check"
+          name="right"
           width={18}
           height={30}
           className="hover:text-secondary-2 cursor-pointer duration-150"

@@ -5,14 +5,14 @@ import Icon from '../../shared/Icon';
 import projects from './constants';
 import Head from './Head';
 import List from './List';
-import Create from './modals/Create';
+import CreateOrUpdateProject from './modals/CreateOrUpdateProject';
 import Filter from './modals/Filter';
 
 const Project = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
 
-  const pushSearchPrjoject = () => [];
+  const pushSearchProject = () => [];
 
   return (
     <div className="container-project">
@@ -24,7 +24,7 @@ const Project = () => {
               <HeadManager
                 title="CREER UN NOUVEAU PROJET"
                 onOpen={() => setShowCreateModal(true)}
-                pushSearch={pushSearchPrjoject}
+                pushSearch={pushSearchProject}
               />
             </div>
             <div
@@ -42,7 +42,7 @@ const Project = () => {
           <List projects={projects} />
         </div>
       </div>
-      {showCreateModal && <Create onClose={() => setShowCreateModal(false)} />}
+      {showCreateModal && <CreateOrUpdateProject onClose={() => setShowCreateModal(false)} />}
       {showFilterModal && <Filter onClose={() => setShowFilterModal(false)} />}
     </div>
   );

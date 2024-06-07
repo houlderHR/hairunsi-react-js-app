@@ -1,12 +1,11 @@
 import { FC, useState } from 'react';
 import IconCard from '../../../../../../../shared/authenticated/CardUserManager/IconCard';
 import DeleteModal from '../../../../../../../shared/authenticated/Modal/DeleteModal';
-import AddContact from '../AddContact';
 import InputAddContact from '../AddContact/InputAddContact';
-import ContactsType from '../constant';
+import { ContactType } from '../constant';
 
 interface ItemContactProps {
-  item: ContactsType;
+  item: ContactType;
 }
 
 const ItemContact: FC<ItemContactProps> = ({ item }) => {
@@ -31,10 +30,10 @@ const ItemContact: FC<ItemContactProps> = ({ item }) => {
       ) : (
         <div className="flex items-center border border-transparent hover:border hover:border-secondary-3 rounded-lg px-6 py-[23px] relative">
           <div className="text-secondary-3 text-base leading-[18.38px] font-bold w-1/2 md:w-1/4">
-            {item.client.contact.Label}
+            {item.Label}
           </div>
           <div className="text-primary leading-[18.38px] font-normal text-base w-1/4 md:w-1/4 truncate">
-            {item.client.contact.value}
+            {item.value}
           </div>
           <div className="absolute right-5">
             <IconCard
