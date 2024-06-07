@@ -26,20 +26,22 @@ const Environment = () => {
             <Input type="text" placeholder="Lien" additionalClass="w-2/5" />
             <div className="flex flex-row justify-evenly items-center w-1/5">
               <Icon
-                name="x"
-                className="text-[#808080] hover:text-red-500"
-                size={24}
-                onClick={() => setShowForm(false)}
+                name="right"
+                className="text-[#808080] hover:text-green-500"
+                height={18}
+                width={14}
               />
               <Icon
-                name="x"
-                className="text-[#808080] hover:text-green-500  !font-light"
-                size={24}
+                name="x-grey"
+                className="text-[#808080] hover:text-red-500"
+                height={18}
+                width={14}
+                onClick={() => setShowForm(false)}
               />
             </div>
           </div>
         )}
-        <div className="w-full space-y-4 max-h-[340px] flex flex-col overflow-y-scroll scroll-smooth">
+        <div className="w-full space-y-4 flex flex-col">
           <EnvironmentList />
         </div>
       </div>

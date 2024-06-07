@@ -17,8 +17,9 @@ const EnvDetail: FC<{ item: { label: string; link: string } }> = ({ item }) => {
       <div className="flex flex-row justify-center gap-2 lg:gap-8">
         <Icon
           name="trash"
-          className="text-[#808080] hover:text-red-500"
-          size={24}
+          className="text-[#bdbdbd] hover:text-red-500"
+          height={18}
+          width={14}
           onClick={() => {
             setShowDeleteForm(true);
             setShowFormUpdate(false);
@@ -26,8 +27,9 @@ const EnvDetail: FC<{ item: { label: string; link: string } }> = ({ item }) => {
         />
         <Icon
           name="pen"
-          className="text-[#808080] hover:text-[#0d99ff]"
-          size={24}
+          className="text-[#bdbdbd] hover:text-[#0d99ff]"
+          height={18}
+          width={14}
           onClick={() => {
             setShowFormUpdate(true);
             setShowDeleteForm(false);
