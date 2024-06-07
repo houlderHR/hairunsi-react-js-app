@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
+import { twMerge } from 'tailwind-merge';
 import Icon from '../../Icon';
 
 export enum ModalShowStateType {
@@ -12,14 +13,20 @@ export enum ModalShowStateType {
 interface ModalProps {
   title?: string;
   onClose: () => void;
+  classNames?: string;
 }
 
-const Modal: FC<PropsWithChildren<ModalProps>> = ({ children, title, onClose }) => (
+const Modal: FC<PropsWithChildren<ModalProps>> = ({ children, title, classNames, onClose }) => (
   <>
     {createPortal(
       <div className="fixed z-[100] top-0 h-full w-full flex items-center justify-center">
         <div className="bg-black opacity-[16%] h-full w-full absolute top-0" />
-        <div className="bg-white shadow-xl rounded-lg lg:w-1/3 md:w-1/2 w-3/4 py-4 px-[26px] z-30">
+        <div
+          className={twMerge(
+            'bg-white shadow-xl rounded-lg lg:w-1/3 md:w-1/2 w-3/4 py-4 px-[26px] z-30',
+            classNames,
+          )}
+        >
           <div className="flex flex-row justify-between items-center mb-12">
             <h3 className="text-secondary text-[22px] font-medium">{title}</h3>
             <span role="presentation" onClick={onClose} className="cursor-pointer">

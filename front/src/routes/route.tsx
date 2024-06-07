@@ -8,7 +8,9 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Project from '../pages/Project';
 import ProjectDetails from '../pages/Project/ProjectDetails';
+import Daily from '../pages/Project/ProjectDetails/Daily';
 import MainInfo from '../pages/Project/ProjectDetails/MainInfo';
+import Report from '../pages/Project/ProjectDetails/Report';
 import RedirectEmail from '../pages/RedirectEmail';
 import ResetPassword from '../pages/ResetPassword';
 import ResetPasswordSuccess from '../pages/ResetPassworSuccess';
@@ -137,11 +139,11 @@ const router = createBrowserRouter([
           },
           {
             path: routes.authentified.subpaths.project.subpaths.id.subpaths.daily.path,
-            element: <MainInfo />,
+            element: <Daily />,
           },
           {
             path: routes.authentified.subpaths.project.subpaths.id.subpaths.report.path,
-            element: <MainInfo />,
+            element: <Report />,
           },
         ],
       },

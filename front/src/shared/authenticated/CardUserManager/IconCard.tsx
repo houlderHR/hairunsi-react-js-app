@@ -6,12 +6,18 @@ interface IconBoxProps {
   withOther?: boolean;
   isRemovable?: boolean;
   isEditable?: boolean;
+  iconHeight?: number;
+  iconWidth?: number;
+  additionalClassIcon?: string;
   openUpdateModal: () => void;
   openDeleteModal: () => void;
 }
 // Icone de trash et edit de chaque Card
 const IconCard: FC<IconBoxProps> = ({
   withOther,
+  iconHeight,
+  iconWidth,
+  additionalClassIcon,
   openUpdateModal,
   openDeleteModal,
   isRemovable,
@@ -26,9 +32,9 @@ const IconCard: FC<IconBoxProps> = ({
     {isEditable && (
       <Icon
         onClick={openUpdateModal}
-        width={11.67}
-        className="hover:text-secondary duration-300"
-        height={15}
+        width={iconWidth ?? 11.67}
+        className={twMerge(additionalClassIcon, 'hover:text-secondary duration-300')}
+        height={iconHeight ?? 15}
         name="pen"
       />
     )}
@@ -38,9 +44,9 @@ const IconCard: FC<IconBoxProps> = ({
         <Icon
           onClick={openDeleteModal}
           name="trash"
-          className="hover:text-red-400 duration-300"
-          height={15}
-          width={11.67}
+          className={twMerge(additionalClassIcon, 'hover:text-red-400 duration-300')}
+          height={iconHeight ?? 15}
+          width={iconWidth ?? 11.67}
         />
       </>
     )}

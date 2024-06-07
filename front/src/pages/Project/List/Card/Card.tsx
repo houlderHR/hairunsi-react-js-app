@@ -1,14 +1,15 @@
 import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../../../routes/paths';
+import formatDateToDDMonthYYYY from '../../../../utils/formatDate';
 import IProject from '../../IProject';
 
 interface ICard {
   project: IProject;
-  key?: string;
+  index?: string;
 }
 
-const Card: FC<ICard> = ({ project, key }) => {
+const Card: FC<ICard> = ({ project, index }) => {
   const [projectIsValid, setProjectIsValid] = useState(false);
   const [clientIsValid, setClientIsValid] = useState(false);
 
@@ -33,7 +34,7 @@ const Card: FC<ICard> = ({ project, key }) => {
   return (
     <Link
       to={`${routes.authentified.subpaths.project.path}/${project.id}/${routes.authentified.subpaths.project.subpaths.id.subpaths.main_info.path}`}
-      key={key}
+      key={index}
     >
       <div className="w-[380px] h-auto bg-white border-[#F0F0F0] hover:border-[#3E60C1] hover:cursor-pointer border-[1px] rounded-xl flex flex-col py-5 px-6 gap-y-5">
         <div className="w-full h-fit flex flex-col items-start gap-y-[10px] ">
@@ -55,7 +56,7 @@ const Card: FC<ICard> = ({ project, key }) => {
           </div>
           <div className="text-[10px] text-[#808080] flex flex-row gap-2">
             <div className="font-medium">Date de création :</div>
-            <div className="font-normal">{project.created_at.toLocaleString()}</div>
+            <div className="font-normal">{formatDateToDDMonthYYYY(project.created_at)}</div>
           </div>
         </div>
         <div className="text-xs font-normal text-[#808080] text-justify line-clamp-3">

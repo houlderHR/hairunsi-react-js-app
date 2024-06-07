@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
-import DeleteModal from '../../../../../shared/authenticated/Modal/DeleteModal';
-import Icon from '../../../../../shared/Icon';
-import Input from '../../../../../shared/inputs/Input';
+import DeleteModal from '../../../../../../../../shared/authenticated/Modal/DeleteModal';
+import Icon from '../../../../../../../../shared/Icon';
+import Input from '../../../../../../../../shared/inputs/Input';
 
 const EnvDetail: FC<{ item: { label: string; link: string } }> = ({ item }) => {
   const [showDeleteModal, setShowDeleteForm] = useState(false);

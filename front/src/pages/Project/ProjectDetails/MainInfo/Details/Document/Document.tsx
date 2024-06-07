@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import DeleteModal from '../../../shared/authenticated/Modal/DeleteModal';
-import InputFileWithDragAndDrop from '../../../shared/inputs/InputFileWithDragAndDrop';
+import DeleteModal from '../../../../../../shared/authenticated/Modal/DeleteModal';
+import InputFileWithDragAndDrop from '../../../../../../shared/inputs/InputFileWithDragAndDrop';
 import DOCUMENTS from './constant';
 import DocumentWithNameAndPicture from './DocumentWithNameAndPicture/DocumentWithNameAndPicture';
 
@@ -15,7 +15,7 @@ const Document = () => {
   };
 
   return (
-    <div className="w-full min-h-full flex flex-col justify-center items-center">
+    <div className="w-full min-h-full flex flex-col ">
       <div className="w-full p-10  flex flex-col gap-y-7">
         <div className="w-full h-[76px] border-[1px] border-dashed border-[#bdbdbd] rounded-xl">
           <InputFileWithDragAndDrop
@@ -33,6 +33,7 @@ const Document = () => {
                 size={document.size}
                 index={`${document.name}${document.size}${key}`}
                 actions={[() => deleteDocument(document), () => {}]}
+                key={document.size + key.toString()}
               />
             ))
           ) : (
