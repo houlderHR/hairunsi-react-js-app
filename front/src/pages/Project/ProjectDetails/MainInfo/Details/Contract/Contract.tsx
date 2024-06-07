@@ -36,7 +36,7 @@ const Contract = () => {
               data={_value}
               key={_value.description}
               action={
-                <div className="grid grid-cols-4 2xl:gap-x-7 gap-x-4 w-full md:px-4 px-2 justify-start items-center">
+                <div className="grid grid-cols-4 2xl:gap-x-7 gap-x-4 w-full md:px-4 justify-start items-center">
                   <Icon
                     name="reload"
                     className="text-gray-1 cursor-pointer hover:text-secondary-2 duration-150"
