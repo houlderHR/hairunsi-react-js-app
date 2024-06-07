@@ -7,7 +7,7 @@ type TableRowProps<T> = {
   action?: JSX.Element;
 };
 
-const isAction = (name: string) => name === '' || name === 'action';
+const isAction = (name: string) => name === '' || name.toLowerCase() === 'action';
 
 const TableRow = <T,>({ data, properties, action }: TableRowProps<T>) => (
   <tr className="odd:bg-gray-50 even:bg-white">
