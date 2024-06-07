@@ -58,6 +58,7 @@ export const ContractHeading: HeaderType<ContractDataType>[] = [
         ))}
       </div>
     ),
+    className: 'max-sm:hidden',
   },
   {
     name: 'Action',
