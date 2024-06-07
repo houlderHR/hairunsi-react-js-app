@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import Contacts from './Contacts';
+import Contract from './Contract';
 import Document from './Document';
 import Environment from './Environment';
 import TabLink from './Link';
@@ -17,7 +18,7 @@ const Details: FC = () => {
     },
     { title: 'Liens', content: <TabLink /> },
     { title: 'Environnements', content: <Environment /> },
-    { title: 'Contrats', content: <div /> },
+    { title: 'Contrats', content: <Contract /> },
   ];
 
   return (

@@ -53,7 +53,6 @@ const Daily = () => {
       textAreaPlaceholder="Objéctifs de la journée"
       sidebarAdditionalComponent={
         <AddContent
-          additionalItemContainerClass="lg:flex-row flex-col gap-y-2"
           additionalClass="lg:flex-row flex-col gap-y-2"
           title="Ajouter un collaborateur"
         />
@@ -62,12 +61,13 @@ const Daily = () => {
       <div className="w-full bg-white px-2 md:px-6 py-4">
         <div className="flex gap-y-4 flex-row gap-x-4 w-full sm:w-10/12 xl:w-7/12 ml-auto bg-white">
           {!showSidebar && (
-            <Icon
-              name="add"
-              size={42}
-              className="max-sm:flex hidden cursor-pointer"
+            <div
+              role="presentation"
               onClick={toggleShowSidebar}
-            />
+              className="p-3 max-sm:flex hidden cursor-pointer my-auto h-full rounded-l-full bg-secondary shadow text-white hover:bg-primary duration-150"
+            >
+              <Icon name="add" size={22} />
+            </div>
           )}
           <div className="relative w-full" role="presentation" onClick={toggleShowFilterName}>
             <InputIcon
@@ -109,7 +109,7 @@ const Daily = () => {
               </DropDown>
             )}
           </div>
-          <div className="border border-gray-1 w-full px-1 lg:px-4 rounded hover:border-secondary-2 cursor-pointer z-[55]">
+          <div className="border border-gray-1 w-full px-1 lg:px-4 rounded hover:border-secondary-2 cursor-pointer z-[36]">
             <Datepicker
               displayFormat="DD MMM YYYY"
               placeholder={`${new Date(Date.now()).toLocaleDateString('fr-FR', {
