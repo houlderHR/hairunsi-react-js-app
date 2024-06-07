@@ -33,7 +33,7 @@ const Header: FC<HeaderProps> = ({ project, onUpdate }) => (
           {project.description}
         </p>
         <div className="h-full flex gap-6 items-center py-[13px]">
-          <p className="w-px h-full bg-secondary-3 shadow-md rounded-lg bg-indigo-500 shadow-[rgba(0,0,15,0.5)_2px_0px_8px_0px]" />
+          <p className="w-px h-full bg-secondary-3 rounded-lg shadow-[rgba(0,0,15,0.5)_2px_0px_8px_0px]" />
           <Icon
             name="pen"
             className="cursor-pointer text-secondary-3 hover:text-secondary"
