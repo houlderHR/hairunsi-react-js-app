@@ -53,11 +53,12 @@ const EnvDetail: FC<{ item: { label: string; link: string } }> = ({ item }) => {
       <Input type="text" placeholder="Libellé" additionalClass="w-2/5" value={removeEnv?.label} />
       <Input type="text" placeholder="Lien" additionalClass="w-2/5" value={removeEnv?.link} />
       <div className="flex flex-row justify-evenly items-center w-1/5">
-        <Icon name="x" className="text-[#808080] hover:text-red-500" size={24} />
+        <Icon name="x-grey" className="text-[#808080] hover:text-red-500" width={14} height={18} />
         <Icon
-          name="x"
+          name="right"
           className="text-[#808080] hover:text-green-500"
-          size={24}
+          width={14}
+          height={18}
           onClick={() => setShowFormUpdate(false)}
         />
       </div>
