@@ -21,6 +21,7 @@ const Document = () => {
           <InputFileWithDragAndDrop
             file={file}
             setFile={setFile}
+            icon="upload-picture"
             actionForFile=""
             typeFile="votre document"
           />

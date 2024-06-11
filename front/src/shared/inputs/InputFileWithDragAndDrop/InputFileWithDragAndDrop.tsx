@@ -3,6 +3,7 @@ import { ChangeEvent, DragEvent, FC, useRef, useState } from 'react';
 import Icon from '../../Icon';
 
 interface FiLeExport {
+  icon?: string;
   file: File | undefined | null;
   setFile: React.Dispatch<React.SetStateAction<File | undefined | null>>;
   link?: string | null | undefined;
@@ -12,6 +13,7 @@ interface FiLeExport {
 }
 
 const InputFileWithDragAndDrop: FC<FiLeExport> = ({
+  icon,
   file,
   setFile,
   link,
@@ -59,7 +61,7 @@ const InputFileWithDragAndDrop: FC<FiLeExport> = ({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        <img src="/icon/upload-picture.svg" alt="upload" />
+        {icon && <Icon name={icon} />}
         <input
           type="file"
           id="file"
